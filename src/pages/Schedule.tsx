@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { AlertCircle, Clock, MapPin, Video, Wifi } from "lucide-react";
 import { useSEO } from "@/hooks/useSEO";
+import { motion } from "framer-motion";
 
 export default function Schedule() {
   useSEO({
@@ -131,184 +132,196 @@ export default function Schedule() {
             </div>
 
             {/* Instructions Tab */}
-            <TabsContent
-              value="instructions"
-              className="space-y-6 animate-slide-up"
-            >
-              <Card className="bg-card/50 backdrop-blur-sm border-primary/20">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-3 text-2xl text-primary">
-                    <AlertCircle className="w-6 h-6" />
-                    Instructions for Presenters & Attendees
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <div className="p-4 bg-primary/10 rounded-lg text-sm text-muted-foreground italic">
-                    All participants and presenters are requested to follow
-                    these guidelines carefully for a smooth conference
-                    experience.
-                  </div>
-                  <ol className="list-decimal list-outside ml-6 space-y-4 text-muted-foreground text-lg">
-                    <li className="pl-2">
-                      All the participants and presenters are requested to keep
-                      their mic and video{" "}
-                      <span className="text-red-500 font-semibold">OFF</span>{" "}
-                      until and unless it is asked to un-mute.
-                    </li>
-                    <li className="pl-2">
-                      Click{" "}
-                      <span className="bg-primary px-2 py-0.5 rounded text-primary-foreground text-sm font-bold">
-                        Join
-                      </span>{" "}
-                      on the respective Date Tab to attend/present the
-                      respective Keynotes/Technical Sessions for online
-                      attendees.
-                    </li>
-                    <li className="pl-2">
-                      Join the Keynotes/Technical Sessions at least{" "}
-                      <span className="font-bold text-foreground">
-                        05 minutes
-                      </span>{" "}
-                      before the scheduled time. All the times are in{" "}
-                      <span className="font-bold text-primary">
-                        Indian Standard Time (IST)
-                      </span>
-                      .
-                    </li>
-                    <li className="pl-2">
-                      Paper presentation time for each paper is{" "}
-                      <span className="font-bold text-foreground">12 Min</span>{" "}
-                      and{" "}
-                      <span className="font-bold text-foreground">
-                        3 minutes
-                      </span>{" "}
-                      for Q & A.
-                    </li>
-                    <li className="pl-2">
-                      The presenters are requested to be ready with their
-                      presentation slides and check their mic and video settings
-                      in advance.
-                    </li>
-                    <li className="pl-2">
-                      The authors (presenters) will be called one-by-one in
-                      their respective Technical Sessions by Session Chairs.
-                    </li>
-                  </ol>
-                </CardContent>
-              </Card>
+            <TabsContent value="instructions" className="space-y-6">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                <Card className="bg-card/50 backdrop-blur-sm border-primary/20">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-3 text-2xl text-primary">
+                      <AlertCircle className="w-6 h-6" />
+                      Instructions for Presenters & Attendees
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-6">
+                    <div className="p-4 bg-primary/10 rounded-lg text-sm text-muted-foreground italic">
+                      All participants and presenters are requested to follow
+                      these guidelines carefully for a smooth conference
+                      experience.
+                    </div>
+                    <ol className="list-decimal list-outside ml-6 space-y-4 text-muted-foreground text-lg">
+                      <li className="pl-2">
+                        All the participants and presenters are requested to keep
+                        their mic and video{" "}
+                        <span className="text-red-500 font-semibold">OFF</span>{" "}
+                        until and unless it is asked to un-mute.
+                      </li>
+                      <li className="pl-2">
+                        Click{" "}
+                        <span className="bg-primary px-2 py-0.5 rounded text-primary-foreground text-sm font-bold">
+                          Join
+                        </span>{" "}
+                        on the respective Date Tab to attend/present the
+                        respective Keynotes/Technical Sessions for online
+                        attendees.
+                      </li>
+                      <li className="pl-2">
+                        Join the Keynotes/Technical Sessions at least{" "}
+                        <span className="font-bold text-foreground">
+                          05 minutes
+                        </span>{" "}
+                        before the scheduled time. All the times are in{" "}
+                        <span className="font-bold text-primary">
+                          Indian Standard Time (IST)
+                        </span>
+                        .
+                      </li>
+                      <li className="pl-2">
+                        Paper presentation time for each paper is{" "}
+                        <span className="font-bold text-foreground">12 Min</span>{" "}
+                        and{" "}
+                        <span className="font-bold text-foreground">
+                          3 minutes
+                        </span>{" "}
+                        for Q & A.
+                      </li>
+                      <li className="pl-2">
+                        The presenters are requested to be ready with their
+                        presentation slides and check their mic and video settings
+                        in advance.
+                      </li>
+                      <li className="pl-2">
+                        The authors (presenters) will be called one-by-one in
+                        their respective Technical Sessions by Session Chairs.
+                      </li>
+                    </ol>
+                  </CardContent>
+                </Card>
+              </motion.div>
             </TabsContent>
 
             {/* Day 1 Offline */}
-            <TabsContent
-              value="day1-offline"
-              className="space-y-6 animate-slide-up"
-            >
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold flex items-center gap-2">
-                  <MapPin className="text-primary w-6 h-6" />
-                  Offline Schedule (CHRIST University)
-                </h2>
-                <span className="px-4 py-1 rounded-full bg-secondary/10 text-secondary border border-secondary/20 text-sm font-medium">
-                  In-Person
-                </span>
-              </div>
-              <div className="grid gap-4">
-                {scheduleData.day1Offline.events.map((event, i) => (
-                  <Card
-                    key={i}
-                    className="hover:border-primary/40 transition-all cursor-default"
-                  >
-                    <CardContent className="p-6 flex flex-col md:flex-row md:items-center gap-4">
-                      <div className="min-w-[160px] flex items-center gap-2 text-primary font-mono font-semibold">
-                        <Clock className="w-4 h-4" />
-                        {event.time}
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="text-lg font-bold">{event.title}</h3>
-                        <p className="text-muted-foreground flex items-center gap-2 text-sm mt-1">
-                          <MapPin className="w-3 h-3" /> {event.location}
-                        </p>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
+            <TabsContent value="day1-offline" className="space-y-6">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-2xl font-bold flex items-center gap-2">
+                    <MapPin className="text-primary w-6 h-6" />
+                    Offline Schedule (CHRIST University)
+                  </h2>
+                  <span className="px-4 py-1 rounded-full bg-secondary/10 text-secondary border border-secondary/20 text-sm font-medium">
+                    In-Person
+                  </span>
+                </div>
+                <div className="grid gap-4">
+                  {scheduleData.day1Offline.events.map((event, i) => (
+                    <Card
+                      key={i}
+                      className="hover:border-primary/40 transition-all cursor-default"
+                    >
+                      <CardContent className="p-6 flex flex-col md:flex-row md:items-center gap-4">
+                        <div className="min-w-[160px] flex items-center gap-2 text-primary font-mono font-semibold">
+                          <Clock className="w-4 h-4" />
+                          {event.time}
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="text-lg font-bold">{event.title}</h3>
+                          <p className="text-muted-foreground flex items-center gap-2 text-sm mt-1">
+                            <MapPin className="w-3 h-3" /> {event.location}
+                          </p>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </motion.div>
             </TabsContent>
 
             {/* Day 1 Online */}
-            <TabsContent
-              value="day1-online"
-              className="space-y-6 animate-slide-up"
-            >
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold flex items-center gap-2">
-                  <Wifi className="text-primary w-6 h-6" />
-                  Online Schedule
-                </h2>
-                <span className="px-4 py-1 rounded-full bg-green-500/10 text-green-500 border border-green-500/20 text-sm font-medium">
-                  Virtual
-                </span>
-              </div>
-              <div className="grid gap-4">
-                {scheduleData.day1Online.events.map((event, i) => (
-                  <Card
-                    key={i}
-                    className="hover:border-primary/40 transition-all"
-                  >
-                    <CardContent className="p-6 flex flex-col md:flex-row md:items-center gap-6">
-                      <div className="min-w-[160px] flex items-center gap-2 text-primary font-mono font-semibold">
-                        <Clock className="w-4 h-4" />
-                        {event.time}
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="text-lg font-bold">{event.title}</h3>
-                      </div>
-                      <Button size="sm" className="gap-2 shrink-0">
-                        <Video className="w-4 h-4" />
-                        Join Meeting
-                      </Button>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
+            <TabsContent value="day1-online" className="space-y-6">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-2xl font-bold flex items-center gap-2">
+                    <Wifi className="text-primary w-6 h-6" />
+                    Online Schedule
+                  </h2>
+                  <span className="px-4 py-1 rounded-full bg-green-500/10 text-green-500 border border-green-500/20 text-sm font-medium">
+                    Virtual
+                  </span>
+                </div>
+                <div className="grid gap-4">
+                  {scheduleData.day1Online.events.map((event, i) => (
+                    <Card
+                      key={i}
+                      className="hover:border-primary/40 transition-all"
+                    >
+                      <CardContent className="p-6 flex flex-col md:flex-row md:items-center gap-6">
+                        <div className="min-w-[160px] flex items-center gap-2 text-primary font-mono font-semibold">
+                          <Clock className="w-4 h-4" />
+                          {event.time}
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="text-lg font-bold">{event.title}</h3>
+                        </div>
+                        <Button size="sm" className="gap-2 shrink-0">
+                          <Video className="w-4 h-4" />
+                          Join Meeting
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </motion.div>
             </TabsContent>
 
             {/* Day 2 Online */}
-            <TabsContent
-              value="day2-online"
-              className="space-y-6 animate-slide-up"
-            >
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold flex items-center gap-2">
-                  <Wifi className="text-primary w-6 h-6" />
-                  Online Schedule
-                </h2>
-                <span className="px-4 py-1 rounded-full bg-green-500/10 text-green-500 border border-green-500/20 text-sm font-medium">
-                  Virtual
-                </span>
-              </div>
-              <div className="grid gap-4">
-                {scheduleData.day2Online.events.map((event, i) => (
-                  <Card
-                    key={i}
-                    className="hover:border-primary/40 transition-all"
-                  >
-                    <CardContent className="p-6 flex flex-col md:flex-row md:items-center gap-6">
-                      <div className="min-w-[160px] flex items-center gap-2 text-primary font-mono font-semibold">
-                        <Clock className="w-4 h-4" />
-                        {event.time}
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="text-lg font-bold">{event.title}</h3>
-                      </div>
-                      <Button size="sm" className="gap-2 shrink-0">
-                        <Video className="w-4 h-4" />
-                        Join Meeting
-                      </Button>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
+            <TabsContent value="day2-online" className="space-y-6">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-2xl font-bold flex items-center gap-2">
+                    <Wifi className="text-primary w-6 h-6" />
+                    Online Schedule
+                  </h2>
+                  <span className="px-4 py-1 rounded-full bg-green-500/10 text-green-500 border border-green-500/20 text-sm font-medium">
+                    Virtual
+                  </span>
+                </div>
+                <div className="grid gap-4">
+                  {scheduleData.day2Online.events.map((event, i) => (
+                    <Card
+                      key={i}
+                      className="hover:border-primary/40 transition-all"
+                    >
+                      <CardContent className="p-6 flex flex-col md:flex-row md:items-center gap-6">
+                        <div className="min-w-[160px] flex items-center gap-2 text-primary font-mono font-semibold">
+                          <Clock className="w-4 h-4" />
+                          {event.time}
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="text-lg font-bold">{event.title}</h3>
+                        </div>
+                        <Button size="sm" className="gap-2 shrink-0">
+                          <Video className="w-4 h-4" />
+                          Join Meeting
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </motion.div>
             </TabsContent>
           </Tabs>
         </div>

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
   {
@@ -88,7 +89,8 @@ export const Navbar = () => {
             >
               {link.submenu ? (
                 <>
-                  <button
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
                     className={`font-medium text-lg transition-colors hover:text-primary flex items-center gap-1 ${
                       isLanding && !isScrolled
                         ? "text-primary-foreground"
@@ -97,33 +99,43 @@ export const Navbar = () => {
                   >
                     {link.name}
                     <ChevronDown className="w-4 h-4" />
-                  </button>
-                  {openDropdown === link.name && (
-                    <div className="absolute top-full left-0 bg-background rounded-md shadow-lg border py-2 min-w-48 mt-1">
-                      <div className="absolute -top-2 left-0 right-0 h-2" />
-                      {link.submenu.map((sublink) => (
-                        <Link
-                          key={sublink.name}
-                          to={sublink.href}
-                          className="block px-4 py-2 text-sm text-foreground hover:bg-primary/10 hover:text-primary transition-colors"
-                        >
-                          {sublink.name}
-                        </Link>
-                      ))}
-                    </div>
-                  )}
+                  </motion.button>
+                  <AnimatePresence>
+                    {openDropdown === link.name && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 10 }}
+                        transition={{ duration: 0.2 }}
+                        className="absolute top-full left-0 bg-background rounded-md shadow-lg border py-2 min-w-48 mt-1"
+                      >
+                        <div className="absolute -top-2 left-0 right-0 h-2" />
+                        {link.submenu.map((sublink) => (
+                          <Link
+                            key={sublink.name}
+                            to={sublink.href}
+                            className="block px-4 py-2 text-sm text-foreground hover:bg-primary/10 hover:text-primary transition-colors"
+                          >
+                            {sublink.name}
+                          </Link>
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </>
               ) : (
-                <Link
-                  to={link.href}
-                  className={`font-medium text-lg transition-colors hover:text-primary ${
-                    isLanding && !isScrolled
-                      ? "text-primary-foreground"
-                      : "text-foreground"
-                  }`}
-                >
-                  {link.name}
-                </Link>
+                <motion.div whileHover={{ scale: 1.05 }}>
+                  <Link
+                    to={link.href}
+                    className={`font-medium text-lg transition-colors hover:text-primary ${
+                      isLanding && !isScrolled
+                        ? "text-primary-foreground"
+                        : "text-foreground"
+                    }`}
+                  >
+                    {link.name}
+                  </Link>
+                </motion.div>
               )}
             </div>
           ))}
@@ -175,50 +187,57 @@ export const Navbar = () => {
       </div>
 
       {/* Mobile Menu */}
-      {isMobileMenuOpen && (
-        <div className="lg:hidden absolute top-full left-0 right-0 w-full bg-background shadow-xl border-t max-h-[calc(100vh-120px)] overflow-y-auto z-50">
-          <div className="flex flex-col items-center justify-center py-8 px-4 gap-6">
-            {navLinks.map((link) => (
-              <div
-                key={link.name}
-                className="w-full flex flex-col items-center"
-              >
-                {link.submenu ? (
-                  <details className="cursor-pointer w-full flex flex-col items-center">
-                    <summary className="font-medium text-lg text-foreground hover:text-primary transition-colors py-2 flex items-center gap-2 list-none">
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="lg:hidden absolute top-full left-0 right-0 w-full bg-background shadow-xl border-t max-h-[calc(100vh-120px)] overflow-y-auto z-50"
+          >
+            <div className="flex flex-col items-center justify-center py-8 px-4 gap-6">
+              {navLinks.map((link) => (
+                <div
+                  key={link.name}
+                  className="w-full flex flex-col items-center"
+                >
+                  {link.submenu ? (
+                    <details className="cursor-pointer w-full flex flex-col items-center">
+                      <summary className="font-medium text-lg text-foreground hover:text-primary transition-colors py-2 flex items-center gap-2 list-none">
+                        {link.name}
+                        <ChevronDown className="w-5 h-5" />
+                      </summary>
+                      <div className="mt-4 flex flex-col gap-3 items-center">
+                        {link.submenu.map((sublink) => (
+                          <Link
+                            key={sublink.name}
+                            to={sublink.href}
+                            className="font-medium text-base text-foreground hover:text-primary transition-colors py-1"
+                            onClick={() => setIsMobileMenuOpen(false)}
+                          >
+                            {sublink.name}
+                          </Link>
+                        ))}
+                      </div>
+                    </details>
+                  ) : (
+                    <Link
+                      to={link.href}
+                      className="font-medium text-lg text-foreground hover:text-primary transition-colors py-2"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
                       {link.name}
-                      <ChevronDown className="w-5 h-5" />
-                    </summary>
-                    <div className="mt-4 flex flex-col gap-3 items-center">
-                      {link.submenu.map((sublink) => (
-                        <Link
-                          key={sublink.name}
-                          to={sublink.href}
-                          className="font-medium text-base text-foreground hover:text-primary transition-colors py-1"
-                          onClick={() => setIsMobileMenuOpen(false)}
-                        >
-                          {sublink.name}
-                        </Link>
-                      ))}
-                    </div>
-                  </details>
-                ) : (
-                  <Link
-                    to={link.href}
-                    className="font-medium text-lg text-foreground hover:text-primary transition-colors py-2"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    {link.name}
-                  </Link>
-                )}
-              </div>
-            ))}
-            <Button variant="default" size="lg" className="mt-6 px-8" asChild>
-              <Link to="/registration">Register</Link>
-            </Button>
-          </div>
-        </div>
-      )}
+                    </Link>
+                  )}
+                </div>
+              ))}
+              <Button variant="default" size="lg" className="mt-6 px-8" asChild>
+                <Link to="/registration">Register</Link>
+              </Button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 };

@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Linkedin, Twitter } from "lucide-react";
 import { Link } from "react-router-dom";
+import { Reveal } from "./Reveal";
 
 const speakers = [
   {
@@ -43,71 +44,77 @@ export const SpeakersSection = () => {
       <div className="container mx-auto px-4 relative z-10">
         {/* Header */}
         <div className="text-center mb-16">
-          <span className="text-primary font-semibold text-sm uppercase tracking-wider">
-            Learn From The Best
-          </span>
-          <h2 className="font-display text-4xl md:text-5xl font-bold text-primary-foreground mt-3 mb-4">
-            Keynote <span className="text-gradient-primary">Speakers</span>
-          </h2>
-          <p className="text-primary-foreground/60 max-w-2xl mx-auto text-lg">
-            World-renowned experts sharing their insights on the latest
-            developments in computing and communications.
-          </p>
+          <Reveal width="100%">
+            <span className="text-primary font-semibold text-sm uppercase tracking-wider">
+              Learn From The Best
+            </span>
+          </Reveal>
+          <Reveal width="100%">
+            <h2 className="font-display text-4xl md:text-5xl font-bold text-primary-foreground mt-3 mb-4">
+              Keynote <span className="text-gradient-primary">Speakers</span>
+            </h2>
+          </Reveal>
+          <Reveal width="100%">
+            <p className="text-primary-foreground/60 max-w-2xl mx-auto text-lg">
+              World-renowned experts sharing their insights on the latest
+              developments in computing and communications.
+            </p>
+          </Reveal>
         </div>
 
         {/* Speakers Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
           {speakers.map((speaker, index) => (
-            <div
-              key={speaker.name}
-              className="group relative"
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
-              {/* Glow Effect */}
-              <div className="absolute inset-0 gradient-primary rounded-3xl blur-xl opacity-0 group-hover:opacity-30 transition-opacity duration-500" />
+            <Reveal key={speaker.name} width="100%">
+              <div
+                className="group relative"
+              >
+                {/* Glow Effect */}
+                <div className="absolute inset-0 gradient-primary rounded-3xl blur-xl opacity-0 group-hover:opacity-30 transition-opacity duration-500" />
 
-              <div className="relative bg-dark-card border border-dark-border rounded-3xl overflow-hidden hover:border-primary/50 transition-all duration-500">
-                {/* Image */}
-                <div className="relative h-64 overflow-hidden">
-                  <img
-                    src={speaker.image}
-                    alt={speaker.name}
-                    className="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-dark-card via-transparent to-transparent" />
+                <div className="relative bg-dark-card border border-dark-border rounded-3xl overflow-hidden hover:border-primary/50 transition-all duration-500">
+                  {/* Image */}
+                  <div className="relative h-64 overflow-hidden">
+                    <img
+                      src={speaker.image}
+                      alt={speaker.name}
+                      className="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-dark-card via-transparent to-transparent" />
 
-                  {/* Topic Badge */}
-                  <div className="absolute top-4 left-4">
-                    <span className="bg-primary/90 text-primary-foreground text-xs font-semibold px-3 py-1.5 rounded-full">
-                      {speaker.topic}
-                    </span>
+                    {/* Topic Badge */}
+                    <div className="absolute top-4 left-4">
+                      <span className="bg-primary/90 text-primary-foreground text-xs font-semibold px-3 py-1.5 rounded-full">
+                        {speaker.topic}
+                      </span>
+                    </div>
+
+                    {/* Social Links */}
+                    <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <button className="w-8 h-8 bg-dark-card/80 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                        <Linkedin className="w-4 h-4 text-primary-foreground" />
+                      </button>
+                      <button className="w-8 h-8 bg-dark-card/80 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                        <Twitter className="w-4 h-4 text-primary-foreground" />
+                      </button>
+                    </div>
                   </div>
 
-                  {/* Social Links */}
-                  <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <button className="w-8 h-8 bg-dark-card/80 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-primary transition-colors">
-                      <Linkedin className="w-4 h-4 text-primary-foreground" />
-                    </button>
-                    <button className="w-8 h-8 bg-dark-card/80 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-primary transition-colors">
-                      <Twitter className="w-4 h-4 text-primary-foreground" />
-                    </button>
+                  {/* Content */}
+                  <div className="p-6">
+                    <h3 className="font-display text-xl font-bold text-primary-foreground mb-1">
+                      {speaker.name}
+                    </h3>
+                    <p className="text-primary font-medium text-sm mb-2">
+                      {speaker.role}
+                    </p>
+                    <p className="text-primary-foreground/60 text-sm">
+                      {speaker.affiliation}
+                    </p>
                   </div>
-                </div>
-
-                {/* Content */}
-                <div className="p-6">
-                  <h3 className="font-display text-xl font-bold text-primary-foreground mb-1">
-                    {speaker.name}
-                  </h3>
-                  <p className="text-primary font-medium text-sm mb-2">
-                    {speaker.role}
-                  </p>
-                  <p className="text-primary-foreground/60 text-sm">
-                    {speaker.affiliation}
-                  </p>
                 </div>
               </div>
-            </div>
+            </Reveal>
           ))}
         </div>
 

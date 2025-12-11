@@ -8,6 +8,9 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import { Navbar } from "./components/Navbar";
 import { Footer } from "./components/Footer";
+import PageTransition from "./components/PageTransition";
+import ScrollToTop from "./components/ScrollToTop";
+import { AnimatePresence } from "framer-motion";
 import About from "./pages/About";
 import Committee from "./pages/Committee";
 import CRCSubmissions from "./pages/CRCSubmissions";
@@ -31,20 +34,22 @@ const AppRoutes = () => {
 
   return (
     <div className={contentPadding}>
-      <Routes>
-        <Route path="/" element={<Index />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/committee" element={<Committee />} />
-        <Route path="/crc-submissions" element={<CRCSubmissions />} />
-        <Route path="/call-for-papers" element={<CallForPapers />} />
-        <Route path="/registration" element={<Registration />} />
-        <Route path="/important-dates" element={<ImportantDates />} />
-        <Route path="/schedule" element={<Schedule />} />
-        <Route path="/speakers" element={<Speakers />} />
-        <Route path="/contact" element={<Contact />} />
-        {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <AnimatePresence mode="wait">
+        <Routes location={location} key={location.pathname}>
+          <Route path="/" element={<PageTransition><Index /></PageTransition>} />
+          <Route path="/about" element={<PageTransition><About /></PageTransition>} />
+          <Route path="/committee" element={<PageTransition><Committee /></PageTransition>} />
+          <Route path="/crc-submissions" element={<PageTransition><CRCSubmissions /></PageTransition>} />
+          <Route path="/call-for-papers" element={<PageTransition><CallForPapers /></PageTransition>} />
+          <Route path="/registration" element={<PageTransition><Registration /></PageTransition>} />
+          <Route path="/important-dates" element={<PageTransition><ImportantDates /></PageTransition>} />
+          <Route path="/schedule" element={<PageTransition><Schedule /></PageTransition>} />
+          <Route path="/speakers" element={<PageTransition><Speakers /></PageTransition>} />
+          <Route path="/contact" element={<PageTransition><Contact /></PageTransition>} />
+          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
+        </Routes>
+      </AnimatePresence>
       <Footer />
     </div>
   );
@@ -77,6 +82,7 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <BrowserRouter>
+        <ScrollToTop />
         <Toaster />
         <Sonner />
         <SchemaorgScripts />
