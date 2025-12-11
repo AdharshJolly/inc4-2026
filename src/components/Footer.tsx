@@ -20,8 +20,8 @@ const footerLinks = {
 
 export const Footer = () => {
   return (
-    <footer id="contact" className="gradient-dark border-t border-dark-border">
-      <div className="container mx-auto px-4 py-16">
+    <footer id="contact" className="gradient-dark border-t border-dark-border pt-20">
+      <div className="container mx-auto px-4 pb-12">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           {/* Brand */}
           <div className="lg:col-span-1">
@@ -106,7 +106,7 @@ export const Footer = () => {
           </div>
 
           {/* Contact */}
-          <div>
+          <div className="bg-primary/5 rounded-2xl p-6 border border-primary/10">
             <h4 className="font-display font-bold text-primary-foreground mb-6">
               Contact Us
             </h4>

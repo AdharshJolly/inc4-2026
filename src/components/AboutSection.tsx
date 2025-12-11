@@ -11,7 +11,7 @@ const stats = [
 
 export const AboutSection = () => {
   return (
-    <section id="about" className="py-20 md:py-32 bg-background">
+    <section id="about" className="py-24 md:py-40 bg-background">
       <div className="container mx-auto px-4">
         {/* Countdown */}
         <div className="text-center mb-20">
@@ -29,7 +29,7 @@ export const AboutSection = () => {
         <div className="grid lg:grid-cols-2 gap-12 items-center mb-20">
           <div>
             <Reveal>
-              <span className="text-primary font-semibold text-sm uppercase tracking-wider">
+              <span className="text-primary font-semibold text-sm uppercase tracking-[0.2em] bg-primary/10 px-4 py-1.5 rounded-full border border-primary/20">
                 About The Conference
               </span>
             </Reveal>
@@ -110,7 +110,7 @@ export const AboutSection = () => {
             ].map((topic) => (
               <span
                 key={topic}
-                className="bg-muted hover:bg-primary/10 hover:text-primary border border-border hover:border-primary/30 px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 cursor-default"
+                className="bg-muted hover:bg-primary/10 hover:text-primary border border-border hover:border-primary/30 px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 cursor-default hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-1"
               >
                 {topic}
               </span>

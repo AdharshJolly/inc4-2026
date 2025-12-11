@@ -24,7 +24,7 @@ export const HeroSection = () => {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden gradient-hero pt-32 md:pt-0"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden gradient-hero pt-40 md:pt-20"
     >
       {/* Animated Background Elements */}
       <div className="absolute inset-0 pattern-grid opacity-30" />
@@ -71,7 +71,6 @@ export const HeroSection = () => {
             variants={item}
             className="text-xl md:text-2xl text-primary-foreground/80 font-display mb-4"
           >
-            International Conference on Contemporary
             <br />
             Computing and Communications
           </motion.p>

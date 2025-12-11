@@ -2,6 +2,7 @@ import { HeroSection } from "@/components/HeroSection";
 import { Marquee } from "@/components/Marquee";
 import { AboutSection } from "@/components/AboutSection";
 import { CTASection } from "@/components/CTASection";
+import { SponsorsSection } from "@/components/SponsorsSection";
 import { SpeakersSection } from "@/components/SpeakersSection";
 import { useSEO } from "@/hooks/useSEO";
 
@@ -22,6 +23,7 @@ const Index = () => {
       <Marquee />
       <AboutSection />
       <SpeakersSection />
+      {/* <SponsorsSection /> */}
       <CTASection />
     </main>
   );

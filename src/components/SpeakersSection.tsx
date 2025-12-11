@@ -34,7 +34,7 @@ export const SpeakersSection = () => {
   return (
     <section
       id="speakers"
-      className="py-20 md:py-32 gradient-dark relative overflow-hidden"
+      className="py-24 md:py-40 gradient-dark relative overflow-hidden"
     >
       {/* Background Elements */}
       <div className="absolute inset-0 pattern-grid opacity-20" />
@@ -45,7 +45,7 @@ export const SpeakersSection = () => {
         {/* Header */}
         <div className="text-center mb-16">
           <Reveal width="100%">
-            <span className="text-primary font-semibold text-sm uppercase tracking-wider">
+            <span className="text-primary font-semibold text-sm uppercase tracking-[0.2em] bg-primary/10 px-4 py-1.5 rounded-full border border-primary/20">
               Learn From The Best
             </span>
           </Reveal>
@@ -72,7 +72,7 @@ export const SpeakersSection = () => {
                 {/* Glow Effect */}
                 <div className="absolute inset-0 gradient-primary rounded-3xl blur-xl opacity-0 group-hover:opacity-30 transition-opacity duration-500" />
 
-                <div className="relative bg-dark-card border border-dark-border rounded-3xl overflow-hidden hover:border-primary/50 transition-all duration-500">
+                <div className="relative bg-dark-card border border-dark-border rounded-3xl overflow-hidden hover:border-primary/50 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2">
                   {/* Image */}
                   <div className="relative h-64 overflow-hidden">
                     <img

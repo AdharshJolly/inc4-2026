@@ -91,14 +91,21 @@ export const Navbar = () => {
                 <>
                   <motion.button
                     whileHover={{ scale: 1.05 }}
-                    className={`font-medium text-lg transition-colors hover:text-primary flex items-center gap-1 ${
+                    className={`font-medium text-lg transition-colors flex items-center gap-1 py-1 ${
                       isLanding && !isScrolled
-                        ? "text-primary-foreground"
-                        : "text-foreground"
+                        ? location.pathname === link.href || link.submenu.some(sub => sub.href === location.pathname) ? "text-primary font-bold" : "text-primary-foreground hover:text-primary"
+                        : location.pathname === link.href || link.submenu.some(sub => sub.href === location.pathname) ? "text-primary font-bold" : "text-foreground hover:text-primary"
                     }`}
                   >
                     {link.name}
                     <ChevronDown className="w-4 h-4" />
+                    {(location.pathname === link.href || link.submenu.some(sub => sub.href === location.pathname)) && (
+                      <motion.div
+                        layoutId="navbar-indicator"
+                        className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary rounded-full"
+                        transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                      />
+                    )}
                   </motion.button>
                   <AnimatePresence>
                     {openDropdown === link.name && (
@@ -107,14 +114,16 @@ export const Navbar = () => {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 10 }}
                         transition={{ duration: 0.2 }}
-                        className="absolute top-full left-0 bg-background rounded-md shadow-lg border py-2 min-w-48 mt-1"
+                        className="absolute top-full left-0 bg-background/95 backdrop-blur-md rounded-xl shadow-xl border border-primary/10 py-3 min-w-[200px] mt-2 overflow-hidden"
                       >
-                        <div className="absolute -top-2 left-0 right-0 h-2" />
+                        <div className="absolute -top-4 left-0 right-0 h-4" />
                         {link.submenu.map((sublink) => (
                           <Link
                             key={sublink.name}
                             to={sublink.href}
-                            className="block px-4 py-2 text-sm text-foreground hover:bg-primary/10 hover:text-primary transition-colors"
+                            className={`block px-5 py-2.5 text-sm transition-all hover:bg-primary/10 hover:pl-7 hover:text-primary ${
+                                location.pathname === sublink.href ? "text-primary font-semibold bg-primary/5" : "text-foreground/80"
+                            }`}
                           >
                             {sublink.name}
                           </Link>
@@ -127,13 +136,20 @@ export const Navbar = () => {
                 <motion.div whileHover={{ scale: 1.05 }}>
                   <Link
                     to={link.href}
-                    className={`font-medium text-lg transition-colors hover:text-primary ${
+                    className={`font-medium text-lg transition-colors relative py-1 ${
                       isLanding && !isScrolled
-                        ? "text-primary-foreground"
-                        : "text-foreground"
+                        ? location.pathname === link.href ? "text-primary font-bold" : "text-primary-foreground hover:text-primary"
+                        : location.pathname === link.href ? "text-primary font-bold" : "text-foreground hover:text-primary"
                     }`}
                   >
                     {link.name}
+                    {location.pathname === link.href && (
+                      <motion.div
+                        layoutId="navbar-indicator"
+                        className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary rounded-full"
+                        transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                      />
+                    )}
                   </Link>
                 </motion.div>
               )}
