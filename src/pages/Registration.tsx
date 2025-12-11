@@ -3,8 +3,18 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Info } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useSEO } from "@/hooks/useSEO";
 
 export default function Registration() {
+  useSEO({
+    title: "Registration | IEEE InC4 2026",
+    description:
+      "Register for IEEE InC4 2026. View registration fees, categories, and payment details for the International Conference on Contemporary Computing and Communications at CHRIST University.",
+    keywords:
+      "InC4 registration, conference registration, registration fees, early bird, IEEE, 2026 conference",
+    canonicalUrl: "https://ic4.co.in/registration",
+  });
+
   return (
     <div className="min-h-screen bg-background">
       <PageTitle title="Registration" />

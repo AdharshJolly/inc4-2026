@@ -3,6 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import { Navbar } from "./components/Navbar";
@@ -16,6 +17,10 @@ import ImportantDates from "./pages/ImportantDates";
 import Schedule from "./pages/Schedule";
 import Speakers from "./pages/Speakers";
 import Contact from "./pages/Contact";
+import {
+  getInC4EventSchema,
+  getOrganizationSchema,
+} from "./hooks/useSchemaOrg";
 
 const queryClient = new QueryClient();
 
@@ -45,12 +50,36 @@ const AppRoutes = () => {
   );
 };
 
+const SchemaorgScripts = () => {
+  useEffect(() => {
+    // Add Event Schema
+    const eventScript = document.createElement("script");
+    eventScript.type = "application/ld+json";
+    eventScript.textContent = JSON.stringify(getInC4EventSchema());
+    document.head.appendChild(eventScript);
+
+    // Add Organization Schema
+    const orgScript = document.createElement("script");
+    orgScript.type = "application/ld+json";
+    orgScript.textContent = JSON.stringify(getOrganizationSchema());
+    document.head.appendChild(orgScript);
+
+    return () => {
+      document.head.removeChild(eventScript);
+      document.head.removeChild(orgScript);
+    };
+  }, []);
+
+  return null;
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <BrowserRouter>
         <Toaster />
         <Sonner />
+        <SchemaorgScripts />
         <Navbar />
         <AppRoutes />
       </BrowserRouter>

@@ -3,17 +3,26 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { AlertCircle, Clock, MapPin, Video, Wifi } from "lucide-react";
+import { useSEO } from "@/hooks/useSEO";
 
-// Template data structure for easier future editing
-const scheduleData = {
-  day1Offline: {
-    title: "March 13, 2026 (Offline)",
-    events: [
-      { time: "09:00 AM - 10:00 AM", title: "Inauguration Ceremony", location: "Main Auditorium" },
-      { time: "10:30 AM - 11:30 AM", title: "Keynote Address I", location: "Main Auditorium" },
-      { time: "11:30 AM - 01:00 PM", title: "Technical Session I", location: "Hall A" },
-      { time: "01:00 PM - 02:00 PM", title: "Lunch Break", location: "Cafeteria" },
-      { time: "02:00 PM - 04:00 PM", title: "Technical Session II", location: "Hall A" },
+export default function Schedule() {
+  useSEO({
+    title: "Conference Schedule | IEEE InC4 2026",
+    description: "View the complete schedule for IEEE InC4 2026. See keynote speeches, technical sessions, and timings for March 13-14, 2026 at CHRIST University, Bengaluru.",
+    keywords: "InC4 schedule, conference agenda, keynote speakers, technical sessions, March 2026, Bengaluru",
+    canonicalUrl: "https://ic4.co.in/schedule",
+  });
+
+  // Template data structure for easier future editing
+  const scheduleData = {
+    day1Offline: {
+      title: "March 13, 2026 (Offline)",
+      events: [
+        { time: "09:00 AM - 10:00 AM", title: "Inauguration Ceremony", location: "Main Auditorium" },
+        { time: "10:30 AM - 11:30 AM", title: "Keynote Address I", location: "Main Auditorium" },
+        { time: "11:30 AM - 01:00 PM", title: "Technical Session I", location: "Hall A" },
+        { time: "01:00 PM - 02:00 PM", title: "Lunch Break", location: "Cafeteria" },
+        { time: "02:00 PM - 04:00 PM", title: "Technical Session II", location: "Hall A" },
     ]
   },
   day1Online: {
@@ -35,7 +44,6 @@ const scheduleData = {
   }
 };
 
-export default function Schedule() {
   return (
     <div className="min-h-screen bg-background">
       <PageTitle title="Schedule" />
