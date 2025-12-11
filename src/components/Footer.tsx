@@ -1,19 +1,20 @@
 import { Mail, Phone, MapPin, Linkedin, Twitter, Youtube } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const footerLinks = {
   quickLinks: [
-    { name: "Home", href: "#home" },
-    { name: "About", href: "#about" },
-    { name: "Speakers", href: "#speakers" },
-    { name: "Schedule", href: "#schedule" },
-    { name: "Venue", href: "#venue" },
+    { name: "Home", href: "/" },
+    { name: "About", href: "/about" },
+    { name: "Speakers", href: "/speakers" },
+    { name: "Schedule", href: "/schedule" },
+    { name: "Contact", href: "/contact" },
   ],
   resources: [
-    { name: "Call for Papers", href: "#" },
-    { name: "Author Guidelines", href: "#" },
-    { name: "Registration", href: "#" },
-    { name: "Workshops", href: "#" },
-    { name: "Past Editions", href: "#" },
+    { name: "Call for Papers", href: "/call-for-papers" },
+    { name: "Registration", href: "/registration" },
+    { name: "Important Dates", href: "/important-dates" },
+    { name: "CRC Submissions", href: "/crc-submissions" },
+    { name: "Committee", href: "/committee" },
   ],
 };
 
@@ -25,19 +26,24 @@ export const Footer = () => {
           {/* Brand */}
           <div className="lg:col-span-1">
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 rounded-xl gradient-primary flex items-center justify-center">
-                <span className="text-primary-foreground font-display font-bold text-xl">IC4</span>
-              </div>
+              <img
+                src="/images/InC4 Logo White.png"
+                alt="InC4 Logo"
+                className="h-12 w-12"
+              />
               <div>
                 <span className="font-display font-bold text-lg text-primary-foreground">
                   IEEE InC4 2026
                 </span>
-                <p className="text-primary-foreground/60 text-xs">Bengaluru, India</p>
+                <p className="text-primary-foreground/60 text-xs">
+                  Bengaluru, India
+                </p>
               </div>
             </div>
             <p className="text-primary-foreground/60 text-sm leading-relaxed mb-6">
-              International Conference on Contemporary Computing and Communications,
-              organized by IEEE Computer Society Bangalore Chapter.
+              International Conference on Contemporary Computing and
+              Communications, organized by IEEE Computer Society Bangalore
+              Chapter.
             </p>
             <div className="flex gap-3">
               <a
@@ -69,12 +75,12 @@ export const Footer = () => {
             <ul className="space-y-3">
               {footerLinks.quickLinks.map((link) => (
                 <li key={link.name}>
-                  <a
-                    href={link.href}
+                  <Link
+                    to={link.href}
                     className="text-primary-foreground/60 hover:text-primary transition-colors text-sm"
                   >
                     {link.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -88,12 +94,12 @@ export const Footer = () => {
             <ul className="space-y-3">
               {footerLinks.resources.map((link) => (
                 <li key={link.name}>
-                  <a
-                    href={link.href}
+                  <Link
+                    to={link.href}
                     className="text-primary-foreground/60 hover:text-primary transition-colors text-sm"
                   >
                     {link.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
