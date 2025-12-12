@@ -1,13 +1,15 @@
 import { PageTitle } from "@/components/PageTitle";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Reveal } from "@/components/Reveal";
 import {
   ArrowRight,
   FileText,
-  Globe,
   Cpu,
   Network,
   Database,
+  Calendar,
+  MapPin,
+  Download
 } from "lucide-react";
 import { useSEO } from "@/hooks/useSEO";
 
@@ -26,7 +28,7 @@ export default function CallForPapers() {
       title: "Intelligent System",
       icon: Cpu,
       description:
-        "Decision trees, Support Vector Machine, Artificial Neural Networks, Deep Learning algorithms, Reinforcement Learning, Genetic algorithms, Data Mining and machine learning, Association rule mining, Novel feature selection algorithms, Statistical learning algorithms, Clustering, classification, and summarization of Web data, Data pre-processing and noise removal algorithms Swarm intelligence, Bio-inspired algorithms, Nature-inspired algorithms, Text mining, Intelligent algorithms of large spatial data, Information retrieval, Computer vision, Data Visualization.",
+        "Algorithms and Applications: Decision trees, Support Vector Machine, Artificial Neural Networks, Deep Learning algorithms, Reinforcement Learning, Genetic algorithms, Data Mining and machine learning, Association rule mining, Novel feature selection algorithms, Statistical learning algorithms, Clustering, classification, and summarization of Web data, Data pre-processing and noise removal algorithms Swarm intelligence, Bio-inspired algorithms, Nature-inspired algorithms, Text mining, Intelligent algorithms of large spatial data, Information retrieval, Computer vision, Data Visualization.",
     },
     {
       title: "Intelligent Data Analytics and Computing",
@@ -53,107 +55,121 @@ export default function CallForPapers() {
       <PageTitle title="Call for Papers" />
 
       <div className="container mx-auto px-4 pb-20">
-        <div className="max-w-4xl mx-auto space-y-12">
-          {/* Introduction */}
-          <section className="prose prose-invert max-w-none animate-slide-up">
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              IEEE Computer Society Bangalore Chapter and IEEE Computer Society
-              Student Branch Chapter CHRIST University Bangalore are organizing
-              the fourth edition of the 2026 IEEE International Conference on
-              Contemporary Computing and Communications (InC4) on March 13-14,
-              2026, in association with the Department of Computer Science and
-              Engineering, School of Engineering and Technology, CHRIST (Deemed
-              to be University), Kengeri Campus, Bengaluru, India. The IEEE
-              InC4-2026 aims to bring researchers, academicians, industry, and
-              government personnel together to share and discuss the various
-              aspects of Computing and Communications. The conference will
-              witness multiple eminent keynote speakers from academia and
-              industry worldwide and the presentation of accepted peer-reviewed
-              articles. The IEEE InC4 2026 conference proceeding will be
-              submitted for inclusion in IEEE XPLORE digital library.
-            </p>
-            <p className="text-muted-foreground mt-4">
-              Original contributions based on the results of research and
-              development are solicited. Prospective authors are requested to
-              submit their papers in standard IEEE conference format in not more
-              than 6 pages, in the following broad areas (but not limited to).
-              Authors must ensure the relevance of their submissions to the
-              scope, name, and theme of the conference.
-            </p>
+        <div className="max-w-6xl mx-auto space-y-20">
+          
+          {/* Introduction Hero */}
+          <section className="relative">
+             <Reveal width="100%">
+                <div className="bg-card border border-border/50 rounded-3xl p-8 md:p-12 overflow-hidden relative">
+                    <div className="relative z-10 grid lg:grid-cols-2 gap-12 items-center">
+                        <div className="space-y-6">
+                            <span className="text-primary font-semibold text-sm uppercase tracking-[0.2em] bg-primary/10 px-4 py-1.5 rounded-full border border-primary/20 w-fit">InC4 2026</span>
+                            <h2 className="text-2xl md:text-3xl font-bold leading-tight">
+                                IEEE Computer Society Bangalore Chapter & Christ University
+                            </h2>
+                            <p className="text-muted-foreground leading-relaxed">
+                              Organizing the fourth edition of the 2026 IEEE International Conference on Contemporary Computing and Communications (InC4) on <span className="text-foreground font-semibold">March 13-14, 2026</span>.
+                            </p>
+                            <p className="text-muted-foreground leading-relaxed">
+                                Bringing researchers, academicians, industry, and government personnel together to share and discuss various aspects of Computing and Communications. Accepted peer-reviewed articles will be submitted for inclusion in <span className="text-primary font-semibold">IEEE XPLORE</span> digital library.
+                            </p>
+
+                             <div className="flex flex-wrap gap-4 pt-4">
+                                <div className="flex items-center gap-2 text-sm font-medium bg-secondary/30 px-3 py-2 rounded-lg">
+                                    <Calendar className="w-4 h-4 text-primary" /> March 13-14, 2026
+                                </div>
+                                <div className="flex items-center gap-2 text-sm font-medium bg-secondary/30 px-3 py-2 rounded-lg">
+                                    <MapPin className="w-4 h-4 text-primary" /> Bengaluru, India
+                                </div>
+                             </div>
+                        </div>
+
+                        {/* Right side decoration/info */}
+                        <div className="bg-secondary/10 rounded-2xl p-8 border border-secondary/20 h-full flex flex-col justify-center">
+                            <h3 className="text-xl font-bold mb-4">Submission Scope</h3>
+                            <p className="text-sm text-muted-foreground mb-6">
+                                Original contributions based on the results of research and development are solicited. Prospective authors are requested to submit their papers in standard IEEE conference format in not more than 6 pages.
+                            </p>
+                             <Button size="lg" className="w-full gap-2" asChild>
+                                <a href="https://cmt3.research.microsoft.com/InC42025" target="_blank" rel="noopener noreferrer">
+                                    Submit Paper <ArrowRight className="w-4 h-4" />
+                                </a>
+                            </Button>
+                        </div>
+                    </div>
+                    {/* Decorative Blob */}
+                    <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl -z-0 translate-x-1/2 -translate-y-1/2 pointer-events-none" />
+                </div>
+             </Reveal>
           </section>
 
-          {/* Topics */}
-          <section
-            className="animate-slide-up"
-            style={{ animationDelay: "0.2s" }}
-          >
-            <h2 className="text-3xl font-bold mb-8 text-center text-primary">
-              Topics of Interest
-            </h2>
-            <div className="grid gap-6">
+          {/* Topics Grid */}
+          <section>
+            <Reveal>
+               <h2 className="text-3xl font-bold mb-12 text-center">Topics of Interest  ( Not Limited To )</h2>
+            </Reveal>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {topics.map((topic, index) => (
-                <Card
-                  key={index}
-                  className="bg-card/50 backdrop-blur-sm border-primary/20 hover:border-primary/40 transition-colors"
-                >
-                  <CardHeader className="flex flex-row items-start gap-4 space-y-0">
-                    <div className="p-3 rounded-xl bg-primary/10 text-primary">
-                      <topic.icon className="w-6 h-6" />
-                    </div>
-                    <div>
-                      <CardTitle className="text-xl font-bold mb-2">
+                <Reveal key={index} width="100%">
+                    <div className="group h-full bg-card border border-border p-8 rounded-2xl hover:border-primary/50 hover:shadow-lg transition-all duration-300">
+                      <div className="flex items-start justify-between mb-6">
+                        <div className="p-3 rounded-xl bg-primary/10 text-primary group-hover:scale-110 transition-transform duration-300">
+                          <topic.icon className="w-8 h-8" />
+                        </div>
+                        <span className="text-6xl font-bold text-secondary/30 font-display select-none -mt-4">
+                            0{index + 1}
+                        </span>
+                      </div>
+                      
+                      <h3 className="text-xl font-bold mb-4 group-hover:text-primary transition-colors">
                         {topic.title}
-                      </CardTitle>
+                      </h3>
                       <p className="text-muted-foreground text-sm leading-relaxed">
                         {topic.description}
                       </p>
                     </div>
-                  </CardHeader>
-                </Card>
+                </Reveal>
               ))}
             </div>
           </section>
 
-          {/* Guidelines */}
-          <section
-            className="animate-slide-up"
-            style={{ animationDelay: "0.4s" }}
-          >
-            <Card className="bg-primary/5 border-primary/20">
-              <CardContent className="p-8">
-                <h2 className="text-2xl font-bold mb-6 flex items-center gap-3">
-                  <FileText className="w-6 h-6 text-primary" />
-                  Registered Paper Guidelines
-                </h2>
-                <ul className="space-y-4 text-muted-foreground">
-                  <li className="flex items-start gap-3">
-                    <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2" />
-                    The paper must strictly adhere to the standard IEEE two
-                    column format and must not be more than 6 pages.
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2" />
-                    Typesetting instructions and sample templates:{" "}
-                    <a
-                      href="#"
-                      className="text-primary hover:underline font-medium"
-                    >
-                      Click here
-                    </a>
-                  </li>
-                </ul>
-
-                <div className="mt-8 flex justify-center">
-                  <Button
-                    size="lg"
-                    className="w-full sm:w-auto font-semibold text-lg"
-                  >
-                    Submit Paper <ArrowRight className="ml-2 w-5 h-5" />
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+          {/* Guidelines Section */}
+          <section>
+            <Reveal width="100%">
+               <div className="bg-primary/5 border border-primary/10 rounded-3xl py-6 px-8 md:p-16 relative overflow-hidden">
+                  <div className="relative z-10 max-w-4xl mx-auto text-center space-y-8">
+                      <div className="inline-flex items-center justify-center p-3 bg-background rounded-xl mb-4 shadow-sm">
+                          <FileText className="w-8 h-8 text-primary" />
+                      </div>
+                      
+                      <h2 className="text-3xl md:text-4xl font-bold">Registered Paper Guidelines</h2>
+                      
+                      <div className="grid md:grid-cols-2 gap-8 text-left">
+                          <div className="bg-card rounded-2xl p-6 border border-border shadow-sm">
+                              <p className="font-bold text-lg mb-2 text-primary">Formatting Rules</p>
+                              <p className="text-sm text-muted-foreground leading-relaxed">
+                                  The paper must strictly adhere to the standard IEEE two column format and must not be more than 6 pages.
+                              </p>
+                          </div>
+                           <div className="bg-card rounded-2xl p-6 border border-border shadow-sm flex flex-col justify-center">
+                              <p className="font-bold text-lg mb-4 text-primary">Need Help?</p>
+                              <Button className="w-full gap-2" asChild>
+                                  <a href="https://drive.google.com/drive/folders/1DqCpJHxmPtFlfaajHuaXAy8pWm86iME5?usp=sharing" target="_blank" rel="noopener noreferrer">
+                                      <Download className="w-4 h-4" /> Download Templates
+                                  </a>
+                              </Button>
+                          </div>
+                      </div>
+                  </div>
+                   
+                   {/* Decorative Elements */}
+                   <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -z-0 translate-x-1/2 -translate-y-1/2" />
+                   <div className="absolute bottom-0 left-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -z-0 -translate-x-1/2 translate-y-1/2" />
+               </div>
+            </Reveal>
           </section>
+
         </div>
       </div>
     </div>
