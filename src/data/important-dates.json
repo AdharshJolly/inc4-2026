@@ -1,0 +1,32 @@
+[
+  {
+    "event": "Submission Deadline",
+    "date": "January 5, 2026",
+    "status": "passed"
+  },
+  {
+    "event": "Acceptance Notification",
+    "date": "February 5, 2026",
+    "status": "upcoming"
+  },
+  {
+    "event": "Early Bird Registration Deadline",
+    "date": "February 25, 2026",
+    "status": "upcoming"
+  },
+  {
+    "event": "Registration Hard Deadline",
+    "date": "March 3, 2026",
+    "status": "upcoming"
+  },
+  {
+    "event": "Camera Ready Submission",
+    "date": "March 3, 2026",
+    "status": "upcoming"
+  },
+  {
+    "event": "Conference Date",
+    "date": "March 13 - 14, 2026",
+    "status": "highlight"
+  }
+]

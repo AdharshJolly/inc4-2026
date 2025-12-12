@@ -1,10 +1,17 @@
 import { Reveal } from "./Reveal";
 
 const partners = [
-  { name: "IEEE Computer Society", logo: "/images/ieee_cs_logo.png", type: "Organizer" },
+  {
+    name: "IEEE Computer Society",
+    logo: "/images/ieee_cs_logo.png",
+    type: "Organizer",
+  },
   { name: "CHRIST University", logo: "/images/cu_logo.png", type: "Organizer" },
-  { name: "Springer", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Springer_logo.svg/2560px-Springer_logo.svg.png", type: "Technical Partner" },
-  { name: "Scopus", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Scopus_logo.svg/2560px-Scopus_logo.svg.png", type: "Technical Partner" },
+  {
+    name: "Springer",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Springer_logo.svg/2560px-Springer_logo.svg.png",
+    type: "Technical Partner",
+  },
 ];
 
 export const SponsorsSection = () => {
@@ -30,13 +37,13 @@ export const SponsorsSection = () => {
               <div className="group relative grayscale hover:grayscale-0 transition-all duration-300 transform hover:scale-105">
                 <div className="h-16 md:h-20 flex items-center justify-center">
                   {/* Placeholder for logos if images fail, but ideally should rely on alt text or actual images */}
-                  <img 
-                    src={partner.logo} 
-                    alt={partner.name} 
+                  <img
+                    src={partner.logo}
+                    alt={partner.name}
                     className="h-full w-auto object-contain max-w-[200px]"
                     onError={(e) => {
-                      e.currentTarget.style.display = 'none';
-                      e.currentTarget.parentElement!.innerText = partner.name; 
+                      e.currentTarget.style.display = "none";
+                      e.currentTarget.parentElement!.innerText = partner.name;
                     }}
                   />
                 </div>

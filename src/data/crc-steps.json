@@ -1,0 +1,44 @@
+[
+  {
+    "icon": "FileText",
+    "title": "Prepare Camera-Ready Paper",
+    "description": "Prepare your Camera-Ready Paper as per the \"Instruction to prepare Camera Ready Paper.\"",
+    "action": "Download Template",
+    "link": ""
+  },
+  {
+    "icon": "MessageSquare",
+    "title": "Reply to Reviewers",
+    "description": "Prepare reply to reviewers as per the instructions (Instruction to prepare reply to reviewers).",
+    "action": "Reviewer Reply Template",
+    "link": ""
+  },
+  {
+    "icon": "CreditCard",
+    "title": "Registration Fee",
+    "description": "Deposit Registration fee. Visit Registration Link or Explara.",
+    "action": "Pay Registration",
+    "link": ""
+  },
+  {
+    "icon": "UserPlus",
+    "title": "Update Author Details",
+    "description": "Update detail of all co-authors on Microsoft CMT.",
+    "action": "Go to CMT",
+    "link": ""
+  },
+  {
+    "icon": "Upload",
+    "title": "Upload Documents",
+    "description": "Upload all the documents (carefully go through Instruction to submit final files) through Microsoft CMT under Author Console using link \"Create Camera Ready Submission\".",
+    "action": "Go to CMT",
+    "link": ""
+  },
+  {
+    "icon": "CheckCircle2",
+    "title": "Final Confirmation",
+    "description": "After Registration, please submit your information through Google Form.",
+    "action": "Google Form",
+    "link": ""
+  }
+]

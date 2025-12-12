@@ -2,6 +2,7 @@ import { PageTitle } from "@/components/PageTitle";
 import { Card, CardContent } from "@/components/ui/card";
 import { Calendar } from "lucide-react";
 import { useSEO } from "@/hooks/useSEO";
+import dates from "@/data/important-dates.json";
 
 export default function ImportantDates() {
   useSEO({
@@ -12,35 +13,6 @@ export default function ImportantDates() {
       "InC4 dates, submission deadline, registration deadline, important dates, conference schedule, 2026",
     canonicalUrl: "https://ic4.co.in/important-dates",
   });
-
-  const dates = [
-    { event: "Submission Deadline", date: "January 5, 2026", status: "passed" },
-    {
-      event: "Acceptance Notification",
-      date: "February 5, 2026",
-      status: "upcoming",
-    },
-    {
-      event: "Early Bird Registration Deadline",
-      date: "February 25, 2026",
-      status: "upcoming",
-    },
-    {
-      event: "Registration Hard Deadline",
-      date: "March 3, 2026",
-      status: "upcoming",
-    },
-    {
-      event: "Camera Ready Submission",
-      date: "March 3, 2026",
-      status: "upcoming",
-    },
-    {
-      event: "Conference Date",
-      date: "March 13 - 14, 2026",
-      status: "highlight",
-    },
-  ];
 
   return (
     <div className="min-h-screen bg-background">

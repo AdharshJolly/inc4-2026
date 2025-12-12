@@ -1,0 +1,210 @@
+[
+  {
+    "id": "chief-patron",
+    "label": "Chief Patron",
+    "members": [
+      {
+        "name": "Dr Fr Joseph C C",
+        "role": "Vice Chancellor",
+        "image": "https://christuniversity.in/uploads/cmsmenu/fjcc_20201001014328..jpg",
+        "affiliation": "CHRIST (Deemed to be University), Bangalore, India"
+      }
+    ]
+  },
+  {
+    "id": "patrons",
+    "label": "Patrons",
+    "members": [
+      {
+        "name": "Dr Fr Viju P D CMI",
+        "role": "Pro-Vice Chancellor",
+        "image": "https://kp.christuniversity.in/KnowledgePro/images/EmployeePhotos/E173.jpg",
+        "affiliation": "CHRIST (Deemed to be University), Bangalore, India"
+      },
+      {
+        "name": "Dr Fr Jiby Jose E",
+        "role": "Director, School of Engineering and Technology",
+        "image": "https://kp.christuniversity.in/KnowledgePro/images/EmployeePhotos/E3266.jpg",
+        "affiliation": "CHRIST (Deemed to be University), Bangalore, India"
+      }
+    ]
+  },
+  {
+    "id": "honorary-chairs",
+    "label": "Honorary Chairs",
+    "members": [
+      {
+        "name": "Dr Raghunandan Kumar",
+        "role": "Dean, School of Engineering and Technology",
+        "image": "https://kp.christuniversity.in/KnowledgePro/images/EmployeePhotos/E721.jpg",
+        "affiliation": "CHRIST (Deemed to be University), Bangalore, India"
+      },
+      {
+        "name": "Dr Chandrakanta Kumar",
+        "role": "Immediate Past Chair, 2025",
+        "image": "https://ieeebangalore.org/wp-content/uploads/2023/06/vice-chair-ta.png",
+        "affiliation": "IEEE Bangalore Section"
+      },
+      {
+        "name": "Dr Sunil Kumar Vuppala",
+        "role": "Immediate Past Chair, 2025",
+        "image": "https://btc.ieeebangalore.org/wp-content/uploads/2020/09/sunil.png",
+        "affiliation": "IEEE Computer Society Bangalore Chapter"
+      }
+    ]
+  },
+  {
+    "id": "general-chairs",
+    "label": "General Chairs",
+    "members": [
+      {
+        "name": "Dr Mary Anita EA",
+        "role": "Associate Dean, School of Engineering and Technology",
+        "image": "https://christuniversity.in/uploads/faculty-image/E4755.jpg",
+        "affiliation": "CHRIST (Deemed to be University), Bangalore, India"
+      },
+      {
+        "name": "Dr Sandeep Kumar",
+        "role": "Professor, Department of AI, ML and Data Science",
+        "image": "https://christuniversity.in/uploads/faculty-image/E4860.jpg",
+        "affiliation": "IEEE Computer Society Bangalore Chapter"
+      }
+    ]
+  },
+  {
+    "id": "general-co-chairs",
+    "label": "General Co-Chairs",
+    "members": [
+      {
+        "name": "Dr Balamurugan M",
+        "role": "HoD, Department of Computer Science and Engineering",
+        "image": "https://christuniversity.in/uploads/faculty-image/E2150.jpg",
+        "affiliation": "CHRIST (Deemed to be University), Bangalore, India"
+      },
+      {
+        "name": "Dr Michael Moses T",
+        "role": "HoD, Department of AI, ML and Data Science",
+        "image": "https://christuniversity.in/uploads/faculty-image/E1703.jpg",
+        "affiliation": "CHRIST (Deemed to be University), Bangalore, India"
+      }
+    ]
+  },
+  {
+    "id": "steering",
+    "label": "Steering Committee",
+    "members": [
+      {
+        "name": "Alok Ranjan",
+        "role": "Chapter Secretary",
+        "image": "https://cs.ieeebangalore.org/wp-content/uploads/2024/03/alok-500x500.jpg",
+        "affiliation": ""
+      },
+      {
+        "name": "Sourav Kanti Addya",
+        "role": "Chapter Joint Secretary",
+        "image": "https://cs.ieeebangalore.org/wp-content/uploads/2024/03/sourav-500x500-1.jpg",
+        "affiliation": ""
+      },
+      {
+        "name": "Dilip Kumar Dalei",
+        "role": "Scientist",
+        "image": "https://cs.ieeebangalore.org/wp-content/uploads/2023/02/dilip-500x500.jpg",
+        "affiliation": "Defence Research and Development Organisation (DRDO)"
+      },
+      {
+        "name": "Rohit Verma",
+        "role": "Research Scientist",
+        "image": "https://cs.ieeebangalore.org/wp-content/uploads/2023/02/Rohit-Verma.jpg",
+        "affiliation": "Intel Labs"
+      }
+    ]
+  },
+  {
+    "id": "tpc",
+    "label": "Technical Program Committee",
+    "members": [
+      { "name": "To be announced", "role": "TPC Member", "affiliation": "" }
+    ]
+  },
+  {
+    "id": "advisory",
+    "label": "Advisory Committee",
+    "members": [
+      {
+        "name": "To be announced",
+        "role": "Advisory Committee",
+        "affiliation": ""
+      }
+    ]
+  },
+  {
+    "id": "publication",
+    "label": "Publication Committee",
+    "members": [
+      {
+        "name": "Dr Sandeep Kumar",
+        "role": "Professor, Department of AI, ML and Data Science",
+        "image": "https://christuniversity.in/uploads/faculty-image/E4860.jpg",
+        "affiliation": "IEEE Computer Society Bangalore Chapter"
+      }
+    ]
+  },
+  {
+    "id": "finance",
+    "label": "Finance Committee",
+    "members": [
+      {
+        "name": "Dr Sandeep Kumar",
+        "role": "Professor, Department of AI, ML and Data Science",
+        "image": "https://christuniversity.in/uploads/faculty-image/E4860.jpg",
+        "affiliation": "IEEE Computer Society Bangalore Chapter"
+      }
+    ]
+  },
+  {
+    "id": "organizing",
+    "label": "Organizing Committee",
+    "members": [
+      {
+        "name": "To be announced",
+        "role": "Organizing Committee",
+        "affiliation": ""
+      }
+    ]
+  },
+  {
+    "id": "publicity",
+    "label": "Publicity Committee",
+    "members": [
+      {
+        "name": "To be announced",
+        "role": "Publicity Committee",
+        "affiliation": ""
+      }
+    ]
+  },
+  {
+    "id": "volunteers",
+    "label": "Student Volunteers",
+    "members": [
+      {
+        "name": "Pranshu Patel",
+        "role": "Student Chair",
+        "image": "http://edu.ieee.org/in-cucs/wp-content/uploads/sites/690/1705949496396.jpeg",
+        "affiliation": "Christ University - IEEE Student Branch Bangalore Chapter"
+      },
+      {
+        "name": "Labh Bothra",
+        "role": "Treasurer",
+        "image": "http://edu.ieee.org/in-cucs/wp-content/uploads/sites/690/labh.jpeg",
+        "affiliation": "Christ University - IEEE Student Branch Bangalore Chapter"
+      },
+      {
+        "name": "Arnav Rangwani",
+        "role": "Web Master",
+        "image": "http://edu.ieee.org/in-cucs/wp-content/uploads/sites/690/1706305319039.jpeg",
+        "affiliation": "Christ University - IEEE Student Branch Bangalore Chapter"
+      }
+    ]
+  }
+]

@@ -16,9 +16,12 @@ const container: Variants = {
 
 const item: Variants = {
   hidden: { opacity: 0, y: 30 },
-  show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 50, damping: 20 } },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { type: "spring", stiffness: 50, damping: 20 },
+  },
 };
-
 
 export const HeroSection = () => {
   return (
@@ -107,7 +110,7 @@ export const HeroSection = () => {
           >
             <Link to="/">
               <Button variant="hero" size="xl">
-                Register Now
+                Submit Paper
                 <ArrowRight className="w-5 h-5" />
               </Button>
             </Link>

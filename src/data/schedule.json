@@ -1,0 +1,77 @@
+{
+  "day1Offline": {
+    "title": "March 13, 2026 (Offline)",
+    "events": [
+      {
+        "time": "09:00 AM - 10:00 AM",
+        "title": "Inauguration Ceremony",
+        "location": "Main Auditorium"
+      },
+      {
+        "time": "10:30 AM - 11:30 AM",
+        "title": "Keynote Address I",
+        "location": "Main Auditorium"
+      },
+      {
+        "time": "11:30 AM - 01:00 PM",
+        "title": "Technical Session I",
+        "location": "Hall A"
+      },
+      {
+        "time": "01:00 PM - 02:00 PM",
+        "title": "Lunch Break",
+        "location": "Cafeteria"
+      },
+      {
+        "time": "02:00 PM - 04:00 PM",
+        "title": "Technical Session II",
+        "location": "Hall A"
+      }
+    ]
+  },
+  "day1Online": {
+    "title": "March 13, 2026 (Online)",
+    "events": [
+      {
+        "time": "10:30 AM - 11:30 AM",
+        "title": "Keynote Address I (Stream)",
+        "link": "#"
+      },
+      {
+        "time": "11:30 AM - 01:00 PM",
+        "title": "Online Technical Session I",
+        "link": "#"
+      },
+      {
+        "time": "02:00 PM - 04:00 PM",
+        "title": "Online Technical Session II",
+        "link": "#"
+      }
+    ]
+  },
+  "day2Online": {
+    "title": "March 14, 2026 (Online)",
+    "events": [
+      {
+        "time": "09:30 AM - 10:30 AM",
+        "title": "Keynote Address II (Stream)",
+        "link": "#"
+      },
+      {
+        "time": "10:45 AM - 01:00 PM",
+        "title": "Online Technical Session III",
+        "link": "#"
+      },
+      {
+        "time": "02:00 PM - 03:30 PM",
+        "title": "Online Technical Session IV",
+        "link": "#"
+      },
+      {
+        "time": "04:00 PM - 05:00 PM",
+        "title": "Valedictory Function",
+        "link": "#"
+      }
+    ]
+  }
+}

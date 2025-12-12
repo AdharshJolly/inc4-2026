@@ -37,7 +37,7 @@ export default function Contact() {
           </Reveal>
 
           {/* Contact Persons Grid */}
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="gap-8">
             {/* Dr Sandeep Kumar */}
             <Reveal width="100%">
               <Card className="bg-card/50 backdrop-blur-sm border-primary/20 hover:border-primary/40 transition-colors h-full">
@@ -48,7 +48,7 @@ export default function Contact() {
                   <div>
                     <h3 className="text-xl font-bold mb-2">Dr Sandeep Kumar</h3>
                     <p className="text-muted-foreground text-sm font-medium mb-1">
-                      Professor, Department of Computer Science and Engineering,
+                      Professor, Department of AI, ML and Data Science,
                       <br />
                       School of Engineering and Technology, CHRIST (Deemed to be
                       University),
@@ -65,41 +65,6 @@ export default function Contact() {
                       <p className="text-muted-foreground">
                         Phone: +91 90247 06009
                       </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </Reveal>
-
-            {/* Dr Shrikant Subhash Tangade */}
-            <Reveal width="100%">
-              <Card className="bg-card/50 backdrop-blur-sm border-primary/20 hover:border-primary/40 transition-colors h-full">
-                <CardContent className="p-8 text-center space-y-4">
-                  <div className="w-12 h-12 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
-                    <Mail className="w-6 h-6 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold mb-2">
-                      Dr Shrikant Subhash Tangade
-                    </h3>
-                    <p className="text-muted-foreground text-sm font-medium mb-1">
-                      Associate Professor, Department of Computer Science and
-                      Engineering,
-                      <br />
-                      School of Engineering and Technology, CHRIST (Deemed to be
-                      University),
-                      <br />
-                      Kengeri Campus, Bangalore - 560 074
-                    </p>
-                    <div className="mt-4 flex flex-col gap-2 text-sm">
-                      <a
-                        href="mailto:shrikantsubhash.tangade@christuniversity.in"
-                        className="text-primary hover:underline font-medium"
-                      >
-                        Email: shrikantsubhash.tangade@christuniversity.in
-                      </a>
-                      {/* Placeholder for alignment, phone not provided in image for this contact */}
-                      <p className="invisible">Phone: N/A</p>
                     </div>
                   </div>
                 </CardContent>
@@ -129,9 +94,7 @@ export default function Contact() {
 
           {/* FAQ Section (Retained) */}
           <Reveal width="100%">
-            <div
-              className="max-w-3xl mx-auto"
-            >
+            <div className="max-w-3xl mx-auto">
               <h2 className="text-2xl font-semibold mb-8 text-center text-primary">
                 Frequently Asked Questions
               </h2>

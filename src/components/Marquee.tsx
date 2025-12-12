@@ -4,7 +4,7 @@ export const Marquee = () => {
     "March 13-14, 2026",
     "CHRIST University, Bengaluru",
     "IEEE Indexed",
-    "Scopus Indexed",
+
     "Call for Papers Open",
   ];
 

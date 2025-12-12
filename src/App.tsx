@@ -36,18 +36,88 @@ const AppRoutes = () => {
     <div className={contentPadding}>
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
-          <Route path="/" element={<PageTransition><Index /></PageTransition>} />
-          <Route path="/about" element={<PageTransition><About /></PageTransition>} />
-          <Route path="/committee" element={<PageTransition><Committee /></PageTransition>} />
-          <Route path="/crc-submissions" element={<PageTransition><CRCSubmissions /></PageTransition>} />
-          <Route path="/call-for-papers" element={<PageTransition><CallForPapers /></PageTransition>} />
-          <Route path="/registration" element={<PageTransition><Registration /></PageTransition>} />
-          <Route path="/important-dates" element={<PageTransition><ImportantDates /></PageTransition>} />
-          <Route path="/schedule" element={<PageTransition><Schedule /></PageTransition>} />
-          <Route path="/speakers" element={<PageTransition><Speakers /></PageTransition>} />
-          <Route path="/contact" element={<PageTransition><Contact /></PageTransition>} />
+          <Route
+            path="/"
+            element={
+              <PageTransition>
+                <Index />
+              </PageTransition>
+            }
+          />
+          <Route
+            path="/about"
+            element={
+              <PageTransition>
+                <About />
+              </PageTransition>
+            }
+          />
+          <Route
+            path="/committee"
+            element={
+              <PageTransition>
+                <Committee />
+              </PageTransition>
+            }
+          />
+          {/* <Route path="/crc-submissions" element={<PageTransition><CRCSubmissions /></PageTransition>} /> */}
+          <Route
+            path="/call-for-papers"
+            element={
+              <PageTransition>
+                <CallForPapers />
+              </PageTransition>
+            }
+          />
+          <Route
+            path="/registration"
+            element={
+              <PageTransition>
+                <Registration />
+              </PageTransition>
+            }
+          />
+          <Route
+            path="/important-dates"
+            element={
+              <PageTransition>
+                <ImportantDates />
+              </PageTransition>
+            }
+          />
+          <Route
+            path="/schedule"
+            element={
+              <PageTransition>
+                <Schedule />
+              </PageTransition>
+            }
+          />
+          <Route
+            path="/speakers"
+            element={
+              <PageTransition>
+                <Speakers />
+              </PageTransition>
+            }
+          />
+          <Route
+            path="/contact"
+            element={
+              <PageTransition>
+                <Contact />
+              </PageTransition>
+            }
+          />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
+          <Route
+            path="*"
+            element={
+              <PageTransition>
+                <NotFound />
+              </PageTransition>
+            }
+          />
         </Routes>
       </AnimatePresence>
       <Footer />

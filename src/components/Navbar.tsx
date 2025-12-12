@@ -17,7 +17,7 @@ const navLinks = [
     name: "Author Information",
     href: "#",
     submenu: [
-      { name: "CRC Submissions", href: "/crc-submissions" },
+      // { name: "CRC Submissions", href: "/crc-submissions" },
       { name: "Call for Papers", href: "/call-for-papers" },
       { name: "Registration fees", href: "/registration" },
       { name: "Important Dates", href: "/important-dates" },
@@ -93,17 +93,34 @@ export const Navbar = () => {
                     whileHover={{ scale: 1.05 }}
                     className={`font-medium text-lg transition-colors flex items-center gap-1 py-1 ${
                       isLanding && !isScrolled
-                        ? location.pathname === link.href || link.submenu.some(sub => sub.href === location.pathname) ? "text-primary font-bold" : "text-primary-foreground hover:text-primary"
-                        : location.pathname === link.href || link.submenu.some(sub => sub.href === location.pathname) ? "text-primary font-bold" : "text-foreground hover:text-primary"
+                        ? location.pathname === link.href ||
+                          link.submenu.some(
+                            (sub) => sub.href === location.pathname
+                          )
+                          ? "text-primary font-bold"
+                          : "text-primary-foreground hover:text-primary"
+                        : location.pathname === link.href ||
+                          link.submenu.some(
+                            (sub) => sub.href === location.pathname
+                          )
+                        ? "text-primary font-bold"
+                        : "text-foreground hover:text-primary"
                     }`}
                   >
                     {link.name}
                     <ChevronDown className="w-4 h-4" />
-                    {(location.pathname === link.href || link.submenu.some(sub => sub.href === location.pathname)) && (
+                    {(location.pathname === link.href ||
+                      link.submenu.some(
+                        (sub) => sub.href === location.pathname
+                      )) && (
                       <motion.div
                         layoutId="navbar-indicator"
                         className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary rounded-full"
-                        transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                        transition={{
+                          type: "spring",
+                          bounce: 0.2,
+                          duration: 0.6,
+                        }}
                       />
                     )}
                   </motion.button>
@@ -122,7 +139,9 @@ export const Navbar = () => {
                             key={sublink.name}
                             to={sublink.href}
                             className={`block px-5 py-2.5 text-sm transition-all hover:bg-primary/10 hover:pl-7 hover:text-primary ${
-                                location.pathname === sublink.href ? "text-primary font-semibold bg-primary/5" : "text-foreground/80"
+                              location.pathname === sublink.href
+                                ? "text-primary font-semibold bg-primary/5"
+                                : "text-foreground/80"
                             }`}
                           >
                             {sublink.name}
@@ -138,8 +157,12 @@ export const Navbar = () => {
                     to={link.href}
                     className={`font-medium text-lg transition-colors relative py-1 ${
                       isLanding && !isScrolled
-                        ? location.pathname === link.href ? "text-primary font-bold" : "text-primary-foreground hover:text-primary"
-                        : location.pathname === link.href ? "text-primary font-bold" : "text-foreground hover:text-primary"
+                        ? location.pathname === link.href
+                          ? "text-primary font-bold"
+                          : "text-primary-foreground hover:text-primary"
+                        : location.pathname === link.href
+                        ? "text-primary font-bold"
+                        : "text-foreground hover:text-primary"
                     }`}
                   >
                     {link.name}
@@ -147,7 +170,11 @@ export const Navbar = () => {
                       <motion.div
                         layoutId="navbar-indicator"
                         className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary rounded-full"
-                        transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                        transition={{
+                          type: "spring",
+                          bounce: 0.2,
+                          duration: 0.6,
+                        }}
                       />
                     )}
                   </Link>
@@ -164,7 +191,7 @@ export const Navbar = () => {
             size="default"
             asChild
           >
-            <Link to="/">Register Now</Link>
+            <Link to="/call-for-papers">Submit Paper</Link>
           </Button>
           <img
             src="/images/cu_color.png"

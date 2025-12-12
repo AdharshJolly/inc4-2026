@@ -41,7 +41,7 @@ export const CTASection = () => {
             <div className="flex flex-wrap justify-center gap-4">
               <Link to="/">
                 <Button variant="hero" size="xl">
-                  Register Now
+                  Submit Paper
                   <ArrowRight className="w-5 h-5" />
                 </Button>
               </Link>
@@ -59,14 +59,6 @@ export const CTASection = () => {
               <div className="text-center">
                 <p className="font-display text-3xl font-bold text-foreground">
                   IEEE
-                </p>
-                <p className="text-muted-foreground text-sm">Indexed</p>
-              </div>
-            </Reveal>
-            <Reveal>
-              <div className="text-center">
-                <p className="font-display text-3xl font-bold text-foreground">
-                  Scopus
                 </p>
                 <p className="text-muted-foreground text-sm">Indexed</p>
               </div>

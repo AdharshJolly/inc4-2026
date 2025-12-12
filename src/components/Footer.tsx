@@ -10,7 +10,7 @@ const footerLinks = {
     { name: "Contact", href: "/contact" },
   ],
   resources: [
-    { name: "Call for Papers", href: "/call-for-papers" },
+    // { name: "Call for Papers", href: "/call-for-papers" },
     { name: "Registration", href: "/registration" },
     { name: "Important Dates", href: "/important-dates" },
     { name: "CRC Submissions", href: "/crc-submissions" },
@@ -20,9 +20,12 @@ const footerLinks = {
 
 export const Footer = () => {
   return (
-    <footer id="contact" className="gradient-dark border-t border-dark-border pt-20">
+    <footer
+      id="contact"
+      className="gradient-dark border-t border-dark-border pt-20"
+    >
       <div className="container mx-auto px-4 pb-12">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+        <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-12 mb-12">
           {/* Brand */}
           <div className="lg:col-span-1">
             <div className="flex items-center gap-3 mb-6">
@@ -50,19 +53,7 @@ export const Footer = () => {
                 href="#"
                 className="w-10 h-10 rounded-lg bg-dark-card border border-dark-border flex items-center justify-center hover:border-primary hover:text-primary transition-colors"
               >
-                <Twitter className="w-4 h-4 text-primary-foreground" />
-              </a>
-              <a
-                href="#"
-                className="w-10 h-10 rounded-lg bg-dark-card border border-dark-border flex items-center justify-center hover:border-primary hover:text-primary transition-colors"
-              >
                 <Linkedin className="w-4 h-4 text-primary-foreground" />
-              </a>
-              <a
-                href="#"
-                className="w-10 h-10 rounded-lg bg-dark-card border border-dark-border flex items-center justify-center hover:border-primary hover:text-primary transition-colors"
-              >
-                <Youtube className="w-4 h-4 text-primary-foreground" />
               </a>
             </div>
           </div>
@@ -105,8 +96,46 @@ export const Footer = () => {
             </ul>
           </div>
 
+          {/* Past Conferences */}
+          <div>
+            <h4 className="font-display font-bold text-primary-foreground mb-6">
+              Past Conferences
+            </h4>
+            <ul className="space-y-4">
+              <li className="flex flex-col gap-1">
+                <div className="flex items-center gap-2">
+                    <a href="https://archive-2025.ic4.co.in/" target="_blank" rel="noopener noreferrer" className="text-primary-foreground/60 hover:text-primary transition-colors text-sm font-medium">
+                        InC4 2025
+                    </a>
+                </div>
+              </li>
+              <li className="flex flex-col gap-1">
+                <div className="flex items-center gap-2">
+                    <a href="https://archive-2024.ic4.co.in/" target="_blank" rel="noopener noreferrer" className="text-primary-foreground/60 hover:text-primary transition-colors text-sm font-medium">
+                        InC4 2024
+                    </a>
+                    <span className="text-primary-foreground/40 text-xs">|</span>
+                    <a href="https://ieeexplore.ieee.org/xpl/conhome/10648985/proceeding" target="_blank" rel="noopener noreferrer" className="text-primary-foreground/60 hover:text-primary transition-colors text-sm">
+                        Proceedings 2024
+                    </a>
+                </div>
+              </li>
+              <li className="flex flex-col gap-1">
+                <div className="flex items-center gap-2">
+                    <a href="https://archive-2023.ic4.co.in/" target="_blank" rel="noopener noreferrer" className="text-primary-foreground/60 hover:text-primary transition-colors text-sm font-medium">
+                        InC4 2023
+                    </a>
+                    <span className="text-primary-foreground/40 text-xs">|</span>
+                    <a href="https://ieeexplore.ieee.org/xpl/conhome/10262404/proceeding" target="_blank" rel="noopener noreferrer" className="text-primary-foreground/60 hover:text-primary transition-colors text-sm">
+                        Proceedings 2023
+                    </a>
+                </div>
+              </li>
+            </ul>
+          </div>
+
           {/* Contact */}
-          <div className="bg-primary/5 rounded-2xl p-6 border border-primary/10">
+          <div className="bg-primary/5 rounded-2xl py-6 px-4 border border-primary/10">
             <h4 className="font-display font-bold text-primary-foreground mb-6">
               Contact Us
             </h4>
@@ -117,13 +146,13 @@ export const Footer = () => {
                   CHRIST University, Kengeri Campus, Bengaluru, India
                 </span>
               </li>
-              <li className="flex items-center gap-3">
-                <Mail className="w-5 h-5 text-primary flex-shrink-0" />
+              <li className="flex items-start gap-3">
+                <Mail className="w-5 h-5 text-primary flex-shrink-0 mt-1" />
                 <a
-                  href="mailto:inc4@christuniversity.in"
-                  className="text-primary-foreground/60 hover:text-primary transition-colors text-sm"
+                  href="mailto:inc4.christ@conference.christuniversity.in"
+                  className="text-primary-foreground/60 hover:text-primary transition-colors text-sm break-all"
                 >
-                  inc4@christuniversity.in
+                  inc4.christ@conference.christuniversity.in
                 </a>
               </li>
               <li className="flex items-center gap-3">
@@ -140,24 +169,10 @@ export const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-dark-border pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="border-t border-dark-border pt-8 flex justify-between items-center gap-4 w-full">
           <p className="text-primary-foreground/40 text-sm">
             © 2026 IEEE InC4. All rights reserved.
           </p>
-          <div className="flex gap-6">
-            <a
-              href="#"
-              className="text-primary-foreground/40 hover:text-primary transition-colors text-sm"
-            >
-              Privacy Policy
-            </a>
-            <a
-              href="#"
-              className="text-primary-foreground/40 hover:text-primary transition-colors text-sm"
-            >
-              Terms of Service
-            </a>
-          </div>
         </div>
       </div>
     </footer>

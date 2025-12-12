@@ -114,7 +114,9 @@ export default function Registration() {
                       <td className="p-4 text-center border-r border-primary/10 font-mono text-primary">
                         {row.usdEarly}
                       </td>
-                      <td className="p-4 text-center font-mono">{row.usdReg}</td>
+                      <td className="p-4 text-center font-mono">
+                        {row.usdReg}
+                      </td>
                     </tr>
                   ))}
                   <tr className="bg-primary/5 font-semibold">
@@ -161,19 +163,19 @@ export default function Registration() {
                       All the offline participants have to manage their stay and
                       travel on their own. Conference organizers are not
                       responsible for the travel and accommodation of the
-                      participants. However, accommodation in the University guest
-                      house may be provided upon request and availability.
+                      participants. However, accommodation in the University
+                      guest house may be provided upon request and availability.
                     </li>
                     <li>
-                      Refund and Cancellation Policy: Once registered and paid the
-                      registration fee, a candidate cannot cancel the
-                      registration. The registration fee for the conference, once
-                      paid, is not refundable.
+                      Refund and Cancellation Policy: Once registered and paid
+                      the registration fee, a candidate cannot cancel the
+                      registration. The registration fee for the conference,
+                      once paid, is not refundable.
                     </li>
                     <li>
                       Registered online participants will be entitled to an
-                      E-certificate of presentation/participation (as applicable)
-                      only.
+                      E-certificate of presentation/participation (as
+                      applicable) only.
                     </li>
                   </ol>
                 </CardContent>
@@ -185,7 +187,7 @@ export default function Registration() {
             <div className="flex justify-center">
               <Link to="/">
                 <Button size="lg" className="px-8 text-lg h-12">
-                  Register Now
+                  Submit Paper
                 </Button>
               </Link>
             </div>
