@@ -123,7 +123,1621 @@
     "id": "tpc",
     "label": "Technical Program Committee",
     "members": [
-      { "name": "To be announced", "role": "TPC Member", "affiliation": "" }
+      {
+        "name": "A.Naresh",
+        "affiliation": "Associate Professor, Vignan's Nirula Institute of Technology and Science for Women, Guntur, Andhra Pradesh, India"
+      },
+      {
+        "name": "A.Vijaya Krishna",
+        "affiliation": "GNITS,Hyderabad"
+      },
+      {
+        "name": "A.Ponmalar",
+        "affiliation": "Easwari Engineering College"
+      },
+      {
+        "name": "Ajay Kumar",
+        "affiliation": "NIIT Limited, Sanghai, China"
+      },
+      {
+        "name": "Alwyn Rajiv S",
+        "affiliation": "Kamaraj College of Engineering and Technology, India"
+      },
+      {
+        "name": "Abdel-Salam G. Abdel-Salam",
+        "affiliation": "Qatar University, Qatar"
+      },
+      {
+        "name": "Abhishek Saxena",
+        "affiliation": "Amity University, Noida ,Uttar Pradesh"
+      },
+      {
+        "name": "Abhishek Sharma",
+        "affiliation": "The LNMIIT, Jaipur"
+      },
+      {
+        "name": "Abid Hussain",
+        "affiliation": "Associate Professor, School of Computer Applications, Career Point University, Kota, Rajasthan, India"
+      },
+      {
+        "name": "Adarsh Kumar",
+        "affiliation": "Senior Associate Professor, University of Petroleum and Energy Studies, Dehradun, Uttarakhand, India"
+      },
+      {
+        "name": "Aditi Sharma",
+        "affiliation": "Associate Professor CSE, Parul Institute of Technology, Parul University, Vadodara, Gujarat, India"
+      },
+      {
+        "name": "Aditya Prasad Padhy",
+        "affiliation": "Assistant Professor, Aka JAIN University, Jamshedpur, Jharkhand, India"
+      },
+      {
+        "name": "Aida Jones",
+        "affiliation": "Assistant Professor, KCG College of Technology, Chennai, Tamil Nadu, India"
+      },
+      {
+        "name": "Aisha Fernandes",
+        "affiliation": "Goa College of Engineering, Ponda- Goa, INDIA"
+      },
+      {
+        "name": "Ajay Saini",
+        "affiliation": "Associate Professor, Arya Institute of Engineering and Technology, Jaipur, Rajasthan, India."
+      },
+      {
+        "name": "Ajay Sharma",
+        "affiliation": "Assistant Professor, Rajasthan Technical University, Kota, Rajasthan, India"
+      },
+      {
+        "name": "Ajay U Surwade",
+        "affiliation": "Associate Professor, School of Computer Sciences, Kavayitri Bahinabai Chaudhari North Maharashtra University, Jalgaon, Maharashtra, India"
+      },
+      {
+        "name": "Ajmer Singh",
+        "affiliation": "DCRUST, Murthal, India"
+      },
+      {
+        "name": "Akash R Ashok",
+        "affiliation": "Post Graduate Student, The University of Melbourne, Melbourne, Victoria, Australia"
+      },
+      {
+        "name": "Akshat Agrawal",
+        "affiliation": "Assistant Professor, Amity University, Haryana, India"
+      },
+      {
+        "name": "Alka Chaudhary",
+        "affiliation": "Assistant Professor G2, Amity University, Uttar Pradesh, Noida, India"
+      },
+      {
+        "name": "Alok Singh Chauhan",
+        "affiliation": "Associate Professor, ABES Engineering College, Ghaziabad, Uttar Pradesh, India"
+      },
+      {
+        "name": "Alpna Mishra",
+        "affiliation": "Associate Professor, Sharda University, Greater Noida, Uttar Pradesh, India"
+      },
+      {
+        "name": "Amandeep Kaur",
+        "affiliation": "M.M.D.U, Ambala, Haryana, India"
+      },
+      {
+        "name": "Ambuj Kumar Agarwal",
+        "affiliation": "Professor, Sharda University, Greater Noida, Uttar Pradesh, India"
+      },
+      {
+        "name": "Amit Jain",
+        "affiliation": "Professor, OP Jindal University, Raigarh, Chhattisgarh, India"
+      },
+      {
+        "name": "Amogh Katti",
+        "affiliation": "GITAM University, Hyderabad"
+      },
+      {
+        "name": "Anand Nayyar",
+        "affiliation": "Professor, Scientist, Vice-Chairman (Research), Director (IoT and Intelligent Systems Lab), Duy Tan University, Da Nang, Viet Nam"
+      },
+      {
+        "name": "Anand Pandey",
+        "affiliation": "Assistant Professor, Chandigarh University, Gharuan, Mohali, India"
+      },
+      {
+        "name": "Anand Paul",
+        "affiliation": "Professor, Kyungpook National University, Daegu, South Korea"
+      },
+      {
+        "name": "Anil Kumar Mahto",
+        "affiliation": "Jaypee Institute of Information Technology, Noida, India"
+      },
+      {
+        "name": "Anilkumar K K",
+        "affiliation": "Cochin University of Science and Technology"
+      },
+      {
+        "name": "Anirudh Agarwal",
+        "affiliation": "The LNM Institute of Information Technology Jaipur"
+      },
+      {
+        "name": "Anjali Munde",
+        "affiliation": "Assistant Professor Senior Grade, SOIL School of Business Design, Gurugram, Haryana, India"
+      },
+      {
+        "name": "Ankit Gupta",
+        "affiliation": "Assistant Professor, Chandigarh College of Engineering and Technology Degree Wing, Gharuan, Mohali, India"
+      },
+      {
+        "name": "Ankur Goyal",
+        "affiliation": "Associate Professor, Symbiosis International (Deemed) University, Symbiosis Institute of Technology, Pune, Maharashtra, India"
+      },
+      {
+        "name": "Ann Baby",
+        "affiliation": "Rajagiri College of Social Sciences(Autonomous)., Kalamassery - Kerala, India"
+      },
+      {
+        "name": "Annal Devapriya Darshini",
+        "affiliation": "Assistant Professor, Madras Christian College, Tambaram, Chennai, Tamil Nadu, India"
+      },
+      {
+        "name": "Antonio Sarasa-Cabezuelo",
+        "affiliation": "Universidad Complutense de Madrid, Spain"
+      },
+      {
+        "name": "Anup Kumar Das",
+        "affiliation": "Assistant Professor, B. C. Roy Engineering College, Durgapur, West Bengal, India."
+      },
+      {
+        "name": "Anupriya Jain",
+        "affiliation": "Professor, MRIIRS, Faridabad, Haryana, India"
+      },
+      {
+        "name": "Anuraj Singh",
+        "affiliation": "Assistant Professor, ABV-IIITM Gwalior, Madhya Pradesh, India"
+      },
+      {
+        "name": "Anushree Tripathi",
+        "affiliation": "National Institute of Technology Patna (NITP)"
+      },
+      {
+        "name": "Apurva Anand",
+        "affiliation": "Professor, BBD University Lucknow, Uttar Pradesh, India"
+      },
+      {
+        "name": "Archana Sasi",
+        "affiliation": "Assistant Professor, Presidency University, Bengaluru, Karnataka, India"
+      },
+      {
+        "name": "Argha Sarkar",
+        "affiliation": "Associate Professor, School of Computer Science and Engineering, REVA University, Bengaluru, Karnataka, India"
+      },
+      {
+        "name": "Arjun Singh",
+        "affiliation": "G L Bajaj Institute of Technology and Management Greater Noida"
+      },
+      {
+        "name": "Arshad Ahmad Khan Mohammad",
+        "affiliation": "GITAM Deemed to be University, Hyderabad, Telangana, India"
+      },
+      {
+        "name": "Arvind Kumar",
+        "affiliation": "Associate Professor, Manav Rachna University (MRIIRS), Faridabad, Haryana, India"
+      },
+      {
+        "name": "Ashanta Ranjan Routray",
+        "affiliation": "Fakir Mohan University, Balasore, Odisha"
+      },
+      {
+        "name": "Ashapurna Marndi",
+        "affiliation": "Senior Scientist, CSIR-Fourth Paradigm Institute, Bengaluru, Karnataka, India"
+      },
+      {
+        "name": "Ashish Mishra",
+        "affiliation": "Assistant Professor (Senior Grade), Jaypee Institute of Information Technology, Noida, Uttar Pradesh, India"
+      },
+      {
+        "name": "Ashish Narvekar",
+        "affiliation": "Agnel Institute of Technology and Design, Assagoa-Goa, India"
+      },
+      {
+        "name": "Athira B Kaimal",
+        "affiliation": "CHANDIGARH UNIVERSITY, India"
+      },
+      {
+        "name": "Avani Vyas",
+        "affiliation": "Dr. BR Ambedkar National Institute of Technology, Jalandhar"
+      },
+      {
+        "name": "Ayush Dogra",
+        "affiliation": "Ronin Institute, Montclair,New Jersey, USA"
+      },
+      {
+        "name": "B. Srinivasa Rao",
+        "affiliation": "GRIET, Hyderabad-500090"
+      },
+      {
+        "name": "B.Pragathi",
+        "affiliation": "DVR &amp; Dr.HS MIC COLLEGE OF TECHNOLOGY"
+      },
+      {
+        "name": "B.Radha",
+        "affiliation": "SRI KRISHNA ARTS AND SCIENCE COLLEGE ,COIMBATORE, INDIA"
+      },
+      {
+        "name": "B.Rama Devi",
+        "affiliation": "Professor, Institute of Aeronautical Engineering, location not provided"
+      },
+      {
+        "name": "Babu Kumar S",
+        "affiliation": "CHRIST (Deemed to be University), Bangalore, India"
+      },
+      {
+        "name": "Balaji Banothu",
+        "affiliation": "NIT Trichy"
+      },
+      {
+        "name": "Basant Agarwal",
+        "affiliation": "Associate Professor, Central University of Rajasthan, Ajmer, Rajasthan, India"
+      },
+      {
+        "name": "Ashraful Islam",
+        "affiliation": "University of Regina"
+      },
+      {
+        "name": "Bharathi S. H",
+        "affiliation": "REVA University, Bangalore, India"
+      },
+      {
+        "name": "Bhuvan Chennoju",
+        "affiliation": "Stowers Institute of Medical Research, USA"
+      },
+      {
+        "name": "Deepak Panwar",
+        "affiliation": "Manipal University Jaipur"
+      },
+      {
+        "name": "Bejoy B J",
+        "affiliation": "CHRIST (Deemed to be University), Bangalore, India"
+      },
+      {
+        "name": "Bethanney Janney J",
+        "affiliation": "Sathyabama Institute of Science and technology, Chennai, India"
+      },
+      {
+        "name": "Bharti Joshi",
+        "affiliation": "Professor, Ramrao Adik Institute of Technology, DY Patil deemed to be University, Nerul, Navi Mumbai, Maharashtra, India"
+      },
+      {
+        "name": "Bhavani Sankar Panda",
+        "affiliation": "Raghu Engineering College, Visakhapatnam, India"
+      },
+      {
+        "name": "Binita Thakkar",
+        "affiliation": "Assistant Professor, VIVA College of Arts, Commerce and Science, Virar(W), Affiliated to University of Mumbai, Maharashtra, India"
+      },
+      {
+        "name": "C.Subba Rao",
+        "affiliation": "PROFESSOR, PRASAD V POTLURI SIDDHARTHA INSTITUTE OF TECHNOLOGY, KANURU, VIJAYAWADA-520007, Andhra Pradesh, India"
+      },
+      {
+        "name": "Ch Hussaian Basha",
+        "affiliation": "NITTE Meenakshi Institute of Technology, Bengaluru, Karnataka"
+      },
+      {
+        "name": "Challa Vijaya Madhavi Lakshmi",
+        "affiliation": "R.V.R. &amp; J.C.College of Engineering, Guntur, Andhra Pradesh"
+      },
+      {
+        "name": "Chandani Sharma",
+        "affiliation": "Assistant Professor, Quantum University, Roorkee, Uttarakhand, India"
+      },
+      {
+        "name": "Chander Prabha",
+        "affiliation": "Chitkara University, Punjab, India"
+      },
+      {
+        "name": "D N Vasundhara",
+        "affiliation": "Assistant Professor, VNR VIGNANA JYOTHI INSTITUTE OF ENGINEERING AND TECHNOLOGY"
+      },
+      {
+        "name": "D Paul Joseph",
+        "affiliation": "VIT University, Vellore, India"
+      },
+      {
+        "name": "D. L. Suthar",
+        "affiliation": "Associate Professor, Wollo University, Dessie, Ethiopia"
+      },
+      {
+        "name": "D.Sungeetha",
+        "affiliation": "Associate Professor, Saveetha School of Engineering, Chennai, Tamil Nadu, India"
+      },
+      {
+        "name": "Darshan Gera",
+        "affiliation": "Sri Sathya Sai Institue of Higher Learning, Brindavan Campus, Bengaluru"
+      },
+      {
+        "name": "Dasari Kalyani",
+        "affiliation": "Vallurupalli Nageswara Rao Vignana Jyothi Institute of Engineering and Technology, Hyderabad, India"
+      },
+      {
+        "name": "Deepa R",
+        "affiliation": "CMR Institute of Technology, Bangalore, Karnataka"
+      },
+      {
+        "name": "Deepak K. Sinha",
+        "affiliation": "Professor and PG Head, Jain University, Bangalore, Karnataka, India"
+      },
+      {
+        "name": "Deepak Kshirsagar",
+        "affiliation": "COEP Tech. University Pune"
+      },
+      {
+        "name": "Deepti Chaudhary",
+        "affiliation": "Kurukshetra University"
+      },
+      {
+        "name": "Deepti Patole",
+        "affiliation": "Assistant Professor, K J Somaiya College of Engineering, Mumbai, Maharashtra, India"
+      },
+      {
+        "name": "Devanshi Akshay Jhaveri",
+        "affiliation": "Lecturer, A G Patil Polytechnic Institute, Solapur, Maharashtra, India"
+      },
+      {
+        "name": "Devarani Devi Ningombam",
+        "affiliation": "NIT Patna, Patna, India"
+      },
+      {
+        "name": "Devershi Pallavi Bhatt",
+        "affiliation": "Professor and HoD, Manipal University Jaipur, Jaipur, Rajasthan, India"
+      },
+      {
+        "name": "Dhananjaya Reddy",
+        "affiliation": "Government Degree College, Karvetinagaram, Andhra Pradesh"
+      },
+      {
+        "name": "Dhilsath Fathima M",
+        "affiliation": "Associate Professor, Vel Tech Rangarajan Dr.Sagunthala R&amp;D Institute of Science and Technology, Chennai, Tamil Nadu, India"
+      },
+      {
+        "name": "Dhiraj",
+        "affiliation": "Principal Scientist, CSIR-CEERI, Pilani, Rajasthan, India"
+      },
+      {
+        "name": "Dhyanendra Jain",
+        "affiliation": "Assistant Professor, ABES Engineering College, Ghaziabad, Uttar Pradesh, India"
+      },
+      {
+        "name": "Dikshit Chauhan",
+        "affiliation": "Dr B R Ambedkar National Institute of Technology Jalandhar, Punjab"
+      },
+      {
+        "name": "Dinesh Kumar",
+        "affiliation": "Assistant Professor (Grade-I), National Institute of Jamshedpur, Jamshedpur, Jharkhand 831014"
+      },
+      {
+        "name": "Dinesh V Rojatkar",
+        "affiliation": "Government College of Engineering Amravati, India"
+      },
+      {
+        "name": "Dipankar Dutta",
+        "affiliation": "Associate Professor, Burdwan, West Bengal, India"
+      },
+      {
+        "name": "Dipti Dash",
+        "affiliation": "Kiit University, Bhubaneswar, Odisha, India"
+      },
+      {
+        "name": "Diriba Chali Kejela",
+        "affiliation": "Mattu University, Mattu, Ethiopia"
+      },
+      {
+        "name": "Divya C D",
+        "affiliation": "VVCE MYSURU INDIA"
+      },
+      {
+        "name": "Divya Gupta",
+        "affiliation": "Associate Professor, Chandigarh University, Gharuan, Mohali, India"
+      },
+      {
+        "name": "Dr. Bharathi S. H",
+        "affiliation": "REVA UNIVERSITY, Bangalore, India"
+      },
+      {
+        "name": "Dweepna Garg",
+        "affiliation": "DEPSTAR, CHARUSAT"
+      },
+      {
+        "name": "Elizabeth M J",
+        "affiliation": "National Institute of Technology Calicut, Kerala"
+      },
+      {
+        "name": "G Charles Babu",
+        "affiliation": "Gokaraju Rangaraju Institute of Engineering &amp; Technology, Hyderabad, India"
+      },
+      {
+        "name": "Ganesh Babu R",
+        "affiliation": "SRM TRP ENGINEERING COLLEGE, TIRUCHIRAPPALLI, INDIA"
+      },
+      {
+        "name": "Ganesh Kumar R",
+        "affiliation": "CHRIST (Deemed to be University), Bangalore. India."
+      },
+      {
+        "name": "Garima Sinha",
+        "affiliation": "Associate Professor, Jain University, Bangalore, Karnataka, India"
+      },
+      {
+        "name": "Gaurav Kumar Ameta",
+        "affiliation": "Associate Professor, Parul Institute of Technology, Parul University, Vadodara, Gujarat, India"
+      },
+      {
+        "name": "Gokuraju Thriveni",
+        "affiliation": "CHRIST (Deemed to be University), Bengaluru, India"
+      },
+      {
+        "name": "Gunjan",
+        "affiliation": "SRM University Delhi-NCR Sonipat"
+      },
+      {
+        "name": "G L Saini",
+        "affiliation": "Manipal University Jaipur"
+      },
+      {
+        "name": "H S Prasantha",
+        "affiliation": "K.S.Institute of Technology"
+      },
+      {
+        "name": "Ishaan Dawar",
+        "affiliation": "DIT University, Dehradun, Uttarakhand, India"
+      },
+      {
+        "name": "Ishaan Dawar ",
+        "affiliation": "DIT University, Uttarakhand"
+      },
+      {
+        "name": "K. Suvarna Vani",
+        "affiliation": "VR Siddhartha Engineering College"
+      },
+      {
+        "name": "Gurudas V R",
+        "affiliation": "CHRIST (Deemed to be University), Bangalore, India"
+      },
+      {
+        "name": "Hamid Doost Mohammadian",
+        "affiliation": "Professor for Sustainability and Senior Futurist, University of Applied Sciences (FHM), Berlin, Germany"
+      },
+      {
+        "name": "Haneesh. K. M.",
+        "affiliation": "CHRIST (Deemed to be University), Bangalore, India"
+      },
+      {
+        "name": "Hemkumar D",
+        "affiliation": "VNIT Nagpur, India"
+      },
+      {
+        "name": "Himanshu Choudhary",
+        "affiliation": "Research Fellow, Indian Institute of Technology, Mandi, Himachal Pradesh, India 175005"
+      },
+      {
+        "name": "Himanshu Jindal",
+        "affiliation": "Jaypee University of Information Technology, Waknaghat, Solan"
+      },
+      {
+        "name": "Himanshu Mittal",
+        "affiliation": "Assistant Professor, Indira Gandhi Delhi Technical University for Women, Delhi, India"
+      },
+      {
+        "name": "Hitesh Mohapatra",
+        "affiliation": "KIIT University, Bhubaneswar, Odisha, India"
+      },
+      {
+        "name": "Imrus Salehin",
+        "affiliation": "Dongseo University , Busan , South Korea"
+      },
+      {
+        "name": "JANMENJOY Nayak",
+        "affiliation": "Assistant Professor, MSCB University, Baripada, Odisha, India"
+      },
+      {
+        "name": "János Árpád Kósa",
+        "affiliation": "Technical Program Committee and Advisory Committee, John Von Neumann University"
+      },
+      {
+        "name": "Jayapandian N",
+        "affiliation": "CHRIST (Deemed to be University), Bangalore, India"
+      },
+      {
+        "name": "Jyothi Gupta",
+        "affiliation": "CHRIST (Deemed to be University), Bangalore, India"
+      },
+      {
+        "name": "K. Venkat Satish",
+        "affiliation": "Assistant Professor, RGUKT IIIT Nuzvid, Andhra Pradesh, India"
+      },
+      {
+        "name": "Lumin Xing",
+        "affiliation": " The First Affiliated Hospital of  Shandong First Medical University, Jinan, China"
+      },
+      {
+        "name": "Mazin R. AL-Hameed",
+        "affiliation": "Mazin R. AL-Hameed"
+      },
+      {
+        "name": "Megha",
+        "affiliation": "DIT University, Dehradun, India"
+      },
+      {
+        "name": "Mithun B N",
+        "affiliation": "CHRIST (Deemed to be University)"
+      },
+      {
+        "name": "Mohammad Shahid",
+        "affiliation": "Aligarh Muslim University"
+      },
+      {
+        "name": "Kailash Kumar Maheshwari",
+        "affiliation": "Assistant Professor and Program Coordinator (BSIT), Saudi Electronic University, Riyadh, Kingdom of Saudi Arabia"
+      },
+      {
+        "name": "Kalpana P",
+        "affiliation": "CHRIST (Deemed to be University), Bangalore, India"
+      },
+      {
+        "name": "Kalpesh Popat",
+        "affiliation": "Marwadi University, Rajkot, Gujarat, India"
+      },
+      {
+        "name": "Kamal Kumar Srivastava",
+        "affiliation": "Babu Banarasi Sas Northern India Institute of Technology, Lucknow, India"
+      },
+      {
+        "name": "Kapil Joshi",
+        "affiliation": "Assistant Professor, Uttaranchal University, Dehradun, Uttarakhand, India"
+      },
+      {
+        "name": "Karthika Natarajan",
+        "affiliation": "VIT-AP, AMARAVATHI, ANDRAPRADESH, INDIA"
+      },
+      {
+        "name": "Kartik Sahoo",
+        "affiliation": "Senior Research Fellow, Indian Institute of Technology, Mandi, Himachal Pradesh, India"
+      },
+      {
+        "name": "Kavitha K J",
+        "affiliation": "Associate Professor, GM Institute of Technology, Davangere, Karnataka, India"
+      },
+      {
+        "name": "Kirti Kumari",
+        "affiliation": "IIIT Ranchi, Ranchi, Jharkhand, India."
+      },
+      {
+        "name": "Konika Abid",
+        "affiliation": "Assistant Professor, Sharda University, Greater Noida, Uttar Pradesh, India"
+      },
+      {
+        "name": "Krishan Kumar",
+        "affiliation": "NIT Kurukshetra"
+      },
+      {
+        "name": "Kuldeep Anil Hule",
+        "affiliation": "Army Institute of Technology Pune"
+      },
+      {
+        "name": "Kunwar Pal",
+        "affiliation": "Dr B R Ambedkar National Institute of Technology Jalandhar"
+      },
+      {
+        "name": "L. Rajya Lakshmi",
+        "affiliation": "BITS Pilani (Pilani Campus)"
+      },
+      {
+        "name": "Lalit Kumar Tyagi",
+        "affiliation": "Professor-CSE, G L Bajaj Institute of Technology &amp; Management, Greater Noida, Uttar Pradesh, India"
+      },
+      {
+        "name": "Law Kumar Singh",
+        "affiliation": "GLA UNIVERSITY ,MATHURA,INDIA"
+      },
+      {
+        "name": "Laxmi Ahuja",
+        "affiliation": "Professor, Amity University, Noida, Uttar Pradesh, India"
+      },
+      {
+        "name": "Leena C Sekhar",
+        "affiliation": "MES College Marampally"
+      },
+      {
+        "name": "Leena Das",
+        "affiliation": "KIIT Deemed to be University, Bhubaneswar, India"
+      },
+      {
+        "name": "Linesh Raja",
+        "affiliation": "Associate Professor, Manipal University Jaipur, Rajasthan, India"
+      },
+      {
+        "name": "M. Mohan",
+        "affiliation": "SRM University, Haryana"
+      },
+      {
+        "name": "M. Nazma Naskar",
+        "affiliation": "KIIT, Deemed to be University"
+      },
+      {
+        "name": "M. Sobhana",
+        "affiliation": "V.R Siddhartha Engineering College"
+      },
+      {
+        "name": "M. Vijayalakshmi",
+        "affiliation": "Vivekanand Education Society's Institute of Technology, Mumbai, India"
+      },
+      {
+        "name": "M.Sobhana",
+        "affiliation": "V.R.Siddhartha Engineering College"
+      },
+      {
+        "name": "M.Vasim Babu",
+        "affiliation": "Professor, KPR Institute of Engineering and Technology, Coimbatore, Tamil Nadu, India"
+      },
+      {
+        "name": "Maamar Bougherara",
+        "affiliation": "Assistant Professor, High Normal School of Kouba Algiers, Algeria"
+      },
+      {
+        "name": "Madan Lal Saini",
+        "affiliation": "Professor, Chandigarh University, Mohali, Punjab, India"
+      },
+      {
+        "name": "Madhulika Yarlagadda",
+        "affiliation": "MVSR Engineering College ,Hyderabad, India"
+      },
+      {
+        "name": "Mahammad Rafi D",
+        "affiliation": "GITAM University"
+      },
+      {
+        "name": "Mahbubur Rahman Khan",
+        "affiliation": "Research Assistant, Dinajpur, Bangladesh"
+      },
+      {
+        "name": "Mainak Bandyopadhyay",
+        "affiliation": "KIIT DEEMED TO BE UNIVERSITY, BHUBANESWAR INDIA"
+      },
+      {
+        "name": "Mallikharjuna Rao K",
+        "affiliation": "Dr. SPM International Institute of Information Technology Naya Raipur"
+      },
+      {
+        "name": "Malo Sadouanouan",
+        "affiliation": "Nazi BONI University, Bobo-Dioulasso, Burkina Faso"
+      },
+      {
+        "name": "Manjiri Ranjanikar",
+        "affiliation": "Assistant Professor, PCCOE, Pune, Maharashtra, India"
+      },
+      {
+        "name": "Manju",
+        "affiliation": "Assistant Professor, Jaypee Institute of Information Technology, Noida, Uttar Pradesh, India"
+      },
+      {
+        "name": "Manjunath Ramanna Lamani",
+        "affiliation": "CHRIST (Deemed to be University), Bangalore, India"
+      },
+      {
+        "name": "Manu Singh",
+        "affiliation": "Associate Professor, Ghaziabad"
+      },
+      {
+        "name": "Mario Jose Divan",
+        "affiliation": "Intel Corporation, Hillsboro, OR, USA"
+      },
+      {
+        "name": "Mayank Mohan Sharma",
+        "affiliation": "Principal Software Quality Engineer, Zillow Inc, Seattle, Washington, USA"
+      },
+      {
+        "name": "Mayuri Kundu",
+        "affiliation": "Assistant Professor, REVA University, Bangalore, Karnataka, India"
+      },
+      {
+        "name": "Md Adnanul Islam",
+        "affiliation": "Researcher, Monash University, Clayton, Victoria, Australia"
+      },
+      {
+        "name": "Md. Afroz",
+        "affiliation": "Assistant Professor, Prince Sultan College of Business, Alfaisal University, Jeddah, Kingdom of Saudi Arabia"
+      },
+      {
+        "name": "Md. Hayder Ali",
+        "affiliation": "National University Bangladesh"
+      },
+      {
+        "name": "Md. Tofael Ahmed",
+        "affiliation": "Comilla University, Cumilla, Bangladesh"
+      },
+      {
+        "name": "Mijanur Rahaman Seikh",
+        "affiliation": "Assistant Professor, Kazi Nazrul University, Asansol, West Bengal, India"
+      },
+      {
+        "name": "Minakhi Rout",
+        "affiliation": "KIIT Deemed to be University, Bhubaneswar, India"
+      },
+      {
+        "name": "Mithlesh Arya",
+        "affiliation": "HoD of Advanced Computing Department, Poornima College of Engineering, Jaipur, Rajasthan, India"
+      },
+      {
+        "name": "Mithra Venkatesan",
+        "affiliation": "Associate Professor, Dr. D.Y. Patil Institute of Technology, Pimpri, Pune, Maharashtra, India."
+      },
+      {
+        "name": "Mohammad Sharfuddin Waseem",
+        "affiliation": "Kakatiya institute of technology and science, Warangal, India"
+      },
+      {
+        "name": "Mohd Shahid Husain",
+        "affiliation": "University of Technology and Applied Sciences, Oman"
+      },
+      {
+        "name": "Mohmad Azhar Teli",
+        "affiliation": "University of Kashmir"
+      },
+      {
+        "name": "Moidur Rahman",
+        "affiliation": "Deanship of E-learning and IT, JAZAN University, Jizan, Saudi Arabia"
+      },
+      {
+        "name": "Monali Prajapati",
+        "affiliation": "Gujarat Technological University,Gujarat, India"
+      },
+      {
+        "name": "Monika",
+        "affiliation": "Panipat Institute of Engineering and Technology"
+      },
+      {
+        "name": "Monika Bharti",
+        "affiliation": "Jaypee University of Information Technology, Waknaghat, Solan"
+      },
+      {
+        "name": "Monika Rathore",
+        "affiliation": "Associate Professor, ISIM, Jaipur, Rajasthan, India"
+      },
+      {
+        "name": "Mridul Dixit",
+        "affiliation": "GLA University, Mathura, India"
+      },
+      {
+        "name": "Mwaniki Grace Waigumo",
+        "affiliation": "Jain University Bangalore Karnataka India"
+      },
+      {
+        "name": "N. Padmavathy",
+        "affiliation": "Vishnu Institute of Technology Bhimavaram"
+      },
+      {
+        "name": "N.Hema Priya",
+        "affiliation": "PSG College of Technology, Coimbatore, Tamilnadu, India"
+      },
+      {
+        "name": "N.Subhashini",
+        "affiliation": "Associate Professor, Vellore Institute of Technology, Chennai, Tamil Nadu, India"
+      },
+      {
+        "name": "Nabanita Choudhury",
+        "affiliation": "Assistant Professor, GLA University, Mathura, Uttar Pradesh, India"
+      },
+      {
+        "name": "Nagini Sabbineni",
+        "affiliation": "Professor &amp; Head (CSE), VNR Vignana Jyothi Institute of Engineering and Technology, Hyderabad, India"
+      },
+      {
+        "name": "Name",
+        "affiliation": "affiliation"
+      },
+      {
+        "name": "Narendra Mohan",
+        "affiliation": "GLA UNIVERSITY, MATHURA, INDIA"
+      },
+      {
+        "name": "Nàresh Kumar",
+        "affiliation": "Deenbandhu Chhotu Ram University of science and technology Murthal Sonipat Haryana Govt of Haryan a University"
+      },
+      {
+        "name": "Natarajan K",
+        "affiliation": "Associate Professor, Christ (Deemed to be University), Bengaluru, Karnataka, India"
+      },
+      {
+        "name": "Naveen Kumar",
+        "affiliation": "CHRIST (Deemed to be University), Bangalore, India"
+      },
+      {
+        "name": "Nancy Deborah R",
+        "affiliation": "Velammal College of Engineering and Technology, Madurai, Tamil Nadu, India."
+      },
+      {
+        "name": "Narendra Pal Lamba",
+        "affiliation": "Amity University Rajasthan, Jaipur"
+      },
+      {
+        "name": "Nibedan Panda",
+        "affiliation": "KIIT Deemed to be University, Bhubaneswar, India"
+      },
+      {
+        "name": "Niharika Prasanna Kumar",
+        "affiliation": "RV Institute of Technology and Management"
+      },
+      {
+        "name": "Nisha Varghese",
+        "affiliation": "Christ University, Bangalore, India"
+      },
+      {
+        "name": "Osim Kumar Pal",
+        "affiliation": "University of Kragujevac, Kragujevac, Serbia"
+      },
+      {
+        "name": "Pankaj Agarwal",
+        "affiliation": "Amity University Rajasthan, Jaipur"
+      },
+
+      {
+        "name": "Nebojsa Bacanin",
+        "affiliation": "Full Professor, Singidunum University, Belgrade, Serbia"
+      },
+      {
+        "name": "Neeraj Kumar",
+        "affiliation": "Sitamarhi Institute of Technology, Sitamarhi, Bihar, India."
+      },
+      {
+        "name": "Neeta Maitre",
+        "affiliation": "Cummins College of Engineering for Women, Pune, Inida"
+      },
+      {
+        "name": "Neha Bhatia",
+        "affiliation": "Panipat Institute of Engineering &amp; Technogy"
+      },
+      {
+        "name": "Nihar M. Ranjan",
+        "affiliation": "Rajarshi Shahu College of Engineering, Pune, India"
+      },
+      {
+        "name": "Nihar Ranjan Roy",
+        "affiliation": "Associate Professor, Sharda University, Greater Noida, Uttar Pradesh, India"
+      },
+      {
+        "name": "Niketa Sharma",
+        "affiliation": "Swami Keshvanand Institute of Technology, Management &amp; Gramothan, JAIPUR"
+      },
+      {
+        "name": "Nikhil Govil",
+        "affiliation": "Assistant Professor, GLA University, Mathura, India"
+      },
+      {
+        "name": "Nikhil Marriwala",
+        "affiliation": "University Institute of Engineering and Technology, Kurukshetra University, Kurukshetra"
+      },
+      {
+        "name": "Nisha T N",
+        "affiliation": "Assistant Professor, Symbiosis Centre for Information Technology, Symbiosis International (Deemed University), Pune, Maharashtra, India"
+      },
+      {
+        "name": "Nisha Vasudeva",
+        "affiliation": "Assistant Professor, Parul University, Vadodara, Gujarat, India"
+      },
+      {
+        "name": "Nisha Wadhawan",
+        "affiliation": "Assistant Professor, JIMS, Vasant Kunj, New Delhi, India"
+      },
+      {
+        "name": "Nitima Malsa",
+        "affiliation": "JSS ACADEMY OF TECHNICAL EDUCATION, NOIDA, INDIA"
+      },
+      {
+        "name": "Nitin Mishra",
+        "affiliation": "Dean (Research), Lingyas Vidhyapeeth (Deemed to be University)"
+      },
+      {
+        "name": "Nupa Ram Chauhan",
+        "affiliation": "Associate Professor, Teerthanker Mahaveer University, Moradabad, Uttar Pradesh, India"
+      },
+      {
+        "name": "Nusrat Sharmin",
+        "affiliation": "Assistant Professor, Dhaka, Bangladesh"
+      },
+      {
+        "name": "P. Deivendran",
+        "affiliation": "Velammal Institute of Technology, Tamil Nadu"
+      },
+      {
+        "name": "P.Bharath Kumar Chowdary",
+        "affiliation": "Assistant Professor, Coordinator- Trainings and Placements, Competency Development Center, Hyderabad"
+      },
+      {
+        "name": "Pankaj Dadheech",
+        "affiliation": "Associate Professor, Swami Keshvanand Institute of Technology, Management &amp; Gramothan (SKIT), Jaipur, Rajasthan, India"
+      },
+      {
+        "name": "Pankaj Kumar Singh",
+        "affiliation": "Assistant Professor, Government Women Engineering College, Ajmer, Rajasthan, India"
+      },
+      {
+        "name": "Paramita De",
+        "affiliation": "G L Bajaj Institute of Technology and Management, Greater Noida, India"
+      },
+      {
+        "name": "Priyanka Bharti",
+        "affiliation": "REVA University"
+      },
+      {
+        "name": "Puneet Mahajan ",
+        "affiliation": "Myntra"
+      },
+      {
+        "name": "R.Leena Sri",
+        "affiliation": "Thiagarajar Collge of Engineering"
+      },
+      {
+        "name": "Radhakrishna Bhat",
+        "affiliation": "Manipal Institute of Technology, Manipal Academy of Higher Education, Manipal, Karnataka, India"
+      },
+      {
+        "name": "Rajesh Kumar Raj",
+        "affiliation": "Govt. Engineering College Ajmer(Bikaner Technical University)"
+      },
+      {
+        "name": "Rajesh T. M",
+        "affiliation": "Dayananda Sagar University, Bengaluru, Karnataka"
+      },
+
+      {
+        "name": "Patitapaban Rath",
+        "affiliation": "Central University of Odisha India"
+      },
+      {
+        "name": "Pavan Kumar Illa",
+        "affiliation": "Assistant Professor, VNR Vignana Jyothi Institute of Engineering and Technology, Hyderabad, India"
+      },
+      {
+        "name": "Pawan Bhambu",
+        "affiliation": "Associate Professor, Vivekananda Global University, Jaipur, Rajasthan, India"
+      },
+      {
+        "name": "Poli Lokeshwara Reddy",
+        "affiliation": "ANURAG UNIVERSITY, HYDERABAD, INDIA"
+      },
+      {
+        "name": "Pooja Bhatt",
+        "affiliation": "Assistant Professor, MBIT, CVM University, New Vallabh Vidhyanagar, Anand, Gujarat, India"
+      },
+      {
+        "name": "Pooja Jain",
+        "affiliation": "Swami Keshvanand Institute of Technology,Management &amp; Gramothan,Jaipur,Rajasthan"
+      },
+      {
+        "name": "Pooja M R",
+        "affiliation": "Professor &amp; Head, Dept. of Computer Science &amp; Engineering, Vidyavardhaka College of Engineering, Mysore, Karnataka, India"
+      },
+      {
+        "name": "Prachet Bhuyan",
+        "affiliation": "KIIT Deemed to be University, Bhubaneswar, India"
+      },
+      {
+        "name": "Prachi Sasankar",
+        "affiliation": "Asst. Professor, Sadabai Raisoni Women's College, Nagpur, Maharashtra, India"
+      },
+      {
+        "name": "Pradeep N",
+        "affiliation": "Dean Academics and Professor, Bapuji Institute of Engineering and Technology, Davangere, Karnataka, India"
+      },
+      {
+        "name": "Pradeep Yadav",
+        "affiliation": "Associate Professor, ITM Gwalior, Madhya Pradesh, India"
+      },
+      {
+        "name": "Pramod Sharma",
+        "affiliation": "Principal, Regional College for Education Research and Technology, Jaipur, Rajasthan, India"
+      },
+      {
+        "name": "Pranita Ranade",
+        "affiliation": "Associate Professor, HoD-User Experience Design, Dy Director, Symbiosis Institute of Design, Symbiosis International (Deemed University), Pune, Maharashtra, India"
+      },
+      {
+        "name": "Prasanna Poojary",
+        "affiliation": "Manipal Institute of Technology Bengaluru, Manipal Academy of Higher Education, Manipal"
+      },
+      {
+        "name": "Prashant Sharma",
+        "affiliation": "Associate Professor, Geetanjali Institute of Technical Studies, Udaipur, Rajasthan, India"
+      },
+      {
+        "name": "Prathipati Silpa Chaitanya",
+        "affiliation": "Asst. Professor, Guntur, Andhra Pradesh, India"
+      },
+      {
+        "name": "Pratik Anilkumar Vanjara",
+        "affiliation": "Shri M. P. Shah Commerce College Surendranagar"
+      },
+      {
+        "name": "Pratima Singh",
+        "affiliation": "Ajay Kumar Garg Engineering College, Ghaziabad"
+      },
+      {
+        "name": "Praveen Kumar Shukla",
+        "affiliation": "Professor and Head, CSE, Babu Banarasi Das University, Lucknow, Uttar Pradesh, India"
+      },
+      {
+        "name": "Preeti Sharma",
+        "affiliation": "Associate Professor, Chitkara University, Punjab, India"
+      },
+      {
+        "name": "Prema Bhushan Sahane",
+        "affiliation": "Assistant Professor, JSPM's Rajarshi Shahu College of Engineering, Tathawade, Pune, Maharashtra, India"
+      },
+      {
+        "name": "Priyanka Bhaskar",
+        "affiliation": "Assistant Professor, Central University of Rajasthan, Ajmer, Rajasthan, India"
+      },
+      {
+        "name": "Prodipto Bishnu Angon",
+        "affiliation": " Bangladesh Agricultural University, Mymensingh, Bangladesh"
+      },
+      {
+        "name": "Prof. Narendra Singh Beniwal",
+        "affiliation": "Professor, Bundelkhand Institute of Engineering and Technology, Jhansi, Uttar Pradesh, India"
+      },
+      {
+        "name": "Puja Munjal",
+        "affiliation": "SGTB Khalsa College, University of Delhi"
+      },
+      {
+        "name": "Puneet Himthani",
+        "affiliation": "Research Scholar and TA, MANIT, Bhopal, MP, India"
+      },
+      {
+        "name": "R Sunder",
+        "affiliation": "Associate Professor, Sahrdaya College of Engineering and Technology, Thrissur, Kerala, India"
+      },
+      {
+        "name": "R Vijaya Saraswathi",
+        "affiliation": "VNRVJIET, Hyderabad, India."
+      },
+      {
+        "name": "R. Kalpana",
+        "affiliation": "MADANAPALLE INSTITUTE OF TECHNOLOGY &amp; SCIENCE, MADANAPALLE, ANDHRA PRADESH, INDIA."
+      },
+      {
+        "name": "R. Kavitha",
+        "affiliation": "Associate Professor, Bangalore, Karnataka, India"
+      },
+      {
+        "name": "R. Manikandan",
+        "affiliation": "Senior Assistant Professor, SASTRA Deemed University, Thanjavur, Tamil Nadu, India"
+      },
+      {
+        "name": "R. P. Ram Kumar",
+        "affiliation": "Gokaraju Rangaraju Institute of Engineering and Technology, Hyderabad, Telangana State, India"
+      },
+      {
+        "name": "R.Manikandan",
+        "affiliation": "SASTRA DEEMED TO BE UNIVERSITY, THANJAVUR,INDIA"
+      },
+      {
+        "name": "Rabindra Kumar Barik",
+        "affiliation": "KIIT University, India"
+      },
+      {
+        "name": "Rachna Jain",
+        "affiliation": "Associate Professor, BPIT, Delhi, India"
+      },
+      {
+        "name": "Radha Gupta",
+        "affiliation": "Professor and Head, Mathematics, Dayananda Sagar College of Engineering, Bangalore, Karnataka, India"
+      },
+      {
+        "name": "Rahul B. Soni",
+        "affiliation": "Pandit Deendayal Energy University, Gandhinagar, India"
+      },
+      {
+        "name": "Rahul Dixit",
+        "affiliation": "Indian Institute of Information Technology Pune"
+      },
+      {
+        "name": "Raja Brij Bhushan",
+        "affiliation": "CTO, Binomial Solutions Pvt Ltd, location not provided"
+      },
+      {
+        "name": "Rajani Kumri",
+        "affiliation": "Assistant Professor, IBS Bangalore, Karnataka, India"
+      },
+      {
+        "name": "Rajeev Ranjan",
+        "affiliation": "REVA University, Bengaluru, India"
+      },
+      {
+        "name": "Rajesh Kanna R",
+        "affiliation": "CHRIST (Deemed to be University), Bangalore, India"
+      },
+      {
+        "name": "Rajesh Kumar",
+        "affiliation": "Assistant Professor, Manipal University Jaipur, Rajasthan, India"
+      },
+      {
+        "name": "Rajesh Pasupuleti",
+        "affiliation": "IDSC , University of Miami, Florida , USA"
+      },
+      {
+        "name": "Rajeshwari B S",
+        "affiliation": "B. M. S. College of Engineering"
+      },
+      {
+        "name": "Rajib Kumar Jha",
+        "affiliation": "IIT Patna"
+      },
+      {
+        "name": "Rajiv Ranjan",
+        "affiliation": "BIT Sindri Dhanbad India"
+      },
+      {
+        "name": "Rakesh Dani",
+        "affiliation": "Graphic Era Deemed to be University, Dehradun, India"
+      },
+      {
+        "name": "Rashi Agarwal",
+        "affiliation": "Deptt of CSE, HBTU, Kanpur, India"
+      },
+      {
+        "name": "Ritu Aggarwal",
+        "affiliation": "MMEC, MM(DU), Mullana"
+      },
+      {
+        "name": "Sanjay Jain",
+        "affiliation": "Amity University Rajasthan, Jaipur"
+      },
+      {
+        "name": "Shakuntla Singla",
+        "affiliation": "MMEC, MM(DU), Mullana"
+      },
+      {
+        "name": "Rama Devi Burri",
+        "affiliation": "Institute of Aeronautical Engineering, Hyderabad, Telangana, India"
+      },
+      {
+        "name": "Raman Kumar",
+        "affiliation": "Assistant Professor (CSE), Kapurthala"
+      },
+      {
+        "name": "Ramesh Cheripelli",
+        "affiliation": "G Narayanamma Institute of Technology and Science,Hyderabad,India"
+      },
+      {
+        "name": "Ramjeet Singh Yadav",
+        "affiliation": "Dr. Rammanohar Lohia Avadh University"
+      },
+      {
+        "name": "Rashmi Phalnikar",
+        "affiliation": "Associate Professor, MIT World Peace University, Pune, Maharashtra, India"
+      },
+      {
+        "name": "Rashmi Soni",
+        "affiliation": "Dayananda Sagar Academy pf Technology &amp; Management, Bengaluru"
+      },
+      {
+        "name": "Ravichander Janapati",
+        "affiliation": "SR University, Warangal, India."
+      },
+      {
+        "name": "Ravindranath Cherukuri",
+        "affiliation": "Associate Professor, CHRIST (Deemed to be University), Bengaluru, Karnataka, India"
+      },
+      {
+        "name": "Rekha",
+        "affiliation": "Associate Professor, KL University, Hyderabad, Telangana, India"
+      },
+      {
+        "name": "Renu Kumawat",
+        "affiliation": "Associate Professor, Dept of Computer and Communication Engineering, Manipal University Jaipur, Rajasthan, India"
+      },
+      {
+        "name": "Reynaldo Ricardo Quispe Infantes",
+        "affiliation": "Professor, National University of San Agustin, Arequipa, Peru"
+      },
+      {
+        "name": "Richa Sharma",
+        "affiliation": "JK Lakshmipat University, Jaipur, India"
+      },
+      {
+        "name": "Riju Chaudhary",
+        "affiliation": "Assistant Professor, Amity University Uttar Pradesh, Noida, Uttar Pradesh, India"
+      },
+      {
+        "name": "Rishi Gupta",
+        "affiliation": "Associate Professor, Manipal University Jaipur, Rajasthan, India"
+      },
+      {
+        "name": "Ritu Khandelwal",
+        "affiliation": "Assistant Professor, International School of Informatics and Management, Jaipur, Rajasthan, India"
+      },
+      {
+        "name": "Ritu Raj",
+        "affiliation": "Indian Institute of Information Technology KOTA, INDIA"
+      },
+      {
+        "name": "Robin Singh Bhadoria",
+        "affiliation": "GLA University, Mathura, India"
+      },
+      {
+        "name": "Robin Thomas",
+        "affiliation": "CHRIST (Deemed to be University), Bangalore, India"
+      },
+      {
+        "name": "Ruchi Kaushik",
+        "affiliation": "CHRIST (Deemed to be University) Bangalore"
+      },
+      {
+        "name": "Rudresh Deepak Shirwaikar",
+        "affiliation": "Agnel Institute of Technology and Design"
+      },
+      {
+        "name": "S Julius Fusic",
+        "affiliation": "Thiagarajar College of Engineering"
+      },
+      {
+        "name": "S Mahaboob Hussain",
+        "affiliation": "Assistant Professor, Bhimavaram"
+      },
+      {
+        "name": "S. Hariharan",
+        "affiliation": "Vardhaman College of Engineering, Hyderabad, India"
+      },
+      {
+        "name": "S.D. Purohit",
+        "affiliation": "Associate Professor, Rajasthan Technical University, Kota, Rajasthan, India"
+      },
+      {
+        "name": "S.Pravinth Raja",
+        "affiliation": "Associate Professor, Presidency University, Bengaluru, Karnataka, India"
+      },
+      {
+        "name": "Sachin Deorao Ruikar",
+        "affiliation": "Associate Professor, Walchand College of Engineering, Sangli, Maharashtra, India"
+      },
+      {
+        "name": "Sachin Upadhyay",
+        "affiliation": "Assistant Professor, GLA University, Mathura"
+      },
+      {
+        "name": "Nirmal K",
+        "affiliation": "eBay, California, USA"
+      },
+      {
+        "name": "Suresh P",
+        "affiliation": "Sri Venkateshwara College of Engineering, Bengaluru, India"
+      },
+      {
+        "name": "Shashidhara H R",
+        "affiliation": "The National Institute of Engineering Mysuru India"
+      },
+      {
+        "name": "Asharani Patil",
+        "affiliation": "Sharnbasva University, Kalaburagi, India"
+      },
+      {
+        "name": "Dr. Megha",
+        "affiliation": "DIT University, Dehradun, Uttarakhand, India"
+      },
+
+      {
+        "name": "Sameer Kaul",
+        "affiliation": "Associate Professor, Higher Education, Jammu and Kashmir, India"
+      },
+      {
+        "name": "Sami Ouali",
+        "affiliation": "UTAS, IBRI, OMAN"
+      },
+      {
+        "name": "Sandeep Dalal",
+        "affiliation": "Associate Professor, DCSA, Maharshi Dayanand University, Rohtak, Haryana, India"
+      },
+      {
+        "name": "Sandeep Shiravale",
+        "affiliation": "MIT Academy of Engineering"
+      },
+      {
+        "name": "Sandhya S",
+        "affiliation": "RV College of Engineering"
+      },
+      {
+        "name": "Santosh Anand",
+        "affiliation": "Vice Chairperson and Assistant Professor, Amrita Vishwa Vidyapeetham, Mysuru, Karnataka, India"
+      },
+      {
+        "name": "Santosh Kumar",
+        "affiliation": "Chandigarh University - Mohali,Punjab (India)"
+      },
+      {
+        "name": "Santosh Kumar Pani",
+        "affiliation": "KIIT Deemed to be University"
+      },
+      {
+        "name": "Santosh Naik",
+        "affiliation": "Hyderabad Institute of Technology and Management"
+      },
+      {
+        "name": "Saroj Hiranwal",
+        "affiliation": "Professor, Rajasthan Institute of Engineering and Technology, Jaipur, Rajasthan, India"
+      },
+      {
+        "name": "Sayali Kurra",
+        "affiliation": "Student, N K Orchid College of Engineering and Technology, Solapur, Maharashtra, India"
+      },
+      {
+        "name": "Seema Sharma",
+        "affiliation": "Associate Professor, MANAV RACHNA INTERNATIONAL INSTITUTE OF RESEARCH AND STUDIES, Faridabad, Haryana, India"
+      },
+      {
+        "name": "Shalini Aggarwal",
+        "affiliation": "Associate Professor, Chandigarh University, Mohali, Punjab, India"
+      },
+      {
+        "name": "Shamneesh Sharma",
+        "affiliation": "upGrad Campus, upGrad Education Private Limited, India"
+      },
+      {
+        "name": "Shankar Gowda B N",
+        "affiliation": "Bangalore Institute of Technology"
+      },
+      {
+        "name": "Sharayu Ashishkumar Lokhande",
+        "affiliation": "Army Institute of Technology"
+      },
+      {
+        "name": "Sharmila S P",
+        "affiliation": "Indian Institute of Technology Indore, Madhya Pradesh"
+      },
+      {
+        "name": "Shashi Bhushan",
+        "affiliation": "Assistant Professor, Amity University Patna, Bihar, India"
+      },
+      {
+        "name": "Shashi Raj K",
+        "affiliation": "Assistant Professor, Dept. of ECE, Dayananda Sagar College of Engineering, Bangalore, Karnataka, India"
+      },
+      {
+        "name": "Shashvat",
+        "affiliation": "Assistant Professor, Alliance University, Bangalore, Karnataka, India"
+      },
+      {
+        "name": "Sheikh Amir Fayaz",
+        "affiliation": "Research Scholar, University of Kashmir, Srinagar, Jammu and Kashmir, India"
+      },
+      {
+        "name": "Sheilza Jain",
+        "affiliation": "JC Bose University of Science and Technology YMCA Faridabad Faridabad"
+      },
+      {
+        "name": "Shilpa Devram Pawar",
+        "affiliation": "Army Institute of Technology, Pune"
+      },
+      {
+        "name": "Shipra Arora",
+        "affiliation": "DRONACHARYA COLLEGE OF ENGINEERING GURUGRAM INDIA"
+      },
+      {
+        "name": "Shiraz Sohail",
+        "affiliation": "NIT TRICHY"
+      },
+      {
+        "name": "Shweta Roy",
+        "affiliation": "Assistant Professor, ABES Engineering College, Ghaziabad, India"
+      },
+      {
+        "name": "Simmi Dutta",
+        "affiliation": "Professor, Govt. College of Engineering and Technology, Jammu, Jammu and Kashmir, India"
+      },
+      {
+        "name": "Singanamalli Renuka",
+        "affiliation": "Vasavi college of engineering , Hyderabad, Telangana ,India"
+      },
+      {
+        "name": "Snigdha Sen",
+        "affiliation": "Global Academy of Technology, Bangalore, India"
+      },
+      {
+        "name": "Sohan Lal Gupta",
+        "affiliation": "Assistant Professor, Swami Keshvanand Institute of Technology, Jaipur, Rajasthan, India"
+      },
+      {
+        "name": "Sonal Sharma",
+        "affiliation": "Associate Professor, Bangalore, Karnataka, India"
+      },
+      {
+        "name": "Sonia Khetarpaul",
+        "affiliation": "Assistant Professor, Shiv Nadar University, Greater Noida, Uttar Pradesh, India"
+      },
+      {
+        "name": "Soumya Ranjan Mishra",
+        "affiliation": "KIIT University, Bhubaneswar, Odissa"
+      },
+      {
+        "name": "Sounak Paul",
+        "affiliation": "BIT Mesra, Ranchi, India"
+      },
+      {
+        "name": "Sourabh Sharma",
+        "affiliation": "Avantika University, Ujjain (M.P), India"
+      },
+      {
+        "name": "Srichandan Sobhanayak",
+        "affiliation": "IIIT Bhubaneswar, India"
+      },
+      {
+        "name": "Srinivas Kanakala",
+        "affiliation": "VNR VIGNANA JYOTHI INSTITUTE OF ENGINEERING AND TECHNOOGY"
+      },
+      {
+        "name": "Subhashree Darshana",
+        "affiliation": "KIIT DEEMED TO BE UNIVERSITY, BHUBANESWAR, ODISHA"
+      },
+      {
+        "name": "Sudeep Tanwar",
+        "affiliation": "Professor, NIRMA UNIVERSITY, Ahmedabad, Gujarat, India"
+      },
+      {
+        "name": "Sudesh Kumar",
+        "affiliation": "Associate Professor, Tonk, Rajasthan, India"
+      },
+      {
+        "name": "Sudhanshu Singh",
+        "affiliation": "Assistant Professor, Dronacharya Group of Institutions, Greater Noida, Uttar Pradesh, India"
+      },
+      {
+        "name": "Sujatha A K",
+        "affiliation": "Associate Professor, CHRIST (Deemed to be University), Bangalore, Karnataka, India"
+      },
+      {
+        "name": "Sujatha Kamepalli",
+        "affiliation": "VFSTR Deemed to be University, Guntur"
+      },
+      {
+        "name": "Sujoy Datta",
+        "affiliation": "KIIT University, India"
+      },
+      {
+        "name": "Sukanya Ledalla",
+        "affiliation": "ASSOCIATE PROFESSOR, Hyderabad, Telangana, India"
+      },
+      {
+        "name": "Suleyman Malikmyradovich Nokerov",
+        "affiliation": "Acting Dean of the Faculty of Cyberphysical Systems, Oguz Han Engineering and Technology University, Ashgabat, Turkmenistan"
+      },
+      {
+        "name": "Suman Madan",
+        "affiliation": "JIMS, Sec-5, Rohini, Delhi"
+      },
+      {
+        "name": "Sumitha B S",
+        "affiliation": "Assistant Professor, Nagarjuna College of Engg, Bangalore, Karnataka, India"
+      },
+      {
+        "name": "Sunil Gupta",
+        "affiliation": "Associate Professor, Chitkara University, Rajpura, Punjab, India"
+      },
+      {
+        "name": "Sur Singh Rawat",
+        "affiliation": "JSS Academy of Technical Education,Noida,India"
+      },
+      {
+        "name": "Surbhi Sharma",
+        "affiliation": "Manipal University,Jaipur,India"
+      },
+      {
+        "name": "Suresh Kumar Sudabattula",
+        "affiliation": "Associate Professor, Lovely Professional University, Phagwara, Punjab, India"
+      },
+      {
+        "name": "Syed Wajahat Abbas Rizvi",
+        "affiliation": "Professor, Amity University Uttar Pradesh, Noida, Uttar Pradesh, India"
+      },
+      {
+        "name": "T G Babu",
+        "affiliation": "Arignar Anna Government Arts College, Cheyyar, Tamilnadu,India"
+      },
+      {
+        "name": "Tasneem Ahmed",
+        "affiliation": "Integral University, Lucknow"
+      },
+      {
+        "name": "Tejinder Kaur ",
+        "affiliation": "Assistant Professor, Chitkara University, Chandigarh, India"
+      },
+      {
+        "name": "Tene Ramakrishnudu",
+        "affiliation": "Associate Professor, National Institute of Technology- Warangal, Warangal, India"
+      },
+      {
+        "name": "Tripti Lamba",
+        "affiliation": "Associate Professor, MAIT, AI&amp;ML Dept. GGSIPU, Delhi, India"
+      },
+      {
+        "name": "V. Gokula Krishnan",
+        "affiliation": "Saveetha School of Engineering Saveetha Institute of Medical and Technical Sciences, Tamil Nadu, India"
+      },
+      {
+        "name": "V.Velmurugan",
+        "affiliation": "Associate Professor, Vel Tech Rangarajan Dr Sagunlatha R&amp;D Institute of Science and Technology, Chennai, Tamil Nadu, India"
+      },
+      {
+        "name": "Vaibhav Bhatnagar",
+        "affiliation": "Assistant Professor, Manipal University Jaipur, Rajasthan, India"
+      },
+      {
+        "name": "Vaibhav Sharma",
+        "affiliation": "S.R.M. UNIVERSITY, DELHI-NCR, SONEPAT"
+      },
+      {
+        "name": "Valentina Emilia Balas",
+        "affiliation": "Professor, Aurel Vlaicu University of Arad, Romania"
+      },
+      {
+        "name": "Varaprasad Janamala",
+        "affiliation": "Associate Professor, Christ (Deemed to be University), Bengaluru, Karnataka, India"
+      },
+      {
+        "name": "Varshapriya J N",
+        "affiliation": "Assistant Professor, Veermata Jijabai Technological Institute, Mumbai, Maharashtra, India"
+      },
+      {
+        "name": "Vijay Kumar",
+        "affiliation": "Dr. B.R. Ambedkar NIT Jalandhar"
+      },
+      {
+        "name": "Vijay Kumar Vyas",
+        "affiliation": "Associate Professor, Sur University College, Oman"
+      },
+      {
+        "name": "Vijaya Kumar Sagenela",
+        "affiliation": "DEPARTMENT OF CSE,GITAM UNIVERSITY HYDERABAD"
+      },
+      {
+        "name": "Vikas Bajpai",
+        "affiliation": "Assistant Professor, The LNM Institute of Information Technology, Jaipur, Rajasthan, India"
+      },
+      {
+        "name": "Vikas Verma",
+        "affiliation": "NETAJI SUBHAS UNIVERSITY OF TECHNOLOGY"
+      },
+      {
+        "name": "Vinay Raj",
+        "affiliation": "National Institute of Technology Tiruchirappalli, Trichy, Tamil Nadu, India"
+      },
+      {
+        "name": "Vipin Shukla",
+        "affiliation": "Pandit Deendayal Energy University, Gandhinagar, Gujarat"
+      },
+      {
+        "name": "Vishal Shrivastava",
+        "affiliation": "ARYA COLLEGE OF ENGINEERING AND IT, JAIPUR, INDIA"
+      },
+      {
+        "name": "Vishalakshi Prabhu H",
+        "affiliation": "RV College of Engineering, Bengaluru"
+      },
+      {
+        "name": "Vivek Jaglan",
+        "affiliation": "Pro Vice Chancellor (Computing) &amp; Professor, UETR, Roorkee, Uttarakhand, India"
+      },
+      {
+        "name": "Vivek Kumar Sharma",
+        "affiliation": "Professor, Jagannath University, Jaipur, Rajasthan, India"
+      },
+      {
+        "name": "Waseem Ahmed",
+        "affiliation": "Assistant Professor, ABES Engineering College, Ghaziabad, Uttar Pradesh, India"
+      },
+      {
+        "name": "Yatendra Mohan Sharma",
+        "affiliation": "Professor, Biff &amp; Bright College of Engineering and Technology, Dudu, Jaipur, Rajasthan, India"
+      },
+      {
+        "name": "Yudhveer Singh",
+        "affiliation": "Associate Professor, Amity University Rajasthan, Jaipur, Rajasthan, India"
+      }
     ]
   },
   {
@@ -131,9 +1745,748 @@
     "label": "Advisory Committee",
     "members": [
       {
-        "name": "To be announced",
-        "role": "Advisory Committee",
-        "affiliation": ""
+        "name": "Abdel-Salam Gomaa",
+        "affiliation": "Qatar University, Doha – Qatar"
+      },
+      {
+        "name": "Abdul Cader Mohamed Nafrees",
+        "affiliation": "South Eastern University of Sri Lanka, Oluvil, Sri Lanka"
+      },
+      {
+        "name": "Abid Hussain",
+        "affiliation": "Career Point University, Kota, Rajasthan, India"
+      },
+      {
+        "name": "Adarsh Kumar",
+        "affiliation": "University of Petroleum and Energy Studies, Dehradun, Uttarakhand, India"
+      },
+      {
+        "name": "Aditi Sharma",
+        "affiliation": "Parul Institute of Technology, Parul University, Vadodara, Gujarat, India"
+      },
+      {
+        "name": "Aditya Prasad Padhy",
+        "affiliation": "Arka JAIN University, Jamshedpur, Jharkhand, India"
+      },
+      {
+        "name": "Ajay Saini",
+        "affiliation": "Arya Institute of Engineering and Technology, Jaipur, Rajasthan, India"
+      },
+      {
+        "name": "Ajay Sharma",
+        "affiliation": "Rajasthan Technical University, Kota, Rajasthan, India"
+      },
+      {
+        "name": "Ajay U Surwade",
+        "affiliation": "Kavayitri Bahinabai Chaudhari North Maharashtra University, Jalgaon, Maharashtra, India"
+      },
+      {
+        "name": "Ajay Vikram Singh",
+        "affiliation": "AIIT, Amity University, Noida, Uttar Pradesh, India"
+      },
+      {
+        "name": "Akshat Agrawal",
+        "affiliation": "Amity University, Haryana, India"
+      },
+      {
+        "name": "Alka Chaudhary",
+        "affiliation": "Amity University, Noida, Uttar Pradesh, India"
+      },
+      {
+        "name": "Amit Jain",
+        "affiliation": "O.P. Jindal Global University, Raigarh, Haryana, India"
+      },
+      {
+        "name": "Amit Sinhal",
+        "affiliation": "JK Lakshmipat University, Jaipur, Rajasthan, India"
+      },
+      {
+        "name": "Anand Nayyar",
+        "affiliation": "Duy Tan University, Danang, Vietnam"
+      },
+      {
+        "name": "Anand Pandey",
+        "affiliation": "Chandigarh University, Mohali, Punjab, India"
+      },
+      {
+        "name": "Anand Paul",
+        "affiliation": "Kyungpook National University, Daegu, Republic of Korea"
+      },
+      {
+        "name": "Anjali Munde",
+        "affiliation": "SOIL School of Business Design, Gurugram, Haryana, India"
+      },
+      {
+        "name": "Ankit Gupta",
+        "affiliation": "Chandigarh College of Engineering and Technology (Degree Wing), Chandigarh, Punjab, India"
+      },
+      {
+        "name": "Ankur Goyal",
+        "affiliation": "Symbiosis International (Deemed) University, Symbiosis Institute of Technology, Pune, Maharashtra, India"
+      },
+      {
+        "name": "Anup Kumar Das",
+        "affiliation": "Dr. B. C. Roy Engineering College, Durgapur, West Bengal, India."
+      },
+      {
+        "name": "Anupriya Jain",
+        "affiliation": "Manav Rachna International Institute of Research and Studies (MRIIRS), Faridabad, Haryana, India"
+      },
+      {
+        "name": "Anurag Jain",
+        "affiliation": "GGSIP University, Delhi, India"
+      },
+      {
+        "name": "Anuraj Singh",
+        "affiliation": "ABV-Indian Institute of Information Technology and Management, Gwalior, Madhya Pradesh, India"
+      },
+      {
+        "name": "Apurva Anand",
+        "affiliation": "BBD University, Lucknow, Uttar Pradesh, India"
+      },
+      {
+        "name": "Archana Sasi",
+        "affiliation": "Presidency University, Bengaluru, Karnataka, India"
+      },
+      {
+        "name": "Argha Sarkar",
+        "affiliation": "School of Computer Science and Engineering, REVA University, Bengaluru, Karnataka, India"
+      },
+      {
+        "name": "Arvind Kumar",
+        "affiliation": "Manav Rachna University (MRU), Faridabad, Haryana, India"
+      },
+      {
+        "name": "Ayush Dogra",
+        "affiliation": "CSIR-Central Scientific Instruments Organisation (Research Lab - Government of India), Chandigarh, India"
+      },
+      {
+        "name": "B N Shankar Gowda",
+        "affiliation": "Bangalore Institute of Technology, Bangalore, Karnataka, India"
+      },
+      {
+        "name": "Chandani Sharma",
+        "affiliation": "Quantum University, Roorkee, Uttarakhand, India"
+      },
+      {
+        "name": "D. L. Suthar",
+        "affiliation": "Wollo University, Dessie, Ethiopia"
+      },
+      {
+        "name": "Danilo Pelusi",
+        "affiliation": "University of Teramo, Teramo, Italy"
+      },
+      {
+        "name": "Deepak K. Sinha",
+        "affiliation": "Jain University, Bangalore, Karnataka, India"
+      },
+      {
+        "name": "Deepti Patole",
+        "affiliation": "K J Somaiya College of Engineering, Mumbai, Maharashtra, India"
+      },
+      {
+        "name": "Devanshi Akshay Jhaveri",
+        "affiliation": "A G Patil Polytechnic Institute, Solapur, Maharashtra, India"
+      },
+      {
+        "name": "Devershi Pallavi Bhatt",
+        "affiliation": "Manipal University Jaipur, Jaipur, Rajasthan, India"
+      },
+      {
+        "name": "Dhiraj",
+        "affiliation": "CSIR-Central Electronics Engineering Research Institute (CEERI), Pilani, Rajasthan, India"
+      },
+      {
+        "name": "Dipankar Dutta",
+        "affiliation": "Burdwan University, Burdwan, West Bengal, India"
+      },
+      {
+        "name": "A.Naresh",
+        "affiliation": "Vignan's Nirula Institute of Technology and Science for Women, Guntur, Andhra Pradesh, India"
+      },
+      {
+        "name": "G. Rekha",
+        "affiliation": "KL University, Hyderabad"
+      },
+      {
+        "name": "Kavita Sheoran",
+        "affiliation": "Maharaja Surajmal Institute of Technology, New Delhi, India"
+      },
+      {
+        "name": "KVSSSS SAIRAM",
+        "affiliation": "N.M.A.M. Institute of Technology NITTE, Karnataka, India"
+      },
+      {
+        "name": "Narayana Swamy Ramaiah",
+        "affiliation": "JAIN (Deemed-to-be University), Karnataka"
+      },
+      {
+        "name": "B.Rama Devi",
+        "affiliation": "Institute of Aeronautical Engineering, Hyderabad, Telangana, India"
+      },
+      {
+        "name": "Nilanjan Dey",
+        "affiliation": "Techno India College of Technology, India"
+      },
+      {
+        "name": "D.Sungeetha",
+        "affiliation": "Saveetha School of Engineering, Chennai, Tamil Nadu, India"
+      },
+      {
+        "name": "Noor Zaman",
+        "affiliation": "Taylor's University, Malaysia"
+      },
+      {
+        "name": "M.Vasim Babu",
+        "affiliation": "KPR Institute of Engineering and Technology, Coimbatore, Tamil Nadu, India"
+      },
+      {
+        "name": "Mithra Venkatesan",
+        "affiliation": "Dr. D. Y. Patil Institute of Technology, Pimpri, Pune, Maharashtra, India"
+      },
+      {
+        "name": "N.Subhashini",
+        "affiliation": "Vellore Institute of Technology, Chennai, Tamil Nadu, India"
+      },
+      {
+        "name": "Pooja Bhatt",
+        "affiliation": "MBIT, CVM University, New Vallabh Vidhyanagar, Gujarat, India"
+      },
+      {
+        "name": "Pooja M R",
+        "affiliation": "Department of Computer Science &amp; Engineering, Vidyavardhaka College of Engineering, Mysuru, Karnataka, India"
+      },
+      {
+        "name": "R.Manikandan",
+        "affiliation": "SASTRA Deemed University, Thanjavur, Tamil Nadu, India"
+      },
+      {
+        "name": "S.Pravinth Raja",
+        "affiliation": "Presidency University, Bangalore, Karnataka, India"
+      },
+      {
+        "name": "Sandeep Dalal",
+        "affiliation": "DCSA, Maharshi Dayanand University, Rohtak, Haryana, India"
+      },
+      {
+        "name": "Tejinder Kaur",
+        "affiliation": "Chitkara University, Himachal Pradesh, India"
+      },
+      {
+        "name": "V.Velmurugan",
+        "affiliation": "Vel Tech Rangarajan Dr. Sagunthala R&amp;D Institute of Science and Technology, Chennai, Tamil Nadu, India."
+      },
+      {
+        "name": "Garima Sinha",
+        "affiliation": "Jain University, Bangalore, Karnataka, India;"
+      },
+      {
+        "name": "Gaurav Kumar Ameta",
+        "affiliation": "Parul Institute of Technology, Parul University, Vadodara, Gujarat, India;"
+      },
+      {
+        "name": "Hamid Doost Mohammadian",
+        "affiliation": "University of Applied Sciences (FHM), Berlin, Germany;"
+      },
+      {
+        "name": "Harshal A. Arolkar",
+        "affiliation": "FCAIT, GLS University, Ahmedabad, Gujarat, India;"
+      },
+      {
+        "name": "Himanshu Mittal",
+        "affiliation": "Indira Gandhi Delhi Technical University for Women, Delhi, India;"
+      },
+      {
+        "name": "J.Thomas",
+        "affiliation": "Bengaluru, Karnataka"
+      },
+      {
+        "name": "Janmenjoy Nayak",
+        "affiliation": "MSCB University, Baripada, Odisha, India;"
+      },
+      {
+        "name": "János Árpád Kósa",
+        "affiliation": "John von Neumann University, Budapest, Hungary;"
+      },
+      {
+        "name": "Jivan Shrikrishna Parab",
+        "affiliation": "Goa University, Goa, India;"
+      },
+      {
+        "name": "K. Venkat Satish",
+        "affiliation": "Rajiv Gandhi University of Knowledge Technologies, IIIT Nuzvid, Andhra Pradesh, India;"
+      },
+      {
+        "name": "Kailash Kumar Maheshwari",
+        "affiliation": "Saudi Electronic University, Riyadh, Kingdom of Saudi Arabia;"
+      },
+      {
+        "name": "Kalpana Hm",
+        "affiliation": "SIT, Pune, Maharashtra, India;"
+      },
+      {
+        "name": "Kaminee Sahu",
+        "affiliation": "GGITS Jabalpur, Madhya Pradesh, India;"
+      },
+      {
+        "name": "Kapil Joshi",
+        "affiliation": "Uttaranchal University, Dehradun, Uttarakhand, India;"
+      },
+      {
+        "name": "Kavitha K J",
+        "affiliation": "GM Institute of Technology, Davangere, Karnataka, India;"
+      },
+      {
+        "name": "Konika Abid",
+        "affiliation": "Sharda University, Greater Noida, Uttar Pradesh, India;"
+      },
+      {
+        "name": "Linesh Raja",
+        "affiliation": "Manipal University Jaipur, Jaipur, Rajasthan, India;"
+      },
+      {
+        "name": "Maamar Bougherara",
+        "affiliation": "High Normal School of Kouba Algiers, Algiers, Algeria;"
+      },
+      {
+        "name": "Madan Lal Saini",
+        "affiliation": "Chandigarh University, Mohali, Punjab, India;"
+      },
+      {
+        "name": "Mahbubur Rahman Khan",
+        "affiliation": "Dinajpur, Bangladesh;"
+      },
+      {
+        "name": "Manjiri Ranjanikar",
+        "affiliation": "Pune Institute of Computer Technology, Pune, Maharashtra, India;"
+      },
+      {
+        "name": "Manju",
+        "affiliation": "Jaypee Institute of Information Technology, Noida, Uttar Pradesh, India;"
+      },
+      {
+        "name": "Mayank Mohan Sharma",
+        "affiliation": "Zillow Inc, Seattle, Washington, USA;"
+      },
+      {
+        "name": "Mayuri Kundu",
+        "affiliation": "REVA University, Bangalore, Karnataka, India;"
+      },
+      {
+        "name": "Md Adnanul Islam",
+        "affiliation": "Monash University, Clayton, Victoria, Australia;"
+      },
+      {
+        "name": "Mithlesh Arya",
+        "affiliation": "Poornima College of Engineering, Jaipur, Rajasthan, India;"
+      },
+      {
+        "name": "Monika Rathore",
+        "affiliation": "Institute of Management Studies (ISIM), Jaipur, Rajasthan, India;"
+      },
+      {
+        "name": "Moti Lal Rinawa",
+        "affiliation": "Government Engineering College, Jhalawar, Rajasthan, India;"
+      },
+      {
+        "name": "Ms. Binita Thakkar",
+        "affiliation": "VIVA College of Arts, Commerce and Science, Virar(W), Affiliated to University of Mumbai, Maharashtra, India;"
+      },
+      {
+        "name": "Natarajan K",
+        "affiliation": "Christ (Deemed to be University), Bengaluru, Karnataka, India;"
+      },
+      {
+        "name": "Nebojša Bačanin-Džakula",
+        "affiliation": "Univerzitet Singidunum/Singidunum University, Belgrade, Serbia;"
+      },
+      {
+        "name": "Nisha T N",
+        "affiliation": "Symbiosis Centre for Information Technology, Symbiosis International (Deemed University), Pune, Maharashtra, India;"
+      },
+      {
+        "name": "Nisha Vasudeva",
+        "affiliation": "Parul University, Vadodara, Gujarat, India;"
+      },
+      {
+        "name": "Nitin Mishra",
+        "affiliation": "Lingaya's Vidyapeeth (Deemed to be University), Faridabad, Haryana, India;"
+      },
+      {
+        "name": "Pankaj Dadheech",
+        "affiliation": "Swami Keshvanand Institute of Technology, Management &amp; Gramothan (SKIT), Jaipur, Rajasthan, India;"
+      },
+      {
+        "name": "Pankaj Kumar Singh",
+        "affiliation": "Government Women Engineering College, Ajmer, Rajasthan, India;"
+      },
+      {
+        "name": "Parimal Kumar",
+        "affiliation": "GOI;"
+      },
+      {
+        "name": "Pawan Bhambu",
+        "affiliation": "Vivekananda Global University, Jaipur, Rajasthan, India;"
+      },
+      {
+        "name": "Prachi Sasankar",
+        "affiliation": "Sada Bai Raisoni Women's College, Nagpur, Maharashtra, India;"
+      },
+      {
+        "name": "Pradeep N",
+        "affiliation": "Bapuji Institute of Engineering and Technology, Davangere, Karnataka, India;"
+      },
+      {
+        "name": "Pradeep Yadav",
+        "affiliation": "ITM University Gwalior, Madhya Pradesh, India;"
+      },
+      {
+        "name": "Pramod Sharma",
+        "affiliation": "Regional College for Education Research and Technology, Jaipur, Rajasthan, India;"
+      },
+      {
+        "name": "Pranshav Gajjar",
+        "affiliation": "Nirma University, Ahmedabad, Gujarat, India;"
+      },
+      {
+        "name": "Pankaj Kumar Sharma",
+        "affiliation": "Government Women engineering college Ajmer"
+      },
+      {
+        "name": "Prashant Sharma",
+        "affiliation": "Geetanjali Institute of Technical Studies, Udaipur, Rajasthan, India;"
+      },
+      {
+        "name": "Prashant Singh Rana",
+        "affiliation": "Thapar University, Patiala"
+      },
+      {
+        "name": "Praveen Kumar Shukla",
+        "affiliation": "Department of Computer Science and Engineering, Babu Banarasi Das University, Lucknow, Uttar Pradesh, India;"
+      },
+      {
+        "name": "Preeti Sharma",
+        "affiliation": "Chitkara University, Punjab, India;"
+      },
+      {
+        "name": "Priyanka Bhaskar",
+        "affiliation": "Central University of Rajasthan, Kishangarh, Ajmer, Rajasthan, India;"
+      },
+      {
+        "name": "Laxmi Ahuja",
+        "affiliation": "Amity University, Noida, Uttar Pradesh, India;"
+      },
+      {
+        "name": "Rajveer Singh Shekhawat",
+        "affiliation": "Persius Ou, Tallinn, Estonia"
+      },
+      {
+        "name": "Ambuj Kumar Agarwal",
+        "affiliation": "Moradabad, Uttar Pradesh, India."
+      },
+      {
+        "name": "Narendra Singh Beniwal",
+        "affiliation": "Bundelkhand Institute of Engineering and Technology, Jhansi, Uttar Pradesh, India;"
+      },
+      {
+        "name": "R Sunder",
+        "affiliation": "Sahrdaya College of Engineering and Technology, Kodakara, Kerala, India;"
+      },
+      {
+        "name": "Rachna Jain",
+        "affiliation": "BPIT, Delhi, India;"
+      },
+      {
+        "name": "Radha Gupta",
+        "affiliation": "Dayananda Sagar College of Engineering, Bangalore, Karnataka, India;"
+      },
+      {
+        "name": "Raja Brij Bhushan",
+        "affiliation": "Binomial Solutions Pvt Ltd, Ahmedabad, Gujarat, India;"
+      },
+      {
+        "name": "Rajani Kumri",
+        "affiliation": "IBS Bangalore, Karnataka, India;"
+      },
+      {
+        "name": "Ravindranath Cherukuri",
+        "affiliation": "CHRIST (Deemed to be University), Bengaluru, Karnataka, India;"
+      },
+      {
+        "name": "Ramesh Chandra Poonia",
+        "affiliation": "CHRIST (Deemed to be University), Bengaluru, Karnataka, India;"
+      },
+      {
+        "name": "Riju Chaudhary",
+        "affiliation": "Amity University Uttar Pradesh, Noida, Uttar Pradesh, India;"
+      },
+      {
+        "name": "Ravi Kumar Godara",
+        "affiliation": "Poornima University Jaipur"
+      },
+      {
+        "name": "Ravi M Yadahali",
+        "affiliation": "Methodist College of Engineering and Technology ABIDS Hyderabad"
+      },
+      {
+        "name": "Ravi Raj Choudhary",
+        "affiliation": "Central University of Rajasthan"
+      },
+      {
+        "name": "Ravinder Rena",
+        "affiliation": "DUT Business School, Durban University of Technology, Durban 4001, Republic of South Africa"
+      },
+      {
+        "name": "Rishi Pal Singh Poonia",
+        "affiliation": "Guru Jambheshwar University of Science and Technology, Hisar"
+      },
+      {
+        "name": "Rishi Gupta",
+        "affiliation": "Manipal University Jaipur, Jaipur, Rajasthan, India;"
+      },
+      {
+        "name": "Ritu Khandelwal",
+        "affiliation": "International School of Informatics and Management, Jaipur, Rajasthan, India;"
+      },
+      {
+        "name": "S.D. Purohit",
+        "affiliation": "Rajasthan Technical University, Kota, Rajasthan, India;"
+      },
+      {
+        "name": "Sachin Deorao Ruikar",
+        "affiliation": "Walchand College of Engineering, Sangli, Maharashtra, India;"
+      },
+      {
+        "name": "Sameer Kaul",
+        "affiliation": "Higher Education, Jammu and Kashmir, India;"
+      },
+      {
+        "name": "Sandeep Shiravale",
+        "affiliation": "MIT Academy of Engineering, Alandi, Maharashtra, India;"
+      },
+      {
+        "name": "Sangeetha Govinda",
+        "affiliation": "Bangalore University, Bengaluru, Karnataka, India;"
+      },
+      {
+        "name": "Santosh Anand",
+        "affiliation": "Amrita Vishwa Vidyapeetham, Mysuru, Karnataka, India;"
+      },
+      {
+        "name": "Saroj Hiranwal",
+        "affiliation": "Rajasthan Institute of Engineering and Technology, Jaipur, Rajasthan, India;"
+      },
+      {
+        "name": "Seema Sharma",
+        "affiliation": "MANAV RACHNA INTERNATIONAL INSTITUTE OF RESEARCH AND STUDIES, Faridabad, Haryana, India;"
+      },
+      {
+        "name": "Sandeep Joshi",
+        "affiliation": "Manipal University Jaipur"
+      },
+      {
+        "name": "Sanjeevikumar Padmanaban",
+        "affiliation": "Aalborg University, Esbjerg, Denmark"
+      },
+      {
+        "name": "Surender Sunda",
+        "affiliation": "GNSS Research Centre for Ionospheric Studies & Navigation Application, Airports Authority of India, SVPI Airport, Ahmedabad"
+      },
+      {
+        "name": "Swarnendu Kumar Chakraborty",
+        "affiliation": "Dept of CSE, NIT Arunachal Pradesh, GoI"
+      },
+      {
+        "name": "Shalini Aggarwal",
+        "affiliation": "Chandigarh University, Mohali, Punjab, India;"
+      },
+      {
+        "name": "Shashi Raj K",
+        "affiliation": "Dayananda Sagar College of Engineering, Bangalore, Karnataka, India;"
+      },
+      {
+        "name": "Shashvat",
+        "affiliation": "Alliance University, Bangalore, Karnataka, India;"
+      },
+      {
+        "name": "Sheikh Amir Fayaz",
+        "affiliation": "University of Kashmir, Srinagar, Jammu and Kashmir, India;"
+      },
+      {
+        "name": "Simmi Dutta",
+        "affiliation": "Govt. College of Engineering and Technology, Jammu J&amp;K, India;"
+      },
+      {
+        "name": "Sonal Sharma",
+        "affiliation": "Bangalore, Karnataka, India;"
+      },
+      {
+        "name": "Sudeep Tanwar",
+        "affiliation": "NIRMA UNIVERSITY, Ahmedabad, Gujarat, India;"
+      },
+      {
+        "name": "Sudesh Kumar",
+        "affiliation": "Tonk, Rajasthan, India;"
+      },
+      {
+        "name": "Sujatha A K",
+        "affiliation": "CHRIST (Deemed to be University), Bangalore, Karnataka, India;"
+      },
+      {
+        "name": "Sukanya Ledalla",
+        "affiliation": "Hyderabad, Telangana, India;"
+      },
+      {
+        "name": "Sunil Gupta",
+        "affiliation": "Chitkara University, Rajpura, Punjab, India;"
+      },
+      {
+        "name": "Sunil Kumar Khatri",
+        "affiliation": "Amity University, Noida, Uttar Pradesh, India;"
+      },
+      {
+        "name": "Syed Wajahat Abbas Rizvi",
+        "affiliation": "Amity University, Uttar Pradesh, India;"
+      },
+      {
+        "name": "Tripti Lamba",
+        "affiliation": "MAIT, AI&amp;ML Dept. GGSIPU, Delhi, India;"
+      },
+      {
+        "name": "Vaibhav Bhatnagar",
+        "affiliation": "Manipal University Jaipur, Jaipur, Rajasthan, India;"
+      },
+      {
+        "name": "Vaibhav Gandhi",
+        "affiliation": "Parul University, Vadodara, Gujarat, India;"
+      },
+      {
+        "name": "Valentina Emilia Balas",
+        "affiliation": "Aurel Vlaicu University of Arad, Arad, Romania;"
+      },
+      {
+        "name": "Vijander Singh",
+        "affiliation": "Norwegian University of Science and Technology, Ålesund, Norway;"
+      },
+      {
+        "name": "Vijay Kumar Vyas",
+        "affiliation": "Sur University College, Sur, Oman;"
+      },
+      {
+        "name": "V. K. Vyas",
+        "affiliation": "Sur University College, Oman"
+      },
+      {
+        "name": "Vivek Kumar Sharma",
+        "affiliation": "Jagannath University Jaipur"
+      },
+      {
+        "name": "Vinay Rishiwal",
+        "affiliation": "MJP RohilKhand University, Bareilly, Uttar Pradesh, India;"
+      },
+      {
+        "name": "Vinod Gill",
+        "affiliation": "Govt. College Nalwa, Hisar, Haryana, India;"
+      },
+      {
+        "name": "Vivek Jaglan",
+        "affiliation": "UETR, Roorke, Uttarakhand, India;"
+      },
+      {
+        "name": "Vivek Kumar Sharma",
+        "affiliation": "Parul University, Vadodara, Gujarat, India."
+      },
+      {
+        "name": "Yudhveer Singh",
+        "affiliation": "Amity University, Rajasthan, Jaipur, India"
+      },
+      {
+        "name": "Eleni G. Makri",
+        "affiliation": "Unicaf University "
+      },
+      {
+        "name": "Hanna Danylchuk",
+        "affiliation": "Bohdan Khmelnytsky National University of Cherkasy, Cherkasy, Ukraine"
+      },
+      {
+        "name": "Gouthami.V",
+        "affiliation": "Kakatiya Institute of Technology and Science, Warangal, India"
+      },
+      {
+        "name": "Alok Singh Chauhan",
+        "affiliation": "ABES Engineering College, Ghaziabad, India"
+      },
+      {
+        "name": "Raj Kumar Sharma",
+        "affiliation": "Sharda University, Greater Noida, Uttar Pradesh, India"
+      },
+      {
+        "name": "Vikas Bajpai",
+        "affiliation": "The LNM Institute of Information Technology, Jaipur, India"
+      },
+      {
+        "name": "Md. Afroz",
+        "affiliation": "Prince Sultan College of Business, Alfaisal University, Jeddah, Saudi Arabia"
+      },
+      {
+        "name": "Dhyanendra Jain",
+        "affiliation": "ABES Engineering College, Ghaziabad, Uttar Pradesh, India"
+      },
+      {
+        "name": "Shweta Roy",
+        "affiliation": "ABES Engineering College, Ghaziabad, Uttar Pradesh, India"
+      },
+      {
+        "name": "Pavan Kumar Illa",
+        "affiliation": "VNR Vignana Jyothi Institute of Engineering and Technology, Hyderabad, India"
+      },
+      {
+        "name": "S Mahaboob Hussain",
+        "affiliation": "Vishnu Institute of Technology, Bhimavaram, India"
+      },
+      {
+        "name": "Tene Ramakrishnudu",
+        "affiliation": "National Institute of Technology- Warangal, Warangal, India"
+      },
+      {
+        "name": "Nikhil Govil",
+        "affiliation": "GLA University, Mathura, India"
+      },
+      {
+        "name": "Raman Kumar",
+        "affiliation": "Kapurthala"
+      },
+      {
+        "name": "Nagini Sabbineni",
+        "affiliation": "VNR Vignana Jyothi Institute of Engineering and Technology, Hyderabad, India"
+      },
+      {
+        "name": "Manu Singh",
+        "affiliation": "Ghaziabad"
+      },
+      {
+        "name": "Sachin Upadhyay",
+        "affiliation": "GLA University, Mathura, India."
+      },
+      {
+        "name": "P.Bharath Kumar Chowdary",
+        "affiliation": "Hyderabad"
+      },
+      {
+        "name": "D N Vasundhara",
+        "affiliation": "VNR Vignana Jyothi Institute of Engineering and Technology, Hyderabad, India."
+      },
+      {
+        "name": "Dinesh Kumar",
+        "affiliation": "National Institute of Technology, Jamshedpur, Jharkhand, India"
+      },
+      {
+        "name": "Awari Harshavardhan",
+        "affiliation": "Vallurupalli Nageswara Rao Vignana Jyothi Institute of Engineering and Technology, Telangana, India"
+      },
+      {
+        "name": "Ketan Kotecha",
+        "affiliation": "Symbiosis International University, Pune, India"
       }
     ]
   },
@@ -166,9 +2519,64 @@
     "label": "Organizing Committee",
     "members": [
       {
-        "name": "To be announced",
-        "role": "Organizing Committee",
-        "affiliation": ""
+        "name": "Debasish Mukherjee",
+        "affiliation": "Advanced Research Center, Singapore"
+      },
+      {
+        "name": "Naveen J",
+        "affiliation": "CHRIST (Deemed to be University), Bangalore"
+      },
+      {
+        "name": "Balamurugan M",
+        "affiliation": "CHRIST (Deemed to be University), Bangalore"
+      },
+      {
+        "name": "Cherukuri Ravindranath Chowdary",
+        "affiliation": "CHRIST (Deemed to be University), Bangalore"
+      },
+      {
+        "name": "Chinthakunta Manjunath",
+        "affiliation": "CHRIST (Deemed to be University), Bangalore"
+      },
+      {
+        "name": "Daniel D",
+        "affiliation": "CHRIST (Deemed to be University), Bangalore"
+      },
+      {
+        "name": "Debarka Mukhopadhyay",
+        "affiliation": "CHRIST (Deemed to be University), Bangalore"
+      },
+      {
+        "name": "Gnana Prakasi O S",
+        "affiliation": "CHRIST (Deemed to be University), Bangalore"
+      },
+      {
+        "name": "Gokulapriya R",
+        "affiliation": "CHRIST (Deemed to be University), Bangalore"
+      },
+      {
+        "name": "Julian Benadit P",
+        "affiliation": "CHRIST (Deemed to be University), Bangalore"
+      },
+      {
+        "name": "Jyothi Thomas",
+        "affiliation": "CHRIST (Deemed to be University), Bangalore"
+      },
+      {
+        "name": "Karthikeyan H",
+        "affiliation": "CHRIST (Deemed to be University), Bangalore"
+      },
+      {
+        "name": "Lalitha K",
+        "affiliation": "CHRIST (Deemed to be University), Bangalore"
+      },
+      {
+        "name": "Natarajan K",
+        "affiliation": "CHRIST (Deemed to be University), Bangalore"
+      },
+      {
+        "name": "Raghavendra S",
+        "affiliation": "CHRIST (Deemed to be University), Bangalore"
       }
     ]
   },
@@ -177,9 +2585,40 @@
     "label": "Publicity Committee",
     "members": [
       {
-        "name": "To be announced",
-        "role": "Publicity Committee",
-        "affiliation": ""
+        "name": "Manohar M",
+        "affiliation": "CHRIST (Deemed to be University), Bangalore"
+      },
+      {
+        "name": "Deepa Yogish",
+        "affiliation": "CHRIST (Deemed to be University), Bangalore"
+      },
+      {
+        "name": "Jeno Lovesum S P",
+        "affiliation": "CHRIST (Deemed to be University), Bangalore"
+      },
+      {
+        "name": "Laxmi Kumari Pathak",
+        "affiliation": "CHRIST (Deemed to be University), Bangalore"
+      },
+      {
+        "name": "Manjunatha Swamy C",
+        "affiliation": "CHRIST (Deemed to be University), Bangalore"
+      },
+      {
+        "name": "Mausumi Goswami",
+        "affiliation": "CHRIST (Deemed to be University), Bangalore"
+      },
+      {
+        "name": "Rajkumar Rajavel",
+        "affiliation": "CHRIST (Deemed to be University), Bangalore"
+      },
+      {
+        "name": "Swati Raj",
+        "affiliation": "CHRIST (Deemed to be University), Bangalore"
+      },
+      {
+        "name": "Vandana Reddy",
+        "affiliation": "CHRIST (Deemed to be University), Bangalore"
       }
     ]
   },
@@ -191,6 +2630,18 @@
         "name": "Pranshu Patel",
         "role": "Student Chair",
         "image": "http://edu.ieee.org/in-cucs/wp-content/uploads/sites/690/1705949496396.jpeg",
+        "affiliation": "Christ University - IEEE Student Branch Bangalore Chapter"
+      },
+      {
+        "name": "Keona Liz Croning",
+        "role": "Student Vice Chair",
+        "image": "http://edu.ieee.org/in-cucs/wp-content/uploads/sites/690/keona_2-1-Keona-Liz-Croning.jpg",
+        "affiliation": "Christ University - IEEE Student Branch Bangalore Chapter"
+      },
+      {
+        "name": "Adarsh Ramani",
+        "role": "Secretary",
+        "image": "http://edu.ieee.org/in-cucs/wp-content/uploads/sites/690/IMG_0982-scaled.jpg",
         "affiliation": "Christ University - IEEE Student Branch Bangalore Chapter"
       },
       {
