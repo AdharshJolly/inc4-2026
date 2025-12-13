@@ -45,11 +45,11 @@ export const CTASection = () => {
                   <ArrowRight className="w-5 h-5" />
                 </Button>
               </Link>
-              <Link to="/call-for-papers">
+              {/* <Link to="/call-for-papers">
                 <Button variant="outline" size="xl">
                   Submit Paper
                 </Button>
-              </Link>
+              </Link> */}
             </div>
           </Reveal>
 
