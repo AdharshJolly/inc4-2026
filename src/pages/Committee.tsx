@@ -20,7 +20,7 @@ export default function Committee() {
       <PageTitle title="Committee" />
 
       <div className="container mx-auto px-4 pb-20">
-        <Tabs defaultValue="steering" className="space-y-12">
+        <Tabs defaultValue="chief-patron" className="space-y-12">
           {/* Scrollable Tabs List */}
           <div className="w-full overflow-x-auto pb-4 scrollbar-hide">
             <TabsList className="w-full justify-start md:justify-center bg-transparent gap-2 h-auto flex-wrap min-w-max md:min-w-0">
@@ -51,17 +51,15 @@ export default function Committee() {
                     <CardContent className="p-0 flex flex-col h-full">
                       <div className="h-2 bg-gradient-to-r from-primary to-secondary opacity-80" />
                       <div className="p-6 flex flex-col items-center text-center flex-1">
-                        <div className="w-24 h-24 rounded-full bg-muted flex items-center justify-center mb-4 group-hover:scale-105 transition-transform duration-500 overflow-hidden border-2 border-border group-hover:border-primary/50">
-                          {member.image ? (
+                        {member.image && (
+                          <div className="w-24 h-24 rounded-full bg-muted flex items-center justify-center mb-4 group-hover:scale-105 transition-transform duration-500 overflow-hidden border-2 border-border group-hover:border-primary/50">
                             <img
                               src={member.image}
                               alt={member.name}
                               className="w-full h-full object-cover object-top bg-white"
                             />
-                          ) : (
-                            <User2 className="w-10 h-10 text-muted-foreground" />
-                          )}
-                        </div>
+                          </div>
+                        )}
                         <h3 className="font-bold text-lg text-foreground mb-1 group-hover:text-primary transition-colors">
                           {member.name}
                         </h3>

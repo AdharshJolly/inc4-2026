@@ -3,10 +3,14 @@ import { Reveal } from "./Reveal";
 const partners = [
   {
     name: "IEEE Computer Society",
-    logo: "/images/ieee_cs_logo.png",
+    logo: "/images/ieee_cs_bc.png",
     type: "Organizer",
   },
-  { name: "CHRIST University", logo: "/images/cu_logo.png", type: "Organizer" },
+  {
+    name: "CHRIST University",
+    logo: "/images/cu_color.png",
+    type: "Organizer",
+  },
   {
     name: "Springer",
     logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Springer_logo.svg/2560px-Springer_logo.svg.png",

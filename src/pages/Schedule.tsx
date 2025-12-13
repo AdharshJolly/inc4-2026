@@ -19,7 +19,7 @@ export default function Schedule() {
   useSEO({
     title: "Conference Schedule | IEEE InC4 2026",
     description:
-      "View the complete schedule for IEEE InC4 2026. See keynote speeches, technical sessions, and timings for March 13-14, 2026 at CHRIST University, Bengaluru.",
+      "View the complete schedule for IEEE InC4 2026. See keynote speeches, technical sessions, and timings for August 7-8, 2026 at CHRIST University, Bengaluru.",
     keywords:
       "InC4 schedule, conference agenda, keynote speakers, technical sessions, March 2026, Bengaluru",
     canonicalUrl: "https://ic4.co.in/schedule",
@@ -40,7 +40,7 @@ export default function Schedule() {
                     <Calendar className="w-4 h-4" /> Conference Agenda
                   </div>
                   <h2 className="text-3xl md:text-5xl font-bold leading-tight">
-                    March 13-14, 2026
+                    August 7-8, 2026
                   </h2>
                   <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
                     Join us for two days of insightful keynotes, technical

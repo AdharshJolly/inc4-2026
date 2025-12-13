@@ -152,7 +152,7 @@ export default function Registration() {
                       Registration Fee covers entry to pre-conference workshops
                       and sessions, including keynote, parallel sessions.
                       Registration Fee covers breakfast and working lunch during
-                      conference days (March 13 - 14, 2026).
+                      conference days (August 7-8, 2026).
                     </li>
                     <li>
                       Registered offline/In-person participants will be entitled

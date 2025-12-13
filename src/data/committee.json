@@ -64,6 +64,12 @@
         "affiliation": "CHRIST (Deemed to be University), Bangalore, India"
       },
       {
+        "name": "Dr Prasant Misra",
+        "role": "Chair-Elect",
+        "image": "https://media.licdn.com/dms/image/v2/D5603AQGsPnAFuv4cDQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1719454733692?e=1767225600&v=beta&t=9LD5Rg9h-3UwHS_pQiga5lU50NzzD0FSUXjfgI67sEQ",
+        "affiliation": "IEEE Bangalore Section"
+      },
+      {
         "name": "Dr Sandeep Kumar",
         "role": "Professor, Department of AI, ML and Data Science",
         "image": "https://christuniversity.in/uploads/faculty-image/E4860.jpg",
@@ -2491,30 +2497,6 @@
     ]
   },
   {
-    "id": "publication",
-    "label": "Publication Committee",
-    "members": [
-      {
-        "name": "Dr Sandeep Kumar",
-        "role": "Professor, Department of AI, ML and Data Science",
-        "image": "https://christuniversity.in/uploads/faculty-image/E4860.jpg",
-        "affiliation": "IEEE Computer Society Bangalore Chapter"
-      }
-    ]
-  },
-  {
-    "id": "finance",
-    "label": "Finance Committee",
-    "members": [
-      {
-        "name": "Dr Sandeep Kumar",
-        "role": "Professor, Department of AI, ML and Data Science",
-        "image": "https://christuniversity.in/uploads/faculty-image/E4860.jpg",
-        "affiliation": "IEEE Computer Society Bangalore Chapter"
-      }
-    ]
-  },
-  {
     "id": "organizing",
     "label": "Organizing Committee",
     "members": [
@@ -2630,31 +2612,31 @@
         "name": "Pranshu Patel",
         "role": "Student Chair",
         "image": "http://edu.ieee.org/in-cucs/wp-content/uploads/sites/690/1705949496396.jpeg",
-        "affiliation": "Christ University - IEEE Student Branch Bangalore Chapter"
+        "affiliation": "Christ University - IEEE Computer Society Student Branch Bangalore Chapter"
       },
       {
         "name": "Keona Liz Croning",
         "role": "Student Vice Chair",
         "image": "http://edu.ieee.org/in-cucs/wp-content/uploads/sites/690/keona_2-1-Keona-Liz-Croning.jpg",
-        "affiliation": "Christ University - IEEE Student Branch Bangalore Chapter"
+        "affiliation": "Christ University - IEEE Computer Society Student Branch Bangalore Chapter"
       },
       {
         "name": "Adarsh Ramani",
         "role": "Secretary",
         "image": "http://edu.ieee.org/in-cucs/wp-content/uploads/sites/690/IMG_0982-scaled.jpg",
-        "affiliation": "Christ University - IEEE Student Branch Bangalore Chapter"
+        "affiliation": "Christ University - IEEE Computer Society Student Branch Bangalore Chapter"
       },
       {
         "name": "Labh Bothra",
         "role": "Treasurer",
         "image": "http://edu.ieee.org/in-cucs/wp-content/uploads/sites/690/labh.jpeg",
-        "affiliation": "Christ University - IEEE Student Branch Bangalore Chapter"
+        "affiliation": "Christ University - IEEE Computer Society Student Branch Bangalore Chapter"
       },
       {
         "name": "Arnav Rangwani",
         "role": "Web Master",
         "image": "http://edu.ieee.org/in-cucs/wp-content/uploads/sites/690/1706305319039.jpeg",
-        "affiliation": "Christ University - IEEE Student Branch Bangalore Chapter"
+        "affiliation": "Christ University - IEEE Computer Society Student Branch Bangalore Chapter"
       }
     ]
   }

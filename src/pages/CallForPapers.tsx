@@ -50,7 +50,7 @@ export default function CallForPapers() {
                       International Conference on Contemporary Computing and
                       Communications (InC4) on{" "}
                       <span className="text-foreground font-semibold">
-                        March 13-14, 2026
+                        August 7-8, 2026
                       </span>
                       .
                     </p>
@@ -67,8 +67,8 @@ export default function CallForPapers() {
 
                     <div className="flex flex-wrap gap-4 pt-4">
                       <div className="flex items-center gap-2 text-sm font-medium bg-secondary/30 px-3 py-2 rounded-lg">
-                        <Calendar className="w-4 h-4 text-primary" /> March
-                        13-14, 2026
+                        <Calendar className="w-4 h-4 text-primary" /> August
+                        7-8, 2026
                       </div>
                       <div className="flex items-center gap-2 text-sm font-medium bg-secondary/30 px-3 py-2 rounded-lg">
                         <MapPin className="w-4 h-4 text-primary" /> Bengaluru,
@@ -87,11 +87,7 @@ export default function CallForPapers() {
                       conference format in not more than 6 pages.
                     </p>
                     <Button size="lg" className="w-full gap-2" asChild>
-                      <a
-                        href="https://cmt3.research.microsoft.com/InC42025"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
+                      <a href="" target="_blank" rel="noopener noreferrer">
                         Submit Paper <ArrowRight className="w-4 h-4" />
                       </a>
                     </Button>
@@ -168,11 +164,7 @@ export default function CallForPapers() {
                         Need Help?
                       </p>
                       <Button className="w-full gap-2" asChild>
-                        <a
-                          href="https://drive.google.com/drive/folders/1DqCpJHxmPtFlfaajHuaXAy8pWm86iME5?usp=sharing"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
+                        <a href="" target="_blank" rel="noopener noreferrer">
                           <Download className="w-4 h-4" /> Download Templates
                         </a>
                       </Button>

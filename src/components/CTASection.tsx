@@ -54,7 +54,7 @@ export const CTASection = () => {
           </Reveal>
 
           {/* Stats Row */}
-          <div className="flex flex-wrap justify-center gap-8 mt-16 pt-16 border-t border-border">
+          {/* <div className="flex flex-wrap justify-center gap-8 mt-16 pt-16 border-t border-border">
             <Reveal>
               <div className="text-center">
                 <p className="font-display text-3xl font-bold text-foreground">
@@ -71,7 +71,7 @@ export const CTASection = () => {
                 <p className="text-muted-foreground text-sm">Mode Available</p>
               </div>
             </Reveal>
-          </div>
+          </div> */}
         </div>
       </div>
     </section>

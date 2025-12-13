@@ -75,7 +75,8 @@ export const HeroSection = () => {
             className="text-xl md:text-2xl text-primary-foreground/80 font-display mb-4"
           >
             <br />
-            Computing and Communications
+            IEEE International Conference on Contemporary Computing and
+            Communications
           </motion.p>
 
           {/* Event Details */}
@@ -85,7 +86,7 @@ export const HeroSection = () => {
           >
             <div className="flex items-center gap-2 text-primary-foreground/90">
               <Calendar className="w-5 h-5 text-primary" />
-              <span className="font-medium">March 13-14, 2026</span>
+              <span className="font-medium">August 7-8, 2026</span>
             </div>
             <div className="flex items-center gap-2 text-primary-foreground/90">
               <MapPin className="w-5 h-5 text-secondary" />
