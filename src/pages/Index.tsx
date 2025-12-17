@@ -9,9 +9,9 @@ import { useSEO } from "@/hooks/useSEO";
 const Index = () => {
   useSEO({
     title:
-      "IEEE InC4 2026 | International Conference on Contemporary Computing and Communications",
+      "InC4 2026 | International Conference on Contemporary Computing and Communications",
     description:
-      "Join the fourth edition of IEEE International Conference on Contemporary Computing and Communications (InC4) at CHRIST University, Bengaluru. August 7-8, 2026.",
+      "Join the fourth edition of International Conference on Contemporary Computing and Communications (InC4) at CHRIST University, Bengaluru. August 7-8, 2026.",
     keywords:
       "IEEE, InC4, conference, computing, communications, Bengaluru, CHRIST University, research, technology, 2026",
     canonicalUrl: "https://ic4.co.in/",

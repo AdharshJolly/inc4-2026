@@ -7,9 +7,9 @@ import { Button } from "@/components/ui/button";
 export default function About() {
   useSEO({
     title:
-      "About InC4 2026 | IEEE International Conference on Contemporary Computing and Communications",
+      "About InC4 2026 | International Conference on Contemporary Computing and Communications",
     description:
-      "Learn about IEEE InC4 2026, the fourth edition of the International Conference on Contemporary Computing and Communications at CHRIST University, Bengaluru. Key insights on the conference mission and previous editions.",
+      "Learn about InC4 2026, the fourth edition of the International Conference on Contemporary Computing and Communications at CHRIST University, Bengaluru. Key insights on the conference mission and previous editions.",
     keywords:
       "InC4, conference about, IEEE, computing, communications, CHRIST University, academic conference, research",
     canonicalUrl: "https://ic4.co.in/about",
@@ -38,7 +38,7 @@ export default function About() {
               <Reveal>
                 <div className="prose prose-lg prose-invert text-muted-foreground leading-relaxed">
                   <p>
-                    The fourth edition of IEEE International Conference on
+                    The fourth edition of International Conference on
                     Contemporary Computing and Communications (InC4) is
                     organized by IEEE Computer Society Bangalore Chapter and
                     IEEE Computer Society Student Branch Chapter CHRIST
@@ -71,11 +71,13 @@ export default function About() {
                       InC4 2025
                     </h3>
                     <p className="text-sm text-muted-foreground mt-2">
-                      850+ Articles
+                      1300+ Articles
                       <br />
-                      20 Countries
+                      16 Countries
                       <br />
-                      190 Presented
+                      197 Presented
+                      <br />
+                      191 Published and Indexed with Scopus
                     </p>
                   </div>
                   <div className="bg-primary/5 border border-primary/10 rounded-2xl p-6 backdrop-blur-sm">
@@ -89,6 +91,8 @@ export default function About() {
                       18 Countries
                       <br />
                       162 Presented
+                      <br />
+                      154 Published and Indexed with Scopus
                     </p>
                   </div>
                   <div className="bg-primary/5 border border-primary/10 rounded-2xl p-6 backdrop-blur-sm sm:mt-8">
@@ -101,7 +105,9 @@ export default function About() {
                       <br />
                       500+ Reviewers
                       <br />
-                      170 Accepted
+                      170 Presented
+                      <br />
+                      157 Published and Indexed with Scopus
                     </p>
                   </div>
                 </div>
@@ -240,6 +246,80 @@ export default function About() {
                     className="w-full max-w-sm h-auto object-contain"
                   />
                 </div>
+              </Reveal>
+            </div>
+          </section>
+
+          {/* IEEE CS Student Branch Section (Zag: Image Left, Text Right) */}
+          <section className="grid lg:grid-cols-3 gap-12 items-start">
+            <div className="order-2 lg:order-1 relative top-4">
+              <Reveal width="100%">
+                <div className="relative rounded-3xl overflow-hidden border border-border mt-2 shadow-md bg-white">
+                  <img
+                    src="/images/ieee_cs_cu.png"
+                    alt="IEEE Computer Society Student Branch Chapter CHRIST University"
+                    className="w-full h-auto object-contain p-6"
+                  />
+                </div>
+                <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-primary/10 rounded-full blur-2xl -z-10" />
+                <div className="absolute -top-6 -left-6 w-32 h-32 bg-secondary/10 rounded-full blur-2xl -z-10" />
+              </Reveal>
+            </div>
+
+            <div className="order-1 lg:order-2 lg:col-span-2 space-y-6">
+              <Reveal>
+                <span className="text-primary font-semibold text-sm uppercase tracking-[0.2em] bg-primary/10 px-4 py-1.5 rounded-full border border-primary/20">
+                  Student Chapter
+                </span>
+              </Reveal>
+              <Reveal>
+                <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground">
+                  IEEE Computer Society{" "}
+                  <span className="text-primary block mt-1">
+                    Student Branch Chapter CHRIST University Bangalore
+                  </span>
+                </h2>
+              </Reveal>
+              <Reveal>
+                <div className="prose prose-lg prose-invert text-muted-foreground leading-relaxed">
+                  <p>
+                    The IEEE Computer Society Student Branch Chapter at CHRIST
+                    University Bangalore is a vibrant community of students
+                    passionate about computing, technology, and innovation. As
+                    part of the larger IEEE Computer Society, the student
+                    chapter provides a platform for students to engage with
+                    cutting-edge research, industry trends, and professional
+                    development opportunities.
+                  </p>
+                  <p>
+                    The chapter actively organizes technical workshops,
+                    seminars, hackathons, and guest lectures featuring industry
+                    experts and renowned academicians. Through these
+                    initiatives, students gain hands-on experience, enhance
+                    their technical skills, and build valuable networks that
+                    prepare them for successful careers in technology and
+                    research.
+                  </p>
+                  <p>
+                    By collaborating with IEEE Computer Society Bangalore
+                    Chapter, the student branch plays a crucial role in
+                    organizing flagship events like InC4, providing students
+                    with unique opportunities to interact with the global
+                    computing community and contribute to advancing the field of
+                    contemporary computing and communications.
+                  </p>
+                </div>
+              </Reveal>
+              <Reveal>
+                <Button variant="outline" className="gap-2" asChild>
+                  <a
+                    href="https://edu.ieee.org/in-cucs/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Visit Chapter <ExternalLink className="w-4 h-4" />
+                  </a>
+                </Button>
               </Reveal>
             </div>
           </section>

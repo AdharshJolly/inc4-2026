@@ -7,9 +7,9 @@ import { Reveal } from "@/components/Reveal";
 
 export default function Contact() {
   useSEO({
-    title: "Contact Us | IEEE InC4 2026",
+    title: "Contact Us | InC4 2026",
     description:
-      "Get in touch with the IEEE InC4 2026 organizing team. Contact information, venue details, and FAQ for the International Conference on Contemporary Computing and Communications.",
+      "Get in touch with the InC4 2026 organizing team. Contact information, venue details, and FAQ for the International Conference on Contemporary Computing and Communications.",
     keywords:
       "contact InC4, conference contact, IEEE, CHRIST University, venue, email, conference details",
     canonicalUrl: "https://ic4.co.in/contact",

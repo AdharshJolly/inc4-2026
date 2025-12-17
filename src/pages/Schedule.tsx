@@ -17,9 +17,9 @@ import scheduleData from "@/data/schedule.json";
 
 export default function Schedule() {
   useSEO({
-    title: "Conference Schedule | IEEE InC4 2026",
+    title: "Conference Schedule | InC4 2026",
     description:
-      "View the complete schedule for IEEE InC4 2026. See keynote speeches, technical sessions, and timings for August 7-8, 2026 at CHRIST University, Bengaluru.",
+      "View the complete schedule for InC4 2026. See keynote speeches, technical sessions, and timings for August 7-8, 2026 at CHRIST University, Bengaluru.",
     keywords:
       "InC4 schedule, conference agenda, keynote speakers, technical sessions, March 2026, Bengaluru",
     canonicalUrl: "https://ic4.co.in/schedule",

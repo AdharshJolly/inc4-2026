@@ -10,10 +10,10 @@ const footerLinks = {
     { name: "Contact", href: "/contact" },
   ],
   resources: [
-    // { name: "Call for Papers", href: "/call-for-papers" },
+    { name: "Call for Papers", href: "/call-for-papers" },
     { name: "Registration", href: "/registration" },
     { name: "Important Dates", href: "/important-dates" },
-    { name: "CRC Submissions", href: "/crc-submissions" },
+    // { name: "CRC Submissions", href: "/crc-submissions" },
     { name: "Committee", href: "/committee" },
   ],
 };
@@ -36,7 +36,7 @@ export const Footer = () => {
               />
               <div>
                 <span className="font-display font-bold text-lg text-primary-foreground">
-                  IEEE InC4 2026
+                  InC4 2026
                 </span>
                 <p className="text-primary-foreground/60 text-xs">
                   Bengaluru, India
@@ -104,31 +104,65 @@ export const Footer = () => {
             <ul className="space-y-4">
               <li className="flex flex-col gap-1">
                 <div className="flex items-center gap-2">
-                    <a href="https://archive-2025.ic4.co.in/" target="_blank" rel="noopener noreferrer" className="text-primary-foreground/60 hover:text-primary transition-colors text-sm font-medium">
-                        InC4 2025
-                    </a>
+                  <a
+                    href="https://archive-2025.ic4.co.in/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary-foreground/60 hover:text-primary transition-colors text-sm font-medium"
+                  >
+                    InC4 2025
+                  </a>
+                  <span className="text-primary-foreground/40 text-xs">|</span>
+                  <a
+                    href="https://ieeexplore.ieee.org/xpl/conhome/11251522/proceeding"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary-foreground/60 hover:text-primary transition-colors text-sm"
+                  >
+                    Proceedings 2025
+                  </a>
                 </div>
               </li>
               <li className="flex flex-col gap-1">
                 <div className="flex items-center gap-2">
-                    <a href="https://archive-2024.ic4.co.in/" target="_blank" rel="noopener noreferrer" className="text-primary-foreground/60 hover:text-primary transition-colors text-sm font-medium">
-                        InC4 2024
-                    </a>
-                    <span className="text-primary-foreground/40 text-xs">|</span>
-                    <a href="https://ieeexplore.ieee.org/xpl/conhome/10648985/proceeding" target="_blank" rel="noopener noreferrer" className="text-primary-foreground/60 hover:text-primary transition-colors text-sm">
-                        Proceedings 2024
-                    </a>
+                  <a
+                    href="https://archive-2024.ic4.co.in/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary-foreground/60 hover:text-primary transition-colors text-sm font-medium"
+                  >
+                    InC4 2024
+                  </a>
+                  <span className="text-primary-foreground/40 text-xs">|</span>
+                  <a
+                    href="https://ieeexplore.ieee.org/xpl/conhome/10648985/proceeding"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary-foreground/60 hover:text-primary transition-colors text-sm"
+                  >
+                    Proceedings 2024
+                  </a>
                 </div>
               </li>
               <li className="flex flex-col gap-1">
                 <div className="flex items-center gap-2">
-                    <a href="https://archive-2023.ic4.co.in/" target="_blank" rel="noopener noreferrer" className="text-primary-foreground/60 hover:text-primary transition-colors text-sm font-medium">
-                        InC4 2023
-                    </a>
-                    <span className="text-primary-foreground/40 text-xs">|</span>
-                    <a href="https://ieeexplore.ieee.org/xpl/conhome/10262404/proceeding" target="_blank" rel="noopener noreferrer" className="text-primary-foreground/60 hover:text-primary transition-colors text-sm">
-                        Proceedings 2023
-                    </a>
+                  <a
+                    href="https://archive-2023.ic4.co.in/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary-foreground/60 hover:text-primary transition-colors text-sm font-medium"
+                  >
+                    InC4 2023
+                  </a>
+                  <span className="text-primary-foreground/40 text-xs">|</span>
+                  <a
+                    href="https://ieeexplore.ieee.org/xpl/conhome/10262404/proceeding"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary-foreground/60 hover:text-primary transition-colors text-sm"
+                  >
+                    Proceedings 2023
+                  </a>
                 </div>
               </li>
             </ul>
@@ -158,10 +192,10 @@ export const Footer = () => {
               <li className="flex items-center gap-3">
                 <Phone className="w-5 h-5 text-primary flex-shrink-0" />
                 <a
-                  href="tel:+918040129100"
+                  href="tel:+919024706009"
                   className="text-primary-foreground/60 hover:text-primary transition-colors text-sm"
                 >
-                  +91 80 4012 9100
+                  +91 90247 06009
                 </a>
               </li>
             </ul>
@@ -171,7 +205,7 @@ export const Footer = () => {
         {/* Bottom Bar */}
         <div className="border-t border-dark-border pt-8 flex justify-between items-center gap-4 w-full">
           <p className="text-primary-foreground/40 text-sm">
-            © 2026 IEEE InC4. All rights reserved.
+            © 2026 InC4. All rights reserved.
           </p>
         </div>
       </div>

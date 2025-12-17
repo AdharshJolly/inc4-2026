@@ -16,11 +16,11 @@ import topics from "@/data/call-for-papers-topics.json";
 
 export default function CallForPapers() {
   useSEO({
-    title: "Call for Papers | IEEE InC4 2026",
+    title: "Call for Papers | InC4 2026",
     description:
-      "Submit your research papers to IEEE InC4 2026. Guidelines for paper submission, research topics, and important deadlines for the International Conference on Contemporary Computing and Communications.",
+      "Submit your research papers to InC4 2026. Guidelines for paper submission, research topics, and important deadlines for the International Conference on Contemporary Computing and Communications.",
     keywords:
-      "call for papers, paper submission, IEEE InC4, research papers, conference guidelines, submission deadline",
+      "call for papers, paper submission, IEEE, InC4, research papers, conference guidelines, submission deadline",
     canonicalUrl: "https://ic4.co.in/call-for-papers",
   });
 
@@ -46,9 +46,9 @@ export default function CallForPapers() {
                       University
                     </h2>
                     <p className="text-muted-foreground leading-relaxed">
-                      Organizing the fourth edition of the 2026 IEEE
-                      International Conference on Contemporary Computing and
-                      Communications (InC4) on{" "}
+                      Organizing the fourth edition of the 2026 International
+                      Conference on Contemporary Computing and Communications
+                      (InC4) on{" "}
                       <span className="text-foreground font-semibold">
                         August 7-8, 2026
                       </span>
@@ -57,12 +57,13 @@ export default function CallForPapers() {
                     <p className="text-muted-foreground leading-relaxed">
                       Bringing researchers, academicians, industry, and
                       government personnel together to share and discuss various
-                      aspects of Computing and Communications. Accepted
-                      peer-reviewed articles will be submitted for inclusion in{" "}
+                      aspects of Computing and Communications. Accepted papers
+                      will be submitted for inclusion into{" "}
                       <span className="text-primary font-semibold">
-                        IEEE XPLORE
+                        IEEE Xplore
                       </span>{" "}
-                      digital library.
+                      subject to meeting IEEE Xplore’s scope and quality
+                      requirements
                     </p>
 
                     <div className="flex flex-wrap gap-4 pt-4">

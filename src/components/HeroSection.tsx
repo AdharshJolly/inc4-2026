@@ -56,7 +56,7 @@ export const HeroSection = () => {
           >
             <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
             <span className="text-primary font-medium text-sm">
-              Fourth Edition • IEEE International Conference
+              Fourth Edition • International Conference
             </span>
           </motion.div>
 
@@ -75,7 +75,7 @@ export const HeroSection = () => {
             className="text-xl md:text-2xl text-primary-foreground/80 font-display mb-4"
           >
             <br />
-            IEEE International Conference on Contemporary Computing and
+            International Conference on Contemporary Computing and
             Communications
           </motion.p>
 

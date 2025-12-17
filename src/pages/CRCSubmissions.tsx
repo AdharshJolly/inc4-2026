@@ -17,11 +17,11 @@ import steps from "@/data/crc-steps.json";
 
 export default function CRCSubmissions() {
   useSEO({
-    title: "CRC Submissions | IEEE InC4 2026",
+    title: "CRC Submissions | InC4 2026",
     description:
-      "Submit your Camera Ready Copy (CRC) for IEEE InC4 2026. Guidelines for final paper submission, formatting requirements, and submission procedures.",
+      "Submit your Camera Ready Copy (CRC) for InC4 2026. Guidelines for final paper submission, formatting requirements, and submission procedures.",
     keywords:
-      "CRC submissions, camera ready, paper submission, IEEE InC4, final submission, formatting guidelines",
+      "CRC submissions, camera ready, paper submission, InC4, final submission, formatting guidelines",
     canonicalUrl: "https://ic4.co.in/crc-submissions",
   });
 

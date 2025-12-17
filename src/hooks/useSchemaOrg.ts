@@ -26,9 +26,9 @@ export const useSchemaOrg = ({ type, data }: SchemaOrgProps) => {
 export const getInC4EventSchema = () => ({
   "@context": "https://schema.org",
   "@type": "Event",
-  name: "IEEE InC4 2026 - International Conference on Contemporary Computing and Communications",
+  name: "InC4 2026 - International Conference on Contemporary Computing and Communications",
   description:
-    "The fourth edition of IEEE International Conference on Contemporary Computing and Communications",
+    "The fourth edition of International Conference on Contemporary Computing and Communications",
   startDate: "2026-03-13T09:00:00+05:30",
   endDate: "2026-03-14T17:00:00+05:30",
   eventAttendanceMode: "OfflineEventAttendanceMode",
@@ -57,11 +57,11 @@ export const getInC4EventSchema = () => ({
 export const getOrganizationSchema = () => ({
   "@context": "https://schema.org",
   "@type": "Organization",
-  name: "IEEE InC4 2026",
+  name: "InC4 2026",
   url: "https://ic4.co.in",
   image: "https://ic4.co.in/images/InC4 Logo White.png",
   description:
-    "IEEE International Conference on Contemporary Computing and Communications",
+    "International Conference on Contemporary Computing and Communications",
   sameAs: [
     "https://twitter.com/ieeecomputers",
     "https://www.facebook.com/IEEEComputerSociety",

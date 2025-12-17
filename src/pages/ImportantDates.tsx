@@ -6,9 +6,9 @@ import dates from "@/data/important-dates.json";
 
 export default function ImportantDates() {
   useSEO({
-    title: "Important Dates | IEEE InC4 2026",
+    title: "Important Dates | InC4 2026",
     description:
-      "Key dates and deadlines for IEEE InC4 2026. Paper submission deadlines, registration dates, and conference schedule for August 7-8, 2026.",
+      "Key dates and deadlines for InC4 2026. Paper submission deadlines, registration dates, and conference schedule for August 7-8, 2026.",
     keywords:
       "InC4 dates, submission deadline, registration deadline, important dates, conference schedule, 2026",
     canonicalUrl: "https://ic4.co.in/important-dates",

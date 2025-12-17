@@ -7,9 +7,9 @@ import speakers from "@/data/speakers.json";
 
 export default function Speakers() {
   useSEO({
-    title: "Keynote Speakers | IEEE InC4 2026",
+    title: "Keynote Speakers | InC4 2026",
     description:
-      "Meet the distinguished keynote speakers at IEEE InC4 2026. Renowned researchers and industry experts sharing insights on computing and communications.",
+      "Meet the distinguished keynote speakers at InC4 2026. Renowned researchers and industry experts sharing insights on computing and communications.",
     keywords:
       "keynote speakers, InC4, conference speakers, IEEE, research experts, industry leaders, computing",
     canonicalUrl: "https://ic4.co.in/speakers",

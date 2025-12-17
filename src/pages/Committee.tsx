@@ -7,9 +7,9 @@ import committeeCategories from "@/data/committee.json";
 
 export default function Committee() {
   useSEO({
-    title: "Conference Committee | IEEE InC4 2026",
+    title: "Conference Committee | InC4 2026",
     description:
-      "Meet the organizing committee members of IEEE InC4 2026. View the patrons, chairs, committee members, and program committee of the International Conference on Contemporary Computing and Communications.",
+      "Meet the organizing committee members of InC4 2026. View the patrons, chairs, committee members, and program committee of the International Conference on Contemporary Computing and Communications.",
     keywords:
       "InC4 committee, conference organizers, IEEE, academic committee, program committee, conference chairs",
     canonicalUrl: "https://ic4.co.in/committee",

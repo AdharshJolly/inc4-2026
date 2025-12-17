@@ -8,9 +8,9 @@ import { Reveal } from "@/components/Reveal";
 
 export default function Registration() {
   useSEO({
-    title: "Registration | IEEE InC4 2026",
+    title: "Registration | InC4 2026",
     description:
-      "Register for IEEE InC4 2026. View registration fees, categories, and payment details for the International Conference on Contemporary Computing and Communications at CHRIST University.",
+      "Register for InC4 2026. View registration fees, categories, and payment details for the International Conference on Contemporary Computing and Communications at CHRIST University.",
     keywords:
       "InC4 registration, conference registration, registration fees, early bird, IEEE, 2026 conference",
     canonicalUrl: "https://ic4.co.in/registration",
@@ -64,36 +64,36 @@ export default function Registration() {
                   {[
                     {
                       category: "IEEE Student Member",
-                      inrEarly: "₹ 4500",
-                      inrReg: "₹ 5500",
+                      inrEarly: "₹ 6000",
+                      inrReg: "₹ 7500",
                       usdEarly: "$ 125",
                       usdReg: "$ 150",
                     },
                     {
                       category: "Non-IEEE Student Member",
-                      inrEarly: "₹ 6500",
-                      inrReg: "₹ 8000",
+                      inrEarly: "₹ 8000",
+                      inrReg: "₹ 9500",
                       usdEarly: "$ 175",
                       usdReg: "$ 225",
                     },
                     {
                       category: "IEEE Professional Member",
-                      inrEarly: "₹ 8000",
-                      inrReg: "₹ 9500",
+                      inrEarly: "₹ 9500",
+                      inrReg: "₹ 11000",
                       usdEarly: "$ 225",
                       usdReg: "$ 275",
                     },
                     {
                       category: "Non-IEEE Professional Member",
-                      inrEarly: "₹ 11500",
-                      inrReg: "₹ 13500",
+                      inrEarly: "₹ 13000",
+                      inrReg: "₹ 15000",
                       usdEarly: "$ 275",
                       usdReg: "$ 350",
                     },
                     {
                       category: "Only Attending",
-                      inrEarly: "₹ 3000",
-                      inrReg: "₹ 3500",
+                      inrEarly: "₹ 1500",
+                      inrReg: "₹ 2500",
                       usdEarly: "$ 70",
                       usdReg: "$ 100",
                     },

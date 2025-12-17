@@ -18,7 +18,7 @@ export const CTASection = () => {
             <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/30 rounded-full px-5 py-2 mb-8">
               <Sparkles className="w-4 h-4 text-primary" />
               <span className="text-primary font-medium text-sm">
-                Early Bird Registration Open
+                Early Bird Registration will be opened soon!
               </span>
             </div>
           </Reveal>
