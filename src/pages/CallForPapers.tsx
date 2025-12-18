@@ -57,13 +57,14 @@ export default function CallForPapers() {
                     <p className="text-muted-foreground leading-relaxed">
                       Bringing researchers, academicians, industry, and
                       government personnel together to share and discuss various
-                      aspects of Computing and Communications. Accepted papers
+                      aspects of Computing and Communications.{" "}
+                      {/* Accepted papers
                       will be submitted for inclusion into{" "}
                       <span className="text-primary font-semibold">
                         IEEE Xplore
                       </span>{" "}
                       subject to meeting IEEE Xplore’s scope and quality
-                      requirements
+                      requirements */}
                     </p>
 
                     <div className="flex flex-wrap gap-4 pt-4">
@@ -92,6 +93,15 @@ export default function CallForPapers() {
                         Submit Paper <ArrowRight className="w-4 h-4" />
                       </a>
                     </Button>
+                    <div className="mt-4 border-l-4 border-primary/70 bg-muted/40 px-4 py-3 rounded-r-xl">
+                      <p className="text-xs leading-relaxed text-muted-foreground">
+                        Note: The Microsoft CMT service was used for managing
+                        the peer-reviewing process for this conference. This
+                        service was provided for free by Microsoft and they bore
+                        all expenses, including costs for Azure cloud services
+                        as well as for software development and support.
+                      </p>
+                    </div>
                   </div>
                 </div>
                 {/* Decorative Blob */}
