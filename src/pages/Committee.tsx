@@ -12,6 +12,7 @@ export default function Committee() {
       "Meet the organizing committee members of InC4 2026. View the patrons, chairs, committee members, and program committee of the International Conference on Contemporary Computing and Communications.",
     keywords:
       "InC4 committee, conference organizers, IEEE, academic committee, program committee, conference chairs",
+    ogType: "website",
     canonicalUrl: "https://ic4.co.in/committee",
   });
 

@@ -13,6 +13,7 @@ export default function Registration() {
       "Register for InC4 2026. View registration fees, categories, and payment details for the International Conference on Contemporary Computing and Communications at CHRIST University.",
     keywords:
       "InC4 registration, conference registration, registration fees, early bird, IEEE, 2026 conference",
+    ogType: "website",
     canonicalUrl: "https://ic4.co.in/registration",
   });
 

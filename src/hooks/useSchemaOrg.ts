@@ -29,8 +29,8 @@ export const getInC4EventSchema = () => ({
   name: "InC4 2026 - International Conference on Contemporary Computing and Communications",
   description:
     "The fourth edition of International Conference on Contemporary Computing and Communications",
-  startDate: "2026-03-13T09:00:00+05:30",
-  endDate: "2026-03-14T17:00:00+05:30",
+  startDate: "2026-08-07T09:00:00+05:30",
+  endDate: "2026-08-08T17:00:00+05:30",
   eventAttendanceMode: "OfflineEventAttendanceMode",
   location: {
     "@type": "Place",

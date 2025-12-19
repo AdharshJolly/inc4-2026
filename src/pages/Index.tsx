@@ -14,6 +14,7 @@ const Index = () => {
       "Join the fourth edition of International Conference on Contemporary Computing and Communications (InC4) at CHRIST University, Bengaluru. August 7-8, 2026.",
     keywords:
       "IEEE, InC4, conference, computing, communications, Bengaluru, CHRIST University, research, technology, 2026",
+    ogType: "event",
     canonicalUrl: "https://ic4.co.in/",
   });
 

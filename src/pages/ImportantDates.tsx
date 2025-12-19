@@ -11,6 +11,7 @@ export default function ImportantDates() {
       "Key dates and deadlines for InC4 2026. Paper submission deadlines, registration dates, and conference schedule for August 7-8, 2026.",
     keywords:
       "InC4 dates, submission deadline, registration deadline, important dates, conference schedule, 2026",
+    ogType: "website",
     canonicalUrl: "https://ic4.co.in/important-dates",
   });
 

@@ -21,6 +21,7 @@ export default function CallForPapers() {
       "Submit your research papers to InC4 2026. Guidelines for paper submission, research topics, and important deadlines for the International Conference on Contemporary Computing and Communications.",
     keywords:
       "call for papers, paper submission, IEEE, InC4, research papers, conference guidelines, submission deadline",
+    ogType: "article",
     canonicalUrl: "https://ic4.co.in/call-for-papers",
   });
 

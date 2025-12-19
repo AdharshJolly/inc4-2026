@@ -12,6 +12,7 @@ export default function About() {
       "Learn about InC4 2026, the fourth edition of the International Conference on Contemporary Computing and Communications at CHRIST University, Bengaluru. Key insights on the conference mission and previous editions.",
     keywords:
       "InC4, conference about, IEEE, computing, communications, CHRIST University, academic conference, research",
+    ogType: "website",
     canonicalUrl: "https://ic4.co.in/about",
   });
 

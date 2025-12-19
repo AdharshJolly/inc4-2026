@@ -12,6 +12,7 @@ export default function Speakers() {
       "Meet the distinguished keynote speakers at InC4 2026. Renowned researchers and industry experts sharing insights on computing and communications.",
     keywords:
       "keynote speakers, InC4, conference speakers, IEEE, research experts, industry leaders, computing",
+    ogType: "website",
     canonicalUrl: "https://ic4.co.in/speakers",
   });
 

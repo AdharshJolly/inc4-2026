@@ -7,6 +7,7 @@ export interface SEOProps {
   ogTitle?: string;
   ogDescription?: string;
   ogImage?: string;
+  ogType?: "website" | "article" | "event" | "profile";
   twitterTitle?: string;
   twitterDescription?: string;
   canonicalUrl?: string;
@@ -19,6 +20,7 @@ export const useSEO = ({
   ogTitle,
   ogDescription,
   ogImage = "https://ic4.co.in/images/InC4 Logo White.png",
+  ogType = "website",
   twitterTitle,
   twitterDescription,
   canonicalUrl,
@@ -54,6 +56,7 @@ export const useSEO = ({
     setMetaTag('meta[property="og:title"]', ogTitle || title);
     setMetaTag('meta[property="og:description"]', ogDescription || description);
     setMetaTag('meta[property="og:image"]', ogImage);
+    setMetaTag('meta[property="og:type"]', ogType);
     if (canonicalUrl) {
       setMetaTag('meta[property="og:url"]', canonicalUrl);
     }
@@ -85,6 +88,7 @@ export const useSEO = ({
     ogTitle,
     ogDescription,
     ogImage,
+    ogType,
     twitterTitle,
     twitterDescription,
     canonicalUrl,
