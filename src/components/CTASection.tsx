@@ -39,7 +39,11 @@ export const CTASection = () => {
 
           <Reveal width="100%">
             <div className="flex flex-wrap justify-center gap-4">
-              <Link to="/call-for-papers">
+              <Link
+                to="https://cmt3.research.microsoft.com/InC42026"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <Button variant="hero" size="xl">
                   Submit Paper
                   <ArrowRight className="w-5 h-5" />

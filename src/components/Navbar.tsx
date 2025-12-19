@@ -191,7 +191,13 @@ export const Navbar = () => {
             size="default"
             asChild
           >
-            <Link to="/call-for-papers">Submit Paper</Link>
+            <Link
+              to="https://cmt3.research.microsoft.com/InC42026"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Submit Paper
+            </Link>
           </Button>
           <img
             src="/images/cu_color.png"

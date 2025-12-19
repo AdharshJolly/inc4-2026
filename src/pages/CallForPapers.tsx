@@ -90,7 +90,11 @@ export default function CallForPapers() {
                       conference format in not more than 6 pages.
                     </p>
                     <Button size="lg" className="w-full gap-2" asChild>
-                      <a href="" target="_blank" rel="noopener noreferrer">
+                      <a
+                        href="https://cmt3.research.microsoft.com/InC42026"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         Submit Paper <ArrowRight className="w-4 h-4" />
                       </a>
                     </Button>

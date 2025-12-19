@@ -186,7 +186,11 @@ export default function Registration() {
 
           <Reveal width="100%">
             <div className="flex justify-center">
-              <Link to="/">
+              <Link
+                to="https://cmt3.research.microsoft.com/InC42026"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <Button size="lg" className="px-8 text-lg h-12">
                   Submit Paper
                 </Button>
