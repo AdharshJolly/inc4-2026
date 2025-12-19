@@ -4,13 +4,14 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Reveal } from "@/components/Reveal";
 import { User2 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useSEO } from "@/hooks/useSEO";
 import { getCommitteePersonSchema } from "@/hooks/useSchemaOrg";
 import committeeCategories from "@/data/committee.json";
 
 export default function Committee() {
-  const location = useLocation();
+  const { category } = useParams<{ category?: string }>();
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("chief-patron");
 
   useSEO({
@@ -23,22 +24,19 @@ export default function Committee() {
     canonicalUrl: "https://ic4.co.in/committee",
   });
 
-  // Handle URL hash navigation
+  // Handle URL path-based navigation
   useEffect(() => {
-    // Extract hash from URL (e.g., #patrons from /committee#patrons)
-    const hash = location.hash.slice(1); // Remove the # character
-
-    if (hash && committeeCategories.some((cat) => cat.id === hash)) {
-      setActiveTab(hash);
-    } else {
+    if (category && committeeCategories.some((cat) => cat.id === category)) {
+      setActiveTab(category);
+    } else if (!category) {
       setActiveTab("chief-patron");
     }
-  }, [location.hash]);
+  }, [category]);
 
   // Update URL when tab changes
   const handleTabChange = (tabId: string) => {
     setActiveTab(tabId);
-    window.location.hash = tabId;
+    navigate(`/committee/${tabId}`);
   };
 
   // Inject Person schemas for all committee members
@@ -112,9 +110,9 @@ export default function Committee() {
               value={category.id}
               className="focus-visible:outline-none animate-in fade-in duration-500 ease-out"
             >
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-7xl mx-auto">
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 auto-rows-fr items-stretch gap-6 max-w-7xl mx-auto">
                 {category.members.map((member, index) => (
-                  <Reveal key={index} width="100%">
+                  <Reveal key={index} width="100%" className="h-full">
                     <Card className="group border-primary/10 bg-card/50 backdrop-blur-sm hover:border-primary/40 hover:shadow-card-hover transition-all duration-300 overflow-hidden h-full">
                       <CardContent className="p-0 flex flex-col h-full">
                         <div className="h-2 bg-gradient-to-r from-primary to-secondary opacity-80" />

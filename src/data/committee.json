@@ -40,16 +40,10 @@
         "affiliation": "CHRIST (Deemed to be University), Bangalore, India"
       },
       {
-        "name": "Dr Chengappa MR",
-        "role": "Chair-Elect, 2026",
-        "image": "https://media.licdn.com/dms/image/v2/D5603AQHVT1_Rr4YOGA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1718255608269?e=1767830400&v=beta&t=p_LoLIjbU1iYCkosmme2EHuMgL1y0T-bYqFRWHvn3Yg",
-        "affiliation": "IEEE Bangalore Section"
-      },
-      {
-        "name": "Dr Chandrakanta Kumar",
-        "role": "Immediate Past Chair, 2025",
-        "image": "https://ieeebangalore.org/wp-content/uploads/2023/06/vice-chair-ta.png",
-        "affiliation": "IEEE Bangalore Section"
+        "name": "Dr Abhishek Mahesh Appaji",
+        "role": "Chair, 2026",
+        "image": "https://www.maastrichtuniversity.nl/sites/default/files/styles/4800x7200/public/ppp/70046722/Dr.AbhishekAppaji_HeadShot.jpeg?itok=mWNSF791",
+        "affiliation": "IEEE Computer Society Bangalore Chapter"
       },
       {
         "name": "Dr Sunil Kumar Vuppala",
@@ -77,7 +71,7 @@
       },
       {
         "name": "Dr Sandeep Kumar",
-        "role": "Professor, Department of AI, ML and Data Science",
+        "role": "Professor, Department of Aritificial Intelligence and Data Science Engineering",
         "image": "https://christuniversity.in/uploads/faculty-image/E4860.jpg",
         "affiliation": "IEEE Computer Society Bangalore Chapter"
       }
@@ -95,7 +89,7 @@
       },
       {
         "name": "Dr Michael Moses T",
-        "role": "HoD, Department of AI, ML and Data Science",
+        "role": "HoD, Department of Aritificial Intelligence and Data Science Engineering",
         "image": "https://christuniversity.in/uploads/faculty-image/E1703.jpg",
         "affiliation": "CHRIST (Deemed to be University), Bangalore, India"
       }
@@ -2634,6 +2628,12 @@
         "name": "Arnav Rangwani",
         "role": "Web Master",
         "image": "http://edu.ieee.org/in-cucs/wp-content/uploads/sites/690/1706305319039.jpeg",
+        "affiliation": "Christ University - IEEE Computer Society Student Branch Bangalore Chapter"
+      },
+      {
+        "name": "Adharsh Jolly",
+        "role": "Executive Committee Member",
+        "image": "https://media.licdn.com/dms/image/v2/D5603AQFQO_F5mnFTbA/profile-displayphoto-scale_400_400/B56Zs3qHMwKAAg-/0/1766165346749?e=1767830400&v=beta&t=OLWc01r1LudVQ8iXAkH4QdAfdN0_JR6WH3obJynk9iM",
         "affiliation": "Christ University - IEEE Computer Society Student Branch Bangalore Chapter"
       }
     ]

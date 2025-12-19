@@ -33,10 +33,21 @@ const AppRoutes = () => {
   const isLanding = location.pathname === "/";
   const contentPadding = isLanding ? "" : "pt-[110px]";
 
+  // Create a custom key that groups committee routes together
+  // This prevents page transition animations when switching between committee tabs
+  const getRouteKey = (pathname: string) => {
+    if (pathname.startsWith("/committee")) {
+      return "/committee"; // All committee routes share the same key
+    }
+    return pathname; // Other routes use their full path as key
+  };
+
+  const routeKey = getRouteKey(location.pathname);
+
   return (
     <div className={contentPadding}>
       <AnimatePresence mode="wait">
-        <Routes location={location} key={location.pathname}>
+        <Routes location={location} key={routeKey}>
           <Route
             path="/"
             element={
@@ -55,6 +66,14 @@ const AppRoutes = () => {
           />
           <Route
             path="/committee"
+            element={
+              <PageTransition>
+                <Committee />
+              </PageTransition>
+            }
+          />
+          <Route
+            path="/committee/:category"
             element={
               <PageTransition>
                 <Committee />

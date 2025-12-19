@@ -49,7 +49,8 @@ export default function Contact() {
                   <div>
                     <h3 className="text-xl font-bold mb-2">Dr Sandeep Kumar</h3>
                     <p className="text-muted-foreground text-sm font-medium mb-1">
-                      Professor, Department of AI, ML and Data Science,
+                      Professor, Department of Aritificial Intelligence and Data
+                      Science Engineering,
                       <br />
                       School of Engineering and Technology, CHRIST (Deemed to be
                       University),

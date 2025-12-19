@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Calendar, MapPin, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import { motion, Variants } from "framer-motion";
+import { motion, Variants, useReducedMotion } from "framer-motion";
 
 const container: Variants = {
   hidden: { opacity: 0 },
@@ -24,6 +24,8 @@ const item: Variants = {
 };
 
 export const HeroSection = () => {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <section
       id="home"
@@ -32,15 +34,19 @@ export const HeroSection = () => {
       {/* Animated Background Elements */}
       <div className="absolute inset-0 pattern-grid opacity-30" />
 
-      {/* Floating Orbs */}
-      <div className="absolute top-20 left-10 w-72 h-72 bg-primary/20 rounded-full blur-3xl animate-float" />
-      <div className="absolute bottom-20 right-10 w-96 h-96 bg-secondary/20 rounded-full blur-3xl animate-float-delayed" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/10 rounded-full blur-3xl animate-pulse-slow" />
+      {/* Floating Orbs - Conditionally animated */}
+      {!shouldReduceMotion && (
+        <>
+          <div className="absolute top-20 left-10 w-72 h-72 bg-primary/20 rounded-full blur-3xl animate-float" />
+          <div className="absolute bottom-20 right-10 w-96 h-96 bg-secondary/20 rounded-full blur-3xl animate-float-delayed" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/10 rounded-full blur-3xl animate-pulse-slow" />
 
-      {/* Geometric Shapes */}
-      <div className="absolute top-32 right-20 w-20 h-20 border-2 border-primary/30 rotate-45 animate-spin-slow" />
-      <div className="absolute bottom-40 left-20 w-16 h-16 bg-secondary/30 rounded-full animate-float" />
-      <div className="absolute top-1/4 left-1/4 w-8 h-8 bg-primary/40 rotate-45" />
+          {/* Geometric Shapes */}
+          <div className="absolute top-32 right-20 w-20 h-20 border-2 border-primary/30 rotate-45 animate-spin-slow" />
+          <div className="absolute bottom-40 left-20 w-16 h-16 bg-secondary/30 rounded-full animate-float" />
+          <div className="absolute top-1/4 left-1/4 w-8 h-8 bg-primary/40 rotate-45" />
+        </>
+      )}
 
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
