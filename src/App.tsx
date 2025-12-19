@@ -143,7 +143,10 @@ const SchemaorgScripts = () => {
     document.head.appendChild(orgScript);
 
     // Add Breadcrumb Schema based on current route
-    const breadcrumbMap: Record<string, Array<{ name: string; url: string }>> = {
+    const breadcrumbMap: Record<
+      string,
+      Array<{ name: string; url: string }>
+    > = {
       "/": [{ name: "Home", url: "https://ic4.co.in/" }],
       "/about": [
         { name: "Home", url: "https://ic4.co.in/" },
@@ -185,7 +188,9 @@ const SchemaorgScripts = () => {
 
     const breadcrumbScript = document.createElement("script");
     breadcrumbScript.type = "application/ld+json";
-    breadcrumbScript.textContent = JSON.stringify(getBreadcrumbSchema(breadcrumbs));
+    breadcrumbScript.textContent = JSON.stringify(
+      getBreadcrumbSchema(breadcrumbs)
+    );
     document.head.appendChild(breadcrumbScript);
 
     return () => {

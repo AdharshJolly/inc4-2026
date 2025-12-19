@@ -87,3 +87,28 @@ export const getBreadcrumbSchema = (
     item: item.url,
   })),
 });
+
+// Person schema generator for committee members
+interface CommitteeMember {
+  name: string;
+  role?: string;
+  affiliation: string;
+  image?: string;
+}
+
+export const getCommitteePersonSchema = (members: CommitteeMember[]) => {
+  return members.map((member) => ({
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: member.name,
+    ...(member.role && { jobTitle: member.role }),
+    affiliation: {
+      "@type": "Organization",
+      name: member.affiliation,
+    },
+    ...(member.image && { image: member.image }),
+    url: `https://ic4.co.in/committee#${member.name
+      .replace(/\s+/g, "-")
+      .toLowerCase()}`,
+  }));
+};
