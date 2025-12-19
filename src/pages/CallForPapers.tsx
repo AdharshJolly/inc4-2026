@@ -96,11 +96,11 @@ export default function CallForPapers() {
                     </Button>
                     <div className="mt-4 border-l-4 border-primary/70 bg-muted/40 px-4 py-3 rounded-r-xl">
                       <p className="text-xs leading-relaxed text-muted-foreground">
-                        Note: The Microsoft CMT service was used for managing
-                        the peer-reviewing process for this conference. This
-                        service was provided for free by Microsoft and they bore
-                        all expenses, including costs for Azure cloud services
-                        as well as for software development and support.
+                        The Microsoft CMT service was used for managing the
+                        peer-reviewing process for this conference. This service
+                        was provided for free by Microsoft and they bore all
+                        expenses, including costs for Azure cloud services as
+                        well as for software development and support.
                       </p>
                     </div>
                   </div>

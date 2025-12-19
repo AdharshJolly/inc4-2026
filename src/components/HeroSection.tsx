@@ -109,7 +109,7 @@ export const HeroSection = () => {
             variants={item}
             className="flex flex-wrap justify-center gap-4"
           >
-            <Link to="/">
+            <Link to="/call-for-papers">
               <Button variant="hero" size="xl">
                 Submit Paper
                 <ArrowRight className="w-5 h-5" />
