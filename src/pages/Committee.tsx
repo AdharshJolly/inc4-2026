@@ -39,6 +39,39 @@ export default function Committee() {
     navigate(`/committee/${tabId}`);
   };
 
+  // Preload all committee member images
+  useEffect(() => {
+    const imageUrls = committeeCategories.flatMap((category) =>
+      category.members
+        .filter((member: any) => member.image)
+        .map((member: any) => member.image)
+    );
+
+    // Add preload link tags for critical images (first 12 for above-the-fold)
+    const criticalImages = imageUrls.slice(0, 12);
+    const preloadLinks: HTMLLinkElement[] = [];
+
+    criticalImages.forEach((url) => {
+      const link = document.createElement("link");
+      link.rel = "preload";
+      link.as = "image";
+      link.href = url;
+      document.head.appendChild(link);
+      preloadLinks.push(link);
+    });
+
+    // Preload remaining images using Image objects (lower priority)
+    imageUrls.slice(12).forEach((url) => {
+      const img = new Image();
+      img.src = url;
+    });
+
+    // Cleanup: remove preload links on unmount
+    return () => {
+      preloadLinks.forEach((link) => link.remove());
+    };
+  }, []);
+
   // Inject Person schemas for all committee members
   useEffect(() => {
     // Flatten all members from all categories
@@ -122,6 +155,16 @@ export default function Committee() {
                               <img
                                 src={member.image}
                                 alt={member.name}
+                                loading={
+                                  category.id === activeTab && index < 8
+                                    ? "eager"
+                                    : "lazy"
+                                }
+                                fetchPriority={
+                                  category.id === activeTab && index < 4
+                                    ? "high"
+                                    : "auto"
+                                }
                                 className="w-full h-full object-cover object-top bg-white"
                               />
                             </div>
