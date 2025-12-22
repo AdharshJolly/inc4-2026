@@ -28,15 +28,6 @@ export const DatesManager = () => {
           <Plus className="w-4 h-4 mr-2" />
           Add Event Date
         </Button>
-        <Button variant="outline" asChild>
-          <a
-            href="http://localhost:4001"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Open TinaCMS Editor
-          </a>
-        </Button>
       </div>
 
       {/* Timeline */}

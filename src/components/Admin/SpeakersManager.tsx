@@ -246,18 +246,7 @@ export const SpeakersManager = () => {
         </div>
       )}
 
-      {/* TinaCMS Link */}
-      <div className="flex flex-wrap gap-2">
-        <Button variant="outline" asChild>
-          <a
-            href="http://localhost:4001"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Open TinaCMS Editor
-          </a>
-        </Button>
-      </div>
+
     </div>
   );
 };

@@ -164,15 +164,6 @@ export const CommitteeManager = () => {
           <Download className="w-4 h-4 mr-2" />
           Export CSV
         </Button>
-        <Button variant="outline" asChild>
-          <a
-            href="http://localhost:4001"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Open TinaCMS Editor
-          </a>
-        </Button>
       </div>
 
       {/* Bulk Actions Section */}
