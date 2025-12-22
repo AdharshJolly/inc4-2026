@@ -2,33 +2,13 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Linkedin, Twitter } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Reveal } from "./Reveal";
+import speakersData from "@/data/speakers.json";
+import { getPhotoUrl } from "@/lib/photoMigration";
+import type { SpeakersData } from "@/types/data";
 
-const speakers = [
-  {
-    name: "Prof. Dr. S.S. Iyengar",
-    role: "Distinguished University Professor",
-    affiliation: "Florida International University, Miami",
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRazweYMznr6twfdAzQef0XBTGHFv3t7BJfXA&s",
-    topic: "AI & Autonomous Systems",
-  },
-  {
-    name: "Damodaran Subramanian",
-    role: "Chief Executive Officer",
-    affiliation: "ChipEdge Technologies Pvt Ltd",
-    image:
-      "https://d1hbpr09pwz0sk.cloudfront.net/profile_pic/damodaran-subramanian-e6d5db9b",
-    topic: "Semiconductor Innovation",
-  },
-  {
-    name: "Dr. Sourav Kanti Addya",
-    role: "Assistant Professor",
-    affiliation: "NITK Surathkal",
-    image:
-      "https://i0.wp.com/ieeecsbangalore.org/wp-content/uploads/2024/06/sourav-500x500-1-e1717351315834.jpg?resize=300%2C300&ssl=1",
-    topic: "Cloud & Edge Computing",
-  },
-];
+// Get first 3 speakers from JSON data
+const allSpeakers = (speakersData as SpeakersData).root;
+const speakers = allSpeakers.slice(0, 3);
 
 export const SpeakersSection = () => {
   return (
@@ -66,9 +46,7 @@ export const SpeakersSection = () => {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
           {speakers.map((speaker, index) => (
             <Reveal key={speaker.name} width="100%">
-              <div
-                className="group relative"
-              >
+              <div className="group relative">
                 {/* Glow Effect */}
                 <div className="absolute inset-0 gradient-primary rounded-3xl blur-xl opacity-0 group-hover:opacity-30 transition-opacity duration-500" />
 
@@ -76,7 +54,7 @@ export const SpeakersSection = () => {
                   {/* Image */}
                   <div className="relative h-64 overflow-hidden">
                     <img
-                      src={speaker.image}
+                      src={getPhotoUrl(speaker.photo)}
                       alt={speaker.name}
                       className="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-700"
                     />

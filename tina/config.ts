@@ -1,9 +1,32 @@
 import { defineConfig } from "tinacms";
 
+// Validate required environment variables
+const clientId = process.env.VITE_TINA_CLIENT_ID;
+const token = process.env.VITE_TINA_TOKEN;
+
+if (!clientId) {
+  throw new Error(
+    "Missing required environment variable: VITE_TINA_CLIENT_ID. " +
+      "Please set it in your .env.local file."
+  );
+}
+
+if (!token) {
+  throw new Error(
+    "Missing required environment variable: VITE_TINA_TOKEN. " +
+      "Please set it in your .env.local file."
+  );
+}
+
+// Determine branch based on environment
+const branch =
+  process.env.VITE_TINA_BRANCH ||
+  (process.env.NODE_ENV === "production" ? "main" : "development");
+
 export default defineConfig({
-  branch: "development",
-  clientId: process.env.VITE_TINA_CLIENT_ID || "",
-  token: process.env.VITE_TINA_TOKEN || "",
+  branch,
+  clientId,
+  token,
   build: {
     outputFolder: "admin",
     publicFolder: "public",

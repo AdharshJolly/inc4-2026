@@ -96,7 +96,7 @@
         },
         {
           "name": "Dr Sandeep Kumar",
-          "role": "Professor, Department of Aritificial Intelligence and Data Science Engineering",
+          "role": "Professor, Department of Artificial Intelligence and Data Science Engineering",
           "affiliation": "IEEE Computer Society Bangalore Chapter",
           "photo": {
             "url": "https://christuniversity.in/uploads/faculty-image/E4860.jpg",
@@ -120,7 +120,7 @@
         },
         {
           "name": "Dr Michael Moses T",
-          "role": "HoD, Department of Aritificial Intelligence and Data Science Engineering",
+          "role": "HoD, Department of Artificial Intelligence and Data Science Engineering",
           "affiliation": "CHRIST (Deemed to be University), Bangalore, India",
           "photo": {
             "url": "https://christuniversity.in/uploads/faculty-image/E1703.jpg",
@@ -1211,15 +1211,6 @@
           }
         },
         {
-          "name": "Ishaan Dawar",
-          "role": "",
-          "affiliation": "DIT University, Dehradun, Uttarakhand, India",
-          "photo": {
-            "url": "",
-            "file": null
-          }
-        },
-        {
           "name": "Ishaan Dawar ",
           "role": "",
           "affiliation": "DIT University, Uttarakhand",
@@ -1375,7 +1366,7 @@
         {
           "name": "Mazin R. AL-Hameed",
           "role": "",
-          "affiliation": "Mazin R. AL-Hameed",
+          "affiliation": "",
           "photo": {
             "url": "",
             "file": null
@@ -1979,15 +1970,6 @@
           "name": "Nagini Sabbineni",
           "role": "",
           "affiliation": "Professor &amp; Head (CSE), VNR Vignana Jyothi Institute of Engineering and Technology, Hyderabad, India",
-          "photo": {
-            "url": "",
-            "file": null
-          }
-        },
-        {
-          "name": "Name",
-          "role": "",
-          "affiliation": "affiliation",
           "photo": {
             "url": "",
             "file": null

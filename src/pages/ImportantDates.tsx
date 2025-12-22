@@ -2,7 +2,8 @@ import { PageTitle } from "@/components/PageTitle";
 import { Card, CardContent } from "@/components/ui/card";
 import { Calendar } from "lucide-react";
 import { useSEO } from "@/hooks/useSEO";
-import dates from "@/data/important-dates.json";
+import datesData from "@/data/important-dates.json";
+import type { ImportantDatesData } from "@/types/data";
 
 export default function ImportantDates() {
   useSEO({
@@ -14,6 +15,9 @@ export default function ImportantDates() {
     ogType: "website",
     canonicalUrl: "https://ic4.co.in/important-dates",
   });
+
+  // Type-safe data normalization
+  const dates = (datesData as ImportantDatesData).root;
 
   return (
     <div className="min-h-screen bg-background">
@@ -32,37 +36,33 @@ export default function ImportantDates() {
                 </div>
               </div>
 
-              {(Array.isArray(dates) ? dates : (dates as any).root)?.map(
-                (item, index) => (
+              {dates.map((item, index) => (
+                <div
+                  key={index}
+                  className={`grid grid-cols-1 md:grid-cols-2 border-b last:border-0 border-primary/10 hover:bg-primary/5 transition-colors ${
+                    item.status === "highlight" ? "bg-primary/5 font-bold" : ""
+                  }`}
+                >
                   <div
-                    key={index}
-                    className={`grid grid-cols-1 md:grid-cols-2 border-b last:border-0 border-primary/10 hover:bg-primary/5 transition-colors ${
+                    className={`p-6 text-center md:text-left md:pl-8 ${
                       item.status === "highlight"
-                        ? "bg-primary/5 font-bold"
-                        : ""
+                        ? "text-primary text-xl"
+                        : "font-semibold"
                     }`}
                   >
-                    <div
-                      className={`p-6 text-center md:text-left md:pl-8 ${
-                        item.status === "highlight"
-                          ? "text-primary text-xl"
-                          : "font-semibold"
-                      }`}
-                    >
-                      {item.event}
-                    </div>
-                    <div
-                      className={`p-6 text-center ${
-                        item.status === "highlight"
-                          ? "text-primary text-xl"
-                          : "text-muted-foreground"
-                      }`}
-                    >
-                      {item.date}
-                    </div>
+                    {item.event}
                   </div>
-                )
-              )}
+                  <div
+                    className={`p-6 text-center ${
+                      item.status === "highlight"
+                        ? "text-primary text-xl"
+                        : "text-muted-foreground"
+                    }`}
+                  >
+                    {item.date}
+                  </div>
+                </div>
+              ))}
             </CardContent>
           </Card>
 

@@ -7,22 +7,17 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSEO } from "@/hooks/useSEO";
 import { getCommitteePersonSchema } from "@/hooks/useSchemaOrg";
-import committeeData from "@/data/committee.json";
-
-const getPhotoUrl = (photo: any): string => {
-  if (!photo) return "";
-  if (typeof photo === "object") {
-    return photo?.file || photo?.url || "";
-  }
-
-  return photo || "";
-};
+import committeeDataImport from "@/data/committee.json";
+import { getPhotoUrl } from "@/lib/photoMigration";
+import type { CommitteeData } from "@/types/data";
 
 export default function Committee() {
   const { category } = useParams<{ category?: string }>();
-  const committeeCategories = Array.isArray(committeeData)
-    ? (committeeData as any)
-    : (committeeData as any).root;
+
+  // Type-safe data normalization
+  const committeeData = committeeDataImport as CommitteeData;
+  const committeeCategories = committeeData.root;
+
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("chief-patron");
 
@@ -59,8 +54,8 @@ export default function Committee() {
   useEffect(() => {
     const imageUrls = committeeCategories.flatMap((category) =>
       category.members
-        .filter((member: any) => getPhotoUrl(member.photo || member.image))
-        .map((member: any) => getPhotoUrl(member.photo || member.image))
+        .filter((member: any) => getPhotoUrl(member.photo))
+        .map((member: any) => getPhotoUrl(member.photo))
     );
 
     // Add preload link tags for critical images (first 12 for above-the-fold)
@@ -96,7 +91,7 @@ export default function Committee() {
         name: member.name,
         role: member.role,
         affiliation: member.affiliation,
-        image: getPhotoUrl(member.photo || member.image),
+        image: getPhotoUrl(member.photo),
       }))
     );
 
@@ -166,10 +161,10 @@ export default function Committee() {
                       <CardContent className="p-0 flex flex-col h-full">
                         <div className="h-2 bg-gradient-to-r from-primary to-secondary opacity-80" />
                         <div className="p-6 flex flex-col items-center text-center flex-1">
-                          {getPhotoUrl(member.photo || member.image) && (
+                          {getPhotoUrl(member.photo) && (
                             <div className="w-24 h-24 rounded-full bg-muted flex items-center justify-center mb-4 group-hover:scale-105 transition-transform duration-500 overflow-hidden border-2 border-border group-hover:border-primary/50">
                               <img
-                                src={getPhotoUrl(member.photo || member.image)}
+                                src={getPhotoUrl(member.photo)}
                                 alt={member.name}
                                 loading={
                                   category.id === activeTab && index < 8
