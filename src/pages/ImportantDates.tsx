@@ -32,33 +32,37 @@ export default function ImportantDates() {
                 </div>
               </div>
 
-              {dates.map((item, index) => (
-                <div
-                  key={index}
-                  className={`grid grid-cols-1 md:grid-cols-2 border-b last:border-0 border-primary/10 hover:bg-primary/5 transition-colors ${
-                    item.status === "highlight" ? "bg-primary/5 font-bold" : ""
-                  }`}
-                >
+              {(Array.isArray(dates) ? dates : (dates as any).root)?.map(
+                (item, index) => (
                   <div
-                    className={`p-6 text-center md:text-left md:pl-8 ${
+                    key={index}
+                    className={`grid grid-cols-1 md:grid-cols-2 border-b last:border-0 border-primary/10 hover:bg-primary/5 transition-colors ${
                       item.status === "highlight"
-                        ? "text-primary text-xl"
-                        : "font-semibold"
+                        ? "bg-primary/5 font-bold"
+                        : ""
                     }`}
                   >
-                    {item.event}
+                    <div
+                      className={`p-6 text-center md:text-left md:pl-8 ${
+                        item.status === "highlight"
+                          ? "text-primary text-xl"
+                          : "font-semibold"
+                      }`}
+                    >
+                      {item.event}
+                    </div>
+                    <div
+                      className={`p-6 text-center ${
+                        item.status === "highlight"
+                          ? "text-primary text-xl"
+                          : "text-muted-foreground"
+                      }`}
+                    >
+                      {item.date}
+                    </div>
                   </div>
-                  <div
-                    className={`p-6 text-center ${
-                      item.status === "highlight"
-                        ? "text-primary text-xl"
-                        : "text-muted-foreground"
-                    }`}
-                  >
-                    {item.date}
-                  </div>
-                </div>
-              ))}
+                )
+              )}
             </CardContent>
           </Card>
 

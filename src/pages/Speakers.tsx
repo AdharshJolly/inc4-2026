@@ -5,6 +5,17 @@ import { Reveal } from "@/components/Reveal";
 import { Link } from "react-router-dom";
 import speakers from "@/data/speakers.json";
 
+// Helper function to get photo URL from either old (string) or new (object) format
+const getPhotoUrl = (photo: any): string => {
+  if (!photo) return "";
+  // Handle new format: { url, file }
+  if (typeof photo === "object") {
+    return photo?.file || photo?.url || "";
+  }
+  // Handle old format: string (backward compatibility)
+  return photo || "";
+};
+
 export default function Speakers() {
   useSEO({
     title: "Keynote Speakers | InC4 2026",
@@ -42,14 +53,14 @@ export default function Speakers() {
 
         {/* 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {speakers.map((speaker, index) => (
+          {(Array.isArray(speakers) ? speakers : (speakers as any).root)?.map((speaker, index) => (
             <Reveal key={speaker.name} width="100%">
               <div className="group relative">
                 <div className="relative bg-card border border-border rounded-3xl overflow-hidden hover:border-primary/50 hover:shadow-md transition-all duration-500">
                   {/* Image * /}
                   <div className="relative h-72 overflow-hidden">
                     <img
-                      src={speaker.image}
+                      src={getPhotoUrl(speaker.photo || speaker.image)}
                       alt={speaker.name}
                       className="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-700"
                     />

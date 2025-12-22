@@ -1,32 +1,34 @@
-[
-  {
-    "event": "Submission Deadline",
-    "date": "June 05, 2026",
-    "status": "upcoming"
-  },
-  {
-    "event": "Acceptance Notification",
-    "date": "July 05, 2026",
-    "status": "upcoming"
-  },
-  {
-    "event": "Early Bird Registration Deadline",
-    "date": "July 20, 2026",
-    "status": "upcoming"
-  },
-  {
-    "event": "Registration Hard Deadline",
-    "date": "July 30, 2026",
-    "status": "upcoming"
-  },
-  {
-    "event": "Camera Ready Submission",
-    "date": "July 30, 2026",
-    "status": "upcoming"
-  },
-  {
-    "event": "Conference Date",
-    "date": "August 07 - 08, 2026",
-    "status": "highlight"
-  }
-]
+{
+  "root": [
+    {
+      "event": "Submission Deadline",
+      "date": "June 05, 2026",
+      "status": "upcoming"
+    },
+    {
+      "event": "Acceptance Notification",
+      "date": "July 05, 2026",
+      "status": "upcoming"
+    },
+    {
+      "event": "Early Bird Registration Deadline",
+      "date": "July 20, 2026",
+      "status": "upcoming"
+    },
+    {
+      "event": "Registration Hard Deadline",
+      "date": "July 30, 2026",
+      "status": "upcoming"
+    },
+    {
+      "event": "Camera Ready Submission",
+      "date": "July 30, 2026",
+      "status": "upcoming"
+    },
+    {
+      "event": "Conference Date",
+      "date": "August 07 - 08, 2026",
+      "status": "highlight"
+    }
+  ]
+}
