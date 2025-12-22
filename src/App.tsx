@@ -20,6 +20,9 @@ import ImportantDates from "./pages/ImportantDates";
 import Schedule from "./pages/Schedule";
 import Speakers from "./pages/Speakers";
 import Contact from "./pages/Contact";
+import AdminDashboard from "./pages/Admin/Dashboard";
+import ActivityLogPage from "./pages/Admin/ActivityLogPage";
+import { ProtectedAdminRoute } from "./pages/Admin/ProtectedAdminRoute";
 import {
   getInC4EventSchema,
   getOrganizationSchema,
@@ -127,6 +130,26 @@ const AppRoutes = () => {
               <PageTransition>
                 <Contact />
               </PageTransition>
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+              <ProtectedAdminRoute>
+                <PageTransition>
+                  <AdminDashboard />
+                </PageTransition>
+              </ProtectedAdminRoute>
+            }
+          />
+          <Route
+            path="/admin/activity-log"
+            element={
+              <ProtectedAdminRoute>
+                <PageTransition>
+                  <ActivityLogPage />
+                </PageTransition>
+              </ProtectedAdminRoute>
             }
           />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
