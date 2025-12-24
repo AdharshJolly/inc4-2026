@@ -45,7 +45,7 @@ export const CountdownTimer = () => {
   ];
 
   return (
-    <div className="flex flex-wrap justify-center gap-4 md:gap-6">
+    <div className="flex justify-center gap-2 md:gap-6">
       {timeBlocks.map((block, index) => (
         <div
           key={block.label}
@@ -53,11 +53,11 @@ export const CountdownTimer = () => {
           style={{ animationDelay: `${index * 0.1}s` }}
         >
           <div className="absolute inset-0 gradient-primary rounded-2xl blur-xl opacity-30 group-hover:opacity-50 transition-opacity" />
-          <div className="relative bg-card border-2 border-primary/20 rounded-2xl p-4 md:p-6 min-w-[80px] md:min-w-[100px] text-center hover:border-primary/40 transition-colors">
-            <span className="font-display text-3xl md:text-5xl font-bold text-gradient-primary">
+          <div className="relative bg-card border-2 border-primary/20 rounded-2xl p-3 md:p-6 min-w-[70px] md:min-w-[100px] text-center hover:border-primary/40 transition-colors">
+            <span className="font-display text-2xl md:text-5xl font-bold text-gradient-primary block">
               {String(block.value).padStart(2, "0")}
             </span>
-            <p className="text-muted-foreground text-sm font-medium mt-2">
+            <p className="text-muted-foreground text-xs md:text-sm font-medium mt-1 md:mt-2">
               {block.label}
             </p>
           </div>
