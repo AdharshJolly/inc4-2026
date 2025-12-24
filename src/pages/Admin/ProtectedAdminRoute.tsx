@@ -46,8 +46,28 @@ export const ProtectedAdminRoute = ({ children }: ProtectedRouteProps) => {
   // Lockout duration in minutes
   const LOCKOUT_DURATION = 15 * 60 * 1000;
 
-  // Admin password - should be environment variable in production
+  // Fallback admin password (client-side only; not secret). Server-side check preferred.
   const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD || "admin123";
+
+  // Verify password via server (if available) with client fallback
+  const verifyPassword = async (input: string) => {
+    try {
+      const response = await fetch("/api/admin-auth", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password: input }),
+      });
+
+      if (response.ok) return true;
+      if (response.status === 401) return false;
+      // Other statuses fall through to client fallback
+    } catch (error) {
+      console.warn("Server auth unavailable, using client fallback", error);
+    }
+
+    // Fallback to client-side password (not secret)
+    return input === ADMIN_PASSWORD;
+  };
 
   useEffect(() => {
     // Check if user has an active session
@@ -136,7 +156,7 @@ export const ProtectedAdminRoute = ({ children }: ProtectedRouteProps) => {
     }
   }, [isLocked, lockoutTime]);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
     // Check if account is locked
@@ -149,8 +169,10 @@ export const ProtectedAdminRoute = ({ children }: ProtectedRouteProps) => {
       return;
     }
 
-    // Verify password
-    if (password === ADMIN_PASSWORD) {
+    // Verify password (server if available, else client fallback)
+    const isValid = await verifyPassword(password);
+
+    if (isValid) {
       // Set session
       sessionStorage.setItem("admin_session", "true");
       sessionStorage.setItem("admin_session_time", Date.now().toString());
