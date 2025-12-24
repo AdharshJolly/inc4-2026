@@ -97,16 +97,17 @@ export const ProtectedAdminRoute = ({ children }: ProtectedRouteProps) => {
           import.meta.env.VITE_TINA_BRANCH ||
           (import.meta.env.MODE === "production" ? "main" : "development");
 
-        await commitChangesToGitHub(pendingChanges, branch)
-          .then((success) => {
-            if (success) {
-              clearPendingChanges();
-              console.log("Changes synced before window close");
-            }
-          })
-          .catch((err) => {
-            console.error("Failed to sync changes before close:", err);
-          });
+        try {
+          const result = await commitChangesToGitHub(pendingChanges, branch);
+          if (result.success) {
+            clearPendingChanges();
+            console.log("Changes synced before window close");
+          } else {
+            console.warn(`Failed to sync before close: ${result.error}`);
+          }
+        } catch (err) {
+          console.error("Error during beforeunload sync:", err);
+        }
       }
     };
 
@@ -186,13 +187,13 @@ export const ProtectedAdminRoute = ({ children }: ProtectedRouteProps) => {
         import.meta.env.VITE_TINA_BRANCH ||
         (import.meta.env.MODE === "production" ? "main" : "development");
 
-      const success = await commitChangesToGitHub(pendingChanges, branch);
-      if (success) {
+      const result = await commitChangesToGitHub(pendingChanges, branch);
+      if (result.success) {
         clearPendingChanges();
         console.log(`Synced ${pendingChanges.length} changes to GitHub`);
       } else {
         console.warn(
-          "Failed to sync changes to GitHub, but logging out anyway"
+          `Failed to sync changes to GitHub: ${result.error}. Logging out anyway.`
         );
       }
     }

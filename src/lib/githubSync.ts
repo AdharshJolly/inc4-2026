@@ -1,6 +1,7 @@
 /**
  * GitHub Sync Utility
  * Handles committing changes to GitHub when admin session ends
+ * Includes retry logic and error handling
  */
 
 interface FileChange {
@@ -9,26 +10,88 @@ interface FileChange {
   message: string;
 }
 
+interface SyncResult {
+  success: boolean;
+  message: string;
+  error?: string;
+}
+
+/**
+ * Retry mechanism for API calls
+ */
+async function fetchWithRetry(
+  url: string,
+  options: RequestInit,
+  maxRetries: number = 3
+): Promise<Response> {
+  let lastError: Error | null = null;
+
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      const response = await fetch(url, options);
+
+      // If successful, return
+      if (response.ok) {
+        return response;
+      }
+
+      // If rate limited, wait before retrying
+      if (response.status === 429) {
+        const retryAfter = response.headers.get("retry-after");
+        const waitTime = (parseInt(retryAfter || "60") + 1) * 1000;
+        console.warn(
+          `Rate limited. Retrying after ${waitTime / 1000} seconds...`
+        );
+        await new Promise((resolve) => setTimeout(resolve, waitTime));
+        continue;
+      }
+
+      // For other non-2xx responses, throw error
+      if (!response.ok) {
+        throw new Error(
+          `GitHub API error: ${response.status} ${response.statusText}`
+        );
+      }
+
+      return response;
+    } catch (error) {
+      lastError = error instanceof Error ? error : new Error(String(error));
+      console.warn(`Attempt ${attempt}/${maxRetries} failed:`, lastError);
+
+      // Wait before retrying (exponential backoff)
+      if (attempt < maxRetries) {
+        const delay = Math.pow(2, attempt - 1) * 1000; // 1s, 2s, 4s...
+        await new Promise((resolve) => setTimeout(resolve, delay));
+      }
+    }
+  }
+
+  throw lastError || new Error("GitHub API request failed after retries");
+}
+
 /**
  * Commit file changes to GitHub
  * Uses GitHub API to update files directly
+ * Includes automatic retry logic for transient failures
  */
 export async function commitChangesToGitHub(
   changes: FileChange[],
   branch: string = "development"
-) {
+): Promise<SyncResult> {
   const token = import.meta.env.VITE_TINA_TOKEN;
   const owner = "AdharshJolly";
   const repo = "inc4-2026";
 
   if (!token) {
-    console.error("GitHub token not available for syncing");
-    return false;
+    const error =
+      "GitHub token not available for syncing. Please check VITE_TINA_TOKEN env var.";
+    console.error(error);
+    return { success: false, message: error };
   }
 
   try {
     // Get current branch reference to find the latest commit SHA
-    const refResponse = await fetch(
+    const refResponse = await fetchWithRetry(
       `https://api.github.com/repos/${owner}/${repo}/git/refs/heads/${branch}`,
       {
         headers: {
@@ -38,17 +101,11 @@ export async function commitChangesToGitHub(
       }
     );
 
-    if (!refResponse.ok) {
-      throw new Error(
-        `Failed to get branch reference: ${refResponse.statusText}`
-      );
-    }
-
     const refData = await refResponse.json();
     const latestCommitSha = refData.object.sha;
 
     // Get the tree of the latest commit
-    const commitResponse = await fetch(
+    const commitResponse = await fetchWithRetry(
       `https://api.github.com/repos/${owner}/${repo}/git/commits/${latestCommitSha}`,
       {
         headers: {
@@ -58,17 +115,13 @@ export async function commitChangesToGitHub(
       }
     );
 
-    if (!commitResponse.ok) {
-      throw new Error(`Failed to get commit: ${commitResponse.statusText}`);
-    }
-
     const commitData = await commitResponse.json();
     const baseTreeSha = commitData.tree.sha;
 
     // Create blob objects for each changed file
     const treeItems = [];
     for (const change of changes) {
-      const blobResponse = await fetch(
+      const blobResponse = await fetchWithRetry(
         `https://api.github.com/repos/${owner}/${repo}/git/blobs`,
         {
           method: "POST",
@@ -83,10 +136,6 @@ export async function commitChangesToGitHub(
         }
       );
 
-      if (!blobResponse.ok) {
-        throw new Error(`Failed to create blob: ${blobResponse.statusText}`);
-      }
-
       const blobData = await blobResponse.json();
       treeItems.push({
         path: change.path,
@@ -97,7 +146,7 @@ export async function commitChangesToGitHub(
     }
 
     // Create a new tree with the changes
-    const treeResponse = await fetch(
+    const treeResponse = await fetchWithRetry(
       `https://api.github.com/repos/${owner}/${repo}/git/trees`,
       {
         method: "POST",
@@ -112,10 +161,6 @@ export async function commitChangesToGitHub(
       }
     );
 
-    if (!treeResponse.ok) {
-      throw new Error(`Failed to create tree: ${treeResponse.statusText}`);
-    }
-
     const treeData = await treeResponse.json();
 
     // Create a commit with the new tree
@@ -127,7 +172,7 @@ export async function commitChangesToGitHub(
             .map((m) => `- ${m}`)
             .join("\n")}`;
 
-    const newCommitResponse = await fetch(
+    const newCommitResponse = await fetchWithRetry(
       `https://api.github.com/repos/${owner}/${repo}/git/commits`,
       {
         method: "POST",
@@ -143,16 +188,10 @@ export async function commitChangesToGitHub(
       }
     );
 
-    if (!newCommitResponse.ok) {
-      throw new Error(
-        `Failed to create commit: ${newCommitResponse.statusText}`
-      );
-    }
-
     const newCommitData = await newCommitResponse.json();
 
     // Update the branch reference to point to the new commit
-    const updateRefResponse = await fetch(
+    const updateRefResponse = await fetchWithRetry(
       `https://api.github.com/repos/${owner}/${repo}/git/refs/heads/${branch}`,
       {
         method: "PATCH",
@@ -167,17 +206,17 @@ export async function commitChangesToGitHub(
       }
     );
 
-    if (!updateRefResponse.ok) {
-      throw new Error(
-        `Failed to update branch: ${updateRefResponse.statusText}`
-      );
-    }
-
-    console.log(`Successfully committed changes to ${branch}`);
-    return true;
+    const message = `Successfully synced ${changes.length} file(s) to ${branch}`;
+    console.log(message);
+    return { success: true, message };
   } catch (error) {
-    console.error("Error syncing with GitHub:", error);
-    return false;
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    console.error("Error syncing with GitHub:", errorMessage);
+    return {
+      success: false,
+      message: "Failed to sync changes to GitHub",
+      error: errorMessage,
+    };
   }
 }
 

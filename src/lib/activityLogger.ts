@@ -15,7 +15,6 @@ export interface ActivityLogEntry {
 
 const STORAGE_KEY = "admin_activity_log";
 const MAX_ENTRIES = 500; // Keep last 500 entries
-
 export const ActivityLogger = {
   /**
    * Log an action to activity log
@@ -25,7 +24,7 @@ export const ActivityLogger = {
 
     const newEntry: ActivityLogEntry = {
       ...entry,
-      id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+      id: `${Date.now()}-${Math.random().toString(36).slice(2, 11)}`,
       timestamp: Date.now(),
     };
 
@@ -87,7 +86,10 @@ export const ActivityLogger = {
     a.download = `admin-activity-log-${
       new Date().toISOString().split("T")[0]
     }.json`;
+    document.body.appendChild(a);
     a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
   },
 };
 
@@ -147,11 +149,10 @@ export const logAction = {
       targetName: name,
       status: "warning",
     }),
-
-  bulkAction: (action: string, count: number) =>
+  bulkAction: (action: string, count: number, type: ActivityLogEntry["type"]) =>
     ActivityLogger.log({
       action: `Performed bulk action: ${action} (${count} items)`,
-      type: "member",
+      type,
       targetName: `${count} items`,
       status: "success",
     }),

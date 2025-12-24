@@ -3,9 +3,10 @@ import { Badge } from "@/components/ui/badge";
 import { Calendar, Plus, Edit, Trash2 } from "lucide-react";
 import datesData from "@/data/important-dates.json";
 import type { ImportantDatesData } from "@/types/data";
+import { AddDatesDialog } from "./AddDatesDialog";
 
 export const DatesManager = () => {
-  const dates = (datesData as ImportantDatesData).root;
+  const dates = (datesData as ImportantDatesData).root || [];
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -24,10 +25,7 @@ export const DatesManager = () => {
     <div className="space-y-6">
       {/* Actions */}
       <div className="flex gap-2">
-        <Button className="bg-orange-500 hover:bg-orange-600">
-          <Plus className="w-4 h-4 mr-2" />
-          Add Event Date
-        </Button>
+        <AddDatesDialog />
       </div>
 
       {/* Timeline */}

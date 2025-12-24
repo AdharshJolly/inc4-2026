@@ -11,6 +11,11 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Plus } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import committeeData from "@/data/committee.json";
+import { storePendingChange } from "@/lib/githubSync";
+import { ActivityLogger } from "@/lib/activityLogger";
+import type { CommitteeData } from "@/types/data";
 
 interface AddCategoryFormData {
   label: string;
@@ -25,6 +30,7 @@ export const AddCategoryDialog = ({
 }: AddCategoryDialogProps) => {
   const [open, setOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
   const [formData, setFormData] = useState<AddCategoryFormData>({
     label: "",
   });
@@ -32,40 +38,65 @@ export const AddCategoryDialog = ({
   const handleSubmit = async () => {
     // Validation
     if (!formData.label.trim()) {
-      alert("Please enter a category name");
+      toast({
+        title: "Validation Error",
+        description: "Please enter a category name",
+        variant: "destructive",
+      });
       return;
     }
 
     setIsSubmitting(true);
 
     try {
-      // TODO: Integrate with TinaCMS GraphQL mutation
-      // const mutation = `
-      //   mutation AddCommitteeCategory($label: String!) {
-      //     addCommitteeCategory(label: $label) {
-      //       id
-      //       label
-      //       members { id name role }
-      //     }
-      //   }
-      // `;
+      const committee = (committeeData as CommitteeData).root;
 
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      // Generate unique ID for category
+      const categoryId = `category-${Date.now()}`;
 
-      console.log("New category to be added:", formData);
+      // Create new category object
+      const newCategory = {
+        id: categoryId,
+        name: formData.label,
+        members: [],
+      };
+
+      // Add to committee in memory
+      committee.push(newCategory);
+
+      // Store pending change for GitHub commit on logout
+      const updatedCommittee = JSON.stringify(committeeData, null, 2);
+      storePendingChange({
+        path: "src/data/committee.json",
+        content: updatedCommittee,
+        message: `Added new committee category: ${formData.label}`,
+      });
+
+      // Log the action
+      ActivityLogger.log({
+        action: "Added new committee category",
+        type: "category",
+        targetName: formData.label,
+        status: "success",
+      });
+
+      toast({
+        title: "Success",
+        description: `Category "${formData.label}" added successfully! Changes will sync to GitHub when you log out.`,
+      });
 
       onCategoryAdded?.(formData);
 
       // Reset form
       setFormData({ label: "" });
       setOpen(false);
-      alert(
-        "Category added successfully! (Note: Changes will persist when integrated with TinaCMS)"
-      );
     } catch (error) {
       console.error("Error adding category:", error);
-      alert("Error adding category. Please try again.");
+      toast({
+        title: "Error",
+        description: "Failed to add category. Please try again.",
+        variant: "destructive",
+      });
     } finally {
       setIsSubmitting(false);
     }

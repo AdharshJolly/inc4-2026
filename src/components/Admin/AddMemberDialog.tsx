@@ -19,7 +19,10 @@ import {
 } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Plus, Eye } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 import committeeData from "@/data/committee.json";
+import { storePendingChange } from "@/lib/githubSync";
+import { ActivityLogger } from "@/lib/activityLogger";
 import type { CommitteeData } from "@/types/data";
 import { PreviewDialog } from "./PreviewDialog";
 
@@ -40,6 +43,7 @@ interface AddMemberDialogProps {
 export const AddMemberDialog = ({ onMemberAdded }: AddMemberDialogProps) => {
   const [open, setOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
   const [formData, setFormData] = useState<AddMemberFormData>({
     name: "",
     role: "",
@@ -97,40 +101,79 @@ export const AddMemberDialog = ({ onMemberAdded }: AddMemberDialogProps) => {
   const handleSubmit = async () => {
     // Validation
     if (!formData.name.trim()) {
-      alert("Please enter a member name");
+      toast({
+        title: "Validation Error",
+        description: "Please enter a member name",
+        variant: "destructive",
+      });
       return;
     }
     if (!formData.affiliation.trim()) {
-      alert("Please enter affiliation");
+      toast({
+        title: "Validation Error",
+        description: "Please enter affiliation",
+        variant: "destructive",
+      });
       return;
     }
     if (!formData.categoryId) {
-      alert("Please select a category");
+      toast({
+        title: "Validation Error",
+        description: "Please select a category",
+        variant: "destructive",
+      });
       return;
     }
     if (!formData.photoUrl && !formData.photoFile) {
-      alert("Please provide either a photo URL or upload a photo file");
+      toast({
+        title: "Validation Error",
+        description: "Please provide either a photo URL or upload a photo file",
+        variant: "destructive",
+      });
       return;
     }
 
     setIsSubmitting(true);
 
     try {
-      // TODO: Integrate with TinaCMS GraphQL mutation
-      // For file uploads, you'll need to:
-      // 1. Upload file to TinaCMS media manager
-      // 2. Get the returned file path
-      // 3. Use that path in the member data
+      const category = committee.find((c) => c.id === formData.categoryId);
+      if (!category) {
+        throw new Error("Category not found");
+      }
 
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 500));
-
-      console.log("New member to be added:", {
-        ...formData,
+      // Create new member object
+      const newMember = {
+        name: formData.name,
+        role: formData.role || "",
+        affiliation: formData.affiliation,
         photo: {
           url: formData.photoUrl,
           file: formData.photoFile ? formData.photoFile.name : null,
         },
+      };
+
+      // Add to category in memory
+      category.members.push(newMember);
+
+      // Store pending change for GitHub commit on logout
+      const updatedCommittee = JSON.stringify(committeeData, null, 2);
+      storePendingChange({
+        path: "src/data/committee.json",
+        content: updatedCommittee,
+        message: `Added new committee member: ${formData.name}`,
+      });
+
+      // Log the action
+      ActivityLogger.log({
+        action: "Added new committee member",
+        type: "member",
+        targetName: formData.name,
+        status: "success",
+      });
+
+      toast({
+        title: "Success",
+        description: `Member "${formData.name}" added successfully! Changes will sync to GitHub when you log out.`,
       });
 
       onMemberAdded?.({
@@ -156,12 +199,13 @@ export const AddMemberDialog = ({ onMemberAdded }: AddMemberDialogProps) => {
       });
 
       setOpen(false);
-      alert(
-        "Member added successfully! (Note: Changes will persist when integrated with TinaCMS)"
-      );
     } catch (error) {
       console.error("Error adding member:", error);
-      alert("Error adding member. Please try again.");
+      toast({
+        title: "Error",
+        description: "Failed to add member. Please try again.",
+        variant: "destructive",
+      });
     } finally {
       setIsSubmitting(false);
     }

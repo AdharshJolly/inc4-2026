@@ -12,6 +12,11 @@ import {
 } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Plus, Eye } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import speakersData from "@/data/speakers.json";
+import { storePendingChange } from "@/lib/githubSync";
+import { ActivityLogger } from "@/lib/activityLogger";
+import type { SpeakersData } from "@/types/data";
 import { PreviewDialog } from "./PreviewDialog";
 
 interface AddSpeakerFormData {
@@ -34,6 +39,7 @@ interface AddSpeakerDialogProps {
 export const AddSpeakerDialog = ({ onSpeakerAdded }: AddSpeakerDialogProps) => {
   const [open, setOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
   const [formData, setFormData] = useState<AddSpeakerFormData>({
     name: "",
     role: "",
@@ -93,44 +99,86 @@ export const AddSpeakerDialog = ({ onSpeakerAdded }: AddSpeakerDialogProps) => {
   const handleSubmit = async () => {
     // Validation
     if (!formData.name.trim()) {
-      alert("Please enter speaker name");
+      toast({
+        title: "Validation Error",
+        description: "Please enter speaker name",
+        variant: "destructive",
+      });
       return;
     }
     if (!formData.role.trim()) {
-      alert("Please enter speaker role");
+      toast({
+        title: "Validation Error",
+        description: "Please enter speaker role",
+        variant: "destructive",
+      });
       return;
     }
     if (!formData.affiliation.trim()) {
-      alert("Please enter affiliation");
+      toast({
+        title: "Validation Error",
+        description: "Please enter affiliation",
+        variant: "destructive",
+      });
       return;
     }
     if (!formData.topic.trim()) {
-      alert("Please enter topic");
+      toast({
+        title: "Validation Error",
+        description: "Please enter topic",
+        variant: "destructive",
+      });
       return;
     }
     if (!formData.photoUrl && !formData.photoFile) {
-      alert("Please provide either a photo URL or upload a photo file");
+      toast({
+        title: "Validation Error",
+        description: "Please provide either a photo URL or upload a photo file",
+        variant: "destructive",
+      });
       return;
     }
 
     setIsSubmitting(true);
 
     try {
-      // TODO: Integrate with TinaCMS GraphQL mutation
-      // For file uploads, you'll need to:
-      // 1. Upload file to TinaCMS media manager
-      // 2. Get the returned file path
-      // 3. Use that path in the speaker data
+      const speakers = (speakersData as SpeakersData).root;
 
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 500));
-
-      console.log("New speaker to be added:", {
-        ...formData,
+      // Create new speaker object
+      const newSpeaker = {
+        name: formData.name,
+        role: formData.role,
+        affiliation: formData.affiliation,
+        topic: formData.topic,
+        linkedin: formData.linkedin || "",
         photo: {
           url: formData.photoUrl,
           file: formData.photoFile ? formData.photoFile.name : null,
         },
+      };
+
+      // Add to speakers in memory
+      speakers.push(newSpeaker);
+
+      // Store pending change for GitHub commit on logout
+      const updatedSpeakers = JSON.stringify(speakersData, null, 2);
+      storePendingChange({
+        path: "src/data/speakers.json",
+        content: updatedSpeakers,
+        message: `Added new speaker: ${formData.name}`,
+      });
+
+      // Log the action
+      ActivityLogger.log({
+        action: "Added new speaker",
+        type: "speaker",
+        targetName: formData.name,
+        status: "success",
+      });
+
+      toast({
+        title: "Success",
+        description: `Speaker "${formData.name}" added successfully! Changes will sync to GitHub when you log out.`,
       });
 
       onSpeakerAdded?.({
@@ -156,12 +204,13 @@ export const AddSpeakerDialog = ({ onSpeakerAdded }: AddSpeakerDialogProps) => {
       });
 
       setOpen(false);
-      alert(
-        "Speaker added successfully! (Note: Changes will persist when integrated with TinaCMS)"
-      );
     } catch (error) {
       console.error("Error adding speaker:", error);
-      alert("Error adding speaker. Please try again.");
+      toast({
+        title: "Error",
+        description: "Failed to add speaker. Please try again.",
+        variant: "destructive",
+      });
     } finally {
       setIsSubmitting(false);
     }
