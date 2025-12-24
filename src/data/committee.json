@@ -5733,6 +5733,14 @@
             "url": "https://media.licdn.com/dms/image/v2/D5603AQFQO_F5mnFTbA/profile-displayphoto-scale_400_400/B56Zs3qHMwKAAg-/0/1766165346749?e=1767830400&v=beta&t=OLWc01r1LudVQ8iXAkH4QdAfdN0_JR6WH3obJynk9iM",
             "file": null
           }
+        },
+        {
+          "name": "Test",
+          "role": "head",
+          "affiliation": "cu",
+          "photo": {
+            "url": "/images/committee/1766607258118-230gn5.png"
+          }
         }
       ]
     }
