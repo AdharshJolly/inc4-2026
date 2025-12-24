@@ -2,6 +2,7 @@
 import { defineConfig } from "tinacms";
 var clientId = process.env.VITE_TINA_CLIENT_ID;
 var token = process.env.VITE_TINA_TOKEN;
+var searchToken = process.env.VITE_TINA_SEARCH_INDEXER_TOKEN;
 if (!clientId) {
   throw new Error(
     "Missing required environment variable: VITE_TINA_CLIENT_ID. Please set it in your .env.local file."
@@ -10,6 +11,11 @@ if (!clientId) {
 if (!token) {
   throw new Error(
     "Missing required environment variable: VITE_TINA_TOKEN. Please set it in your .env.local file."
+  );
+}
+if (!searchToken) {
+  console.warn(
+    "Missing recommended environment variable: VITE_TINA_SEARCH_INDEXER_TOKEN. You can set it in your .env.local file for search indexing features."
   );
 }
 var branch = process.env.VITE_TINA_BRANCH || (false ? "main" : "development");
@@ -207,6 +213,11 @@ var config_default = defineConfig({
         ]
       }
     ]
+  },
+  search: {
+    tina: {
+      indexerToken: searchToken || ""
+    }
   }
 });
 export {
