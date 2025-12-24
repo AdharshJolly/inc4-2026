@@ -17,7 +17,8 @@ export const PreviewModeBanner = () => {
       <AlertTitle className="text-orange-600">Preview Mode</AlertTitle>
       <AlertDescription className="flex items-center justify-between">
         <span className="text-sm text-orange-700">
-          You're viewing uncommitted changes from the admin panel. This is not the live site.
+          You're viewing uncommitted changes from the admin panel. This is not
+          the live site.
         </span>
         <Button
           size="sm"

@@ -38,14 +38,14 @@ export function isPreviewMode(): boolean {
  */
 export function getPreviewData(filePath: string): string | null {
   if (!isPreviewMode()) return null;
-  
+
   try {
     const dataStr = localStorage.getItem(PREVIEW_DATA_KEY);
     if (!dataStr) return null;
-    
+
     const data: PreviewData = JSON.parse(dataStr);
     const fileContent = data[filePath];
-    
+
     // Return the raw content string (which is JSON)
     return fileContent || null;
   } catch (error) {
@@ -59,7 +59,7 @@ export function getPreviewData(filePath: string): string | null {
  */
 export function getAllPreviewData(): PreviewData | null {
   if (!isPreviewMode()) return null;
-  
+
   try {
     const dataStr = localStorage.getItem(PREVIEW_DATA_KEY);
     if (!dataStr) return null;

@@ -22,7 +22,9 @@ import { FileEdit, Trash2, AlertTriangle } from "lucide-react";
 
 export const PendingChangesCounter = () => {
   const [count, setCount] = useState(0);
-  const [changes, setChanges] = useState<Array<{ path: string; message: string }>>([]);
+  const [changes, setChanges] = useState<
+    Array<{ path: string; message: string }>
+  >([]);
   const [open, setOpen] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const { toast } = useToast();
@@ -89,11 +91,14 @@ export const PendingChangesCounter = () => {
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <h4 className="font-semibold text-sm">Pending Changes</h4>
-              <Badge variant="secondary" className="bg-orange-500/10 text-orange-600">
+              <Badge
+                variant="secondary"
+                className="bg-orange-500/10 text-orange-600"
+              >
                 {count} file{count !== 1 ? "s" : ""}
               </Badge>
             </div>
-            
+
             <p className="text-xs text-muted-foreground">
               These changes will be committed to GitHub when you log out.
             </p>
@@ -137,7 +142,9 @@ export const PendingChangesCounter = () => {
               Discard Pending Changes?
             </AlertDialogTitle>
             <AlertDialogDescription>
-              This will permanently delete all {count} pending change{count !== 1 ? "s" : ""}. This action cannot be undone. Your changes will not be committed to GitHub.
+              This will permanently delete all {count} pending change
+              {count !== 1 ? "s" : ""}. This action cannot be undone. Your
+              changes will not be committed to GitHub.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
