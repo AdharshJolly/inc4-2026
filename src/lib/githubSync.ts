@@ -81,13 +81,13 @@ export async function commitChangesToGitHub(
   changes: FileChange[],
   branch: string = "development"
 ): Promise<SyncResult> {
-  const token = import.meta.env.VITE_TINA_TOKEN;
+  const token = import.meta.env.VITE_GITHUB_TOKEN;
   const owner = "AdharshJolly";
   const repo = "inc4-2026";
 
   if (!token) {
     const error =
-      "GitHub token not available for syncing. Please check VITE_TINA_TOKEN env var.";
+      "GitHub token not available for syncing. Please set VITE_GITHUB_TOKEN in your .env file with a GitHub Personal Access Token.";
     console.error(error);
     return { success: false, message: error };
   }
