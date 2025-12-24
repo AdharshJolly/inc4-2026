@@ -140,15 +140,12 @@ export async function uploadImageToGitHub(
     if (!token) {
       return {
         success: false,
-        error: "GitHub token not configured",
+        error: "GitHub token not configured. Please set VITE_GITHUB_TOKEN in your .env file.",
       };
     }
 
-    // URL-encode the file path and build URL with branch query parameter
-    const encodedFilePath = encodeURIComponent(filePath);
-    const uploadUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${encodedFilePath}?branch=${encodeURIComponent(
-      branch
-    )}`;
+    // GitHub API expects the path without URL encoding
+    const uploadUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${filePath}`;
 
     // Upload to GitHub using API
     const response = await fetchWithRetry(uploadUrl, {
@@ -161,6 +158,7 @@ export async function uploadImageToGitHub(
       body: JSON.stringify({
         message: `Upload image: ${filename}`,
         content: base64Content,
+        branch: branch,
       }),
     });
 
