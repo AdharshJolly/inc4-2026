@@ -5,6 +5,7 @@
  */
 
 import { fetchWithRetry } from "./githubSync";
+import { logError, addBreadcrumb } from "./errorLogger";
 
 export interface UploadResult {
   success: boolean;
@@ -179,10 +180,19 @@ export async function uploadImageToGitHub(
       message: `Successfully uploaded ${filename}`,
     };
   } catch (error) {
+    const errorMsg =
+      error instanceof Error ? error.message : "Unknown error during upload";
+    logError("Image upload to GitHub failed", {
+      filename: file.name,
+      folder,
+      fileSize: file.size,
+      fileType: file.type,
+      error: errorMsg,
+    });
+    addBreadcrumb("file_upload", `Upload failed: ${errorMsg}`, "error");
     return {
       success: false,
-      error:
-        error instanceof Error ? error.message : "Unknown error during upload",
+      error: errorMsg,
     };
   }
 }

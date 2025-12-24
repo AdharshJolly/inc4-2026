@@ -10,12 +10,17 @@ import { getCommitteePersonSchema } from "@/hooks/useSchemaOrg";
 import committeeDataImport from "@/data/committee.json";
 import { getPhotoUrl, normalizePhotoFields } from "@/lib/photoMigration";
 import type { CommitteeData } from "@/types/data";
+import { getPreviewData } from "@/lib/previewMode";
 
 export default function Committee() {
   const { category } = useParams<{ category?: string }>();
 
   // Type-safe data normalization with photo field migration
-  const committeeData = committeeDataImport as CommitteeData;
+  // Check for preview data first, fallback to imported data
+  const previewData = getPreviewData("src/data/committee.json");
+  const committeeData = previewData
+    ? (JSON.parse(previewData) as CommitteeData)
+    : (committeeDataImport as CommitteeData);
   const committeeCategories = committeeData.root.map((cat) => ({
     ...cat,
     members: normalizePhotoFields(cat.members),

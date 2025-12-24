@@ -34,6 +34,7 @@ interface AddDateFormData {
   event: string;
   date: string;
   status: "upcoming" | "completed" | "highlight";
+  description?: string;
 }
 
 interface AddDatesDialogProps {
@@ -49,6 +50,7 @@ export const AddDatesDialog = ({ onDateAdded }: AddDatesDialogProps) => {
     event: "",
     date: "",
     status: "upcoming",
+    description: "",
   });
   // Initialize local dates state from imported JSON
   const [dates, setDates] = useState<ImportantDatesData["root"]>(() =>
@@ -119,6 +121,7 @@ export const AddDatesDialog = ({ onDateAdded }: AddDatesDialogProps) => {
         event: formData.event,
         date: formData.date,
         status: formData.status,
+        description: formData.description?.trim() || undefined,
       };
 
       // Use immutable approach: create new array with spread operator
@@ -162,6 +165,7 @@ export const AddDatesDialog = ({ onDateAdded }: AddDatesDialogProps) => {
         event: "",
         date: "",
         status: "upcoming",
+        description: "",
       });
 
       setOpen(false);
@@ -264,6 +268,20 @@ export const AddDatesDialog = ({ onDateAdded }: AddDatesDialogProps) => {
                 <SelectItem value="highlight">Highlight</SelectItem>
               </SelectContent>
             </Select>
+          </div>
+
+          {/* Description */}
+          <div className="space-y-2">
+            <Label htmlFor="description" className="text-sm font-medium">
+              Description (optional)
+            </Label>
+            <textarea
+              id="description"
+              className="w-full min-h-24 rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+              placeholder="Details shown in calendar events (Google/ICS)."
+              value={formData.description}
+              onChange={(e) => handleInputChange("description", e.target.value)}
+            />
           </div>
 
           {/* Submit Button */}

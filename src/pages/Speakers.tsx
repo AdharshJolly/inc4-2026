@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import speakersData from "@/data/speakers.json";
 import { getPhotoUrl, normalizePhotoFields } from "@/lib/photoMigration";
 import type { SpeakersData } from "@/types/data";
+import { getPreviewData } from "@/lib/previewMode";
 
 export default function Speakers() {
   useSEO({
@@ -19,7 +20,12 @@ export default function Speakers() {
   });
 
   // Type-safe data normalization with legacy photo field handling
-  const speakers = normalizePhotoFields((speakersData as SpeakersData).root);
+  // Check for preview data first, fallback to imported data
+  const previewData = getPreviewData("src/data/speakers.json");
+  const speakersDataActual = previewData
+    ? (JSON.parse(previewData) as SpeakersData)
+    : (speakersData as SpeakersData);
+  const speakers = normalizePhotoFields(speakersDataActual.root);
 
   return (
     <div className="min-h-screen bg-background">

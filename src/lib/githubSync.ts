@@ -4,6 +4,8 @@
  * Includes retry logic and error handling
  */
 
+import { logError, addBreadcrumb } from "./errorLogger";
+
 interface FileChange {
   path: string;
   content: string;
@@ -53,6 +55,11 @@ export async function fetchWithRetry(
     } catch (error) {
       lastError = error instanceof Error ? error : new Error(String(error));
       console.warn(`Attempt ${attempt}/${maxRetries} failed:`, lastError);
+      addBreadcrumb(
+        "github_sync",
+        `Attempt ${attempt} failed: ${lastError.message}`,
+        "warning"
+      );
 
       // Wait before retrying (exponential backoff)
       if (attempt < maxRetries) {
@@ -263,10 +270,18 @@ export async function commitChangesToGitHub(
 
     const message = `Successfully synced ${changes.length} file(s) to ${branch}`;
     console.log(message);
+    addBreadcrumb("github_sync", message, "info", {
+      filesCount: changes.length,
+    });
     return { success: true, message };
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
     console.error("Error syncing with GitHub:", errorMessage);
+    logError("GitHub sync failed", {
+      changesCount: changes.length,
+      branch,
+      error: errorMessage,
+    });
     return {
       success: false,
       message: "Failed to sync changes to GitHub",

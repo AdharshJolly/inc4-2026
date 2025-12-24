@@ -3,7 +3,8 @@ import { PageTitle } from "@/components/PageTitle";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Users, Calendar, Mic } from "lucide-react";
+import { Users, Calendar, Mic, Eye } from "lucide-react";
+import { PendingChangesCounter } from "@/components/Admin/PendingChangesCounter";
 import committeeData from "@/data/committee.json";
 import speakersData from "@/data/speakers.json";
 import datesData from "@/data/important-dates.json";
@@ -16,6 +17,9 @@ import { CommitteeManager } from "@/components/Admin/CommitteeManager";
 import { SpeakersManager } from "@/components/Admin/SpeakersManager";
 import { DatesManager } from "@/components/Admin/DatesManager";
 import { AdminSessionContext } from "./ProtectedAdminRoute";
+import { getPendingChanges } from "@/lib/githubSync";
+import { enablePreviewMode } from "@/lib/previewMode";
+import type { PreviewData } from "@/lib/previewMode";
 
 export default function AdminDashboard() {
   const session = useContext(AdminSessionContext);
@@ -63,20 +67,46 @@ export default function AdminDashboard() {
     },
   ];
 
+  const handlePreview = (url: string) => {
+    const pending = getPendingChanges();
+    if (pending.length === 0) {
+      // No changes, just open the page
+      window.open(url, "_blank");
+      return;
+    }
+
+    // Build preview data object - ensure content is always a string
+    const previewData: PreviewData = {};
+    pending.forEach((change) => {
+      // If content is an object, stringify it; if it's already a string, keep it
+      previewData[change.path] =
+        typeof change.content === "string"
+          ? change.content
+          : JSON.stringify(change.content);
+    });
+
+    // Enable preview mode and open
+    enablePreviewMode(previewData);
+    window.open(url, "_blank");
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 pb-4 flex items-center justify-between">
         <PageTitle title="Admin Dashboard" />
-        {session?.logout && (
-          <Button
-            onClick={session.logout}
-            variant="outline"
-            size="sm"
-            className="border-red-500 text-red-500 hover:bg-red-500 hover:text-white"
-          >
-            Logout
-          </Button>
-        )}
+        <div className="flex items-center gap-3">
+          <PendingChangesCounter />
+          {session?.logout && (
+            <Button
+              onClick={session.logout}
+              variant="outline"
+              size="sm"
+              className="border-red-500 text-red-500 hover:bg-red-500 hover:text-white"
+            >
+              Logout
+            </Button>
+          )}
+        </div>
       </div>
 
       <div className="container mx-auto px-4 pb-20">
@@ -154,14 +184,44 @@ export default function AdminDashboard() {
               </TabsList>
 
               <TabsContent value="committee" className="space-y-4">
+                <div className="flex justify-end mb-4">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handlePreview("/committee")}
+                  >
+                    <Eye className="w-4 h-4 mr-2" />
+                    Preview Committee Page
+                  </Button>
+                </div>
                 <CommitteeManager />
               </TabsContent>
 
               <TabsContent value="speakers" className="space-y-4">
+                <div className="flex justify-end mb-4">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handlePreview("/speakers")}
+                  >
+                    <Eye className="w-4 h-4 mr-2" />
+                    Preview Speakers Page
+                  </Button>
+                </div>
                 <SpeakersManager />
               </TabsContent>
 
               <TabsContent value="dates" className="space-y-4">
+                <div className="flex justify-end mb-4">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handlePreview("/important-dates")}
+                  >
+                    <Eye className="w-4 h-4 mr-2" />
+                    Preview Important Dates
+                  </Button>
+                </div>
                 <DatesManager />
               </TabsContent>
             </Tabs>

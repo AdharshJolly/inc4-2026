@@ -7,6 +7,7 @@ export interface ImportantDateItem {
   event: string;
   date: string;
   status: "upcoming" | "completed" | "highlight";
+  description?: string;
 }
 
 export interface ImportantDatesData {

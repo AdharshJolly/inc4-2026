@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ActivityLog } from "@/components/Admin/ActivityLog";
 import { AdminSessionContext } from "./ProtectedAdminRoute";
+import { PendingChangesCounter } from "@/components/Admin/PendingChangesCounter";
 
 export default function ActivityLogPage() {
   const session = useContext(AdminSessionContext);
@@ -12,16 +13,19 @@ export default function ActivityLogPage() {
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 pb-4 flex items-center justify-between">
         <PageTitle title="Activity Log" />
-        {session?.logout && (
-          <Button
-            onClick={session.logout}
-            variant="outline"
-            size="sm"
-            className="border-red-500 text-red-500 hover:bg-red-500 hover:text-white"
-          >
-            Logout
-          </Button>
-        )}
+        <div className="flex items-center gap-3">
+          <PendingChangesCounter />
+          {session?.logout && (
+            <Button
+              onClick={session.logout}
+              variant="outline"
+              size="sm"
+              className="border-red-500 text-red-500 hover:bg-red-500 hover:text-white"
+            >
+              Logout
+            </Button>
+          )}
+        </div>
       </div>
 
       <div className="container mx-auto px-4 pb-20">

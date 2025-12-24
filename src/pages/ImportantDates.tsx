@@ -1,9 +1,18 @@
 import { PageTitle } from "@/components/PageTitle";
 import { Card, CardContent } from "@/components/ui/card";
-import { Calendar } from "lucide-react";
+import { Calendar, CalendarPlus } from "lucide-react";
 import { useSEO } from "@/hooks/useSEO";
 import datesData from "@/data/important-dates.json";
 import type { ImportantDatesData } from "@/types/data";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import { buildGoogleCalendarUrl, downloadICSFile } from "@/lib/calendarLinks";
+import { getPreviewData } from "@/lib/previewMode";
 
 export default function ImportantDates() {
   useSEO({
@@ -17,7 +26,12 @@ export default function ImportantDates() {
   });
 
   // Type-safe data normalization
-  const dates = (datesData as ImportantDatesData).root;
+  // Check for preview data first, fallback to imported data
+  const previewData = getPreviewData("src/data/important-dates.json");
+  const datesDataActual = previewData
+    ? (JSON.parse(previewData) as ImportantDatesData)
+    : (datesData as ImportantDatesData);
+  const dates = datesDataActual.root;
 
   return (
     <div className="min-h-screen bg-background">
@@ -59,7 +73,58 @@ export default function ImportantDates() {
                         : "text-muted-foreground"
                     }`}
                   >
-                    {item.date}
+                    <div className="flex items-center justify-center md:justify-end gap-3">
+                      <span>{item.date}</span>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="whitespace-nowrap"
+                          >
+                            <CalendarPlus className="w-4 h-4 mr-1" /> Add
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuItem asChild>
+                            {/* Google Calendar link opens new tab */}
+                            <a
+                              href={
+                                buildGoogleCalendarUrl(item.event, item.date, {
+                                  details:
+                                    item.description ||
+                                    `InC4 2026: ${item.event}`,
+                                  location:
+                                    item.status === "highlight"
+                                      ? "CHRIST University, Kengeri Campus, Bangalore, India"
+                                      : "Online",
+                                }) || "#"
+                              }
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              Add to Google Calendar
+                            </a>
+                          </DropdownMenuItem>
+                          <DropdownMenuItem
+                            onClick={() =>
+                              downloadICSFile(item.event, item.date, {
+                                description:
+                                  item.description ||
+                                  `InC4 2026: ${item.event}`,
+                                url: "https://ic4.co.in/important-dates",
+                                location:
+                                  item.status === "highlight"
+                                    ? "CHRIST University, Kengeri Campus, Bangalore, India"
+                                    : "Online",
+                              })
+                            }
+                          >
+                            Download .ics
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </div>
                   </div>
                 </div>
               ))}

@@ -65,8 +65,8 @@ export const AddCategoryDialog = ({
 
       // Use functional updater to avoid stale state across multiple additions
       const updatedCommitteeArray = [...committee, newCategory];
-      // Prefer functional updater to avoid stale state issues
-      setCommittee((prev) => [...prev, newCategory]);
+      // Keep UI state and persisted data in sync using the same computed array
+      setCommittee(updatedCommitteeArray);
 
       // Store pending change for GitHub commit on logout (outside updater)
       const updatedData = {
