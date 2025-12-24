@@ -45,8 +45,7 @@ export default function Committee() {
     } else if (!category) {
       setActiveTab("chief-patron");
     }
-  }, [category]);
-
+  }, [category, committeeCategories]);
   // Update URL when tab changes
   const handleTabChange = (tabId: string) => {
     setActiveTab(tabId);
@@ -84,8 +83,7 @@ export default function Committee() {
     return () => {
       preloadLinks.forEach((link) => link.remove());
     };
-  }, []);
-
+  }, [committeeCategories]);
   // Inject Person schemas for all committee members
   useEffect(() => {
     // Flatten all members from all categories
@@ -101,30 +99,23 @@ export default function Committee() {
     // Generate Person schemas
     const personSchemas = getCommitteePersonSchema(allMembers);
 
-    // Inject each schema into document head
+    // Inject each schema into document head, tracking injected scripts
+    const injectedScripts: HTMLScriptElement[] = [];
     personSchemas.forEach((schema) => {
       const script = document.createElement("script");
       script.type = "application/ld+json";
       script.textContent = JSON.stringify(schema);
+      // Mark scripts as originating from this component for clarity
+      script.setAttribute("data-origin", "CommitteeComponent");
       document.head.appendChild(script);
+      injectedScripts.push(script);
     });
 
-    // Cleanup function to remove scripts on unmount
+    // Cleanup: only remove scripts injected by this component
     return () => {
-      // Remove all person schemas (optional, but clean)
-      const scripts = document.querySelectorAll(
-        'script[type="application/ld+json"]'
-      );
-      scripts.forEach((script) => {
-        if (
-          script.textContent &&
-          script.textContent.includes('"@type":"Person"')
-        ) {
-          script.remove();
-        }
-      });
+      injectedScripts.forEach((script) => script.remove());
     };
-  }, []);
+  }, [committeeCategories]);
 
   return (
     <div className="min-h-screen bg-background">

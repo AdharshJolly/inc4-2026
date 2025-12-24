@@ -70,23 +70,27 @@ export const SpeakersSection = () => {
                         </div>
                       )}
                       <div className="absolute inset-0 bg-gradient-to-t from-dark-card via-transparent to-transparent" />
-
                       {/* Topic Badge */}
                       <div className="absolute top-4 left-4">
                         <span className="bg-primary/90 text-primary-foreground text-xs font-semibold px-3 py-1.5 rounded-full">
                           {speaker.topic}
                         </span>
                       </div>
-
                       {/* Social Links */}
                       <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <button className="w-8 h-8 bg-dark-card/80 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                        <button
+                          aria-label={`${speaker.name} on LinkedIn`}
+                          className="w-8 h-8 bg-dark-card/80 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-primary transition-colors"
+                        >
                           <Linkedin className="w-4 h-4 text-primary-foreground" />
                         </button>
-                        <button className="w-8 h-8 bg-dark-card/80 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                        <button
+                          aria-label={`${speaker.name} on Twitter`}
+                          className="w-8 h-8 bg-dark-card/80 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-primary transition-colors"
+                        >
                           <Twitter className="w-4 h-4 text-primary-foreground" />
                         </button>
-                      </div>
+                      </div>{" "}
                     </div>
 
                     {/* Content */}

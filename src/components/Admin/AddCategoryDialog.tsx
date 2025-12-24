@@ -64,26 +64,20 @@ export const AddCategoryDialog = ({
       };
 
       // Use functional updater to avoid stale state across multiple additions
-      setCommittee((prev) => {
-        // Create new array with spread operator (immutable)
-        const updatedCommitteeArray = [...prev, newCategory];
+      const updatedCommitteeArray = [...committee, newCategory];
+      // Prefer functional updater to avoid stale state issues
+      setCommittee((prev) => [...prev, newCategory]);
 
-        // Reconstruct the full data object with the updated committee array
-        const updatedData = {
-          root: updatedCommitteeArray,
-        };
-
-        // Store pending change for GitHub commit on logout
-        const updatedCommitteeJson = JSON.stringify(updatedData, null, 2);
-        storePendingChange({
-          path: "src/data/committee.json",
-          content: updatedCommitteeJson,
-          message: `Added new committee category: ${formData.label}`,
-        });
-
-        return updatedCommitteeArray;
+      // Store pending change for GitHub commit on logout (outside updater)
+      const updatedData = {
+        root: updatedCommitteeArray,
+      };
+      const updatedCommitteeJson = JSON.stringify(updatedData, null, 2);
+      storePendingChange({
+        path: "src/data/committee.json",
+        content: updatedCommitteeJson,
+        message: `Added new committee category: ${formData.label}`,
       });
-
       // Log the action
       ActivityLogger.log({
         action: "Added new committee category",

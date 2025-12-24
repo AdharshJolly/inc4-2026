@@ -41,8 +41,9 @@ export const getPhotoUrl = (photo: any): string => {
  */
 export const normalizePhotoField = <T extends { photo?: any; image?: any }>(
   item: T
-) => {
-  if (!item) return item;
+): (T & { photo: { url?: string } }) | null | undefined => {
+  // Preserve null/undefined inputs to avoid inventing shapes
+  if (!item) return item as null | undefined;
 
   const normalizedUrl = getPhotoUrl(item.photo ?? item.image);
 
@@ -57,6 +58,7 @@ export const normalizePhotoField = <T extends { photo?: any; image?: any }>(
  */
 export const normalizePhotoFields = <T extends { photo?: any; image?: any }>(
   items: T[]
-) => {
-  return items.map((item) => normalizePhotoField(item));
+): Array<T & { photo: { url?: string } }> => {
+  const normalized = items.map((item) => normalizePhotoField(item));
+  return normalized.filter(Boolean) as Array<T & { photo: { url?: string } }>;
 };
