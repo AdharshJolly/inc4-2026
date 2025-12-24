@@ -16,17 +16,18 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { getPendingChanges, clearPendingChanges } from "@/lib/githubSync";
+import { getPendingChanges, clearPendingChanges, commitChangesToGitHub } from "@/lib/githubSync";
 import { useToast } from "@/hooks/use-toast";
-import { FileEdit, Trash2, AlertTriangle } from "lucide-react";
+import { FileEdit, Trash2, AlertTriangle, Upload, Loader2 } from "lucide-react";
 
 export const PendingChangesCounter = () => {
   const [count, setCount] = useState(0);
   const [changes, setChanges] = useState<
-    Array<{ path: string; message: string }>
+    Array<{ path: string; content: string; message: string }>
   >([]);
   const [open, setOpen] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
+  const [isSyncing, setIsSyncing] = useState(false);
   const { toast } = useToast();
 
   const updateChanges = () => {
@@ -66,6 +67,40 @@ export const PendingChangesCounter = () => {
       description: "All pending changes have been cleared.",
       variant: "default",
     });
+  };
+
+  const handleSyncToGitHub = async () => {
+    if (changes.length === 0) return;
+    
+    setIsSyncing(true);
+    try {
+      const result = await commitChangesToGitHub(changes);
+      
+      if (result.success) {
+        clearPendingChanges();
+        updateChanges();
+        setOpen(false);
+        toast({
+          title: "Synced to GitHub",
+          description: `Successfully committed ${changes.length} file(s) to GitHub.`,
+          variant: "default",
+        });
+      } else {
+        toast({
+          title: "Sync Failed",
+          description: result.error || "Failed to sync changes to GitHub.",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Sync Failed",
+        description: error instanceof Error ? error.message : "An unexpected error occurred.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSyncing(false);
+    }
   };
 
   if (count === 0) return null;
@@ -119,12 +154,27 @@ export const PendingChangesCounter = () => {
               ))}
             </div>
 
-            <div className="pt-2 border-t">
+            <div className="pt-2 border-t space-y-2">
+              <Button
+                variant="outline"
+                size="sm"
+                className="w-full text-green-600 hover:text-green-700 hover:bg-green-50 border-green-200"
+                onClick={handleSyncToGitHub}
+                disabled={isSyncing}
+              >
+                {isSyncing ? (
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                ) : (
+                  <Upload className="w-4 h-4 mr-2" />
+                )}
+                {isSyncing ? "Syncing..." : "Sync to GitHub"}
+              </Button>
               <Button
                 variant="outline"
                 size="sm"
                 className="w-full text-red-600 hover:text-red-700 hover:bg-red-50 border-red-200"
                 onClick={() => setShowConfirm(true)}
+                disabled={isSyncing}
               >
                 <Trash2 className="w-4 h-4 mr-2" />
                 Discard All Changes
