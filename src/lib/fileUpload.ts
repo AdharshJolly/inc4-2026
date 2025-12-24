@@ -131,7 +131,7 @@ export async function uploadImageToGitHub(
     const base64Content = await fileToBase64(file);
 
     // Get GitHub config from environment
-    const token = import.meta.env.VITE_TINA_TOKEN;
+    const token = import.meta.env.VITE_GITHUB_TOKEN;
     const owner = "AdharshJolly";
     const repo = "inc4-2026";
     // Use development branch for now (can be updated to detect production later)
