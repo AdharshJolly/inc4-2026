@@ -24,7 +24,7 @@ var config_default = defineConfig({
   clientId,
   token,
   build: {
-    outputFolder: "admin",
+    outputFolder: "cms",
     publicFolder: "public"
   },
   media: {
