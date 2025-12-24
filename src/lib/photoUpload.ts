@@ -40,18 +40,40 @@ export async function fileToBase64(file: File): Promise<string> {
  * Convert base64 string back to Blob
  * @param base64String - The base64 data URL
  * @returns Blob object
+ * @throws Error if the input is not a valid data URL with base64 content
  */
 export function base64ToBlob(base64String: string): Blob {
-  // Split the data URL to get the base64 content and mime type
-  const parts = base64String.split(",");
-  const mimeMatch = parts[0].match(/:(.*?);/);
-  const mimeType = mimeMatch ? mimeMatch[1] : "image/jpeg";
-  const bstr = atob(parts[1]);
-  const n = bstr.length;
-  const u8arr = new Uint8Array(n);
+  // Guard against missing/invalid input early to avoid confusing DOMExceptions from atob
+  if (!base64String || typeof base64String !== "string") {
+    throw new Error("Invalid base64 input: expected non-empty string");
+  }
 
-  for (let i = 0; i < n; i++) {
-    u8arr[i] = bstr.charCodeAt(i);
+  const commaIndex = base64String.indexOf(",");
+  if (commaIndex === -1) {
+    throw new Error("Invalid base64 input: missing comma delimiter");
+  }
+
+  const header = base64String.slice(0, commaIndex);
+  const dataPart = base64String.slice(commaIndex + 1);
+  if (!dataPart) {
+    throw new Error("Invalid base64 input: missing data segment");
+  }
+
+  const mimeMatch = header.match(/^data:(.*?);base64$/);
+  const mimeType = mimeMatch && mimeMatch[1] ? mimeMatch[1] : "image/jpeg";
+
+  let binaryString: string;
+  try {
+    binaryString = atob(dataPart);
+  } catch (error) {
+    throw new Error("Invalid base64 input: failed to decode");
+  }
+
+  const byteLength = binaryString.length;
+  const u8arr = new Uint8Array(byteLength);
+
+  for (let i = 0; i < byteLength; i++) {
+    u8arr[i] = binaryString.charCodeAt(i);
   }
 
   return new Blob([u8arr], { type: mimeType });

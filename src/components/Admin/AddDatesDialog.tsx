@@ -51,7 +51,7 @@ export const AddDatesDialog = ({ onDateAdded }: AddDatesDialogProps) => {
     status: "upcoming",
   });
   // Initialize local dates state from imported JSON
-  const [dates] = useState<ImportantDatesData["root"]>(() =>
+  const [dates, setDates] = useState<ImportantDatesData["root"]>(() =>
     structuredClone((datesData as ImportantDatesData).root)
   );
 
@@ -123,19 +123,23 @@ export const AddDatesDialog = ({ onDateAdded }: AddDatesDialogProps) => {
 
       // Use immutable approach: create new array with spread operator
       // Never mutate the imported JSON module - create a copy instead
-      const newDates = [...dates, newDate];
+      setDates((prevDates) => {
+        const newDates = [...prevDates, newDate];
 
-      // Reconstruct the full data object with the updated dates array
-      const updatedData = {
-        root: newDates,
-      };
+        // Reconstruct the full data object with the updated dates array
+        const updatedData = {
+          root: newDates,
+        };
 
-      // Store pending change for GitHub commit on logout
-      const updatedDatesJson = JSON.stringify(updatedData, null, 2);
-      storePendingChange({
-        path: "src/data/important-dates.json",
-        content: updatedDatesJson,
-        message: `Added new event date: ${formData.event}`,
+        // Store pending change for GitHub commit on logout
+        const updatedDatesJson = JSON.stringify(updatedData, null, 2);
+        storePendingChange({
+          path: "src/data/important-dates.json",
+          content: updatedDatesJson,
+          message: `Added new event date: ${formData.event}`,
+        });
+
+        return newDates;
       });
 
       // Log the action

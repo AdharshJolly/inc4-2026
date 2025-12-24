@@ -35,7 +35,7 @@ export const AddCategoryDialog = ({
     label: "",
   });
   // Initialize local committee state from imported JSON
-  const [committee] = useState<CommitteeData["root"]>(() =>
+  const [committee, setCommittee] = useState<CommitteeData["root"]>(() =>
     structuredClone((committeeData as CommitteeData).root)
   );
 
@@ -59,25 +59,29 @@ export const AddCategoryDialog = ({
       // Create new category object
       const newCategory = {
         id: categoryId,
-        name: formData.label,
+        label: formData.label,
         members: [],
       };
 
-      // Use immutable approach: create new array with spread operator
-      // Never mutate the imported JSON module - create a copy instead
-      const updatedCommitteeArray = [...committee, newCategory];
+      // Use functional updater to avoid stale state across multiple additions
+      setCommittee((prev) => {
+        // Create new array with spread operator (immutable)
+        const updatedCommitteeArray = [...prev, newCategory];
 
-      // Reconstruct the full data object with the updated committee array
-      const updatedData = {
-        root: updatedCommitteeArray,
-      };
+        // Reconstruct the full data object with the updated committee array
+        const updatedData = {
+          root: updatedCommitteeArray,
+        };
 
-      // Store pending change for GitHub commit on logout
-      const updatedCommitteeJson = JSON.stringify(updatedData, null, 2);
-      storePendingChange({
-        path: "src/data/committee.json",
-        content: updatedCommitteeJson,
-        message: `Added new committee category: ${formData.label}`,
+        // Store pending change for GitHub commit on logout
+        const updatedCommitteeJson = JSON.stringify(updatedData, null, 2);
+        storePendingChange({
+          path: "src/data/committee.json",
+          content: updatedCommitteeJson,
+          message: `Added new committee category: ${formData.label}`,
+        });
+
+        return updatedCommitteeArray;
       });
 
       // Log the action

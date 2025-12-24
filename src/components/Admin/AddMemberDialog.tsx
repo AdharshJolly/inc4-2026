@@ -106,6 +106,11 @@ export const AddMemberDialog = ({ onMemberAdded }: AddMemberDialogProps) => {
         return;
       }
 
+      // Revoke any existing preview before creating a new one
+      if (formData.photoPreviewUrl) {
+        URL.revokeObjectURL(formData.photoPreviewUrl);
+      }
+
       // Create preview URL
       const previewUrl = URL.createObjectURL(file);
 

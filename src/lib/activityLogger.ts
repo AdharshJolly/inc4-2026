@@ -67,10 +67,10 @@ export const ActivityLogger = {
             retries === 1 ? 50 : Math.min(100 * retries, trimmed.length);
           trimmed = trimmed.slice(0, Math.max(1, trimmed.length - removeCount));
 
-          if (trimmed.length === 0) {
-            // If we've removed everything, give up
+          if (trimmed.length <= 1) {
+            // Only the newest entry remains; nothing else to trim
             console.warn(
-              "Activity log quota exceeded - could not free up space"
+              "Activity log quota exceeded - could not free up additional space"
             );
             return newEntry;
           }
@@ -81,8 +81,6 @@ export const ActivityLogger = {
         }
       }
     }
-
-    return newEntry;
   },
 
   /**
@@ -221,9 +219,9 @@ export const logAction = {
       : "member"; // Fallback to "member" if invalid
 
     return ActivityLogger.log({
-      action: `Exported ${type} data`,
+      action: `Exported ${mappedType} data`,
       type: mappedType,
-      targetName: type,
+      targetName: mappedType,
       status: "success",
     });
   },

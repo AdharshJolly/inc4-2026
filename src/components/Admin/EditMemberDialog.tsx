@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Dialog,
   DialogContent,
@@ -16,11 +16,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Badge } from "@/components/ui/badge";
 import { AlertCircle, Upload, X } from "lucide-react";
 import committeeData from "@/data/committee.json";
 import { getPhotoUrl } from "@/lib/photoMigration";
-import { ActivityLogger, logAction } from "@/lib/activityLogger";
+import { ActivityLogger } from "@/lib/activityLogger";
 import { storePendingChange } from "@/lib/githubSync";
 import { uploadImageToGitHub } from "@/lib/fileUpload";
 import { useToast } from "@/hooks/use-toast";
@@ -60,22 +59,33 @@ export const EditMemberDialog = ({
     getPhotoUrl(member?.photo) || ""
   );
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
+  // Ref to track the latest blob URL for proper cleanup
+  const photoPreviewRef = useRef<string>("");
 
-  // Cleanup object URLs to prevent memory leaks
+  // Update ref whenever preview changes
+  useEffect(() => {
+    photoPreviewRef.current = photoPreview;
+  }, [photoPreview]);
+
+  // Cleanup blob URLs on unmount
   useEffect(() => {
     return () => {
-      // Cleanup on unmount
-      if (photoPreview?.startsWith("blob:")) {
-        URL.revokeObjectURL(photoPreview);
+      // Cleanup on unmount - revoke only blob URLs
+      if (photoPreviewRef.current?.startsWith("blob:")) {
+        URL.revokeObjectURL(photoPreviewRef.current);
       }
     };
   }, []);
 
   // Cleanup when dialog closes
   const handleDialogOpenChange = (newOpen: boolean) => {
-    if (!newOpen && photoPreview?.startsWith("blob:")) {
-      // Dialog is closing, revoke the preview URL
-      URL.revokeObjectURL(photoPreview);
+    if (!newOpen) {
+      // Dialog is closing, revoke blob URL if present
+      if (photoPreviewRef.current?.startsWith("blob:")) {
+        URL.revokeObjectURL(photoPreviewRef.current);
+      }
       setPhotoPreview(getPhotoUrl(member?.photo) || "");
     }
     onOpenChange(newOpen);
@@ -124,11 +134,13 @@ export const EditMemberDialog = ({
       }));
       setUploadedFileName(file.name);
 
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPhotoPreview(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+      // Revoke previous blob preview if present to prevent leaks
+      if (photoPreviewRef.current?.startsWith("blob:")) {
+        URL.revokeObjectURL(photoPreviewRef.current);
+      }
+      // Create blob URL for efficient preview (will be revoked on unmount)
+      const blobUrl = URL.createObjectURL(file);
+      setPhotoPreview(blobUrl);
 
       setErrors((prev) => {
         const newErrors = { ...prev };
@@ -139,6 +151,10 @@ export const EditMemberDialog = ({
   };
 
   const handleUrlChange = (url: string) => {
+    // Revoke previous blob preview if present when switching to URL
+    if (photoPreviewRef.current?.startsWith("blob:")) {
+      URL.revokeObjectURL(photoPreviewRef.current);
+    }
     setFormData((prev) => ({
       ...prev,
       photoUrl: url,
@@ -162,6 +178,8 @@ export const EditMemberDialog = ({
     if (!validateForm()) return;
 
     if (!member || !category) return;
+
+    setIsSubmitting(true);
 
     try {
       // Track changes for activity log
@@ -232,6 +250,11 @@ export const EditMemberDialog = ({
         status: "success",
       });
 
+      toast({
+        title: "Success",
+        description: `Member "${formData.name}" updated successfully!`,
+      });
+
       onOpenChange(false);
       onMemberUpdated?.();
     } catch (error) {
@@ -244,6 +267,8 @@ export const EditMemberDialog = ({
             : "Failed to update member. Please try again.",
         variant: "destructive",
       });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -251,10 +276,9 @@ export const EditMemberDialog = ({
     return null;
   }
 
-  const categories = committee.map((c) => ({
-    id: c.id,
-    name: c.name,
-  }));
+  // Note: CommitteeCategory uses `label`, not `name`. If needed for future use,
+  // map to `{ id, label }`. Currently unused; removing avoids type errors.
+  // const categories = committee.map((c) => ({ id: c.id, label: c.label }));
 
   return (
     <Dialog open={open} onOpenChange={handleDialogOpenChange}>
@@ -411,14 +435,19 @@ export const EditMemberDialog = ({
 
           {/* Actions */}
           <div className="flex gap-3 justify-end border-t pt-6">
-            <Button variant="outline" onClick={() => onOpenChange(false)}>
+            <Button
+              variant="outline"
+              onClick={() => onOpenChange(false)}
+              disabled={isSubmitting}
+            >
               Cancel
             </Button>
             <Button
               onClick={handleSubmit}
+              disabled={isSubmitting}
               className="bg-orange-600 hover:bg-orange-700"
             >
-              Save Changes
+              {isSubmitting ? "Saving..." : "Save Changes"}
             </Button>
           </div>
         </div>

@@ -21,22 +21,69 @@ async function fileToBase64(file: File): Promise<string> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = () => {
-      const result = reader.result as string;
+      const result = reader.result;
+      // Validate result is not null and is a string
+      if (!result || typeof result !== "string") {
+        reject(new Error("Failed to read file: invalid result"));
+        return;
+      }
       // Extract base64 part without data:image/...;base64, prefix
       const base64String = result.split(",")[1];
+      if (!base64String) {
+        reject(new Error("Failed to extract base64 from file"));
+        return;
+      }
       resolve(base64String);
     };
-    reader.onerror = reject;
+    reader.onerror = () => {
+      reject(
+        new Error(
+          `File read error: ${reader.error?.message || "Unknown error"}`
+        )
+      );
+    };
+    // Start reading the file
+    reader.readAsDataURL(file);
   });
 }
 
 /**
  * Generate unique filename to avoid collisions
+ * Derives extension from filename if available, otherwise from MIME type
  */
-function generateFilename(originalName: string): string {
+function generateFilename(originalName: string, mimeType?: string): string {
   const timestamp = Date.now();
   const random = Math.random().toString(36).substring(7);
-  const extension = originalName.split(".").pop();
+
+  // Try to extract extension from filename
+  let extension = "";
+  const lastDotIndex = originalName.lastIndexOf(".");
+
+  if (lastDotIndex > 0 && lastDotIndex < originalName.length - 1) {
+    // Extension exists and is not empty
+    extension = originalName.substring(lastDotIndex + 1).toLowerCase();
+  } else if (mimeType) {
+    // Fall back to MIME type mapping
+    const mimeToExt: Record<string, string> = {
+      "image/jpeg": "jpg",
+      "image/png": "png",
+      "image/gif": "gif",
+      "image/webp": "webp",
+    };
+    extension = mimeToExt[mimeType] || "bin";
+  } else {
+    // Default fallback
+    extension = "bin";
+  }
+
+  // Sanitize extension: remove path separators and ensure it's a valid identifier
+  extension = extension.replace(/[\/\\]/g, "").replace(/^\.+/, "");
+
+  // Ensure extension is not empty after sanitization
+  if (!extension) {
+    extension = "bin";
+  }
+
   return `${timestamp}-${random}.${extension}`;
 }
 
@@ -75,8 +122,8 @@ export async function uploadImageToGitHub(
       return { success: false, error: validation.error };
     }
 
-    // Generate unique filename
-    const filename = generateFilename(file.name);
+    // Generate unique filename with proper extension handling
+    const filename = generateFilename(file.name, file.type);
     const filePath = `public/images/${folder}/${filename}`;
 
     // Convert to base64
@@ -96,23 +143,25 @@ export async function uploadImageToGitHub(
       };
     }
 
+    // URL-encode the file path and build URL with branch query parameter
+    const encodedFilePath = encodeURIComponent(filePath);
+    const uploadUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${encodedFilePath}?branch=${encodeURIComponent(
+      branch
+    )}`;
+
     // Upload to GitHub using API
-    const response = await fetchWithRetry(
-      `https://api.github.com/repos/${owner}/${repo}/contents/${filePath}`,
-      {
-        method: "PUT",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-          "X-GitHub-Api-Version": "2022-11-28",
-        },
-        body: JSON.stringify({
-          message: `Upload image: ${filename}`,
-          content: base64Content,
-          branch: branch,
-        }),
-      }
-    );
+    const response = await fetchWithRetry(uploadUrl, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+        "X-GitHub-Api-Version": "2022-11-28",
+      },
+      body: JSON.stringify({
+        message: `Upload image: ${filename}`,
+        content: base64Content,
+      }),
+    });
 
     if (!response.ok) {
       const errorData = await response.json();

@@ -37,21 +37,25 @@ interface AddSpeakerDialogProps {
   ) => void;
 }
 
+const initialFormData: AddSpeakerFormData = {
+  name: "",
+  role: "",
+  affiliation: "",
+  topic: "",
+  photoUrl: "",
+  photoFile: null,
+  photoPreviewUrl: "",
+  linkedin: "",
+};
+
 export const AddSpeakerDialog = ({ onSpeakerAdded }: AddSpeakerDialogProps) => {
   const [open, setOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [imageError, setImageError] = useState(false);
+  const [debouncedPhotoUrl, setDebouncedPhotoUrl] = useState("");
+  const [lastFailedUrl, setLastFailedUrl] = useState<string | null>(null);
   const { toast } = useToast();
-  const [formData, setFormData] = useState<AddSpeakerFormData>({
-    name: "",
-    role: "",
-    affiliation: "",
-    topic: "",
-    photoUrl: "",
-    photoFile: null,
-    photoPreviewUrl: "",
-    linkedin: "",
-  });
+  const [formData, setFormData] = useState<AddSpeakerFormData>(initialFormData);
 
   // Cleanup object URLs to prevent memory leaks
   useEffect(() => {
@@ -63,17 +67,36 @@ export const AddSpeakerDialog = ({ onSpeakerAdded }: AddSpeakerDialogProps) => {
     };
   }, [formData.photoPreviewUrl]);
 
+  // Debounce photo URL input to avoid firing image load/toasts on every keystroke
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedPhotoUrl(formData.photoUrl);
+    }, 400);
+
+    return () => clearTimeout(timer);
+  }, [formData.photoUrl]);
+
+  // Reset image error and failed URL when debounced URL is cleared
+  useEffect(() => {
+    if (!debouncedPhotoUrl) {
+      setImageError(false);
+      setLastFailedUrl(null);
+    }
+  }, [debouncedPhotoUrl]);
+
   // Cleanup when dialog closes
   const handleOpenChange = (newOpen: boolean) => {
-    if (!newOpen && formData.photoPreviewUrl) {
-      // Dialog is closing, revoke the preview URL
-      URL.revokeObjectURL(formData.photoPreviewUrl);
-      setFormData((prev) => ({
-        ...prev,
-        photoPreviewUrl: "",
-      }));
+    if (!newOpen) {
+      if (formData.photoPreviewUrl) {
+        URL.revokeObjectURL(formData.photoPreviewUrl);
+      }
+      setFormData(initialFormData);
+      setImageError(false);
+      setLastFailedUrl(null);
+      setDebouncedPhotoUrl("");
+      setOpen(false);
+      return;
     }
-    setImageError(false); // Reset image error state when dialog closes
     setOpen(newOpen);
   };
 
@@ -375,16 +398,20 @@ export const AddSpeakerDialog = ({ onSpeakerAdded }: AddSpeakerDialogProps) => {
                   onChange={(e) => {
                     handleInputChange("photoUrl", e.target.value);
                     setImageError(false); // Reset error when user changes URL
+                    setLastFailedUrl(null);
                   }}
                   className="border-border"
                 />
-                {formData.photoUrl && !imageError && (
+                {debouncedPhotoUrl && !imageError && (
                   <div className="mt-2 border border-border rounded p-2">
                     <img
-                      src={formData.photoUrl}
+                      src={debouncedPhotoUrl}
                       alt="Preview"
                       className="w-full h-32 object-cover rounded"
                       onError={() => {
+                        // Prevent repeated toasts for the same failing URL
+                        if (debouncedPhotoUrl === lastFailedUrl) return;
+                        setLastFailedUrl(debouncedPhotoUrl);
                         setImageError(true);
                         toast({
                           title: "Image Error",
@@ -396,7 +423,7 @@ export const AddSpeakerDialog = ({ onSpeakerAdded }: AddSpeakerDialogProps) => {
                     />
                   </div>
                 )}
-                {formData.photoUrl && imageError && (
+                {debouncedPhotoUrl && imageError && (
                   <div className="mt-2 border border-red-200 bg-red-50 rounded p-4 text-center">
                     <p className="text-sm text-red-600 font-medium">
                       ❌ Unable to load image

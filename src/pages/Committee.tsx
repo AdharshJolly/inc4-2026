@@ -8,15 +8,18 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useSEO } from "@/hooks/useSEO";
 import { getCommitteePersonSchema } from "@/hooks/useSchemaOrg";
 import committeeDataImport from "@/data/committee.json";
-import { getPhotoUrl } from "@/lib/photoMigration";
+import { getPhotoUrl, normalizePhotoFields } from "@/lib/photoMigration";
 import type { CommitteeData } from "@/types/data";
 
 export default function Committee() {
   const { category } = useParams<{ category?: string }>();
 
-  // Type-safe data normalization
+  // Type-safe data normalization with photo field migration
   const committeeData = committeeDataImport as CommitteeData;
-  const committeeCategories = committeeData.root;
+  const committeeCategories = committeeData.root.map((cat) => ({
+    ...cat,
+    members: normalizePhotoFields(cat.members),
+  }));
 
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("chief-patron");

@@ -3,74 +3,60 @@
  *
  * MIGRATION HISTORY:
  * - Old format: "image": "https://example.com/photo.jpg" (string)
- * - New format: "photo": { "url": "https://...", "file": null } (object)
- *
- * The `file` property is reserved for future TinaCMS file upload support.
- * When file uploads are implemented, uploaded files will be stored in the `file` property,
- * and we can prioritize showing the uploaded file over the URL.
+ * - Transitional format: "photo": { "url": "https://...", "file": "..." }
+ * - Current format: "photo": { "url"?: string } (no file property)
  */
 
+const isNonEmptyString = (value: unknown): value is string =>
+  typeof value === "string" && value.trim().length > 0;
+
 /**
- * Get photo URL from either old (string) or new (object) format
- * @param photo - Photo data in old string format or new { url } format
- * @returns The appropriate photo URL string, or empty string if none available
+ * Get photo URL from supported or legacy formats without throwing
+ * @param photo - Photo data in string, object, or legacy file-bearing shape
+ * @returns Photo URL string or empty string if unavailable
  */
 export const getPhotoUrl = (photo: any): string => {
   if (!photo) return "";
 
-  // New format: { url: string }
-  if (typeof photo === "object") {
-    return photo?.url || "";
-  }
-
   // Old format: direct string (backward compatibility)
   if (typeof photo === "string") {
-    return photo;
+    return isNonEmptyString(photo) ? photo : "";
+  }
+
+  if (typeof photo === "object") {
+    const url = isNonEmptyString((photo as any).url) ? (photo as any).url : "";
+    const legacyFile = isNonEmptyString((photo as any).file)
+      ? (photo as any).file
+      : "";
+
+    return url || legacyFile || "";
   }
 
   return "";
 };
 
 /**
- * Normalize speaker/committee data to ensure photo field exists
- * Converts old "image" string to new "photo" object format
+ * Normalize speaker/committee data to ensure photo field exists and legacy
+ * file-based data migrates into the current url-only shape.
  */
-export const normalizePhotoField = (item: any) => {
+export const normalizePhotoField = <T extends { photo?: any; image?: any }>(
+  item: T
+) => {
   if (!item) return item;
 
-  // If already in new format, return as-is
-  if (item.photo && typeof item.photo === "object") {
-    return item;
-  }
+  const normalizedUrl = getPhotoUrl(item.photo ?? item.image);
 
-  // If has old "image" field, migrate to new format
-  if (item.image && typeof item.image === "string") {
-    return {
-      ...item,
-      photo: {
-        url: item.image,
-        file: null,
-      },
-    };
-  }
-
-  // No image data, provide empty photo object
-  if (!item.photo) {
-    return {
-      ...item,
-      photo: {
-        url: "",
-        file: null,
-      },
-    };
-  }
-
-  return item;
+  return {
+    ...item,
+    photo: normalizedUrl ? { url: normalizedUrl } : {},
+  } as T & { photo: { url?: string } };
 };
 
 /**
  * Batch normalize an array of items
  */
-export const normalizePhotoFields = (items: any[]) => {
-  return items.map(normalizePhotoField);
+export const normalizePhotoFields = <T extends { photo?: any; image?: any }>(
+  items: T[]
+) => {
+  return items.map((item) => normalizePhotoField(item));
 };

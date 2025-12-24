@@ -3,11 +3,11 @@ import { ArrowRight, Linkedin, Twitter } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Reveal } from "./Reveal";
 import speakersData from "@/data/speakers.json";
-import { getPhotoUrl } from "@/lib/photoMigration";
+import { getPhotoUrl, normalizePhotoFields } from "@/lib/photoMigration";
 import type { SpeakersData } from "@/types/data";
 
 // Get first 3 speakers from JSON data
-const allSpeakers = (speakersData as SpeakersData).root;
+const allSpeakers = normalizePhotoFields((speakersData as SpeakersData).root);
 const speakers = allSpeakers.slice(0, 3);
 
 export const SpeakersSection = () => {
@@ -44,56 +44,68 @@ export const SpeakersSection = () => {
 
         {/* Speakers Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {speakers.map((speaker, index) => (
-            <Reveal key={speaker.name} width="100%">
-              <div className="group relative">
-                {/* Glow Effect */}
-                <div className="absolute inset-0 gradient-primary rounded-3xl blur-xl opacity-0 group-hover:opacity-30 transition-opacity duration-500" />
+          {speakers.map((speaker) => {
+            const photoUrl = getPhotoUrl(speaker.photo);
 
-                <div className="relative bg-dark-card border border-dark-border rounded-3xl overflow-hidden hover:border-primary/50 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2">
-                  {/* Image */}
-                  <div className="relative h-64 overflow-hidden">
-                    <img
-                      src={getPhotoUrl(speaker.photo)}
-                      alt={speaker.name}
-                      className="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-700"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-dark-card via-transparent to-transparent" />
+            return (
+              <Reveal key={speaker.name} width="100%">
+                <div className="group relative">
+                  {/* Glow Effect */}
+                  <div className="absolute inset-0 gradient-primary rounded-3xl blur-xl opacity-0 group-hover:opacity-30 transition-opacity duration-500" />
 
-                    {/* Topic Badge */}
-                    <div className="absolute top-4 left-4">
-                      <span className="bg-primary/90 text-primary-foreground text-xs font-semibold px-3 py-1.5 rounded-full">
-                        {speaker.topic}
-                      </span>
+                  <div className="relative bg-dark-card border border-dark-border rounded-3xl overflow-hidden hover:border-primary/50 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2">
+                    {/* Image */}
+                    <div className="relative h-64 overflow-hidden">
+                      {photoUrl ? (
+                        <img
+                          src={photoUrl}
+                          alt={speaker.name}
+                          className="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-700"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center bg-dark-card/80">
+                          <span className="text-5xl font-bold text-primary-foreground/60">
+                            {speaker.name?.charAt(0) || "?"}
+                          </span>
+                        </div>
+                      )}
+                      <div className="absolute inset-0 bg-gradient-to-t from-dark-card via-transparent to-transparent" />
+
+                      {/* Topic Badge */}
+                      <div className="absolute top-4 left-4">
+                        <span className="bg-primary/90 text-primary-foreground text-xs font-semibold px-3 py-1.5 rounded-full">
+                          {speaker.topic}
+                        </span>
+                      </div>
+
+                      {/* Social Links */}
+                      <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <button className="w-8 h-8 bg-dark-card/80 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                          <Linkedin className="w-4 h-4 text-primary-foreground" />
+                        </button>
+                        <button className="w-8 h-8 bg-dark-card/80 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                          <Twitter className="w-4 h-4 text-primary-foreground" />
+                        </button>
+                      </div>
                     </div>
 
-                    {/* Social Links */}
-                    <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <button className="w-8 h-8 bg-dark-card/80 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-primary transition-colors">
-                        <Linkedin className="w-4 h-4 text-primary-foreground" />
-                      </button>
-                      <button className="w-8 h-8 bg-dark-card/80 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-primary transition-colors">
-                        <Twitter className="w-4 h-4 text-primary-foreground" />
-                      </button>
+                    {/* Content */}
+                    <div className="p-6">
+                      <h3 className="font-display text-xl font-bold text-primary-foreground mb-1">
+                        {speaker.name}
+                      </h3>
+                      <p className="text-primary font-medium text-sm mb-2">
+                        {speaker.role}
+                      </p>
+                      <p className="text-primary-foreground/60 text-sm">
+                        {speaker.affiliation}
+                      </p>
                     </div>
-                  </div>
-
-                  {/* Content */}
-                  <div className="p-6">
-                    <h3 className="font-display text-xl font-bold text-primary-foreground mb-1">
-                      {speaker.name}
-                    </h3>
-                    <p className="text-primary font-medium text-sm mb-2">
-                      {speaker.role}
-                    </p>
-                    <p className="text-primary-foreground/60 text-sm">
-                      {speaker.affiliation}
-                    </p>
                   </div>
                 </div>
-              </div>
-            </Reveal>
-          ))}
+              </Reveal>
+            );
+          })}
         </div>
 
         {/* View All Button */}

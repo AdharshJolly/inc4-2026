@@ -52,6 +52,7 @@ export const EditSpeakerDialog = ({
     getPhotoUrl(speaker?.photo) || ""
   );
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const { toast } = useToast();
 
   // Cleanup object URLs to prevent memory leaks
   useEffect(() => {
@@ -122,11 +123,9 @@ export const EditSpeakerDialog = ({
       }));
       setUploadedFileName(file.name);
 
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPhotoPreview(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+      // Create blob URL for efficient preview (will be revoked when preview changes or on unmount)
+      const blobUrl = URL.createObjectURL(file);
+      setPhotoPreview(blobUrl);
 
       setErrors((prev) => {
         const newErrors = { ...prev };
@@ -219,7 +218,7 @@ export const EditSpeakerDialog = ({
         affiliation: formData.affiliation,
         topic: formData.topic,
         linkedin: formData.linkedin,
-        photo: photoUrl ? { url: photoUrl } : {},
+        photo: photoUrl ? { url: photoUrl } : undefined,
       };
 
       speakers[speakerIndex] = updatedSpeaker;

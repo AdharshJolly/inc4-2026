@@ -4,7 +4,7 @@ import { useSEO } from "@/hooks/useSEO";
 import { Reveal } from "@/components/Reveal";
 import { Link } from "react-router-dom";
 import speakersData from "@/data/speakers.json";
-import { getPhotoUrl } from "@/lib/photoMigration";
+import { getPhotoUrl, normalizePhotoFields } from "@/lib/photoMigration";
 import type { SpeakersData } from "@/types/data";
 
 export default function Speakers() {
@@ -18,8 +18,8 @@ export default function Speakers() {
     canonicalUrl: "https://ic4.co.in/speakers",
   });
 
-  // Type-safe data normalization
-  const speakers = (speakersData as SpeakersData).root;
+  // Type-safe data normalization with legacy photo field handling
+  const speakers = normalizePhotoFields((speakersData as SpeakersData).root);
 
   return (
     <div className="min-h-screen bg-background">
