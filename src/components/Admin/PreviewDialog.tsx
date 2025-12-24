@@ -9,6 +9,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Eye } from "lucide-react";
+import { getPhotoUrl } from "@/lib/photoMigration";
 
 interface PreviewableContent {
   type: "member" | "speaker" | "category" | "date";
@@ -25,9 +26,9 @@ export const PreviewDialog = ({ content, trigger }: PreviewDialogProps) => {
   const renderMemberPreview = (member: any) => (
     <div className="space-y-4">
       <div className="flex gap-4">
-        {member.photo?.url || member.photoUrl ? (
+        {getPhotoUrl(member.photo) || member.photoUrl ? (
           <img
-            src={member.photo?.url || member.photoUrl}
+            src={getPhotoUrl(member.photo) || member.photoUrl}
             alt={member.name}
             className="w-32 h-32 rounded-lg object-cover border border-border"
           />
@@ -67,9 +68,9 @@ export const PreviewDialog = ({ content, trigger }: PreviewDialogProps) => {
   const renderSpeakerPreview = (speaker: any) => (
     <div className="space-y-4">
       <div className="flex gap-4">
-        {speaker.photo?.url ? (
+        {getPhotoUrl(speaker.photo) ? (
           <img
-            src={speaker.photo.url}
+            src={getPhotoUrl(speaker.photo)}
             alt={speaker.name}
             className="w-32 h-32 rounded-lg object-cover border border-border"
           />

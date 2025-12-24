@@ -19,7 +19,7 @@ interface SyncResult {
 /**
  * Retry mechanism for API calls
  */
-async function fetchWithRetry(
+export async function fetchWithRetry(
   url: string,
   options: RequestInit,
   maxRetries: number = 3
@@ -30,7 +30,7 @@ async function fetchWithRetry(
     try {
       const response = await fetch(url, options);
 
-      // If successful, return
+      // If successful, return immediately
       if (response.ok) {
         return response;
       }
@@ -47,13 +47,9 @@ async function fetchWithRetry(
       }
 
       // For other non-2xx responses, throw error
-      if (!response.ok) {
-        throw new Error(
-          `GitHub API error: ${response.status} ${response.statusText}`
-        );
-      }
-
-      return response;
+      throw new Error(
+        `GitHub API error: ${response.status} ${response.statusText}`
+      );
     } catch (error) {
       lastError = error instanceof Error ? error : new Error(String(error));
       console.warn(`Attempt ${attempt}/${maxRetries} failed:`, lastError);
@@ -136,7 +132,29 @@ export async function commitChangesToGitHub(
         }
       );
 
-      const blobData = await blobResponse.json();
+      // Check response status
+      if (!blobResponse.ok) {
+        const errorBody = await blobResponse.text();
+        throw new Error(
+          `Failed to create blob for ${change.path}: ${blobResponse.status} ${blobResponse.statusText}. Response: ${errorBody}`
+        );
+      }
+
+      // Parse and validate response
+      const blobData = (await blobResponse.json()) as Record<string, unknown>;
+
+      // Validate sha property exists and is a string
+      if (typeof blobData.sha !== "string" || !blobData.sha) {
+        throw new Error(
+          `Invalid blob response for ${
+            change.path
+          }: missing or invalid sha property. Response: ${JSON.stringify(
+            blobData
+          )}`
+        );
+      }
+
+      // Only push tree item when sha is valid
       treeItems.push({
         path: change.path,
         mode: "100644",
@@ -161,7 +179,24 @@ export async function commitChangesToGitHub(
       }
     );
 
-    const treeData = await treeResponse.json();
+    // Validate tree response
+    if (!treeResponse.ok) {
+      const errorBody = await treeResponse.text();
+      throw new Error(
+        `Failed to create tree: ${treeResponse.status} ${treeResponse.statusText}. Response: ${errorBody}`
+      );
+    }
+
+    const treeData = (await treeResponse.json()) as Record<string, unknown>;
+
+    // Validate tree sha property
+    if (typeof treeData.sha !== "string" || !treeData.sha) {
+      throw new Error(
+        `Invalid tree response: missing or invalid sha property. Response: ${JSON.stringify(
+          treeData
+        )}`
+      );
+    }
 
     // Create a commit with the new tree
     const commitMessageParts = changes.map((c) => c.message);
@@ -188,7 +223,27 @@ export async function commitChangesToGitHub(
       }
     );
 
-    const newCommitData = await newCommitResponse.json();
+    // Validate commit response
+    if (!newCommitResponse.ok) {
+      const errorBody = await newCommitResponse.text();
+      throw new Error(
+        `Failed to create commit: ${newCommitResponse.status} ${newCommitResponse.statusText}. Response: ${errorBody}`
+      );
+    }
+
+    const newCommitData = (await newCommitResponse.json()) as Record<
+      string,
+      unknown
+    >;
+
+    // Validate commit sha property
+    if (typeof newCommitData.sha !== "string" || !newCommitData.sha) {
+      throw new Error(
+        `Invalid commit response: missing or invalid sha property. Response: ${JSON.stringify(
+          newCommitData
+        )}`
+      );
+    }
 
     // Update the branch reference to point to the new commit
     const updateRefResponse = await fetchWithRetry(

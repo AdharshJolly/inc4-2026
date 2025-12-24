@@ -14,8 +14,7 @@ export interface ImportantDatesData {
 }
 
 export interface PhotoField {
-  url: string;
-  file: string | null;
+  url?: string;
 }
 
 export interface SpeakerItem {

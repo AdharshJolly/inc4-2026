@@ -12,16 +12,15 @@
 
 /**
  * Get photo URL from either old (string) or new (object) format
- * @param photo - Photo data in old string format or new { url, file } format
+ * @param photo - Photo data in old string format or new { url } format
  * @returns The appropriate photo URL string, or empty string if none available
  */
 export const getPhotoUrl = (photo: any): string => {
   if (!photo) return "";
 
-  // New format: { url: string, file: null | string }
+  // New format: { url: string }
   if (typeof photo === "object") {
-    // Prioritize uploaded file over URL
-    return photo?.file || photo?.url || "";
+    return photo?.url || "";
   }
 
   // Old format: direct string (backward compatibility)

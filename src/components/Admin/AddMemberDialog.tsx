@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -23,6 +23,7 @@ import { useToast } from "@/hooks/use-toast";
 import committeeData from "@/data/committee.json";
 import { storePendingChange } from "@/lib/githubSync";
 import { ActivityLogger } from "@/lib/activityLogger";
+import { uploadImageToGitHub } from "@/lib/fileUpload";
 import type { CommitteeData } from "@/types/data";
 import { PreviewDialog } from "./PreviewDialog";
 
@@ -56,6 +57,29 @@ export const AddMemberDialog = ({ onMemberAdded }: AddMemberDialogProps) => {
 
   const committee = (committeeData as CommitteeData).root;
 
+  // Cleanup object URLs to prevent memory leaks
+  useEffect(() => {
+    return () => {
+      // Cleanup on unmount
+      if (formData.photoPreviewUrl) {
+        URL.revokeObjectURL(formData.photoPreviewUrl);
+      }
+    };
+  }, []);
+
+  // Cleanup when dialog closes
+  const handleOpenChange = (newOpen: boolean) => {
+    if (!newOpen && formData.photoPreviewUrl) {
+      // Dialog is closing, revoke the preview URL
+      URL.revokeObjectURL(formData.photoPreviewUrl);
+      setFormData((prev) => ({
+        ...prev,
+        photoPreviewUrl: "",
+      }));
+    }
+    setOpen(newOpen);
+  };
+
   const handleInputChange = (field: keyof AddMemberFormData, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
@@ -63,15 +87,22 @@ export const AddMemberDialog = ({ onMemberAdded }: AddMemberDialogProps) => {
   const handlePhotoFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      // Validate file type
       if (!file.type.startsWith("image/")) {
-        alert("Please select a valid image file");
+        toast({
+          title: "Validation Error",
+          description: "Please select a valid image file",
+          variant: "destructive",
+        });
         return;
       }
 
       // Validate file size (max 5MB)
       if (file.size > 5 * 1024 * 1024) {
-        alert("File size must be less than 5MB");
+        toast({
+          title: "Validation Error",
+          description: "File size must be less than 5MB",
+          variant: "destructive",
+        });
         return;
       }
 
@@ -141,15 +172,33 @@ export const AddMemberDialog = ({ onMemberAdded }: AddMemberDialogProps) => {
         throw new Error("Category not found");
       }
 
-      // Create new member object
+      // Handle photo: upload file if present, otherwise use URL
+      let photoUrl = formData.photoUrl;
+
+      if (formData.photoFile) {
+        toast({
+          title: "Uploading photo",
+          description: "Please wait while we upload your photo to GitHub...",
+        });
+
+        const uploadResult = await uploadImageToGitHub(
+          formData.photoFile,
+          "committee"
+        );
+
+        if (!uploadResult.success) {
+          throw new Error(uploadResult.error || "Failed to upload photo");
+        }
+
+        photoUrl = uploadResult.path || "";
+      }
+
+      // Create new member object with just the URL
       const newMember = {
         name: formData.name,
         role: formData.role || "",
         affiliation: formData.affiliation,
-        photo: {
-          url: formData.photoUrl,
-          file: formData.photoFile ? formData.photoFile.name : null,
-        },
+        photo: photoUrl ? { url: photoUrl } : {},
       };
 
       // Add to category in memory
@@ -180,7 +229,7 @@ export const AddMemberDialog = ({ onMemberAdded }: AddMemberDialogProps) => {
         name: formData.name,
         role: formData.role,
         affiliation: formData.affiliation,
-        photoUrl: formData.photoUrl || formData.photoPreviewUrl,
+        photoUrl: photoUrl || formData.photoPreviewUrl,
         photoFile: null,
         photoPreviewUrl: "",
         categoryId: formData.categoryId,
@@ -203,7 +252,10 @@ export const AddMemberDialog = ({ onMemberAdded }: AddMemberDialogProps) => {
       console.error("Error adding member:", error);
       toast({
         title: "Error",
-        description: "Failed to add member. Please try again.",
+        description:
+          error instanceof Error
+            ? error.message
+            : "Failed to add member. Please try again.",
         variant: "destructive",
       });
     } finally {
@@ -212,7 +264,7 @@ export const AddMemberDialog = ({ onMemberAdded }: AddMemberDialogProps) => {
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
         <Button className="bg-orange-500 hover:bg-orange-600">
           <Plus className="w-4 h-4 mr-2" />

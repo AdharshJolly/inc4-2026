@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -16,6 +16,7 @@ import { useToast } from "@/hooks/use-toast";
 import speakersData from "@/data/speakers.json";
 import { storePendingChange } from "@/lib/githubSync";
 import { ActivityLogger } from "@/lib/activityLogger";
+import { uploadImageToGitHub } from "@/lib/fileUpload";
 import type { SpeakersData } from "@/types/data";
 import { PreviewDialog } from "./PreviewDialog";
 
@@ -39,6 +40,7 @@ interface AddSpeakerDialogProps {
 export const AddSpeakerDialog = ({ onSpeakerAdded }: AddSpeakerDialogProps) => {
   const [open, setOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [imageError, setImageError] = useState(false);
   const { toast } = useToast();
   const [formData, setFormData] = useState<AddSpeakerFormData>({
     name: "",
@@ -50,6 +52,30 @@ export const AddSpeakerDialog = ({ onSpeakerAdded }: AddSpeakerDialogProps) => {
     photoPreviewUrl: "",
     linkedin: "",
   });
+
+  // Cleanup object URLs to prevent memory leaks
+  useEffect(() => {
+    return () => {
+      // Cleanup on unmount: revoke any remaining preview URL
+      if (formData.photoPreviewUrl) {
+        URL.revokeObjectURL(formData.photoPreviewUrl);
+      }
+    };
+  }, [formData.photoPreviewUrl]);
+
+  // Cleanup when dialog closes
+  const handleOpenChange = (newOpen: boolean) => {
+    if (!newOpen && formData.photoPreviewUrl) {
+      // Dialog is closing, revoke the preview URL
+      URL.revokeObjectURL(formData.photoPreviewUrl);
+      setFormData((prev) => ({
+        ...prev,
+        photoPreviewUrl: "",
+      }));
+    }
+    setImageError(false); // Reset image error state when dialog closes
+    setOpen(newOpen);
+  };
 
   const handleInputChange = (
     field: keyof AddSpeakerFormData,
@@ -63,13 +89,21 @@ export const AddSpeakerDialog = ({ onSpeakerAdded }: AddSpeakerDialogProps) => {
     if (file) {
       // Validate file type
       if (!file.type.startsWith("image/")) {
-        alert("Please select a valid image file");
+        toast({
+          title: "Validation Error",
+          description: "Please select a valid image file",
+          variant: "destructive",
+        });
         return;
       }
 
       // Validate file size (max 5MB)
       if (file.size > 5 * 1024 * 1024) {
-        alert("File size must be less than 5MB");
+        toast({
+          title: "Validation Error",
+          description: "File size must be less than 5MB",
+          variant: "destructive",
+        });
         return;
       }
 
@@ -86,9 +120,8 @@ export const AddSpeakerDialog = ({ onSpeakerAdded }: AddSpeakerDialogProps) => {
   };
 
   const clearPhotoFile = () => {
-    if (formData.photoPreviewUrl) {
-      URL.revokeObjectURL(formData.photoPreviewUrl);
-    }
+    // Don't revoke here - let useEffect cleanup handle revocation
+    // to avoid breaking async uses of the URL by parent
     setFormData((prev) => ({
       ...prev,
       photoFile: null,
@@ -144,17 +177,35 @@ export const AddSpeakerDialog = ({ onSpeakerAdded }: AddSpeakerDialogProps) => {
     try {
       const speakers = (speakersData as SpeakersData).root;
 
-      // Create new speaker object
+      // Handle photo: upload file if present, otherwise use URL
+      let photoUrl = formData.photoUrl;
+
+      if (formData.photoFile) {
+        toast({
+          title: "Uploading photo",
+          description: "Please wait while we upload your photo to GitHub...",
+        });
+
+        const uploadResult = await uploadImageToGitHub(
+          formData.photoFile,
+          "speakers"
+        );
+
+        if (!uploadResult.success) {
+          throw new Error(uploadResult.error || "Failed to upload photo");
+        }
+
+        photoUrl = uploadResult.path || "";
+      }
+
+      // Create new speaker object with just the URL
       const newSpeaker = {
         name: formData.name,
         role: formData.role,
         affiliation: formData.affiliation,
         topic: formData.topic,
         linkedin: formData.linkedin || "",
-        photo: {
-          url: formData.photoUrl,
-          file: formData.photoFile ? formData.photoFile.name : null,
-        },
+        photo: photoUrl ? { url: photoUrl } : {},
       };
 
       // Add to speakers in memory
@@ -186,7 +237,7 @@ export const AddSpeakerDialog = ({ onSpeakerAdded }: AddSpeakerDialogProps) => {
         role: formData.role,
         affiliation: formData.affiliation,
         topic: formData.topic,
-        photoUrl: formData.photoUrl || formData.photoPreviewUrl,
+        photoUrl: photoUrl,
         linkedin: formData.linkedin,
       });
 
@@ -208,7 +259,10 @@ export const AddSpeakerDialog = ({ onSpeakerAdded }: AddSpeakerDialogProps) => {
       console.error("Error adding speaker:", error);
       toast({
         title: "Error",
-        description: "Failed to add speaker. Please try again.",
+        description:
+          error instanceof Error
+            ? error.message
+            : "Failed to add speaker. Please try again.",
         variant: "destructive",
       });
     } finally {
@@ -217,7 +271,7 @@ export const AddSpeakerDialog = ({ onSpeakerAdded }: AddSpeakerDialogProps) => {
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
         <Button className="bg-orange-500 hover:bg-orange-600">
           <Plus className="w-4 h-4 mr-2" />
@@ -318,21 +372,39 @@ export const AddSpeakerDialog = ({ onSpeakerAdded }: AddSpeakerDialogProps) => {
                   placeholder="https://example.com/photo.jpg"
                   type="url"
                   value={formData.photoUrl}
-                  onChange={(e) =>
-                    handleInputChange("photoUrl", e.target.value)
-                  }
+                  onChange={(e) => {
+                    handleInputChange("photoUrl", e.target.value);
+                    setImageError(false); // Reset error when user changes URL
+                  }}
                   className="border-border"
                 />
-                {formData.photoUrl && (
+                {formData.photoUrl && !imageError && (
                   <div className="mt-2 border border-border rounded p-2">
                     <img
                       src={formData.photoUrl}
                       alt="Preview"
                       className="w-full h-32 object-cover rounded"
                       onError={() => {
-                        // Handle invalid image URL
+                        setImageError(true);
+                        toast({
+                          title: "Image Error",
+                          description:
+                            "Invalid image URL - please check the URL and try again",
+                          variant: "destructive",
+                        });
                       }}
                     />
+                  </div>
+                )}
+                {formData.photoUrl && imageError && (
+                  <div className="mt-2 border border-red-200 bg-red-50 rounded p-4 text-center">
+                    <p className="text-sm text-red-600 font-medium">
+                      ❌ Unable to load image
+                    </p>
+                    <p className="text-xs text-red-500 mt-1">
+                      The URL is invalid or the image cannot be accessed. Please
+                      check the URL and try again.
+                    </p>
                   </div>
                 )}
               </TabsContent>

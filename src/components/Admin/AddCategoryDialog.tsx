@@ -34,6 +34,10 @@ export const AddCategoryDialog = ({
   const [formData, setFormData] = useState<AddCategoryFormData>({
     label: "",
   });
+  // Initialize local committee state from imported JSON
+  const [committee] = useState<CommitteeData["root"]>(() =>
+    structuredClone((committeeData as CommitteeData).root)
+  );
 
   const handleSubmit = async () => {
     // Validation
@@ -49,8 +53,6 @@ export const AddCategoryDialog = ({
     setIsSubmitting(true);
 
     try {
-      const committee = (committeeData as CommitteeData).root;
-
       // Generate unique ID for category
       const categoryId = `category-${Date.now()}`;
 
@@ -61,14 +63,20 @@ export const AddCategoryDialog = ({
         members: [],
       };
 
-      // Add to committee in memory
-      committee.push(newCategory);
+      // Use immutable approach: create new array with spread operator
+      // Never mutate the imported JSON module - create a copy instead
+      const updatedCommitteeArray = [...committee, newCategory];
+
+      // Reconstruct the full data object with the updated committee array
+      const updatedData = {
+        root: updatedCommitteeArray,
+      };
 
       // Store pending change for GitHub commit on logout
-      const updatedCommittee = JSON.stringify(committeeData, null, 2);
+      const updatedCommitteeJson = JSON.stringify(updatedData, null, 2);
       storePendingChange({
         path: "src/data/committee.json",
-        content: updatedCommittee,
+        content: updatedCommitteeJson,
         message: `Added new committee category: ${formData.label}`,
       });
 

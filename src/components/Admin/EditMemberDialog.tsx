@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Dialog,
   DialogContent,
@@ -22,6 +22,8 @@ import committeeData from "@/data/committee.json";
 import { getPhotoUrl } from "@/lib/photoMigration";
 import { ActivityLogger, logAction } from "@/lib/activityLogger";
 import { storePendingChange } from "@/lib/githubSync";
+import { uploadImageToGitHub } from "@/lib/fileUpload";
+import { useToast } from "@/hooks/use-toast";
 import type { CommitteeData } from "@/types/data";
 
 interface EditMemberDialogProps {
@@ -58,6 +60,26 @@ export const EditMemberDialog = ({
     getPhotoUrl(member?.photo) || ""
   );
   const [errors, setErrors] = useState<Record<string, string>>({});
+
+  // Cleanup object URLs to prevent memory leaks
+  useEffect(() => {
+    return () => {
+      // Cleanup on unmount
+      if (photoPreview?.startsWith("blob:")) {
+        URL.revokeObjectURL(photoPreview);
+      }
+    };
+  }, []);
+
+  // Cleanup when dialog closes
+  const handleDialogOpenChange = (newOpen: boolean) => {
+    if (!newOpen && photoPreview?.startsWith("blob:")) {
+      // Dialog is closing, revoke the preview URL
+      URL.revokeObjectURL(photoPreview);
+      setPhotoPreview(getPhotoUrl(member?.photo) || "");
+    }
+    onOpenChange(newOpen);
+  };
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
@@ -136,59 +158,93 @@ export const EditMemberDialog = ({
     setPhotoPreview("");
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!validateForm()) return;
 
     if (!member || !category) return;
 
-    // Track changes for activity log
-    const changes: Record<string, { old: string; new: string }> = {};
+    try {
+      // Track changes for activity log
+      const changes: Record<string, { old: string; new: string }> = {};
 
-    if (member.name !== formData.name) {
-      changes.name = { old: member.name, new: formData.name };
-    }
-    if (member.role !== formData.role) {
-      changes.role = { old: member.role, new: formData.role };
-    }
-    if (member.affiliation !== formData.affiliation) {
-      changes.affiliation = {
-        old: member.affiliation,
-        new: formData.affiliation,
+      if (member.name !== formData.name) {
+        changes.name = { old: member.name, new: formData.name };
+      }
+      if (member.role !== formData.role) {
+        changes.role = { old: member.role, new: formData.role };
+      }
+      if (member.affiliation !== formData.affiliation) {
+        changes.affiliation = {
+          old: member.affiliation,
+          new: formData.affiliation,
+        };
+      }
+
+      // Handle photo: upload file if present, otherwise keep existing or use URL
+      let photoUrl = formData.photoUrl;
+
+      if (formData.photoFile) {
+        toast({
+          title: "Uploading photo",
+          description: "Please wait while we upload your photo to GitHub...",
+        });
+
+        const uploadResult = await uploadImageToGitHub(
+          formData.photoFile,
+          "committee"
+        );
+
+        if (!uploadResult.success) {
+          throw new Error(uploadResult.error || "Failed to upload photo");
+        }
+
+        photoUrl = uploadResult.path || "";
+      } else if (!photoUrl && member.photo?.url) {
+        // Keep existing photo if no new upload or URL
+        photoUrl = member.photo.url;
+      }
+
+      // Update member in memory
+      const updatedMember = {
+        ...member,
+        name: formData.name,
+        role: formData.role,
+        affiliation: formData.affiliation,
+        photo: photoUrl ? { url: photoUrl } : {},
       };
+
+      category.members[memberIndex] = updatedMember;
+
+      // Store pending change for GitHub commit on logout
+      const updatedCommittee = JSON.stringify(committeeData, null, 2);
+      storePendingChange({
+        path: "src/data/committee.json",
+        content: updatedCommittee,
+        message: `Updated committee member: ${formData.name}`,
+      });
+
+      // Log the action
+      ActivityLogger.log({
+        action: "Updated committee member",
+        type: "member",
+        targetName: formData.name,
+        changes: Object.keys(changes).length > 0 ? changes : undefined,
+        status: "success",
+      });
+
+      onOpenChange(false);
+      onMemberUpdated?.();
+    } catch (error) {
+      console.error("Error updating member:", error);
+      toast({
+        title: "Error",
+        description:
+          error instanceof Error
+            ? error.message
+            : "Failed to update member. Please try again.",
+        variant: "destructive",
+      });
     }
-
-    // Update member in memory
-    const updatedMember = {
-      ...member,
-      name: formData.name,
-      role: formData.role,
-      affiliation: formData.affiliation,
-      photo: formData.photoFile
-        ? { url: "", file: formData.photoFile.name }
-        : { url: formData.photoUrl, file: null },
-    };
-
-    category.members[memberIndex] = updatedMember;
-
-    // Store pending change for GitHub commit on logout
-    const updatedCommittee = JSON.stringify(committeeData, null, 2);
-    storePendingChange({
-      path: "src/data/committee.json",
-      content: updatedCommittee,
-      message: `Updated committee member: ${formData.name}`,
-    });
-
-    // Log the action
-    ActivityLogger.log({
-      action: "Updated committee member",
-      type: "member",
-      targetName: formData.name,
-      changes: Object.keys(changes).length > 0 ? changes : undefined,
-      status: "success",
-    });
-
-    onOpenChange(false);
-    onMemberUpdated?.();
   };
 
   if (!member || !category) {
@@ -201,7 +257,7 @@ export const EditMemberDialog = ({
   }));
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={handleDialogOpenChange}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Edit Member: {memberName}</DialogTitle>

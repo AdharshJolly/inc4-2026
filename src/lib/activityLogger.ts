@@ -3,12 +3,14 @@
  * Tracks all admin actions with timestamps
  */
 
+export type ChangeRecord = Record<string, { old: unknown; new: unknown }>;
+
 export interface ActivityLogEntry {
   id: string;
   action: string;
   type: "member" | "speaker" | "date" | "category";
   targetName: string;
-  changes?: Record<string, { old: any; new: any }>;
+  changes?: ChangeRecord;
   timestamp: number;
   status: "success" | "error" | "warning";
 }
@@ -18,8 +20,9 @@ const MAX_ENTRIES = 500; // Keep last 500 entries
 export const ActivityLogger = {
   /**
    * Log an action to activity log
+   * Handles localStorage quota errors gracefully with retry logic
    */
-  log(entry: Omit<ActivityLogEntry, "id" | "timestamp">) {
+  log(entry: Omit<ActivityLogEntry, "id" | "timestamp">): ActivityLogEntry {
     const logs = ActivityLogger.getAll();
 
     const newEntry: ActivityLogEntry = {
@@ -32,9 +35,53 @@ export const ActivityLogger = {
     logs.unshift(newEntry);
 
     // Keep only last MAX_ENTRIES
-    const trimmed = logs.slice(0, MAX_ENTRIES);
+    let trimmed = logs.slice(0, MAX_ENTRIES);
 
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(trimmed));
+    // Attempt to save with retry logic for quota errors
+    let retries = 0;
+    const maxRetries = 3;
+
+    while (retries < maxRetries) {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(trimmed));
+        return newEntry;
+      } catch (error) {
+        // Check if it's a quota exceeded error
+        const isQuotaError =
+          error instanceof DOMException &&
+          (error.name === "QuotaExceededError" ||
+            error.code === 22 ||
+            error.name === "NS_ERROR_DOM_QUOTA_REACHED");
+
+        if (!isQuotaError) {
+          // If it's not a quota error, log and fail gracefully
+          console.error("Error saving activity log:", error);
+          return newEntry; // Return entry anyway, best effort
+        }
+
+        // Try to free up space by removing older entries
+        retries++;
+        if (retries < maxRetries) {
+          // Remove oldest 50 entries (or more aggressively on later retries)
+          const removeCount =
+            retries === 1 ? 50 : Math.min(100 * retries, trimmed.length);
+          trimmed = trimmed.slice(0, Math.max(1, trimmed.length - removeCount));
+
+          if (trimmed.length === 0) {
+            // If we've removed everything, give up
+            console.warn(
+              "Activity log quota exceeded - could not free up space"
+            );
+            return newEntry;
+          }
+        } else {
+          // Out of retries - fail gracefully
+          console.error("Activity log quota exceeded after retry attempts");
+          return newEntry;
+        }
+      }
+    }
+
     return newEntry;
   },
 
@@ -44,7 +91,7 @@ export const ActivityLogger = {
   getAll(): ActivityLogEntry[] {
     try {
       const data = localStorage.getItem(STORAGE_KEY);
-      return data ? JSON.parse(data) : [];
+      return data ? (JSON.parse(data) as ActivityLogEntry[]) : [];
     } catch (error) {
       console.error("Error reading activity log:", error);
       return [];
@@ -69,14 +116,14 @@ export const ActivityLogger = {
   /**
    * Clear all logs
    */
-  clear() {
+  clear(): void {
     localStorage.removeItem(STORAGE_KEY);
   },
 
   /**
    * Export logs as JSON
    */
-  export() {
+  export(): void {
     const logs = ActivityLogger.getAll();
     const json = JSON.stringify(logs, null, 2);
     const blob = new Blob([json], { type: "application/json" });
@@ -97,7 +144,7 @@ export const ActivityLogger = {
  * Log helper functions
  */
 export const logAction = {
-  addMember: (name: string) =>
+  addMember: (name: string): ActivityLogEntry =>
     ActivityLogger.log({
       action: "Added new committee member",
       type: "member",
@@ -105,7 +152,7 @@ export const logAction = {
       status: "success",
     }),
 
-  editMember: (name: string, changes: Record<string, { old: any; new: any }>) =>
+  editMember: (name: string, changes: ChangeRecord): ActivityLogEntry =>
     ActivityLogger.log({
       action: "Edited committee member",
       type: "member",
@@ -114,7 +161,7 @@ export const logAction = {
       status: "success",
     }),
 
-  deleteMember: (name: string) =>
+  deleteMember: (name: string): ActivityLogEntry =>
     ActivityLogger.log({
       action: "Deleted committee member",
       type: "member",
@@ -122,7 +169,7 @@ export const logAction = {
       status: "warning",
     }),
 
-  addSpeaker: (name: string) =>
+  addSpeaker: (name: string): ActivityLogEntry =>
     ActivityLogger.log({
       action: "Added new keynote speaker",
       type: "speaker",
@@ -130,10 +177,7 @@ export const logAction = {
       status: "success",
     }),
 
-  editSpeaker: (
-    name: string,
-    changes: Record<string, { old: any; new: any }>
-  ) =>
+  editSpeaker: (name: string, changes: ChangeRecord): ActivityLogEntry =>
     ActivityLogger.log({
       action: "Edited keynote speaker",
       type: "speaker",
@@ -142,14 +186,19 @@ export const logAction = {
       status: "success",
     }),
 
-  deleteSpeaker: (name: string) =>
+  deleteSpeaker: (name: string): ActivityLogEntry =>
     ActivityLogger.log({
       action: "Deleted keynote speaker",
       type: "speaker",
       targetName: name,
       status: "warning",
     }),
-  bulkAction: (action: string, count: number, type: ActivityLogEntry["type"]) =>
+
+  bulkAction: (
+    action: string,
+    count: number,
+    type: ActivityLogEntry["type"]
+  ): ActivityLogEntry =>
     ActivityLogger.log({
       action: `Performed bulk action: ${action} (${count} items)`,
       type,
@@ -157,11 +206,25 @@ export const logAction = {
       status: "success",
     }),
 
-  exportData: (type: string) =>
-    ActivityLogger.log({
+  exportData: (type: string): ActivityLogEntry => {
+    // Validate and map the type parameter to allowed enum values
+    const validTypes: ActivityLogEntry["type"][] = [
+      "member",
+      "speaker",
+      "date",
+      "category",
+    ];
+    const mappedType: ActivityLogEntry["type"] = validTypes.includes(
+      type as ActivityLogEntry["type"]
+    )
+      ? (type as ActivityLogEntry["type"])
+      : "member"; // Fallback to "member" if invalid
+
+    return ActivityLogger.log({
       action: `Exported ${type} data`,
-      type: "member",
+      type: mappedType,
       targetName: type,
       status: "success",
-    }),
+    });
+  },
 };

@@ -17,7 +17,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Plus } from "lucide-react";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Calendar } from "@/components/ui/calendar";
+import { Plus, Calendar as CalendarIcon } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import datesData from "@/data/important-dates.json";
 import { storePendingChange } from "@/lib/githubSync";
@@ -37,12 +43,17 @@ interface AddDatesDialogProps {
 export const AddDatesDialog = ({ onDateAdded }: AddDatesDialogProps) => {
   const [open, setOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
   const { toast } = useToast();
   const [formData, setFormData] = useState<AddDateFormData>({
     event: "",
     date: "",
     status: "upcoming",
   });
+  // Initialize local dates state from imported JSON
+  const [dates] = useState<ImportantDatesData["root"]>(() =>
+    structuredClone((datesData as ImportantDatesData).root)
+  );
 
   const handleInputChange = (field: keyof AddDateFormData, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -52,6 +63,23 @@ export const AddDatesDialog = ({ onDateAdded }: AddDatesDialogProps) => {
     value: "upcoming" | "completed" | "highlight"
   ) => {
     setFormData((prev) => ({ ...prev, status: value }));
+  };
+
+  // Format date as "Month Day, Year" to match existing data format
+  const formatDate = (date: Date): string => {
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  };
+
+  const handleDateSelect = (date: Date | undefined) => {
+    if (date) {
+      const formattedDate = formatDate(date);
+      setFormData((prev) => ({ ...prev, date: formattedDate }));
+      setSelectedDate(date);
+    }
   };
 
   const handleSubmit = async () => {
@@ -86,8 +114,6 @@ export const AddDatesDialog = ({ onDateAdded }: AddDatesDialogProps) => {
     setIsSubmitting(true);
 
     try {
-      const dates = (datesData as ImportantDatesData).root;
-
       // Create new date object
       const newDate = {
         event: formData.event,
@@ -95,14 +121,20 @@ export const AddDatesDialog = ({ onDateAdded }: AddDatesDialogProps) => {
         status: formData.status,
       };
 
-      // Add to dates in memory
-      dates.push(newDate);
+      // Use immutable approach: create new array with spread operator
+      // Never mutate the imported JSON module - create a copy instead
+      const newDates = [...dates, newDate];
+
+      // Reconstruct the full data object with the updated dates array
+      const updatedData = {
+        root: newDates,
+      };
 
       // Store pending change for GitHub commit on logout
-      const updatedDates = JSON.stringify(datesData, null, 2);
+      const updatedDatesJson = JSON.stringify(updatedData, null, 2);
       storePendingChange({
         path: "src/data/important-dates.json",
-        content: updatedDates,
+        content: updatedDatesJson,
         message: `Added new event date: ${formData.event}`,
       });
 
@@ -181,14 +213,29 @@ export const AddDatesDialog = ({ onDateAdded }: AddDatesDialogProps) => {
             <Label htmlFor="date" className="text-sm font-medium">
               Date *
             </Label>
-            <Input
-              id="date"
-              placeholder="e.g., January 15, 2026"
-              value={formData.date}
-              onChange={(e) => handleInputChange("date", e.target.value)}
-              aria-label="Event date"
-              aria-required="true"
-            />
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  id="date"
+                  variant="outline"
+                  className="w-full justify-start text-left font-normal"
+                  aria-label="Pick event date"
+                  aria-required="true"
+                >
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  {formData.date || "Pick a date"}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" align="start">
+                <Calendar
+                  mode="single"
+                  selected={selectedDate}
+                  onSelect={handleDateSelect}
+                  disabled={(date) => date < new Date("1900-01-01")}
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
           </div>
 
           {/* Status */}

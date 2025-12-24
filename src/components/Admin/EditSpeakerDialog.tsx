@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Dialog,
   DialogContent,
@@ -15,6 +15,8 @@ import speakersData from "@/data/speakers.json";
 import { getPhotoUrl } from "@/lib/photoMigration";
 import { ActivityLogger } from "@/lib/activityLogger";
 import { storePendingChange } from "@/lib/githubSync";
+import { uploadImageToGitHub } from "@/lib/fileUpload";
+import { useToast } from "@/hooks/use-toast";
 import type { SpeakersData } from "@/types/data";
 
 interface EditSpeakerDialogProps {
@@ -50,6 +52,26 @@ export const EditSpeakerDialog = ({
     getPhotoUrl(speaker?.photo) || ""
   );
   const [errors, setErrors] = useState<Record<string, string>>({});
+
+  // Cleanup object URLs to prevent memory leaks
+  useEffect(() => {
+    return () => {
+      // Cleanup on unmount
+      if (photoPreview?.startsWith("blob:")) {
+        URL.revokeObjectURL(photoPreview);
+      }
+    };
+  }, []);
+
+  // Cleanup when dialog closes
+  const handleDialogOpenChange = (newOpen: boolean) => {
+    if (!newOpen && photoPreview?.startsWith("blob:")) {
+      // Dialog is closing, revoke the preview URL
+      URL.revokeObjectURL(photoPreview);
+      setPhotoPreview(getPhotoUrl(speaker?.photo) || "");
+    }
+    onOpenChange(newOpen);
+  };
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
@@ -134,70 +156,104 @@ export const EditSpeakerDialog = ({
     setPhotoPreview("");
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!validateForm()) return;
 
     if (!speaker) return;
 
-    // Track changes for activity log
-    const changes: Record<string, { old: string; new: string }> = {};
+    try {
+      // Track changes for activity log
+      const changes: Record<string, { old: string; new: string }> = {};
 
-    if (speaker.name !== formData.name) {
-      changes.name = { old: speaker.name, new: formData.name };
-    }
-    if (speaker.role !== formData.role) {
-      changes.role = { old: speaker.role, new: formData.role };
-    }
-    if (speaker.affiliation !== formData.affiliation) {
-      changes.affiliation = {
-        old: speaker.affiliation,
-        new: formData.affiliation,
+      if (speaker.name !== formData.name) {
+        changes.name = { old: speaker.name, new: formData.name };
+      }
+      if (speaker.role !== formData.role) {
+        changes.role = { old: speaker.role, new: formData.role };
+      }
+      if (speaker.affiliation !== formData.affiliation) {
+        changes.affiliation = {
+          old: speaker.affiliation,
+          new: formData.affiliation,
+        };
+      }
+      if (speaker.topic !== formData.topic) {
+        changes.topic = { old: speaker.topic, new: formData.topic };
+      }
+      if (speaker.linkedin !== formData.linkedin) {
+        changes.linkedin = {
+          old: speaker.linkedin || "N/A",
+          new: formData.linkedin || "N/A",
+        };
+      }
+
+      // Handle photo: upload file if present, otherwise keep existing or use URL
+      let photoUrl = formData.photoUrl;
+
+      if (formData.photoFile) {
+        toast({
+          title: "Uploading photo",
+          description: "Please wait while we upload your photo to GitHub...",
+        });
+
+        const uploadResult = await uploadImageToGitHub(
+          formData.photoFile,
+          "speakers"
+        );
+
+        if (!uploadResult.success) {
+          throw new Error(uploadResult.error || "Failed to upload photo");
+        }
+
+        photoUrl = uploadResult.path || "";
+      } else if (!photoUrl && speaker.photo?.url) {
+        // Keep existing photo if no new upload or URL
+        photoUrl = speaker.photo.url;
+      }
+
+      // Update speaker in memory
+      const updatedSpeaker = {
+        ...speaker,
+        name: formData.name,
+        role: formData.role,
+        affiliation: formData.affiliation,
+        topic: formData.topic,
+        linkedin: formData.linkedin,
+        photo: photoUrl ? { url: photoUrl } : {},
       };
+
+      speakers[speakerIndex] = updatedSpeaker;
+
+      // Store pending change for GitHub commit on logout
+      const updatedSpeakers = JSON.stringify(speakersData, null, 2);
+      storePendingChange({
+        path: "src/data/speakers.json",
+        content: updatedSpeakers,
+        message: `Updated speaker: ${formData.name}`,
+      });
+
+      // Log the action
+      ActivityLogger.log({
+        action: "Updated speaker",
+        type: "speaker",
+        targetName: formData.name,
+        changes: Object.keys(changes).length > 0 ? changes : undefined,
+        status: "success",
+      });
+
+      onOpenChange(false);
+      onSpeakerUpdated?.();
+    } catch (error) {
+      console.error("Error updating speaker:", error);
+      toast({
+        title: "Error",
+        description:
+          error instanceof Error
+            ? error.message
+            : "Failed to update speaker. Please try again.",
+        variant: "destructive",
+      });
     }
-    if (speaker.topic !== formData.topic) {
-      changes.topic = { old: speaker.topic, new: formData.topic };
-    }
-    if (speaker.linkedin !== formData.linkedin) {
-      changes.linkedin = {
-        old: speaker.linkedin || "N/A",
-        new: formData.linkedin || "N/A",
-      };
-    }
-
-    // Update speaker in memory
-    const updatedSpeaker = {
-      ...speaker,
-      name: formData.name,
-      role: formData.role,
-      affiliation: formData.affiliation,
-      topic: formData.topic,
-      linkedin: formData.linkedin,
-      photo: formData.photoFile
-        ? { url: "", file: formData.photoFile.name }
-        : { url: formData.photoUrl, file: null },
-    };
-
-    speakers[speakerIndex] = updatedSpeaker;
-
-    // Store pending change for GitHub commit on logout
-    const updatedSpeakers = JSON.stringify(speakersData, null, 2);
-    storePendingChange({
-      path: "src/data/speakers.json",
-      content: updatedSpeakers,
-      message: `Updated speaker: ${formData.name}`,
-    });
-
-    // Log the action
-    ActivityLogger.log({
-      action: "Updated speaker",
-      type: "speaker",
-      targetName: formData.name,
-      changes: Object.keys(changes).length > 0 ? changes : undefined,
-      status: "success",
-    });
-
-    onOpenChange(false);
-    onSpeakerUpdated?.();
   };
 
   if (!speaker) {
@@ -205,7 +261,7 @@ export const EditSpeakerDialog = ({
   }
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={handleDialogOpenChange}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Edit Speaker: {speakerName}</DialogTitle>
