@@ -67,7 +67,7 @@ export class ErrorBoundary extends React.Component<Props, State> {
                 <p>
                   An unexpected error occurred. We've logged this for debugging.
                 </p>
-                {import.meta.env.DEV && (
+                {process.env.DEV && (
                   <details className="text-xs bg-muted p-2 rounded max-h-48 overflow-auto">
                     <summary className="cursor-pointer font-mono font-bold">
                       Error Details

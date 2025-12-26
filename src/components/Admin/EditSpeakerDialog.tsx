@@ -177,7 +177,7 @@ export const EditSpeakerDialog = ({
         };
       }
       if (speaker.topic !== formData.topic) {
-        changes.topic = { old: speaker.topic, new: formData.topic };
+        changes.topic = { old: speaker.topic || "", new: formData.topic };
       }
       if (speaker.linkedin !== formData.linkedin) {
         changes.linkedin = {
@@ -218,7 +218,7 @@ export const EditSpeakerDialog = ({
         affiliation: formData.affiliation,
         topic: formData.topic,
         linkedin: formData.linkedin,
-        photo: photoUrl ? { url: photoUrl } : undefined,
+        photo: { url: photoUrl },
       };
 
       speakers[speakerIndex] = updatedSpeaker;

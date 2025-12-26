@@ -12,14 +12,14 @@ export interface CreateIssueOptions {
 export async function createGitHubIssue(
   options: CreateIssueOptions
 ): Promise<{ success: boolean; url?: string; error?: string }> {
-  const token = import.meta.env.VITE_GITHUB_TOKEN;
+  const token = process.env.NEXT_GITHUB_TOKEN;
   const owner = "AdharshJolly";
   const repo = "inc4-2026";
 
   if (!token) {
     return {
       success: false,
-      error: "GitHub token not configured (VITE_GITHUB_TOKEN)",
+      error: "GitHub token not configured (NEXT_GITHUB_TOKEN)",
     };
   }
 

@@ -1,7 +1,10 @@
+"use client";
+
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, ChevronDown } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
@@ -32,8 +35,8 @@ export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
-  const location = useLocation();
-  const isLanding = location.pathname === "/";
+  const pathname = usePathname();
+  const isLanding = pathname === "/";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -56,7 +59,7 @@ export const Navbar = () => {
       <div className="container mx-auto px-4 flex items-center justify-between">
         {/* Left Logos */}
         <div className="flex items-center gap-4">
-          <Link to="/" className="flex items-center gap-3">
+          <Link href="/" className="flex items-center gap-3">
             <img
               src="/images/ieee_cs_bc.png"
               alt="IEEE CS Bangalore Chapter"
@@ -93,15 +96,15 @@ export const Navbar = () => {
                     whileHover={{ scale: 1.05 }}
                     className={`font-medium text-lg transition-colors flex items-center gap-1 py-1 ${
                       isLanding && !isScrolled
-                        ? location.pathname === link.href ||
+                        ? pathname === link.href ||
                           link.submenu.some(
-                            (sub) => sub.href === location.pathname
+                            (sub) => sub.href === pathname
                           )
                           ? "text-primary font-bold"
                           : "text-primary-foreground hover:text-primary"
-                        : location.pathname === link.href ||
+                        : pathname === link.href ||
                           link.submenu.some(
-                            (sub) => sub.href === location.pathname
+                            (sub) => sub.href === pathname
                           )
                         ? "text-primary font-bold"
                         : "text-foreground hover:text-primary"
@@ -109,9 +112,9 @@ export const Navbar = () => {
                   >
                     {link.name}
                     <ChevronDown className="w-4 h-4" />
-                    {(location.pathname === link.href ||
+                    {(pathname === link.href ||
                       link.submenu.some(
-                        (sub) => sub.href === location.pathname
+                        (sub) => sub.href === pathname
                       )) && (
                       <motion.div
                         layoutId="navbar-indicator"
@@ -137,9 +140,9 @@ export const Navbar = () => {
                         {link.submenu.map((sublink) => (
                           <Link
                             key={sublink.name}
-                            to={sublink.href}
+                            href={sublink.href}
                             className={`block px-5 py-2.5 text-sm transition-all hover:bg-primary/10 hover:pl-7 hover:text-primary ${
-                              location.pathname === sublink.href
+                              pathname === sublink.href
                                 ? "text-primary font-semibold bg-primary/5"
                                 : "text-foreground/80"
                             }`}
@@ -154,19 +157,19 @@ export const Navbar = () => {
               ) : (
                 <motion.div whileHover={{ scale: 1.05 }}>
                   <Link
-                    to={link.href}
+                    href={link.href}
                     className={`font-medium text-lg transition-colors relative py-1 ${
                       isLanding && !isScrolled
-                        ? location.pathname === link.href
+                        ? pathname === link.href
                           ? "text-primary font-bold"
                           : "text-primary-foreground hover:text-primary"
-                        : location.pathname === link.href
+                        : pathname === link.href
                         ? "text-primary font-bold"
                         : "text-foreground hover:text-primary"
                     }`}
                   >
                     {link.name}
-                    {location.pathname === link.href && (
+                    {pathname === link.href && (
                       <motion.div
                         layoutId="navbar-indicator"
                         className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary rounded-full"
@@ -192,7 +195,7 @@ export const Navbar = () => {
             asChild
           >
             <Link
-              to="https://cmt3.research.microsoft.com/InC42026"
+              href="https://cmt3.research.microsoft.com/InC42026"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -260,7 +263,7 @@ export const Navbar = () => {
                         {link.submenu.map((sublink) => (
                           <Link
                             key={sublink.name}
-                            to={sublink.href}
+                            href={sublink.href}
                             className="font-medium text-base text-foreground hover:text-primary transition-colors py-1"
                             onClick={() => setIsMobileMenuOpen(false)}
                           >
@@ -271,7 +274,7 @@ export const Navbar = () => {
                     </details>
                   ) : (
                     <Link
-                      to={link.href}
+                      href={link.href}
                       className="font-medium text-lg text-foreground hover:text-primary transition-colors py-2"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
@@ -281,7 +284,7 @@ export const Navbar = () => {
                 </div>
               ))}
               <Button variant="default" size="lg" className="mt-6 px-8" asChild>
-                <Link to="/registration">Register</Link>
+                <Link href="/registration">Register</Link>
               </Button>
             </div>
           </motion.div>

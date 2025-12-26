@@ -1,5 +1,5 @@
 import { Mail, Phone, MapPin, Linkedin, Twitter, Youtube } from "lucide-react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 const footerLinks = {
   quickLinks: [
@@ -67,7 +67,7 @@ export const Footer = () => {
               {footerLinks.quickLinks.map((link) => (
                 <li key={link.name}>
                   <Link
-                    to={link.href}
+                    href={link.href}
                     className="text-primary-foreground/60 hover:text-primary transition-colors text-sm"
                   >
                     {link.name}
@@ -86,7 +86,7 @@ export const Footer = () => {
               {footerLinks.resources.map((link) => (
                 <li key={link.name}>
                   <Link
-                    to={link.href}
+                    href={link.href}
                     className="text-primary-foreground/60 hover:text-primary transition-colors text-sm"
                   >
                     {link.name}

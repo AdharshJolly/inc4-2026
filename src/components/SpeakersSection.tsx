@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Linkedin, Twitter } from "lucide-react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { Reveal } from "./Reveal";
 import speakersData from "@/data/speakers.json";
 import { getPhotoUrl, normalizePhotoFields } from "@/lib/photoMigration";
@@ -114,7 +114,7 @@ export const SpeakersSection = () => {
 
         {/* View All Button */}
         <div className="text-center">
-          <Link to="/speakers">
+          <Link href="/speakers">
             <Button variant="heroOutline" size="lg">
               View All Speakers
               <ArrowRight className="w-4 h-4" />

@@ -82,7 +82,7 @@ export const CommitteeManager = () => {
     if (selectedMembers.size === filteredMembers.length) {
       setSelectedMembers(new Set());
     } else {
-      const allIds = filteredMembers.map((m, idx) => `${m.categoryId}-${idx}`);
+      const allIds = filteredMembers.map((m) => `${m.categoryId}-${m.memberIndex}`);
       setSelectedMembers(new Set(allIds));
     }
   }, [filteredMembers, selectedMembers.size]);

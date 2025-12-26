@@ -23,13 +23,15 @@ export const ActivityLogger = {
    * Handles localStorage quota errors gracefully with retry logic
    */
   log(entry: Omit<ActivityLogEntry, "id" | "timestamp">): ActivityLogEntry {
-    const logs = ActivityLogger.getAll();
-
     const newEntry: ActivityLogEntry = {
       ...entry,
       id: `${Date.now()}-${Math.random().toString(36).slice(2, 11)}`,
       timestamp: Date.now(),
     };
+
+    if (typeof window === "undefined") return newEntry;
+
+    const logs = ActivityLogger.getAll();
 
     // Add to beginning (newest first)
     logs.unshift(newEntry);
@@ -81,12 +83,15 @@ export const ActivityLogger = {
         }
       }
     }
+
+    return newEntry;
   },
 
   /**
    * Get all activity logs
    */
   getAll(): ActivityLogEntry[] {
+    if (typeof window === "undefined") return [];
     try {
       const data = localStorage.getItem(STORAGE_KEY);
       return data ? (JSON.parse(data) as ActivityLogEntry[]) : [];
@@ -115,6 +120,7 @@ export const ActivityLogger = {
    * Clear all logs
    */
   clear(): void {
+    if (typeof window === "undefined") return;
     localStorage.removeItem(STORAGE_KEY);
   },
 

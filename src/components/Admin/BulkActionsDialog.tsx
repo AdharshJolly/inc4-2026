@@ -139,7 +139,7 @@ export const BulkActionsDialog = ({
       path: "src/data/committee.json",
       content: updatedCommittee,
       message: `Moved ${selectedIds.length} committee members to ${
-        committee.find((c) => c.id === selectedCategory)?.name
+        committee.find((c) => c.id === selectedCategory)?.label
       }`,
     });
 
@@ -147,7 +147,7 @@ export const BulkActionsDialog = ({
       action: `Bulk moved ${selectedIds.length} committee members`,
       type: "member",
       targetName: `${selectedIds.length} members to ${
-        committee.find((c) => c.id === selectedCategory)?.name ||
+        committee.find((c) => c.id === selectedCategory)?.label ||
         selectedCategory
       }`,
       status: "success",
@@ -178,7 +178,7 @@ export const BulkActionsDialog = ({
             selectedIds
               .map((id) => {
                 const [categoryId] = id.split("-");
-                return committee.find((c) => c.id === categoryId)?.name;
+                return committee.find((c) => c.id === categoryId)?.label;
               })
               .join(", "),
           ];
@@ -278,7 +278,7 @@ export const BulkActionsDialog = ({
                   <SelectContent>
                     {committee.map((cat) => (
                       <SelectItem key={cat.id} value={cat.id}>
-                        {cat.name}
+                        {cat.label}
                       </SelectItem>
                     ))}
                   </SelectContent>

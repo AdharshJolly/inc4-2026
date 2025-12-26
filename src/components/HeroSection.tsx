@@ -1,6 +1,8 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Calendar, MapPin, ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { motion, Variants, useReducedMotion } from "framer-motion";
 
 const container: Variants = {
@@ -116,7 +118,7 @@ export const HeroSection = () => {
             className="flex flex-wrap justify-center gap-4"
           >
             <Link
-              to="https://cmt3.research.microsoft.com/InC42026"
+              href="https://cmt3.research.microsoft.com/InC42026"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -125,7 +127,7 @@ export const HeroSection = () => {
                 <ArrowRight className="w-5 h-5" />
               </Button>
             </Link>
-            <Link to="/schedule">
+            <Link href="/schedule">
               <Button variant="heroOutline" size="xl">
                 View Schedule
               </Button>

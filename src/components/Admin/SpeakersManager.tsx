@@ -50,7 +50,7 @@ export const SpeakersManager = () => {
     if (selectedSpeakers.size === filteredSpeakers.length) {
       setSelectedSpeakers(new Set());
     } else {
-      const allIds = filteredSpeakers.map((_, idx) => String(idx));
+      const allIds = filteredSpeakers.map((fs) => String(speakers.indexOf(fs)));
       setSelectedSpeakers(new Set(allIds));
     }
   }, [filteredSpeakers.length, selectedSpeakers.size]);
