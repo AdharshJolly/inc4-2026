@@ -64,7 +64,7 @@ export default function CallForPapers() {
                       <span className="text-primary font-semibold">
                         IEEE Xplore
                       </span>{" "}
-                      subject to meeting IEEE Xplore’s scope and quality
+                      subject to meeting IEEE Xplore's scope and quality
                       requirements */}
                     </p>
 
@@ -98,21 +98,23 @@ export default function CallForPapers() {
                         Submit Paper <ArrowRight className="w-4 h-4" />
                       </a>
                     </Button>
-                    <div className="mt-4 border-l-4 border-primary/70 bg-muted/40 px-4 py-3 rounded-r-xl">
-                      <p className="text-xs leading-relaxed text-muted-foreground">
-                        The Microsoft CMT service was used for managing the
-                        peer-reviewing process for this conference. This service
-                        was provided for free by Microsoft and they bore all
-                        expenses, including costs for Azure cloud services as
-                        well as for software development and support.
-                      </p>
-                    </div>
                   </div>
                 </div>
                 {/* Decorative Blob */}
                 <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl -z-0 translate-x-1/2 -translate-y-1/2 pointer-events-none" />
               </div>
             </Reveal>
+          </section>
+
+          {/* Plain Text CMT Acknowledgment - Required by Microsoft CMT */}
+          <section>
+            <p>
+              Microsoft CMT Acknowledgment: The Microsoft CMT service was used
+              for managing the peer-reviewing process for this conference. This
+              service was provided for free by Microsoft and they bore all
+              expenses, including costs for Azure cloud services as well as for
+              software development and support.
+            </p>
           </section>
 
           {/* Topics Grid */}
