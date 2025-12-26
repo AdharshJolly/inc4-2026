@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles } from "lucide-react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { Reveal } from "./Reveal";
 
 export const CTASection = () => {
@@ -40,7 +40,7 @@ export const CTASection = () => {
           <Reveal width="100%">
             <div className="flex flex-wrap justify-center gap-4">
               <Link
-                to="https://cmt3.research.microsoft.com/InC42026"
+                href="https://cmt3.research.microsoft.com/InC42026"
                 target="_blank"
                 rel="noopener noreferrer"
               >

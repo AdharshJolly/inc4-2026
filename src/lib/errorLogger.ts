@@ -39,6 +39,7 @@ let breadcrumbs: Breadcrumb[] = [];
  * Initialize error logging (call once on app startup)
  */
 export const initErrorLogger = () => {
+  if (typeof window === "undefined") return;
   // Load breadcrumbs from localStorage
   try {
     const stored = localStorage.getItem(BREADCRUMB_KEY);
@@ -85,6 +86,7 @@ export const addBreadcrumb = (
   level: "info" | "warning" | "error" = "info",
   data?: Record<string, any>
 ) => {
+  if (typeof window === "undefined") return;
   const crumb: Breadcrumb = {
     timestamp: Date.now(),
     category,
@@ -120,6 +122,7 @@ export const logError = (
   context?: Record<string, any>,
   stack?: string
 ) => {
+  if (typeof window === "undefined") return;
   const log: ErrorLog = {
     id: `error_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`,
     timestamp: Date.now(),
@@ -146,6 +149,7 @@ export const logError = (
  * Log a warning
  */
 export const logWarning = (message: string, context?: Record<string, any>) => {
+  if (typeof window === "undefined") return;
   const log: ErrorLog = {
     id: `warning_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`,
     timestamp: Date.now(),
@@ -200,6 +204,7 @@ const persistLog = (log: ErrorLog) => {
  * Retrieve stored logs
  */
 export const getLogs = (): ErrorLog[] => {
+  if (typeof window === "undefined") return [];
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
     return stored ? JSON.parse(stored) : [];
@@ -212,6 +217,7 @@ export const getLogs = (): ErrorLog[] => {
  * Clear all logs
  */
 export const clearLogs = () => {
+  if (typeof window === "undefined") return;
   try {
     localStorage.removeItem(STORAGE_KEY);
     localStorage.removeItem(BREADCRUMB_KEY);

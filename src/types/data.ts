@@ -1,6 +1,5 @@
 /**
  * Type definitions for JSON data files
- * These match the TinaCMS schema structure
  */
 
 export interface ImportantDateItem {

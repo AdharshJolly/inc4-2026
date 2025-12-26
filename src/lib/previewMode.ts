@@ -14,6 +14,7 @@ export interface PreviewData {
  * Enable preview mode and store pending changes data
  */
 export function enablePreviewMode(data: PreviewData): void {
+  if (typeof window === "undefined") return;
   localStorage.setItem(PREVIEW_MODE_KEY, "true");
   localStorage.setItem(PREVIEW_DATA_KEY, JSON.stringify(data));
 }
@@ -22,6 +23,7 @@ export function enablePreviewMode(data: PreviewData): void {
  * Disable preview mode and clear preview data
  */
 export function disablePreviewMode(): void {
+  if (typeof window === "undefined") return;
   localStorage.removeItem(PREVIEW_MODE_KEY);
   localStorage.removeItem(PREVIEW_DATA_KEY);
 }
@@ -30,6 +32,7 @@ export function disablePreviewMode(): void {
  * Check if preview mode is active
  */
 export function isPreviewMode(): boolean {
+  if (typeof window === "undefined") return false;
   return localStorage.getItem(PREVIEW_MODE_KEY) === "true";
 }
 

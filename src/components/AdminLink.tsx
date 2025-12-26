@@ -1,10 +1,10 @@
 import { Shield } from "lucide-react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 export const AdminLink = () => {
   return (
-    <Link to="/admin">
+    <Link href="/admin">
       <Button
         variant="outline"
         size="sm"

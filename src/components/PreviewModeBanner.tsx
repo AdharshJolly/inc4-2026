@@ -1,3 +1,5 @@
+"use client";
+
 import { isPreviewMode, disablePreviewMode } from "@/lib/previewMode";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
