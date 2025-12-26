@@ -538,6 +538,20 @@ export async function commitChangesToGitHub(
 
 
 
+    if (!updateRefResponse.ok) {
+
+      const errorBody = await updateRefResponse.text();
+
+      throw new Error(
+
+        `Failed to update branch reference for ${branch}: ${updateRefResponse.status} ${updateRefResponse.statusText}. Response: ${errorBody}`
+
+      );
+
+    }
+
+
+
     const message = `Successfully synced ${changes.length} file(s) to ${branch}`;
 
     console.log(message);

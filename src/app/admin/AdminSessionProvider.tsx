@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { logoutAction } from "@/app/actions/auth";
 import { getPendingChanges, clearPendingChanges } from "@/lib/githubSync";
 import { commitChangesToGitHub } from "@/app/actions/github";
+import { useToast } from "@/hooks/use-toast";
 
 interface AdminContextType {
   logout: () => void;
@@ -14,18 +15,35 @@ export const AdminSessionContext = createContext<AdminContextType | null>(null);
 
 export function AdminSessionProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter();
+  const { toast } = useToast();
 
   const handleLogout = async () => {
     // Sync pending changes before logging out
     const pendingChanges = getPendingChanges();
+    
     if (pendingChanges.length > 0) {
-      // We don't have the branch in env here on client easily unless exposed
-      // Assuming 'development' or 'main' fallback on server side if needed
-      // Actually, commitChangesToGitHub server action defaults to 'development'
-      // But we can check if we want to expose branch name
-      const result = await commitChangesToGitHub(pendingChanges);
-      if (result.success) {
+      try {
+        const result = await commitChangesToGitHub(pendingChanges);
+        
+        if (!result.success) {
+          toast({
+            title: "Logout Failed",
+            description: result.error || "Failed to commit pending changes. Please try again or discard changes.",
+            variant: "destructive",
+          });
+          return; // Abort logout
+        }
+        
+        // Only clear if successful
         clearPendingChanges();
+        
+      } catch (error) {
+        toast({
+          title: "Logout Failed",
+          description: error instanceof Error ? error.message : "An unexpected error occurred during sync.",
+          variant: "destructive",
+        });
+        return; // Abort logout
       }
     }
 

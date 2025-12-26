@@ -33,9 +33,13 @@ const processEnv = {
 const parsedServer = serverSchema.safeParse(processEnv);
 
 if (!parsedServer.success) {
-  console.error("❌ Invalid environment variables:", JSON.stringify(parsedServer.error.format(), null, 4));
-  // In a real strict setup, we might process.exit(1) here, but for now we warn
-  // process.exit(1); 
+  console.error(
+    "❌ Invalid environment variables:",
+    JSON.stringify(parsedServer.error.format(), null, 4)
+  );
+  throw new Error(
+    "Invalid environment variables. Please check your .env file and ensure all required variables are set correctly."
+  );
 }
 
-export const env = parsedServer.success ? parsedServer.data : processEnv as z.infer<typeof serverSchema>;
+export const env = parsedServer.data;
