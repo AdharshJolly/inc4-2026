@@ -6,7 +6,7 @@ import { z } from "zod";
  */
 const serverSchema = z.object({
   ADMIN_PASSWORD: z.string().min(1, "ADMIN_PASSWORD is required for authentication"),
-  NEXT_GITHUB_TOKEN: z.string().min(1, "NEXT_GITHUB_TOKEN is required for admin features").optional(),
+  NEXT_GITHUB_TOKEN: z.string().min(1, "NEXT_GITHUB_TOKEN is required for admin features if provided").optional(),
   NEXT_GITHUB_BRANCH: z.string().default("development"),
   NEXT_ERROR_LOG_ENDPOINT: z.string().url().optional(),
   NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
