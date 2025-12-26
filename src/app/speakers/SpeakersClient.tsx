@@ -1,13 +1,15 @@
 "use client";
 
-import { PageTitle } from "@/components/PageTitle";
-import { Users } from "lucide-react";
-import { Reveal } from "@/components/Reveal";
-import speakersData from "@/data/speakers.json";
-import { normalizePhotoFields } from "@/lib/photoMigration";
+import { PageTitle } from "@/components/common/PageTitle";
+import { Card, CardContent } from "@/components/ui/card";
+import { Reveal } from "@/components/common/Reveal";
+import { Badge } from "@/components/ui/badge";
+import { getPhotoUrl, normalizePhotoFields } from "@/lib/photoMigration";
 import type { SpeakersData } from "@/types/data";
+import speakersData from "@/data/speakers.json";
 import { getPreviewData } from "@/lib/previewMode";
 import { useEffect, useState } from "react";
+import { Users } from "lucide-react";
 
 export default function SpeakersClient() {
   const [speakers, setSpeakers] = useState(normalizePhotoFields((speakersData as SpeakersData).root));

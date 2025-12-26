@@ -1,7 +1,7 @@
-import { HeroSection } from "@/components/HeroSection";
-import { Marquee } from "@/components/Marquee";
-import { AboutSection } from "@/components/AboutSection";
-import { CTASection } from "@/components/CTASection";
+import { HeroSection } from "@/components/home/HeroSection";
+import { Marquee } from "@/components/home/Marquee";
+import { AboutSection } from "@/components/home/AboutSection";
+import { CTASection } from "@/components/home/CTASection";
 
 export default function Home() {
   return (

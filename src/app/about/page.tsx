@@ -1,5 +1,5 @@
-import { PageTitle } from "@/components/PageTitle";
-import { Reveal } from "@/components/Reveal";
+import { PageTitle } from "@/components/common/PageTitle";
+import { Reveal } from "@/components/common/Reveal";
 import { FileText, Globe, Users, Award, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Metadata } from "next";

@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles } from "lucide-react";
 import Link from "next/link";
-import { Reveal } from "./Reveal";
+import { Reveal } from "@/components/common/Reveal";
 
 export const CTASection = () => {
   return (

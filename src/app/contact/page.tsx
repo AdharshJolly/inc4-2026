@@ -1,7 +1,7 @@
-import { PageTitle } from "@/components/PageTitle";
+import { PageTitle } from "@/components/common/PageTitle";
 import { Card, CardContent } from "@/components/ui/card";
-import { Mail } from "lucide-react";
-import { Reveal } from "@/components/Reveal";
+import { Mail, Phone, MapPin, Clock, Globe } from "lucide-react";
+import { Reveal } from "@/components/common/Reveal";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

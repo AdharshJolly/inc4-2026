@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
-import { Providers } from "@/components/Providers";
-import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/Footer";
-import { SchemaOrg } from "@/components/SchemaOrg";
-import { PreviewModeBanner } from "@/components/PreviewModeBanner";
-import ScrollToTop from "@/components/ScrollToTop";
+import { Providers } from "@/components/common/Providers";
+import { Navbar } from "@/components/layout/Navbar";
+import { Footer } from "@/components/layout/Footer";
+import { SchemaOrg } from "@/components/common/SchemaOrg";
+import { PreviewModeBanner } from "@/components/common/PreviewModeBanner";
+import ScrollToTop from "@/components/layout/ScrollToTop";
+import { ContentWrapper } from "@/components/layout/ContentWrapper";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -83,8 +84,6 @@ export const metadata: Metadata = {
     canonical: "./",
   },
 };
-
-import { ContentWrapper } from "@/components/ContentWrapper";
 
 export default function RootLayout({
   children,

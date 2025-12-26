@@ -1,9 +1,9 @@
 "use client";
 
-import { PageTitle } from "@/components/PageTitle";
+import { PageTitle } from "@/components/common/PageTitle";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Reveal } from "@/components/Reveal";
+import { Reveal } from "@/components/common/Reveal";
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { getCommitteePersonSchema } from "@/lib/schema";

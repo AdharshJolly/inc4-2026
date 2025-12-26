@@ -1,12 +1,12 @@
 "use client";
 
 import { useContext } from "react";
-import { PageTitle } from "@/components/PageTitle";
+import { PageTitle } from "@/components/common/PageTitle";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Users, Calendar, Mic, Eye } from "lucide-react";
-import { PendingChangesCounter } from "@/components/Admin/PendingChangesCounter";
+import { PendingChangesCounter } from "@/components/admin/PendingChangesCounter";
 import committeeData from "@/data/committee.json";
 import speakersData from "@/data/speakers.json";
 import datesData from "@/data/important-dates.json";
@@ -15,9 +15,9 @@ import type {
   SpeakersData,
   ImportantDatesData,
 } from "@/types/data";
-import { CommitteeManager } from "@/components/Admin/CommitteeManager";
-import { SpeakersManager } from "@/components/Admin/SpeakersManager";
-import { DatesManager } from "@/components/Admin/DatesManager";
+import { CommitteeManager } from "@/components/admin/CommitteeManager";
+import { SpeakersManager } from "@/components/admin/SpeakersManager";
+import { DatesManager } from "@/components/admin/DatesManager";
 import { AdminSessionContext } from "./AdminSessionProvider";
 import { getPendingChanges } from "@/lib/githubSync";
 import { enablePreviewMode } from "@/lib/previewMode";

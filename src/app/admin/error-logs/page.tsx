@@ -1,10 +1,17 @@
 "use client";
 
-import { useEffect, useMemo, useState, useContext } from "react";
-import { PageTitle } from "@/components/PageTitle";
+import { PageTitle } from "@/components/common/PageTitle";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { ArrowLeft, Trash2, AlertCircle, Calendar, RefreshCcw } from "lucide-react";
+import { getLogs, clearLogs, exportLogs, getBreadcrumbs } from "@/lib/errorLogger";
+import type { ErrorLog } from "@/lib/errorLogger";
+import { useEffect, useState, useContext, useMemo } from "react";
+import Link from "next/link";
+import { useToast } from "@/hooks/use-toast";
+import { AdminSessionContext } from "../AdminSessionProvider";
+import { createGitHubIssue } from "@/app/actions/github";
 import {
   Table,
   TableBody,
@@ -27,18 +34,7 @@ import {
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { AlertCircle } from "lucide-react";
-import { AdminSessionContext } from "../AdminSessionProvider";
-import { useToast } from "@/hooks/use-toast";
-import {
-  getLogs,
-  getBreadcrumbs,
-  clearLogs,
-  exportLogs,
-  type ErrorLog,
-} from "@/lib/errorLogger";
-import { createGitHubIssue } from "@/app/actions/github";
-import { PendingChangesCounter } from "@/components/Admin/PendingChangesCounter";
+import { PendingChangesCounter } from "@/components/admin/PendingChangesCounter";
 
 type LevelFilter = "all" | "error" | "warning" | "info";
 

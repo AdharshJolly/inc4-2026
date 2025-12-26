@@ -1,6 +1,6 @@
 import { CountdownTimer } from "./CountdownTimer";
 import { Users, Globe, Award, BookOpen } from "lucide-react";
-import { Reveal } from "./Reveal";
+import { Reveal } from "@/components/common/Reveal";
 
 const stats = [
   { icon: Users, value: "500+", label: "Attendees" },

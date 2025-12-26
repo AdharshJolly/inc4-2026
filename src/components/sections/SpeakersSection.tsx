@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Linkedin, Twitter } from "lucide-react";
 import Link from "next/link";
-import { Reveal } from "./Reveal";
+import { Reveal } from "@/components/common/Reveal";
 import speakersData from "@/data/speakers.json";
 import { getPhotoUrl, normalizePhotoFields } from "@/lib/photoMigration";
 import type { SpeakersData } from "@/types/data";

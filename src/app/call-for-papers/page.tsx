@@ -1,6 +1,6 @@
-import { PageTitle } from "@/components/PageTitle";
+import { PageTitle } from "@/components/common/PageTitle";
 import { Button } from "@/components/ui/button";
-import { Reveal } from "@/components/Reveal";
+import { Reveal } from "@/components/common/Reveal";
 import {
   ArrowRight,
   FileText,
