@@ -28,7 +28,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
-import { AdminSessionContext } from "../AdminAuth";
+import { AdminSessionContext } from "../AdminSessionProvider";
 import { useToast } from "@/hooks/use-toast";
 import {
   getLogs,
@@ -37,7 +37,7 @@ import {
   exportLogs,
   type ErrorLog,
 } from "@/lib/errorLogger";
-import { createGitHubIssue } from "@/lib/githubIssues";
+import { createGitHubIssue } from "@/app/actions/github";
 import { PendingChangesCounter } from "@/components/Admin/PendingChangesCounter";
 
 type LevelFilter = "all" | "error" | "warning" | "info";

@@ -1,9 +1,9 @@
-import { AdminAuth } from "./AdminAuth";
+import { AdminSessionProvider } from "./AdminSessionProvider";
 
 export default function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <AdminAuth>{children}</AdminAuth>;
+  return <AdminSessionProvider>{children}</AdminSessionProvider>;
 }

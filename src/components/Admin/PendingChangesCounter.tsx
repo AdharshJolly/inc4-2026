@@ -16,7 +16,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { getPendingChanges, clearPendingChanges, commitChangesToGitHub } from "@/lib/githubSync";
+import { getPendingChanges, clearPendingChanges } from "@/lib/githubSync";
+import { commitChangesToGitHub } from "@/app/actions/github";
 import { useToast } from "@/hooks/use-toast";
 import { FileEdit, Trash2, AlertTriangle, Upload, Loader2 } from "lucide-react";
 

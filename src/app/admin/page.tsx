@@ -18,7 +18,7 @@ import type {
 import { CommitteeManager } from "@/components/Admin/CommitteeManager";
 import { SpeakersManager } from "@/components/Admin/SpeakersManager";
 import { DatesManager } from "@/components/Admin/DatesManager";
-import { AdminSessionContext } from "./AdminAuth";
+import { AdminSessionContext } from "./AdminSessionProvider";
 import { getPendingChanges } from "@/lib/githubSync";
 import { enablePreviewMode } from "@/lib/previewMode";
 import type { PreviewData } from "@/lib/previewMode";
