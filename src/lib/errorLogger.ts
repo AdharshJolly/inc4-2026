@@ -232,7 +232,7 @@ export const clearLogs = () => {
  */
 const sendToRemote = async (log: ErrorLog): Promise<void> => {
   // TODO: Replace with your Sentry project key or custom endpoint
-  const REMOTE_ENDPOINT = process.env.VITE_ERROR_LOG_ENDPOINT;
+  const REMOTE_ENDPOINT = process.env.NEXT_ERROR_LOG_ENDPOINT;
 
   if (!REMOTE_ENDPOINT) {
     return; // No remote logging configured

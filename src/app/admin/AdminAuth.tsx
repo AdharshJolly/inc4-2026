@@ -36,9 +36,10 @@ export const AdminAuth = ({ children }: ProtectedRouteProps) => {
   const MAX_FAILED_ATTEMPTS = 5;
   const LOCKOUT_DURATION = 15 * 60 * 1000;
 
-  // Next.js uses process.env.VITE_ADMIN_PASSWORD if it's in .env, 
-  // but usually it's process.env.NEXT_PUBLIC_...
-  const ADMIN_PASSWORD = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || process.env.VITE_ADMIN_PASSWORD || "admin123";
+  const ADMIN_PASSWORD =
+    process.env.NEXT_PUBLIC_ADMIN_PASSWORD ||
+    process.env.NEXT_ADMIN_PASSWORD ||
+    "admin123";
 
   const verifyPassword = async (input: string) => {
     try {
@@ -90,7 +91,10 @@ export const AdminAuth = ({ children }: ProtectedRouteProps) => {
         e.preventDefault();
         e.returnValue = "";
 
-        const branch = process.env.NEXT_PUBLIC_TINA_BRANCH || process.env.VITE_TINA_BRANCH || "main";
+        const branch =
+          process.env.NEXT_PUBLIC_TINA_BRANCH ||
+          process.env.NEXT_TINA_BRANCH ||
+          "main";
 
         try {
           const result = await commitChangesToGitHub(pendingChanges, branch);
@@ -129,7 +133,11 @@ export const AdminAuth = ({ children }: ProtectedRouteProps) => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (isLocked) {
-      setError(`Too many failed attempts. Try again in ${Math.ceil(lockoutTime / 1000)} seconds.`);
+      setError(
+        `Too many failed attempts. Try again in ${Math.ceil(
+          lockoutTime / 1000
+        )} seconds.`
+      );
       return;
     }
 
@@ -149,7 +157,11 @@ export const AdminAuth = ({ children }: ProtectedRouteProps) => {
       if (newFailedAttempts >= MAX_FAILED_ATTEMPTS) {
         setIsLocked(true);
         setLockoutTime(Math.ceil(LOCKOUT_DURATION / 1000));
-        setError(`Too many failed attempts. Account locked for ${Math.ceil(LOCKOUT_DURATION / 60000)} minutes.`);
+        setError(
+          `Too many failed attempts. Account locked for ${Math.ceil(
+            LOCKOUT_DURATION / 60000
+          )} minutes.`
+        );
       }
     }
   };
@@ -157,7 +169,10 @@ export const AdminAuth = ({ children }: ProtectedRouteProps) => {
   const handleLogout = async () => {
     const pendingChanges = getPendingChanges();
     if (pendingChanges.length > 0) {
-      const branch = process.env.NEXT_PUBLIC_TINA_BRANCH || process.env.VITE_TINA_BRANCH || "main";
+      const branch =
+        process.env.NEXT_PUBLIC_TINA_BRANCH ||
+        process.env.NEXT_TINA_BRANCH ||
+        "main";
       const result = await commitChangesToGitHub(pendingChanges, branch);
       if (result.success) {
         clearPendingChanges();
