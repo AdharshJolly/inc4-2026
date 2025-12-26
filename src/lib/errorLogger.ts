@@ -227,12 +227,14 @@ export const clearLogs = () => {
   }
 };
 
+import { env } from "./env";
+
 /**
  * Send log to remote service (stub; replace with actual endpoint)
  */
 const sendToRemote = async (log: ErrorLog): Promise<void> => {
   // TODO: Replace with your Sentry project key or custom endpoint
-  const REMOTE_ENDPOINT = process.env.NEXT_ERROR_LOG_ENDPOINT;
+  const REMOTE_ENDPOINT = env.NEXT_ERROR_LOG_ENDPOINT;
 
   if (!REMOTE_ENDPOINT) {
     return; // No remote logging configured

@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import CommitteeClient from "./CommitteeClient";
 
 export const metadata: Metadata = {
   title: "Conference Committee | InC4 2026",
@@ -17,5 +16,5 @@ export const metadata: Metadata = {
 };
 
 export default function CommitteePage() {
-  return <CommitteeClient />;
+  return null;
 }

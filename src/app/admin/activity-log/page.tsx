@@ -5,7 +5,7 @@ import { PageTitle } from "@/components/PageTitle";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ActivityLog } from "@/components/Admin/ActivityLog";
-import { AdminSessionContext } from "../AdminAuth";
+import { AdminSessionContext } from "../AdminSessionProvider";
 import { PendingChangesCounter } from "@/components/Admin/PendingChangesCounter";
 
 export default function ActivityLogPage() {
