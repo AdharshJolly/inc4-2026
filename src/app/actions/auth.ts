@@ -2,13 +2,15 @@
 
 import { cookies } from "next/headers";
 
+import { env } from "@/lib/env";
+
 const SESSION_COOKIE_NAME = "admin_session";
 // In production, this should be a secure, HTTP-only, SameSite cookie
 // Max age: 30 minutes
 const MAX_AGE = 30 * 60;
 
 export async function loginAction(password: string) {
-  const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || process.env.NEXT_PUBLIC_ADMIN_PASSWORD;
+  const ADMIN_PASSWORD = env.ADMIN_PASSWORD;
 
   if (!ADMIN_PASSWORD) {
     console.error("ADMIN_PASSWORD not configured");
