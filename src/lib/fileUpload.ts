@@ -131,16 +131,17 @@ export async function uploadImageToGitHub(
     const base64Content = await fileToBase64(file);
 
     // Get GitHub config from environment
-    const token = import.meta.env.VITE_GITHUB_TOKEN;
+    const token = import.meta.env.NEXT_GITHUB_TOKEN;
     const owner = "AdharshJolly";
     const repo = "inc4-2026";
     // Use development branch for now (can be updated to detect production later)
-    const branch = "development";
+    const branch = import.meta.env.NEXT_GITHUB_BRANCH;
 
     if (!token) {
       return {
         success: false,
-        error: "GitHub token not configured. Please set VITE_GITHUB_TOKEN in your .env file.",
+        error:
+          "GitHub token not configured. Please set VITE_GITHUB_TOKEN in your .env file.",
       };
     }
 
