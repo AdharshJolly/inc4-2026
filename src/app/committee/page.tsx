@@ -17,5 +17,5 @@ export const metadata: Metadata = {
 };
 
 export default function CommitteePage() {
-  return <CommitteeClient />;
+  return null;
 }

@@ -1,5 +1,14 @@
 import { Metadata } from "next";
 import CommitteeClient from "../CommitteeClient";
+import committeeData from "@/data/committee.json";
+import { CommitteeData } from "@/types/data";
+
+export function generateStaticParams() {
+  const data = committeeData as unknown as CommitteeData;
+  return data.root.map((category) => ({
+    category: category.id,
+  }));
+}
 
 export const metadata: Metadata = {
   title: "Conference Committee | InC4 2026",
@@ -17,5 +26,5 @@ export const metadata: Metadata = {
 };
 
 export default function CommitteeCategoryPage() {
-  return <CommitteeClient />;
+  return null;
 }
