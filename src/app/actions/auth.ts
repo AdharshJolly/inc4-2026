@@ -5,14 +5,15 @@ import { randomBytes, timingSafeEqual } from "crypto";
 import { env } from "@/lib/env";
 
 const SESSION_COOKIE_NAME = "admin_session";
-const MAX_AGE = 30 * 60;
+const MAX_AGE = 30 * 60; // 30 minutes in seconds
+const SESSION_MS = MAX_AGE * 1000;
 
 /**
- * In-memory session store
+ * In-memory session store with expiration
  * NOTE: This will not persist across server restarts or share state across 
  * multiple instances (e.g., on Vercel). For production, use a durable store like Redis.
  */
-const validSessions = new Set<string>();
+const validSessions = new Map<string, number>(); // token -> expiresAt (timestamp)
 
 // Rate Limiting Configuration
 interface RateLimitEntry {
@@ -23,7 +24,35 @@ const loginRateLimit = new Map<string, RateLimitEntry>();
 const MAX_ATTEMPTS = 5;
 const WINDOW_MS = 15 * 60 * 1000;
 
+// Periodic cleanup to prevent memory leaks
+// This runs whenever an action is called, or could be moved to a dedicated worker/cron in a robust setup
+function cleanupStores() {
+  const now = Date.now();
+  
+  // Cleanup sessions
+  for (const [token, expiresAt] of validSessions.entries()) {
+    if (now > expiresAt) {
+      validSessions.delete(token);
+    }
+  }
+
+  // Cleanup rate limits
+  for (const [ip, entry] of loginRateLimit.entries()) {
+    if (now > entry.expiresAt) {
+      loginRateLimit.delete(ip);
+    }
+  }
+}
+
+// Run cleanup occasionally (e.g. 1% chance on invocation) to avoid blocking every request
+function maybeCleanup() {
+  if (Math.random() < 0.01) {
+    cleanupStores();
+  }
+}
+
 export async function loginAction(password: string) {
+  maybeCleanup();
   const ADMIN_PASSWORD = env.ADMIN_PASSWORD;
 
   if (!ADMIN_PASSWORD) {
@@ -37,7 +66,13 @@ export async function loginAction(password: string) {
   
   const now = Date.now();
   const limitEntry = loginRateLimit.get(ip);
-  if (limitEntry && now < limitEntry.expiresAt && limitEntry.count >= MAX_ATTEMPTS) {
+  
+  // Strict cleanup for current IP
+  if (limitEntry && now > limitEntry.expiresAt) {
+    loginRateLimit.delete(ip);
+  }
+
+  if (limitEntry && now <= limitEntry.expiresAt && limitEntry.count >= MAX_ATTEMPTS) {
     const waitSeconds = Math.ceil((limitEntry.expiresAt - now) / 1000);
     return { 
       success: false, 
@@ -57,7 +92,8 @@ export async function loginAction(password: string) {
 
     // Generate a cryptographically random session token
     const sessionToken = randomBytes(32).toString("hex");
-    validSessions.add(sessionToken);
+    // Store with expiration timestamp
+    validSessions.set(sessionToken, Date.now() + SESSION_MS);
 
     cookies().set(SESSION_COOKIE_NAME, sessionToken, {
       httpOnly: true,
@@ -80,6 +116,7 @@ export async function loginAction(password: string) {
 }
 
 export async function logoutAction() {
+  maybeCleanup();
   const cookieStore = cookies();
   const session = cookieStore.get(SESSION_COOKIE_NAME);
   if (session?.value) {
@@ -90,11 +127,20 @@ export async function logoutAction() {
 }
 
 export async function isAuthenticatedAction() {
+  maybeCleanup();
   const cookieStore = cookies();
   const session = cookieStore.get(SESSION_COOKIE_NAME);
   
   if (!session?.value) return false;
 
-  // Validate the token against our known valid sessions
-  return validSessions.has(session.value);
+  // Validate the token and check expiration
+  const expiresAt = validSessions.get(session.value);
+  if (!expiresAt) return false;
+
+  if (Date.now() > expiresAt) {
+    validSessions.delete(session.value);
+    return false;
+  }
+
+  return true;
 }
