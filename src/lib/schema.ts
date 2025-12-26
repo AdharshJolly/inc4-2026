@@ -1,27 +1,3 @@
-import { useEffect } from "react";
-
-interface SchemaOrgProps {
-  type: "Event" | "Organization" | "BreadcrumbList";
-  data: Record<string, any>;
-}
-
-export const useSchemaOrg = ({ type, data }: SchemaOrgProps) => {
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.type = "application/ld+json";
-    script.textContent = JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": type,
-      ...data,
-    });
-    document.head.appendChild(script);
-
-    return () => {
-      document.head.removeChild(script);
-    };
-  }, [type, data]);
-};
-
 // Pre-built schema for InC4 event
 export const getInC4EventSchema = () => ({
   "@context": "https://schema.org",

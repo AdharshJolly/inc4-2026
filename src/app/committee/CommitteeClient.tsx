@@ -6,7 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Reveal } from "@/components/Reveal";
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { getCommitteePersonSchema } from "@/hooks/useSchemaOrg";
+import { getCommitteePersonSchema } from "@/lib/schema";
 import committeeDataImport from "@/data/committee.json";
 import { getPhotoUrl, normalizePhotoFields } from "@/lib/photoMigration";
 import type { CommitteeData } from "@/types/data";
