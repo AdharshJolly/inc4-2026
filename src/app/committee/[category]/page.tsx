@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import CommitteeClient from "../CommitteeClient";
 import committeeData from "@/data/committee.json";
 import { CommitteeData } from "@/types/data";
 
