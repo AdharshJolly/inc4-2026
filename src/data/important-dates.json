@@ -1,32 +1,40 @@
-[
-  {
-    "event": "Submission Deadline",
-    "date": "June 05, 2026",
-    "status": "upcoming"
-  },
-  {
-    "event": "Acceptance Notification",
-    "date": "July 05, 2026",
-    "status": "upcoming"
-  },
-  {
-    "event": "Early Bird Registration Deadline",
-    "date": "July 20, 2026",
-    "status": "upcoming"
-  },
-  {
-    "event": "Registration Hard Deadline",
-    "date": "July 30, 2026",
-    "status": "upcoming"
-  },
-  {
-    "event": "Camera Ready Submission",
-    "date": "July 30, 2026",
-    "status": "upcoming"
-  },
-  {
-    "event": "Conference Date",
-    "date": "August 07 - 08, 2026",
-    "status": "highlight"
-  }
-]
+{
+  "root": [
+    {
+      "event": "Submission Deadline",
+      "date": "June 05, 2026",
+      "status": "upcoming",
+      "description": "Final deadline to submit full papers to InC4 2026 (online submission). Ensure formatting and anonymization are correct before uploading. Submissions close at 23:59 local time; late submissions are not accepted. Details: https://ic4.co.in/important-dates"
+    },
+    {
+      "event": "Acceptance Notification",
+      "date": "July 05, 2026",
+      "status": "upcoming",
+      "description": "Acceptance decisions and reviewer feedback for InC4 2026 will be available today (online notification). Check your email and submission portal for your decision and next steps. Details: https://ic4.co.in/important-dates"
+    },
+    {
+      "event": "Early Bird Registration Deadline",
+      "date": "July 20, 2026",
+      "status": "upcoming",
+      "description": "Final day to register at early-bird rates for InC4 2026 (online registration). Prices increase after today—secure your ticket now. Register: https://ic4.co.in/registration"
+    },
+    {
+      "event": "Registration Hard Deadline",
+      "date": "July 30, 2026",
+      "status": "upcoming",
+      "description": "Registration closes today for InC4 2026 (online registration). Complete your registration to secure access to sessions and conference materials. Register: https://ic4.co.in/registration"
+    },
+    {
+      "event": "Camera Ready Submission",
+      "date": "July 30, 2026",
+      "status": "upcoming",
+      "description": "Submit final camera-ready papers with all reviewer fixes applied (online submission). Verify formatting, author list, and metadata. Missing this deadline may affect inclusion in proceedings. Details: https://ic4.co.in/important-dates"
+    },
+    {
+      "event": "Conference Date",
+      "date": "August 07 - 08, 2026",
+      "status": "highlight",
+      "description": "InC4 2026 runs across two days with keynotes, technical sessions, and networking opportunities at CHRIST University, Kengeri Campus, Bangalore. See the schedule for talks, rooms, and updates: https://ic4.co.in/schedule"
+    }
+  ]
+}

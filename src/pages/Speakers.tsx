@@ -3,7 +3,10 @@ import { Linkedin, Twitter, Users } from "lucide-react";
 import { useSEO } from "@/hooks/useSEO";
 import { Reveal } from "@/components/Reveal";
 import { Link } from "react-router-dom";
-import speakers from "@/data/speakers.json";
+import speakersData from "@/data/speakers.json";
+import { getPhotoUrl, normalizePhotoFields } from "@/lib/photoMigration";
+import type { SpeakersData } from "@/types/data";
+import { getPreviewData } from "@/lib/previewMode";
 
 export default function Speakers() {
   useSEO({
@@ -15,6 +18,14 @@ export default function Speakers() {
     ogType: "website",
     canonicalUrl: "https://ic4.co.in/speakers",
   });
+
+  // Type-safe data normalization with legacy photo field handling
+  // Check for preview data first, fallback to imported data
+  const previewData = getPreviewData("src/data/speakers.json");
+  const speakersDataActual = previewData
+    ? (JSON.parse(previewData) as SpeakersData)
+    : (speakersData as SpeakersData);
+  const speakers = normalizePhotoFields(speakersDataActual.root);
 
   return (
     <div className="min-h-screen bg-background">
@@ -49,7 +60,7 @@ export default function Speakers() {
                   {/* Image * /}
                   <div className="relative h-72 overflow-hidden">
                     <img
-                      src={speaker.image}
+                      src={getPhotoUrl(speaker.photo)}
                       alt={speaker.name}
                       className="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-700"
                     />

@@ -1,0 +1,492 @@
+import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Plus, Eye } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import committeeData from "@/data/committee.json";
+import { storePendingChange } from "@/lib/githubSync";
+import { ActivityLogger } from "@/lib/activityLogger";
+import { uploadImageToGitHub } from "@/lib/fileUpload";
+import type { CommitteeData } from "@/types/data";
+import { PreviewDialog } from "./PreviewDialog";
+
+interface AddMemberFormData {
+  name: string;
+  role: string;
+  affiliation: string;
+  photoUrl: string;
+  photoFile: File | null;
+  photoPreviewUrl: string;
+  categoryId: string;
+}
+
+interface AddMemberDialogProps {
+  onMemberAdded?: (member: AddMemberFormData & { categoryId: string }) => void;
+}
+
+export const AddMemberDialog = ({ onMemberAdded }: AddMemberDialogProps) => {
+  const [open, setOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
+  const [formData, setFormData] = useState<AddMemberFormData>({
+    name: "",
+    role: "",
+    affiliation: "",
+    photoUrl: "",
+    photoFile: null,
+    photoPreviewUrl: "",
+    categoryId: "",
+  });
+
+  const committee = (committeeData as CommitteeData).root;
+
+  // Cleanup object URLs to prevent memory leaks
+  useEffect(() => {
+    return () => {
+      // Cleanup on unmount
+      if (formData.photoPreviewUrl) {
+        URL.revokeObjectURL(formData.photoPreviewUrl);
+      }
+    };
+  }, []);
+
+  // Cleanup when dialog closes
+  const handleOpenChange = (newOpen: boolean) => {
+    if (!newOpen && formData.photoPreviewUrl) {
+      // Dialog is closing, revoke the preview URL
+      URL.revokeObjectURL(formData.photoPreviewUrl);
+      setFormData((prev) => ({
+        ...prev,
+        photoPreviewUrl: "",
+      }));
+    }
+    setOpen(newOpen);
+  };
+
+  const handleInputChange = (field: keyof AddMemberFormData, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handlePhotoFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (!file.type.startsWith("image/")) {
+        toast({
+          title: "Validation Error",
+          description: "Please select a valid image file",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      // Validate file size (max 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        toast({
+          title: "Validation Error",
+          description: "File size must be less than 5MB",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      // Revoke any existing preview before creating a new one
+      if (formData.photoPreviewUrl) {
+        URL.revokeObjectURL(formData.photoPreviewUrl);
+      }
+
+      // Create preview URL
+      const previewUrl = URL.createObjectURL(file);
+
+      setFormData((prev) => ({
+        ...prev,
+        photoFile: file,
+        photoPreviewUrl: previewUrl,
+        photoUrl: "", // Clear URL if file is selected
+      }));
+    }
+  };
+
+  const clearPhotoFile = () => {
+    if (formData.photoPreviewUrl) {
+      URL.revokeObjectURL(formData.photoPreviewUrl);
+    }
+    setFormData((prev) => ({
+      ...prev,
+      photoFile: null,
+      photoPreviewUrl: "",
+    }));
+  };
+
+  const handleSubmit = async () => {
+    // Validation
+    if (!formData.name.trim()) {
+      toast({
+        title: "Validation Error",
+        description: "Please enter a member name",
+        variant: "destructive",
+      });
+      return;
+    }
+    if (!formData.affiliation.trim()) {
+      toast({
+        title: "Validation Error",
+        description: "Please enter affiliation",
+        variant: "destructive",
+      });
+      return;
+    }
+    if (!formData.categoryId) {
+      toast({
+        title: "Validation Error",
+        description: "Please select a category",
+        variant: "destructive",
+      });
+      return;
+    }
+    if (!formData.photoUrl && !formData.photoFile) {
+      toast({
+        title: "Validation Error",
+        description: "Please provide either a photo URL or upload a photo file",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const category = committee.find((c) => c.id === formData.categoryId);
+      if (!category) {
+        throw new Error("Category not found");
+      }
+
+      // Handle photo: upload file if present, otherwise use URL
+      let photoUrl = formData.photoUrl;
+
+      if (formData.photoFile) {
+        toast({
+          title: "Uploading photo",
+          description: "Please wait while we upload your photo to GitHub...",
+        });
+
+        const uploadResult = await uploadImageToGitHub(
+          formData.photoFile,
+          "committee"
+        );
+
+        if (!uploadResult.success) {
+          throw new Error(uploadResult.error || "Failed to upload photo");
+        }
+
+        photoUrl = uploadResult.path || "";
+      }
+
+      // Create new member object with just the URL
+      const newMember = {
+        name: formData.name,
+        role: formData.role || "",
+        affiliation: formData.affiliation,
+        photo: photoUrl ? { url: photoUrl } : {},
+      };
+
+      // Add to category in memory
+      category.members.push(newMember);
+
+      // Store pending change for GitHub commit on logout
+      const updatedCommittee = JSON.stringify(committeeData, null, 2);
+      storePendingChange({
+        path: "src/data/committee.json",
+        content: updatedCommittee,
+        message: `Added new committee member: ${formData.name}`,
+      });
+
+      // Log the action
+      ActivityLogger.log({
+        action: "Added new committee member",
+        type: "member",
+        targetName: formData.name,
+        status: "success",
+      });
+
+      toast({
+        title: "Success",
+        description: `Member "${formData.name}" added successfully! Changes will sync to GitHub when you log out.`,
+      });
+
+      onMemberAdded?.({
+        name: formData.name,
+        role: formData.role,
+        affiliation: formData.affiliation,
+        photoUrl: photoUrl || formData.photoPreviewUrl,
+        photoFile: null,
+        photoPreviewUrl: "",
+        categoryId: formData.categoryId,
+      });
+
+      // Reset form
+      clearPhotoFile();
+      setFormData({
+        name: "",
+        role: "",
+        affiliation: "",
+        photoUrl: "",
+        photoFile: null,
+        photoPreviewUrl: "",
+        categoryId: "",
+      });
+
+      setOpen(false);
+    } catch (error) {
+      console.error("Error adding member:", error);
+      toast({
+        title: "Error",
+        description:
+          error instanceof Error
+            ? error.message
+            : "Failed to add member. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={handleOpenChange}>
+      <DialogTrigger asChild>
+        <Button className="bg-orange-500 hover:bg-orange-600">
+          <Plus className="w-4 h-4 mr-2" />
+          Add Committee Member
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle>Add New Committee Member</DialogTitle>
+          <DialogDescription>
+            Add a new member to the committee. Fields with * are required.
+          </DialogDescription>
+        </DialogHeader>
+
+        <div className="space-y-4">
+          {/* Name */}
+          <div className="space-y-2">
+            <Label htmlFor="name" className="text-sm font-medium">
+              Full Name *
+            </Label>
+            <Input
+              id="name"
+              placeholder="e.g., Dr. John Smith"
+              value={formData.name}
+              onChange={(e) => handleInputChange("name", e.target.value)}
+              className="border-border"
+            />
+          </div>
+
+          {/* Category */}
+          <div className="space-y-2">
+            <Label htmlFor="category" className="text-sm font-medium">
+              Category *
+            </Label>
+            <Select
+              value={formData.categoryId}
+              onValueChange={(value) => handleInputChange("categoryId", value)}
+            >
+              <SelectTrigger id="category">
+                <SelectValue placeholder="Select a category" />
+              </SelectTrigger>
+              <SelectContent>
+                {committee.map((cat) => (
+                  <SelectItem key={cat.id} value={cat.id}>
+                    {cat.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          {/* Role */}
+          <div className="space-y-2">
+            <Label htmlFor="role" className="text-sm font-medium">
+              Role
+            </Label>
+            <Input
+              id="role"
+              placeholder="e.g., General Chair, Program Co-Chair"
+              value={formData.role}
+              onChange={(e) => handleInputChange("role", e.target.value)}
+              className="border-border"
+            />
+          </div>
+
+          {/* Affiliation */}
+          <div className="space-y-2">
+            <Label htmlFor="affiliation" className="text-sm font-medium">
+              Affiliation/Institution *
+            </Label>
+            <Input
+              id="affiliation"
+              placeholder="e.g., University of Example, Tech Corp"
+              value={formData.affiliation}
+              onChange={(e) => handleInputChange("affiliation", e.target.value)}
+              className="border-border"
+            />
+          </div>
+
+          {/* Photo - URL or Upload */}
+          <div className="space-y-2">
+            <Label className="text-sm font-medium">Photo *</Label>
+            <Tabs defaultValue="url" className="w-full">
+              <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="url">Photo URL</TabsTrigger>
+                <TabsTrigger value="upload">Upload File</TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="url" className="space-y-2">
+                <Input
+                  placeholder="https://example.com/photo.jpg"
+                  type="url"
+                  value={formData.photoUrl}
+                  onChange={(e) =>
+                    handleInputChange("photoUrl", e.target.value)
+                  }
+                  className="border-border"
+                />
+                {formData.photoUrl && (
+                  <div className="mt-2 border border-border rounded p-2">
+                    <img
+                      src={formData.photoUrl}
+                      alt="Preview"
+                      className="w-full h-32 object-cover rounded"
+                      onError={() => {
+                        // Handle invalid image URL
+                      }}
+                    />
+                  </div>
+                )}
+              </TabsContent>
+
+              <TabsContent value="upload" className="space-y-2">
+                <div className="border-2 border-dashed border-border rounded-lg p-6 text-center hover:border-primary/40 transition-colors cursor-pointer">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handlePhotoFileChange}
+                    className="hidden"
+                    id="photo-upload"
+                  />
+                  <label
+                    htmlFor="photo-upload"
+                    className="cursor-pointer block"
+                  >
+                    <p className="text-sm font-medium text-muted-foreground mb-1">
+                      Click to upload or drag and drop
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      PNG, JPG, GIF (max. 5MB)
+                    </p>
+                  </label>
+                </div>
+
+                {formData.photoFile && (
+                  <div className="mt-2 space-y-2">
+                    <div className="border border-border rounded p-2">
+                      <img
+                        src={formData.photoPreviewUrl}
+                        alt="Preview"
+                        className="w-full h-32 object-cover rounded"
+                      />
+                    </div>
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-muted-foreground truncate">
+                        {formData.photoFile.name}
+                      </span>
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        onClick={clearPhotoFile}
+                        className="text-red-500 hover:text-red-600"
+                      >
+                        Clear
+                      </Button>
+                    </div>
+                  </div>
+                )}
+              </TabsContent>
+            </Tabs>
+          </div>
+        </div>
+
+        {/* Actions */}
+        <div className="flex gap-2 pt-4">
+          {formData.name &&
+            formData.affiliation &&
+            formData.categoryId &&
+            (formData.photoUrl || formData.photoFile) && (
+              <PreviewDialog
+                content={{
+                  type: "member",
+                  data: {
+                    name: formData.name,
+                    role: formData.role,
+                    affiliation: formData.affiliation,
+                    photoUrl: formData.photoUrl || formData.photoPreviewUrl,
+                    categoryLabel: committee.find(
+                      (c) => c.id === formData.categoryId
+                    )?.label,
+                  },
+                }}
+                trigger={
+                  <Button variant="outline" className="flex-1">
+                    <Eye className="w-4 h-4 mr-2" />
+                    Preview
+                  </Button>
+                }
+              />
+            )}
+          <Button
+            onClick={handleSubmit}
+            disabled={isSubmitting}
+            className={`${
+              formData.name &&
+              formData.affiliation &&
+              formData.categoryId &&
+              (formData.photoUrl || formData.photoFile)
+                ? "flex-1"
+                : "flex-auto"
+            } bg-orange-500 hover:bg-orange-600`}
+          >
+            {isSubmitting ? "Adding..." : "Add Member"}
+          </Button>
+          <Button
+            onClick={() => {
+              clearPhotoFile();
+              setOpen(false);
+            }}
+            disabled={isSubmitting}
+            variant="outline"
+            className="flex-1"
+          >
+            Cancel
+          </Button>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+};

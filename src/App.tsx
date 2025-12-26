@@ -5,6 +5,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import Index from "./pages/Index";
+import { ErrorBoundary } from "./components/ErrorBoundary";
+import { initErrorLogger, addBreadcrumb } from "./lib/errorLogger";
+import { PreviewModeBanner } from "./components/PreviewModeBanner";
 import NotFound from "./pages/NotFound";
 import { Navbar } from "./components/Navbar";
 import { Footer } from "./components/Footer";
@@ -20,6 +23,10 @@ import ImportantDates from "./pages/ImportantDates";
 import Schedule from "./pages/Schedule";
 import Speakers from "./pages/Speakers";
 import Contact from "./pages/Contact";
+import AdminDashboard from "./pages/Admin/Dashboard";
+import ActivityLogPage from "./pages/Admin/ActivityLogPage";
+import ErrorLogsPage from "./pages/Admin/ErrorLogsPage";
+import { ProtectedAdminRoute } from "./pages/Admin/ProtectedAdminRoute";
 import {
   getInC4EventSchema,
   getOrganizationSchema,
@@ -33,6 +40,11 @@ const AppRoutes = () => {
   const isLanding = location.pathname === "/";
   const contentPadding = isLanding ? "" : "pt-[110px]";
 
+  // Track navigation for observability
+  useEffect(() => {
+    addBreadcrumb("navigation", `Navigated to ${location.pathname}`, "info");
+  }, [location.pathname]);
+
   // Create a custom key that groups committee routes together
   // This prevents page transition animations when switching between committee tabs
   const getRouteKey = (pathname: string) => {
@@ -43,9 +55,11 @@ const AppRoutes = () => {
   };
 
   const routeKey = getRouteKey(location.pathname);
+  const isAdminPage = location.pathname.startsWith("/admin");
 
   return (
     <div className={contentPadding}>
+      {!isAdminPage && <PreviewModeBanner />}
       <AnimatePresence mode="wait">
         <Routes location={location} key={routeKey}>
           <Route
@@ -127,6 +141,36 @@ const AppRoutes = () => {
               <PageTransition>
                 <Contact />
               </PageTransition>
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+              <ProtectedAdminRoute>
+                <PageTransition>
+                  <AdminDashboard />
+                </PageTransition>
+              </ProtectedAdminRoute>
+            }
+          />
+          <Route
+            path="/admin/activity-log"
+            element={
+              <ProtectedAdminRoute>
+                <PageTransition>
+                  <ActivityLogPage />
+                </PageTransition>
+              </ProtectedAdminRoute>
+            }
+          />
+          <Route
+            path="/admin/error-logs"
+            element={
+              <ProtectedAdminRoute>
+                <PageTransition>
+                  <ErrorLogsPage />
+                </PageTransition>
+              </ProtectedAdminRoute>
             }
           />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
@@ -222,19 +266,28 @@ const SchemaorgScripts = () => {
   return null;
 };
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <BrowserRouter>
-        <ScrollToTop />
-        <Toaster />
-        <Sonner />
-        <SchemaorgScripts />
-        <Navbar />
-        <AppRoutes />
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+const App = () => {
+  // Initialize error logger once on app load
+  useEffect(() => {
+    initErrorLogger();
+  }, []);
+
+  return (
+    <ErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <BrowserRouter>
+            <ScrollToTop />
+            <Toaster />
+            <Sonner />
+            <SchemaorgScripts />
+            <Navbar />
+            <AppRoutes />
+          </BrowserRouter>
+        </TooltipProvider>
+      </QueryClientProvider>
+    </ErrorBoundary>
+  );
+};
 
 export default App;

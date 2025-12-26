@@ -7,10 +7,25 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSEO } from "@/hooks/useSEO";
 import { getCommitteePersonSchema } from "@/hooks/useSchemaOrg";
-import committeeCategories from "@/data/committee.json";
+import committeeDataImport from "@/data/committee.json";
+import { getPhotoUrl, normalizePhotoFields } from "@/lib/photoMigration";
+import type { CommitteeData } from "@/types/data";
+import { getPreviewData } from "@/lib/previewMode";
 
 export default function Committee() {
   const { category } = useParams<{ category?: string }>();
+
+  // Type-safe data normalization with photo field migration
+  // Check for preview data first, fallback to imported data
+  const previewData = getPreviewData("src/data/committee.json");
+  const committeeData = previewData
+    ? (JSON.parse(previewData) as CommitteeData)
+    : (committeeDataImport as CommitteeData);
+  const committeeCategories = committeeData.root.map((cat) => ({
+    ...cat,
+    members: normalizePhotoFields(cat.members),
+  }));
+
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("chief-patron");
 
@@ -26,13 +41,16 @@ export default function Committee() {
 
   // Handle URL path-based navigation
   useEffect(() => {
-    if (category && committeeCategories.some((cat) => cat.id === category)) {
+    if (
+      committeeCategories &&
+      category &&
+      committeeCategories.some((cat: any) => cat.id === category)
+    ) {
       setActiveTab(category);
     } else if (!category) {
       setActiveTab("chief-patron");
     }
-  }, [category]);
-
+  }, [category, committeeCategories]);
   // Update URL when tab changes
   const handleTabChange = (tabId: string) => {
     setActiveTab(tabId);
@@ -43,8 +61,8 @@ export default function Committee() {
   useEffect(() => {
     const imageUrls = committeeCategories.flatMap((category) =>
       category.members
-        .filter((member: any) => member.image)
-        .map((member: any) => member.image)
+        .filter((member: any) => getPhotoUrl(member.photo))
+        .map((member: any) => getPhotoUrl(member.photo))
     );
 
     // Add preload link tags for critical images (first 12 for above-the-fold)
@@ -70,8 +88,7 @@ export default function Committee() {
     return () => {
       preloadLinks.forEach((link) => link.remove());
     };
-  }, []);
-
+  }, [committeeCategories]);
   // Inject Person schemas for all committee members
   useEffect(() => {
     // Flatten all members from all categories
@@ -80,37 +97,30 @@ export default function Committee() {
         name: member.name,
         role: member.role,
         affiliation: member.affiliation,
-        image: member.image,
+        image: getPhotoUrl(member.photo),
       }))
     );
 
     // Generate Person schemas
     const personSchemas = getCommitteePersonSchema(allMembers);
 
-    // Inject each schema into document head
+    // Inject each schema into document head, tracking injected scripts
+    const injectedScripts: HTMLScriptElement[] = [];
     personSchemas.forEach((schema) => {
       const script = document.createElement("script");
       script.type = "application/ld+json";
       script.textContent = JSON.stringify(schema);
+      // Mark scripts as originating from this component for clarity
+      script.setAttribute("data-origin", "CommitteeComponent");
       document.head.appendChild(script);
+      injectedScripts.push(script);
     });
 
-    // Cleanup function to remove scripts on unmount
+    // Cleanup: only remove scripts injected by this component
     return () => {
-      // Remove all person schemas (optional, but clean)
-      const scripts = document.querySelectorAll(
-        'script[type="application/ld+json"]'
-      );
-      scripts.forEach((script) => {
-        if (
-          script.textContent &&
-          script.textContent.includes('"@type":"Person"')
-        ) {
-          script.remove();
-        }
-      });
+      injectedScripts.forEach((script) => script.remove());
     };
-  }, []);
+  }, [committeeCategories]);
 
   return (
     <div className="min-h-screen bg-background">
@@ -150,10 +160,10 @@ export default function Committee() {
                       <CardContent className="p-0 flex flex-col h-full">
                         <div className="h-2 bg-gradient-to-r from-primary to-secondary opacity-80" />
                         <div className="p-6 flex flex-col items-center text-center flex-1">
-                          {member.image && (
+                          {getPhotoUrl(member.photo) && (
                             <div className="w-24 h-24 rounded-full bg-muted flex items-center justify-center mb-4 group-hover:scale-105 transition-transform duration-500 overflow-hidden border-2 border-border group-hover:border-primary/50">
                               <img
-                                src={member.image}
+                                src={getPhotoUrl(member.photo)}
                                 alt={member.name}
                                 loading={
                                   category.id === activeTab && index < 8

@@ -1,0 +1,46 @@
+fragment ImportantDatesParts on ImportantDates {
+  __typename
+  root {
+    __typename
+    event
+    date
+    status
+  }
+}
+
+fragment SpeakersParts on Speakers {
+  __typename
+  root {
+    __typename
+    name
+    role
+    affiliation
+    photo {
+      __typename
+      url
+      file
+    }
+    topic
+    linkedin
+  }
+}
+
+fragment CommitteeParts on Committee {
+  __typename
+  root {
+    __typename
+    id
+    label
+    members {
+      __typename
+      name
+      role
+      affiliation
+      photo {
+        __typename
+        url
+        file
+      }
+    }
+  }
+}
