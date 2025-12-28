@@ -1,6 +1,7 @@
 import { useState, useMemo, useCallback } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 import {
   Select,
   SelectContent,
@@ -12,6 +13,7 @@ import { Search, Download } from "lucide-react";
 import committeeData from "@/data/committee.json";
 import type { CommitteeData } from "@/types/data";
 import { getPhotoUrl } from "@/lib/photoMigration";
+import { isExternalUrl } from "@/lib/utils";
 import { AddMemberDialog } from "./AddMemberDialog";
 import { AddCategoryDialog } from "./AddCategoryDialog";
 import { EditMemberDialog } from "./EditMemberDialog";
@@ -193,7 +195,7 @@ export const CommitteeManager = () => {
         type="members"
         selectedIds={Array.from(selectedMembers)}
         selectedNames={filteredMembers
-          .filter((m, idx) => selectedMembers.has(`${m.categoryId}-${idx}`))
+          .filter((m) => selectedMembers.has(`${m.categoryId}-${m.memberIndex}`))
           .map((m) => m.name)}
         onActionComplete={() => {
           setSelectedMembers(new Set());
@@ -246,8 +248,8 @@ export const CommitteeManager = () => {
         )}
 
         <div className="space-y-2 max-h-[600px] overflow-y-auto">
-          {filteredMembers.map((member, index) => {
-            const memberId = `${member.categoryId}-${index}`;
+          {filteredMembers.map((member) => {
+            const memberId = `${member.categoryId}-${member.memberIndex}`;
             const isSelected = selectedMembers.has(memberId);
             return (
               <div
@@ -267,19 +269,24 @@ export const CommitteeManager = () => {
                   className="rounded cursor-pointer"
                 />
 
-                {getPhotoUrl(member.photo) ? (
-                  <img
-                    src={getPhotoUrl(member.photo)}
-                    alt={member.name}
-                    className="w-10 h-10 rounded-full object-cover border-2 border-border"
-                  />
-                ) : (
-                  <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center border-2 border-border">
-                    <span className="text-lg font-bold text-muted-foreground">
-                      {member.name.charAt(0)}
-                    </span>
-                  </div>
-                )}
+                <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-border flex-shrink-0">
+                  {getPhotoUrl(member.photo) ? (
+                    <Image
+                      src={getPhotoUrl(member.photo)}
+                      alt={member.name}
+                      fill
+                      className="object-cover"
+                      sizes="40px"
+                      unoptimized={isExternalUrl(getPhotoUrl(member.photo))}
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-muted flex items-center justify-center">
+                      <span className="text-lg font-bold text-muted-foreground">
+                        {member.name.charAt(0)}
+                      </span>
+                    </div>
+                  )}
+                </div>
 
                 <div className="flex-1 min-w-0">
                   <p className="font-semibold text-sm truncate">
@@ -288,12 +295,12 @@ export const CommitteeManager = () => {
                   <p className="text-xs text-muted-foreground truncate">
                     {member.role || "No role specified"}
                   </p>
-                  <p className="text-xs text-blue-500 truncate">
+                  <p className="text-xs text-muted-foreground truncate opacity-70">
                     {member.categoryLabel}
                   </p>
                 </div>
 
-                <div className="text-right">
+                <div className="text-right hidden sm:block">
                   <p className="text-xs text-muted-foreground line-clamp-2 max-w-[200px]">
                     {member.affiliation}
                   </p>
@@ -306,7 +313,7 @@ export const CommitteeManager = () => {
                     e.stopPropagation();
                     setEditingMember({
                       categoryId: member.categoryId,
-                      index,
+                      index: member.memberIndex,
                       name: member.name,
                     });
                   }}

@@ -8,6 +8,7 @@ import { SchemaOrg } from "@/components/common/SchemaOrg";
 import { PreviewModeBanner } from "@/components/common/PreviewModeBanner";
 import ScrollToTop from "@/components/layout/ScrollToTop";
 import { ContentWrapper } from "@/components/layout/ContentWrapper";
+import { ScrollProgress } from "@/components/ui/scroll-progress";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -94,6 +95,7 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`}>
       <body className="bg-background text-foreground antialiased font-sans">
         <Providers>
+          <ScrollProgress />
           <ScrollToTop />
           <SchemaOrg />
           <PreviewModeBanner />

@@ -3,6 +3,7 @@ import { Reveal } from "@/components/common/Reveal";
 import { FileText, Globe, Users, Award, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Metadata } from "next";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "About InC4 2026 | International Conference on Contemporary Computing and Communications",
@@ -127,9 +128,11 @@ export default function AboutPage() {
             <div className="order-2 lg:order-1 relative top-4">
               <Reveal width="100%">
                 <div className="relative rounded-3xl overflow-hidden border border-border mt-2 shadow-md bg-white">
-                  <img
+                  <Image
                     src="/images/cu_color.png"
                     alt="CHRIST University"
+                    width={500}
+                    height={300}
                     className="w-full h-auto object-contain p-6"
                   />
                 </div>
@@ -245,9 +248,11 @@ export default function AboutPage() {
             <div className="relative flex justify-center lg:justify-end">
               <Reveal width="100%">
                 <div className="relative rounded-3xl overflow-hidden border border-border bg-white px-8 py-6 shadow-md hover:border-primary/50 transition-colors duration-500">
-                  <img
+                  <Image
                     src="/images/ieee_cs_bc.png"
                     alt="IEEE Computer Society Bangalore Chapter"
+                    width={400}
+                    height={200}
                     className="w-full max-w-sm h-auto object-contain"
                   />
                 </div>
@@ -260,9 +265,11 @@ export default function AboutPage() {
             <div className="order-2 lg:order-1 relative top-4">
               <Reveal width="100%">
                 <div className="relative rounded-3xl overflow-hidden border border-border mt-2 shadow-md bg-white">
-                  <img
+                  <Image
                     src="/images/ieee_cs_cu.png"
                     alt="IEEE Computer Society Student Branch Chapter CHRIST University"
+                    width={500}
+                    height={300}
                     className="w-full h-auto object-contain p-6"
                   />
                 </div>
