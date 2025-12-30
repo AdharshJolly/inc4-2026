@@ -4,9 +4,9 @@ import { useContext } from "react";
 import { PageTitle } from "@/components/common/PageTitle";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ActivityLog } from "../../../components/admin/ActivityLog";
+import { ActivityLog } from "@/components/admin/ActivityLog";
 import { ArrowLeft } from "lucide-react";
-import { PendingChangesCounter } from "../../../components/admin/PendingChangesCounter";
+import { PendingChangesCounter } from "@/components/admin/PendingChangesCounter";
 import { AdminSessionContext } from "../AdminSessionProvider";
 
 export default function ActivityLogPage() {
