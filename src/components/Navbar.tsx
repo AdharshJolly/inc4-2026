@@ -97,15 +97,11 @@ export const Navbar = () => {
                     className={`font-medium text-lg transition-colors flex items-center gap-1 py-1 ${
                       isLanding && !isScrolled
                         ? pathname === link.href ||
-                          link.submenu.some(
-                            (sub) => sub.href === pathname
-                          )
+                          link.submenu.some((sub) => sub.href === pathname)
                           ? "text-primary font-bold"
                           : "text-primary-foreground hover:text-primary"
                         : pathname === link.href ||
-                          link.submenu.some(
-                            (sub) => sub.href === pathname
-                          )
+                          link.submenu.some((sub) => sub.href === pathname)
                         ? "text-primary font-bold"
                         : "text-foreground hover:text-primary"
                     }`}
@@ -113,9 +109,7 @@ export const Navbar = () => {
                     {link.name}
                     <ChevronDown className="w-4 h-4" />
                     {(pathname === link.href ||
-                      link.submenu.some(
-                        (sub) => sub.href === pathname
-                      )) && (
+                      link.submenu.some((sub) => sub.href === pathname)) && (
                       <motion.div
                         layoutId="navbar-indicator"
                         className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary rounded-full"
@@ -195,7 +189,7 @@ export const Navbar = () => {
             asChild
           >
             <Link
-              href="https://cmt3.research.microsoft.com/InC42026"
+              href="https://cmt3.research.microsoft.com/InC2026"
               target="_blank"
               rel="noopener noreferrer"
             >

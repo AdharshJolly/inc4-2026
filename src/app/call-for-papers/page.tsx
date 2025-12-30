@@ -16,11 +16,14 @@ import topics from "@/data/call-for-papers-topics.json";
 
 export const metadata: Metadata = {
   title: "Call for Papers | InC4 2026",
-  description: "Submit your research papers to InC4 2026. Guidelines for paper submission, research topics, and important deadlines for the International Conference on Contemporary Computing and Communications.",
-  keywords: "call for papers, paper submission, IEEE, InC4, research papers, conference guidelines, submission deadline",
+  description:
+    "Submit your research papers to InC4 2026. Guidelines for paper submission, research topics, and important deadlines for the International Conference on Contemporary Computing and Communications.",
+  keywords:
+    "call for papers, paper submission, IEEE, InC4, research papers, conference guidelines, submission deadline",
   openGraph: {
     title: "Call for Papers | InC4 2026",
-    description: "Submit your research papers to InC4 2026. Guidelines for paper submission, research topics, and important deadlines for the International Conference on Contemporary Computing and Communications.",
+    description:
+      "Submit your research papers to InC4 2026. Guidelines for paper submission, research topics, and important deadlines for the International Conference on Contemporary Computing and Communications.",
     type: "article",
     url: "https://ic4.co.in/call-for-papers",
   },
@@ -89,7 +92,7 @@ export default function CallForPapersPage() {
                     </p>
                     <Button size="lg" className="w-full gap-2" asChild>
                       <a
-                        href="https://cmt3.research.microsoft.com/InC42026"
+                        href="https://cmt3.research.microsoft.com/InC2026"
                         target="_blank"
                         rel="noopener noreferrer"
                       >
@@ -107,8 +110,8 @@ export default function CallForPapersPage() {
           {/* Plain Text CMT Acknowledgment - Required by Microsoft CMT */}
           <section>
             <p>
-              CMT Acknowledgment: The Microsoft CMT service was used
-              for managing the peer-reviewing process for this conference. This
+              CMT Acknowledgment: The Microsoft CMT service was used for
+              managing the peer-reviewing process for this conference. This
               service was provided for free by Microsoft and they bore all
               expenses, including costs for Azure cloud services as well as for
               software development and support.
