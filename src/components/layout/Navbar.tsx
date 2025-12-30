@@ -202,7 +202,7 @@ export const Navbar = () => {
             asChild
           >
             <Link
-              href="https://cmt3.research.microsoft.com/InC42026"
+              href="https://cmt3.research.microsoft.com/InC2026"
               target="_blank"
               rel="noopener noreferrer"
             >

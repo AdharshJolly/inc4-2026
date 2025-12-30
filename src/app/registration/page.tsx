@@ -9,11 +9,14 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Registration | InC4 2026",
-  description: "Register for InC4 2026. View registration fees, categories, and payment details for the International Conference on Contemporary Computing and Communications at CHRIST University.",
-  keywords: "InC4 registration, conference registration, registration fees, early bird, IEEE, 2026 conference",
+  description:
+    "Register for InC4 2026. View registration fees, categories, and payment details for the International Conference on Contemporary Computing and Communications at CHRIST University.",
+  keywords:
+    "InC4 registration, conference registration, registration fees, early bird, IEEE, 2026 conference",
   openGraph: {
     title: "Registration | InC4 2026",
-    description: "Register for InC4 2026. View registration fees, categories, and payment details for the International Conference on Contemporary Computing and Communications at CHRIST University.",
+    description:
+      "Register for InC4 2026. View registration fees, categories, and payment details for the International Conference on Contemporary Computing and Communications at CHRIST University.",
     type: "website",
     url: "https://ic4.co.in/registration",
   },
@@ -193,7 +196,7 @@ export default function RegistrationPage() {
           <Reveal width="100%">
             <div className="flex justify-center">
               <Link
-                href="https://cmt3.research.microsoft.com/InC42026"
+                href="https://cmt3.research.microsoft.com/InC2026"
                 target="_blank"
                 rel="noopener noreferrer"
               >
