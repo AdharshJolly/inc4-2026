@@ -6,12 +6,12 @@ import { Metadata } from "next";
 import Image from "next/image";
 
 export const metadata: Metadata = {
-  title: "About InC4 2026 | International Conference on Contemporary Computing and Communications",
-  description: "Learn about InC4 2026, the fourth edition of the International Conference on Contemporary Computing and Communications at CHRIST University, Bengaluru. Key insights on the conference mission and previous editions.",
+  title: "About | 2026 IEEE International Conference on Contemporary Computing and Communications (InC4)",
+  description: "Learn about InC4 2026, the 2026 IEEE International Conference on Contemporary Computing and Communications - Conference#70839 at CHRIST University, Bengaluru.",
   keywords: "InC4, conference about, IEEE, computing, communications, CHRIST University, academic conference, research",
   openGraph: {
-    title: "About InC4 2026 | International Conference on Contemporary Computing and Communications",
-    description: "Learn about InC4 2026, the fourth edition of the International Conference on Contemporary Computing and Communications at CHRIST University, Bengaluru. Key insights on the conference mission and previous editions.",
+    title: "About | 2026 IEEE International Conference on Contemporary Computing and Communications (InC4)",
+    description: "Learn about InC4 2026, the 2026 IEEE International Conference on Contemporary Computing and Communications - Conference#70839 at CHRIST University, Bengaluru.",
     type: "website",
     url: "https://ic4.co.in/about",
   },

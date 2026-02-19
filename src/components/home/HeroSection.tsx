@@ -83,8 +83,16 @@ export const HeroSection = () => {
             className="text-xl md:text-2xl text-primary-foreground/80 font-display mb-4"
           >
             <br />
-            International Conference on Contemporary Computing and
-            Communications
+            2026 IEEE International Conference on Contemporary Computing and
+            Communications (InC4) -{" "}
+            <a
+              href="https://conferences.ieee.org/conferences_events/conferences/conferencedetails/70839"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-primary underline decoration-primary/30 transition-colors"
+            >
+              Conference#70839
+            </a>
           </motion.p>
 
           {/* Event Details */}

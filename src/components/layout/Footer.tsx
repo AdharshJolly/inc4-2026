@@ -47,9 +47,17 @@ export const Footer = () => {
               </div>
             </div>
             <p className="text-primary-foreground/60 text-sm leading-relaxed mb-6">
-              International Conference on Contemporary Computing and
-              Communications, organized by IEEE Computer Society Bangalore
-              Chapter.
+              2026 IEEE International Conference on Contemporary Computing and
+              Communications (InC4) -{" "}
+              <a
+                href="https://conferences.ieee.org/conferences_events/conferences/conferencedetails/70839"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-primary underline decoration-primary/30 transition-colors"
+              >
+                Conference#70839
+              </a>
+              , organized by IEEE Computer Society Bangalore Chapter.
             </p>
             <div className="flex gap-3">
               <a

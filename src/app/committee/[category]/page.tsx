@@ -10,12 +10,12 @@ export function generateStaticParams() {
 }
 
 export const metadata: Metadata = {
-  title: "Conference Committee | InC4 2026",
-  description: "Meet the organizing committee members of InC4 2026. View the patrons, chairs, committee members, and program committee of the International Conference on Contemporary Computing and Communications.",
+  title: "Conference Committee | 2026 IEEE International Conference on Contemporary Computing and Communications (InC4)",
+  description: "Meet the organizing committee members of InC4 2026. View the patrons, chairs, committee members, and program committee of the 2026 IEEE International Conference on Contemporary Computing and Communications - Conference#70839.",
   keywords: "InC4 committee, conference organizers, IEEE, academic committee, program committee, conference chairs",
   openGraph: {
-    title: "Conference Committee | InC4 2026",
-    description: "Meet the organizing committee members of InC4 2026. View the patrons, chairs, committee members, and program committee of the International Conference on Contemporary Computing and Communications.",
+    title: "Conference Committee | 2026 IEEE International Conference on Contemporary Computing and Communications (InC4)",
+    description: "Meet the organizing committee members of InC4 2026. View the patrons, chairs, committee members, and program committee of the 2026 IEEE International Conference on Contemporary Computing and Communications - Conference#70839.",
     type: "website",
     url: "https://ic4.co.in/committee",
   },

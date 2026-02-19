@@ -41,10 +41,22 @@ export const AboutSection = () => {
             </Reveal>
             <Reveal>
               <p className="text-muted-foreground text-lg leading-relaxed mb-6">
-                The fourth edition of International Conference on Contemporary
-                Computing and Communications (InC4) is organized by IEEE
-                Computer Society Bangalore Chapter and IEEE Computer Society
-                Student Branch Chapter CHRIST University Bangalore.
+                The fourth edition of the{" "}
+                <span className="font-semibold text-foreground">
+                  2026 IEEE International Conference on Contemporary Computing
+                  and Communications (InC4) -{" "}
+                  <a
+                    href="https://conferences.ieee.org/conferences_events/conferences/conferencedetails/70839"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary hover:underline transition-all"
+                  >
+                    Conference#70839
+                  </a>
+                </span>{" "}
+                is organized by the IEEE Computer Society Bangalore Chapter and
+                the IEEE Computer Society Student Branch Chapter at CHRIST
+                University, Bangalore.
               </p>
             </Reveal>
             <Reveal>

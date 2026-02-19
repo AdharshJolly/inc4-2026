@@ -2,9 +2,9 @@
 export const getInC4EventSchema = () => ({
   "@context": "https://schema.org",
   "@type": "Event",
-  name: "InC4 2026 - International Conference on Contemporary Computing and Communications",
+  name: "2026 IEEE International Conference on Contemporary Computing and Communications (InC4) - Conference#70839",
   description:
-    "The fourth edition of International Conference on Contemporary Computing and Communications",
+    "The fourth edition of 2026 IEEE International Conference on Contemporary Computing and Communications (InC4) - Conference#70839 at CHRIST University, Bengaluru.",
   startDate: "2026-08-07T09:00:00+05:30",
   endDate: "2026-08-08T17:00:00+05:30",
   eventAttendanceMode: "OfflineEventAttendanceMode",

@@ -23,10 +23,10 @@ const spaceGrotesk = Space_Grotesk({
 export const metadata: Metadata = {
   metadataBase: new URL("https://ic4.co.in"),
   title: {
-    default: "InC4 2026 - International Conference on Contemporary Computing and Communications",
+    default: "InC4 2026 | 2026 IEEE International Conference on Contemporary Computing and Communications",
     template: "%s | InC4 2026",
   },
-  description: "The fourth edition of International Conference on Contemporary Computing and Communications (InC4) at CHRIST University, Bengaluru. August 7-8, 2026.",
+  description: "The 2026 IEEE International Conference on Contemporary Computing and Communications (InC4) - Conference#70839 at CHRIST University, Bengaluru. August 7-8, 2026.",
   keywords: ["InC4", "IEEE", "Conference", "Computing", "Communications", "Bengaluru", "Christ University", "Research"],
   authors: [{ name: "IEEE Computer Society Bangalore Chapter" }],
   creator: "IEEE Computer Society Bangalore Chapter",
@@ -39,8 +39,8 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://ic4.co.in",
     siteName: "InC4 2026",
-    title: "InC4 2026 - International Conference on Contemporary Computing and Communications",
-    description: "The fourth edition of International Conference on Contemporary Computing and Communications (InC4) at CHRIST University, Bengaluru. August 7-8, 2026.",
+    title: "InC4 2026 | 2026 IEEE International Conference on Contemporary Computing and Communications",
+    description: "The 2026 IEEE International Conference on Contemporary Computing and Communications (InC4) - Conference#70839 at CHRIST University, Bengaluru. August 7-8, 2026.",
     images: [
       {
         url: "/images/InC4 Logo White.png",
@@ -52,8 +52,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "InC4 2026 - International Conference on Contemporary Computing and Communications",
-    description: "Join us at InC4 2026, the premier international conference on contemporary computing and communications.",
+    title: "InC4 2026 | 2026 IEEE International Conference on Contemporary Computing and Communications",
+    description: "Join us at InC4 2026, the 2026 IEEE International Conference on Contemporary Computing and Communications - Conference#70839.",
     images: ["/images/InC4 Logo White.png"],
     creator: "@ieeecomputers", // Assuming this handle based on schema data
   },
