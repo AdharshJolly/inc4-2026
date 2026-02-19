@@ -1,10 +1,12 @@
 import { useState, useCallback, useMemo } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 import { Search, Edit, Trash2 } from "lucide-react";
 import speakersData from "@/data/speakers.json";
 import type { SpeakersData } from "@/types/data";
 import { getPhotoUrl } from "@/lib/photoMigration";
+import { isExternalUrl } from "@/lib/utils";
 import { AddSpeakerDialog } from "./AddSpeakerDialog";
 import { EditSpeakerDialog } from "./EditSpeakerDialog";
 import { BulkActionsDialog } from "./BulkActionsDialog";
@@ -23,7 +25,7 @@ export const SpeakersManager = () => {
 
   const filteredSpeakers = useMemo(
     () =>
-      speakers.filter(
+      speakers.map((s, originalIndex) => ({ ...s, originalIndex })).filter(
         (speaker) =>
           speaker.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
           speaker.affiliation
@@ -50,10 +52,10 @@ export const SpeakersManager = () => {
     if (selectedSpeakers.size === filteredSpeakers.length) {
       setSelectedSpeakers(new Set());
     } else {
-      const allIds = filteredSpeakers.map((fs) => String(speakers.indexOf(fs)));
+      const allIds = filteredSpeakers.map((fs) => String(fs.originalIndex));
       setSelectedSpeakers(new Set(allIds));
     }
-  }, [filteredSpeakers.length, selectedSpeakers.size]);
+  }, [filteredSpeakers, selectedSpeakers.size]);
 
   return (
     <div className="space-y-6">
@@ -98,7 +100,7 @@ export const SpeakersManager = () => {
         type="speakers"
         selectedIds={Array.from(selectedSpeakers)}
         selectedNames={filteredSpeakers
-          .filter((_, idx) => selectedSpeakers.has(String(idx)))
+          .filter((s) => selectedSpeakers.has(String(s.originalIndex)))
           .map((s) => s.name)}
         onActionComplete={() => {
           setSelectedSpeakers(new Set());
@@ -145,12 +147,12 @@ export const SpeakersManager = () => {
 
       {/* Speaker Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredSpeakers.map((speaker, index) => {
-          const speakerId = String(index);
+        {filteredSpeakers.map((speaker) => {
+          const speakerId = String(speaker.originalIndex);
           const isSelected = selectedSpeakers.has(speakerId);
           return (
             <div
-              key={index}
+              key={speakerId}
               className={`relative border rounded-lg overflow-hidden transition-all cursor-pointer ${
                 isSelected
                   ? "border-orange-500/50 bg-orange-500/5 shadow-lg"
@@ -172,10 +174,13 @@ export const SpeakersManager = () => {
               {/* Image */}
               <div className="relative h-48 bg-muted">
                 {getPhotoUrl(speaker.photo) ? (
-                  <img
+                  <Image
                     src={getPhotoUrl(speaker.photo)}
                     alt={speaker.name}
-                    className="w-full h-full object-cover"
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    unoptimized={isExternalUrl(getPhotoUrl(speaker.photo))}
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center">
@@ -186,7 +191,7 @@ export const SpeakersManager = () => {
                 )}
 
                 {speaker.topic && (
-                  <div className="absolute top-12 left-2">
+                  <div className="absolute top-12 left-2 z-10">
                     <span className="bg-orange-500 text-white text-xs font-semibold px-3 py-1 rounded-full">
                       {speaker.topic}
                     </span>
@@ -213,7 +218,7 @@ export const SpeakersManager = () => {
                     onClick={(e) => {
                       e.stopPropagation();
                       setEditingSpeaker({
-                        index,
+                        index: speaker.originalIndex,
                         name: speaker.name,
                       });
                     }}
@@ -245,8 +250,6 @@ export const SpeakersManager = () => {
           No speakers found matching your search.
         </div>
       )}
-
-
     </div>
   );
 };

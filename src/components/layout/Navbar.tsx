@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, ChevronDown } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -60,29 +61,41 @@ export const Navbar = () => {
         {/* Left Logos */}
         <div className="flex items-center gap-4">
           <Link href="/" className="flex items-center gap-3">
-            <img
-              src="/images/ieee_cs_bc.png"
-              alt="IEEE CS Bangalore Chapter"
-              className={`h-[4.5rem] w-auto transition-all duration-500 hidden lg:block ${
+            <div
+              className={`relative h-14 md:h-[4.5rem] w-32 md:w-48 transition-all duration-500 hidden lg:block ${
                 isLanding && !isScrolled
                   ? "filter brightness-0 invert opacity-90"
                   : ""
               }`}
-            />
-            <img
-              src="/images/ieee_cs_cu.png"
-              alt="IEEE CS CHRIST University"
-              className={`h-[4.5rem] w-auto transition-all duration-500 ${
+            >
+              <Image
+                src="/images/ieee_cs_bc.png"
+                alt="IEEE CS Bangalore Chapter"
+                fill
+                className="object-contain object-left"
+                priority
+              />
+            </div>
+            <div
+              className={`relative h-14 md:h-[4.5rem] w-32 md:w-48 transition-all duration-500 ${
                 isLanding && !isScrolled && !isMobileMenuOpen
                   ? "filter brightness-0 invert opacity-90"
                   : ""
               }`}
-            />
+            >
+              <Image
+                src="/images/ieee_cs_cu.png"
+                alt="IEEE CS CHRIST University"
+                fill
+                className="object-contain object-left"
+                priority
+              />
+            </div>
           </Link>
         </div>
 
         {/* Desktop Navigation */}
-        <div className="hidden lg:flex items-center gap-8">
+        <div className="hidden lg:flex items-center gap-8 pr-4">
           {navLinks.map((link) => (
             <div
               key={link.name}
@@ -94,7 +107,7 @@ export const Navbar = () => {
                 <>
                   <motion.button
                     whileHover={{ scale: 1.05 }}
-                    className={`font-medium text-lg transition-colors flex items-center gap-1 py-1 ${
+                    className={`font-medium whitespace-nowrap text-lg transition-colors flex items-center gap-1 py-1 ${
                       isLanding && !isScrolled
                         ? pathname === link.href ||
                           link.submenu.some((sub) => sub.href === pathname)
@@ -152,7 +165,7 @@ export const Navbar = () => {
                 <motion.div whileHover={{ scale: 1.05 }}>
                   <Link
                     href={link.href}
-                    className={`font-medium text-lg transition-colors relative py-1 ${
+                    className={`font-medium whitespace-nowrap text-lg transition-colors relative py-1 ${
                       isLanding && !isScrolled
                         ? pathname === link.href
                           ? "text-primary font-bold"
@@ -196,15 +209,20 @@ export const Navbar = () => {
               Submit Paper
             </Link>
           </Button>
-          <img
-            src="/images/cu_color.png"
-            alt="CHRIST University"
-            className={`h-[4.5rem] w-auto transition-all duration-500 ${
+          <div
+            className={`relative h-14 md:h-[4.5rem] w-32 md:w-48 transition-all duration-500 ${
               isLanding && !isScrolled
                 ? "filter brightness-0 invert opacity-90"
                 : ""
             }`}
-          />
+          >
+            <Image
+              src="/images/cu_color.png"
+              alt="CHRIST University"
+              fill
+              className="object-contain object-right"
+            />
+          </div>
         </div>
 
         {/* Mobile Menu Button */}

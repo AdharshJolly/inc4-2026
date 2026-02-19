@@ -1,9 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Linkedin, Twitter } from "lucide-react";
 import Link from "next/link";
-import { Reveal } from "./Reveal";
+import Image from "next/image";
+import { Reveal } from "@/components/common/Reveal";
 import speakersData from "@/data/speakers.json";
 import { getPhotoUrl, normalizePhotoFields } from "@/lib/photoMigration";
+import { isExternalUrl } from "@/lib/utils";
 import type { SpeakersData } from "@/types/data";
 
 // Get first 3 speakers from JSON data
@@ -57,10 +59,13 @@ export const SpeakersSection = () => {
                     {/* Image */}
                     <div className="relative h-64 overflow-hidden">
                       {photoUrl ? (
-                        <img
+                        <Image
                           src={photoUrl}
                           alt={speaker.name}
-                          className="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-700"
+                          fill
+                          className="object-cover object-center group-hover:scale-110 transition-transform duration-700"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          unoptimized={isExternalUrl(photoUrl)}
                         />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center bg-dark-card/80">

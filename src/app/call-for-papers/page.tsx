@@ -1,6 +1,6 @@
-import { PageTitle } from "@/components/PageTitle";
+import { PageTitle } from "@/components/common/PageTitle";
 import { Button } from "@/components/ui/button";
-import { Reveal } from "@/components/Reveal";
+import { Reveal } from "@/components/common/Reveal";
 import {
   ArrowRight,
   FileText,
@@ -15,15 +15,15 @@ import { Metadata } from "next";
 import topics from "@/data/call-for-papers-topics.json";
 
 export const metadata: Metadata = {
-  title: "Call for Papers | InC4 2026",
+  title: "Call for Papers | 2026 IEEE International Conference on Contemporary Computing and Communications (InC4)",
   description:
-    "Submit your research papers to InC4 2026. Guidelines for paper submission, research topics, and important deadlines for the International Conference on Contemporary Computing and Communications.",
+    "Submit your research papers to InC4 2026. Guidelines for paper submission, research topics, and important deadlines for the 2026 IEEE International Conference on Contemporary Computing and Communications - Conference#70839.",
   keywords:
     "call for papers, paper submission, IEEE, InC4, research papers, conference guidelines, submission deadline",
   openGraph: {
-    title: "Call for Papers | InC4 2026",
+    title: "Call for Papers | 2026 IEEE International Conference on Contemporary Computing and Communications (InC4)",
     description:
-      "Submit your research papers to InC4 2026. Guidelines for paper submission, research topics, and important deadlines for the International Conference on Contemporary Computing and Communications.",
+      "Submit your research papers to InC4 2026. Guidelines for paper submission, research topics, and important deadlines for the 2026 IEEE International Conference on Contemporary Computing and Communications - Conference#70839.",
     type: "article",
     url: "https://ic4.co.in/call-for-papers",
   },
@@ -88,7 +88,13 @@ export default function CallForPapersPage() {
                       Original contributions based on the results of research
                       and development are solicited. Prospective authors are
                       requested to submit their papers in standard IEEE
-                      conference format in not more than 6 pages.
+                      conference format in not more than 6 pages. The IEEE InC4
+                      2026 conference proceeding will be submitted for
+                      inclusion in{" "}
+                      <span className="text-foreground font-semibold">
+                        IEEE XPLORE
+                      </span>{" "}
+                      digital library.
                     </p>
                     <Button size="lg" className="w-full gap-2" asChild>
                       <a

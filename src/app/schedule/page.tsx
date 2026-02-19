@@ -1,5 +1,6 @@
-import { PageTitle } from "@/components/PageTitle";
-import { Reveal } from "@/components/Reveal";
+import { PageTitle } from "@/components/common/PageTitle";
+import { Reveal } from "@/components/common/Reveal";
+import { ScheduleSection } from "@/components/sections/ScheduleSection";
 import { Calendar, MapPin, Clock } from "lucide-react";
 import { Metadata } from "next";
 

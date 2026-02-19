@@ -1,5 +1,6 @@
 import { Mail, Phone, MapPin, Linkedin, Twitter, Youtube } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 const footerLinks = {
   quickLinks: [
@@ -29,9 +30,11 @@ export const Footer = () => {
           {/* Brand */}
           <div className="lg:col-span-1">
             <div className="flex items-center gap-3 mb-6">
-              <img
+              <Image
                 src="/images/InC4 Logo White.png"
                 alt="InC4 Logo"
+                width={48}
+                height={48}
                 className="h-12 w-12"
               />
               <div>
@@ -44,9 +47,17 @@ export const Footer = () => {
               </div>
             </div>
             <p className="text-primary-foreground/60 text-sm leading-relaxed mb-6">
-              International Conference on Contemporary Computing and
-              Communications, organized by IEEE Computer Society Bangalore
-              Chapter.
+              2026 IEEE International Conference on Contemporary Computing and
+              Communications (InC4) -{" "}
+              <a
+                href="https://conferences.ieee.org/conferences_events/conferences/conferencedetails/70839"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-primary underline decoration-primary/30 transition-colors"
+              >
+                Conference#70839
+              </a>
+              , organized by IEEE Computer Society Bangalore Chapter.
             </p>
             <div className="flex gap-3">
               <a

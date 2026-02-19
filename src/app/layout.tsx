@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
-import { Providers } from "@/components/Providers";
-import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/Footer";
-import { SchemaOrg } from "@/components/SchemaOrg";
-import { PreviewModeBanner } from "@/components/PreviewModeBanner";
-import ScrollToTop from "@/components/ScrollToTop";
+import { Providers } from "@/components/common/Providers";
+import { Navbar } from "@/components/layout/Navbar";
+import { Footer } from "@/components/layout/Footer";
+import { SchemaOrg } from "@/components/common/SchemaOrg";
+import { PreviewModeBanner } from "@/components/common/PreviewModeBanner";
+import ScrollToTop from "@/components/layout/ScrollToTop";
+import { ContentWrapper } from "@/components/layout/ContentWrapper";
+import { ScrollProgress } from "@/components/ui/scroll-progress";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -19,10 +21,52 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "InC4 2026 - International Conference on Contemporary Computing and Communications",
-  description: "The fourth edition of International Conference on Contemporary Computing and Communications",
+  metadataBase: new URL("https://ic4.co.in"),
+  title: {
+    default: "InC4 2026 | 2026 IEEE International Conference on Contemporary Computing and Communications",
+    template: "%s | InC4 2026",
+  },
+  description: "The 2026 IEEE International Conference on Contemporary Computing and Communications (InC4) - Conference#70839 at CHRIST University, Bengaluru. August 7-8, 2026.",
+  keywords: ["InC4", "IEEE", "Conference", "Computing", "Communications", "Bengaluru", "Christ University", "Research"],
+  authors: [{ name: "IEEE Computer Society Bangalore Chapter" }],
+  creator: "IEEE Computer Society Bangalore Chapter",
+  publisher: "CHRIST (Deemed to be University)",
   verification: {
     google: "4prcouKfo645DwvNat-O8rq_AkPLzAzRNMnA4qssBKI",
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://ic4.co.in",
+    siteName: "InC4 2026",
+    title: "InC4 2026 | 2026 IEEE International Conference on Contemporary Computing and Communications",
+    description: "The 2026 IEEE International Conference on Contemporary Computing and Communications (InC4) - Conference#70839 at CHRIST University, Bengaluru. August 7-8, 2026.",
+    images: [
+      {
+        url: "/images/InC4 Logo White.png",
+        width: 1200,
+        height: 630,
+        alt: "InC4 2026 Logo",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "InC4 2026 | 2026 IEEE International Conference on Contemporary Computing and Communications",
+    description: "Join us at InC4 2026, the 2026 IEEE International Conference on Contemporary Computing and Communications - Conference#70839.",
+    images: ["/images/InC4 Logo White.png"],
+    creator: "@ieeecomputers", // Assuming this handle based on schema data
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
   icons: {
     icon: [
@@ -37,9 +81,10 @@ export const metadata: Metadata = {
     ],
   },
   manifest: "/site.webmanifest",
+  alternates: {
+    canonical: "./",
+  },
 };
-
-import { ContentWrapper } from "@/components/ContentWrapper";
 
 export default function RootLayout({
   children,
@@ -50,6 +95,7 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`}>
       <body className="bg-background text-foreground antialiased font-sans">
         <Providers>
+          <ScrollProgress />
           <ScrollToTop />
           <SchemaOrg />
           <PreviewModeBanner />

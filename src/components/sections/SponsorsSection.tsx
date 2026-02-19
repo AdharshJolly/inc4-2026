@@ -1,4 +1,6 @@
-import { Reveal } from "./Reveal";
+import { Reveal } from "@/components/common/Reveal";
+import Image from "next/image";
+import { isExternalUrl } from "@/lib/utils";
 
 const partners = [
   {
@@ -39,16 +41,14 @@ export const SponsorsSection = () => {
           {partners.map((partner, index) => (
             <Reveal key={index} width="fit-content">
               <div className="group relative grayscale hover:grayscale-0 transition-all duration-300 transform hover:scale-105">
-                <div className="h-16 md:h-20 flex items-center justify-center">
-                  {/* Placeholder for logos if images fail, but ideally should rely on alt text or actual images */}
-                  <img
+                <div className="relative h-16 md:h-20 w-32 md:w-48 flex items-center justify-center">
+                  <Image
                     src={partner.logo}
                     alt={partner.name}
-                    className="h-full w-auto object-contain max-w-[200px]"
-                    onError={(e) => {
-                      e.currentTarget.style.display = "none";
-                      e.currentTarget.parentElement!.innerText = partner.name;
-                    }}
+                    fill
+                    className="object-contain"
+                    sizes="(max-width: 768px) 128px, 192px"
+                    unoptimized={isExternalUrl(partner.logo)}
                   />
                 </div>
               </div>

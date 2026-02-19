@@ -1,14 +1,16 @@
 "use client";
 
-import { PageTitle } from "@/components/PageTitle";
+import { PageTitle } from "@/components/common/PageTitle";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Reveal } from "@/components/Reveal";
+import { Reveal } from "@/components/common/Reveal";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { getCommitteePersonSchema } from "@/hooks/useSchemaOrg";
+import { getCommitteePersonSchema } from "@/lib/schema";
 import committeeDataImport from "@/data/committee.json";
 import { getPhotoUrl, normalizePhotoFields } from "@/lib/photoMigration";
+import { isExternalUrl } from "@/lib/utils";
 import type { CommitteeData } from "@/types/data";
 import { getPreviewData } from "@/lib/previewMode";
 
@@ -131,11 +133,14 @@ export default function CommitteeClient() {
                           <div className="h-2 bg-gradient-to-r from-primary to-secondary opacity-80" />
                           <div className="p-6 flex flex-col items-center text-center flex-1">
                             {getPhotoUrl(member.photo) && (
-                              <div className="w-24 h-24 rounded-full bg-muted flex items-center justify-center mb-4 group-hover:scale-105 transition-transform duration-500 overflow-hidden border-2 border-border group-hover:border-primary/50">
-                                <img
+                              <div className="relative w-24 h-24 rounded-full bg-muted flex items-center justify-center mb-4 group-hover:scale-105 transition-transform duration-500 overflow-hidden border-2 border-border group-hover:border-primary/50">
+                                <Image
                                   src={getPhotoUrl(member.photo)}
                                   alt={member.name}
-                                  className="w-full h-full object-cover object-top bg-white"
+                                  fill
+                                  className="object-cover object-top bg-white"
+                                  sizes="96px"
+                                  unoptimized={isExternalUrl(getPhotoUrl(member.photo))}
                                 />
                               </div>
                             )}

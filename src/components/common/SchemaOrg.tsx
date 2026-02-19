@@ -6,7 +6,7 @@ import {
   getInC4EventSchema,
   getOrganizationSchema,
   getBreadcrumbSchema,
-} from "@/hooks/useSchemaOrg";
+} from "@/lib/schema";
 
 export const SchemaOrg = () => {
   const pathname = usePathname();

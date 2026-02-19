@@ -1,16 +1,16 @@
-import { PageTitle } from "@/components/PageTitle";
+import { PageTitle } from "@/components/common/PageTitle";
 import { Card, CardContent } from "@/components/ui/card";
-import { Mail } from "lucide-react";
-import { Reveal } from "@/components/Reveal";
+import { Mail, Phone, MapPin, Clock, Globe } from "lucide-react";
+import { Reveal } from "@/components/common/Reveal";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Contact Us | InC4 2026",
-  description: "Get in touch with the InC4 2026 organizing team. Contact information, venue details, and FAQ for the International Conference on Contemporary Computing and Communications.",
+  title: "Contact Us | 2026 IEEE International Conference on Contemporary Computing and Communications (InC4)",
+  description: "Get in touch with the InC4 2026 organizing team. Contact information, venue details, and FAQ for the 2026 IEEE International Conference on Contemporary Computing and Communications - Conference#70839.",
   keywords: "contact InC4, conference contact, IEEE, CHRIST University, venue, email, conference details",
   openGraph: {
-    title: "Contact Us | InC4 2026",
-    description: "Get in touch with the InC4 2026 organizing team. Contact information, venue details, and FAQ for the International Conference on Contemporary Computing and Communications.",
+    title: "Contact Us | 2026 IEEE International Conference on Contemporary Computing and Communications (InC4)",
+    description: "Get in touch with the InC4 2026 organizing team. Contact information, venue details, and FAQ for the 2026 IEEE International Conference on Contemporary Computing and Communications - Conference#70839.",
     type: "website",
     url: "https://ic4.co.in/contact",
   },
