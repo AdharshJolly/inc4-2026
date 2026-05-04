@@ -30,9 +30,10 @@ const processEnv = {
 };
 
 // Validate Server Env
+const isServer = typeof window === "undefined";
 const parsedServer = serverSchema.safeParse(processEnv);
 
-if (!parsedServer.success) {
+if (!parsedServer.success && isServer) {
   console.error(
     "❌ Invalid environment variables:",
     JSON.stringify(parsedServer.error.format(), null, 4)
@@ -42,4 +43,11 @@ if (!parsedServer.success) {
   );
 }
 
-export const env = parsedServer.data;
+/**
+ * Exported environment variables
+ * On the server, this is fully validated.
+ * On the client, this contains only public (NEXT_PUBLIC_) variables.
+ */
+export const env = isServer 
+  ? parsedServer.data! 
+  : (processEnv as unknown as z.infer<typeof serverSchema>);
