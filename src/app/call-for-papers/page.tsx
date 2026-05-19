@@ -192,6 +192,7 @@ export default function CallForPapersPage() {
                         Need Help?
                       </p>
                       <TemplateDownloadButton
+                        title="Download Templates"
                         files={[
                           "/docs/InC4_2026_conference_Template.zip",
                           "/docs/InC4 2026 Template.doc",

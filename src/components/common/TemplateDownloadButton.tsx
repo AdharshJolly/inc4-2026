@@ -6,7 +6,7 @@ import { downloadFiles } from "@/lib/utils";
 
 interface TemplateDownloadButtonProps {
   files: string[];
-  title: string;
+  title?: string;
 }
 
 export const TemplateDownloadButton = ({
