@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Calendar, MapPin, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { motion, Variants, useReducedMotion } from "framer-motion";
+import { HeroPartnersGallery } from "./HeroPartnersGallery";
 
 const container: Variants = {
   hidden: { opacity: 0 },
@@ -31,7 +32,7 @@ export const HeroSection = () => {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden gradient-hero pt-40 md:pt-20"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden gradient-hero pt-40 md:pt-20 pb-14"
     >
       {/* Animated Background Elements */}
       <div className="absolute inset-0 pattern-grid opacity-30" />
@@ -110,15 +111,7 @@ export const HeroSection = () => {
             </div>
           </motion.div>
 
-          {/* Description */}
-          <motion.p
-            variants={item}
-            className="text-primary-foreground/60 max-w-2xl mx-auto mb-10 text-lg"
-          >
-            Join researchers and practitioners from academia, industry, and
-            government to explore the cutting-edge of computing and
-            communication technologies.
-          </motion.p>
+          <HeroPartnersGallery />
 
           {/* CTA Buttons */}
           <motion.div
