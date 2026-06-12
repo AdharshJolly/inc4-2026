@@ -6,7 +6,7 @@ import { Building2, MapPin, Award } from "lucide-react";
 import {
   Popover,
   PopoverContent,
-  PopoverTrigger,
+  PopoverAnchor,
 } from "@/components/ui/popover";
 import { Badge } from "@/components/ui/badge";
 
@@ -60,11 +60,15 @@ const PartnerCard = ({ partner }: { partner: any }) => {
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <div 
+      <PopoverAnchor asChild>
+        <div
           className="flex-shrink-0 snap-center relative h-16 sm:h-20 md:h-24 lg:h-28 w-auto flex items-center justify-center group cursor-pointer transition-all"
-          onMouseEnter={() => setOpen(true)}
-          onMouseLeave={() => setOpen(false)}
+          onPointerEnter={(e) => {
+            if (e.pointerType === "mouse") setOpen(true);
+          }}
+          onPointerLeave={(e) => {
+            if (e.pointerType === "mouse") setOpen(false);
+          }}
           onClick={() => setOpen(!open)}
         >
           {partner.image ? (
@@ -78,8 +82,8 @@ const PartnerCard = ({ partner }: { partner: any }) => {
             <Building2 className="w-8 h-8 text-white/50 group-hover:text-white transition-colors duration-300" />
           )}
         </div>
-      </PopoverTrigger>
-      <PopoverContent 
+      </PopoverAnchor>
+      <PopoverContent
         side="bottom"
         className="w-72 bg-background/95 backdrop-blur-xl border-white/20 p-4 shadow-2xl z-[100]"
         onMouseEnter={() => setOpen(true)}
@@ -95,8 +99,13 @@ const PartnerCard = ({ partner }: { partner: any }) => {
               {partner.country}
             </div>
             {partner.qs !== "NA" && (
-              <Badge variant={partner.qs === "Industry" ? "secondary" : "default"} className="text-[10px] px-2 py-0">
-                {partner.qs === "Industry" ? "Industry Partner" : `QS ${partner.qs}`}
+              <Badge
+                variant={partner.qs === "Industry" ? "secondary" : "default"}
+                className="text-[10px] px-2 py-0"
+              >
+                {partner.qs === "Industry"
+                  ? "Industry Partner"
+                  : `QS ${partner.qs}`}
               </Badge>
             )}
           </div>

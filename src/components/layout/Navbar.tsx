@@ -72,6 +72,7 @@ export const Navbar = () => {
                 src="/images/ieee_cs_bc.png"
                 alt="IEEE CS Bangalore Chapter"
                 fill
+                sizes="(max-width: 1024px) 0vw, 192px"
                 className="object-contain object-left"
                 priority
               />
@@ -87,6 +88,7 @@ export const Navbar = () => {
                 src="/images/ieee_cs_cu.png"
                 alt="IEEE CS CHRIST University"
                 fill
+                sizes="(max-width: 768px) 0vw, 192px"
                 className="object-contain object-left"
                 priority
               />
