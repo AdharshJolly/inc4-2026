@@ -126,12 +126,12 @@ export const HeroSection = () => {
             className="flex flex-wrap justify-center gap-4"
           >
             <Link
-              href="https://cmt3.research.microsoft.com/InC2026"
+              href="https://www.explara.com/e/2026-ieee-international-conference-on-contemporary-computing-and-communications-inc4"
               target="_blank"
               rel="noopener noreferrer"
             >
               <Button variant="hero" size="xl">
-                Submit Paper
+                Register here
                 <ArrowRight className="w-5 h-5" />
               </Button>
             </Link>

@@ -101,11 +101,11 @@ export default function CallForPapersPage() {
                     </p>
                     <Button size="lg" className="w-full gap-2" asChild>
                       <a
-                        href="https://cmt3.research.microsoft.com/InC2026"
+                        href="https://www.explara.com/e/2026-ieee-international-conference-on-contemporary-computing-and-communications-inc4"
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        Submit Paper <ArrowRight className="w-4 h-4" />
+                        Register here <ArrowRight className="w-4 h-4" />
                       </a>
                     </Button>
                   </div>
