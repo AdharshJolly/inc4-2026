@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import { Building2, MapPin, Award } from "lucide-react";
+import { Building2, MapPin, ExternalLink } from "lucide-react";
 import {
   Popover,
   PopoverContent,
@@ -14,45 +14,45 @@ const partners = [
   {
     name: "Western Michigan University",
     country: "USA",
-    qs: "1201-1400",
+    link: "https://wmich.edu/",
     image: "/images/partners/wmu.png",
   },
   {
     name: "De La Salle University Manila",
     country: "Philippines",
-    qs: "654",
+    link: "https://www.dlsu.edu.ph/",
     image: "/images/partners/dlsu.png",
   },
   {
     name: "Binghamton University",
     country: "USA",
-    qs: "1001-1200",
+    link: "https://www.binghamton.edu/",
     image: "/images/partners/Binghamton University.png",
   },
   {
     name: "James Cook University",
     country: "Australia",
-    qs: "440",
+    link: "https://www.jcu.edu.au/cadsi",
     image: "/images/partners/cadsi.png",
     invert: true,
   },
   {
     name: "Universidade Federal de Santa Catarina",
     country: "Brazil",
-    qs: "801-850",
+    link: "https://labsec.ufsc.br/",
     image: "/images/partners/labsec.png",
   },
   {
     name: "University of Applied Sciences Würzburg-Schweinfurt",
     country: "Germany",
-    qs: "NA",
+    link: "https://www.thws.de/en/",
     image: "/images/partners/thws.png",
     invert: true,
   },
   {
     name: "Synabl Technologies Pvt Ltd",
     country: "Bangalore, India",
-    qs: "Industry",
+    link: "https://synabl.ai/",
     image: "/images/partners/synabl.png",
   },
 ];
@@ -100,15 +100,10 @@ const PartnerCard = ({ partner }: { partner: any }) => {
               <MapPin className="w-3 h-3 mr-1 opacity-70" />
               {partner.country}
             </div>
-            {partner.qs !== "NA" && (
-              <Badge
-                variant={partner.qs === "Industry" ? "secondary" : "default"}
-                className="text-[10px] px-2 py-0"
-              >
-                {partner.qs === "Industry"
-                  ? "Industry Partner"
-                  : `QS ${partner.qs}`}
-              </Badge>
+            {partner.link && (
+              <a href={partner.link} target="_blank" rel="noopener noreferrer" className="text-xs text-primary hover:underline inline-flex items-center gap-1 font-medium">
+                Visit Website <ExternalLink className="w-3 h-3" />
+              </a>
             )}
           </div>
         </div>
