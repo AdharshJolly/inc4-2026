@@ -72,7 +72,6 @@ export const Navbar = () => {
                 src="/images/ieee_cs_bc.png"
                 alt="IEEE CS Bangalore Chapter"
                 fill
-                sizes="(max-width: 1024px) 0vw, 192px"
                 className="object-contain object-left"
                 priority
               />
@@ -88,7 +87,6 @@ export const Navbar = () => {
                 src="/images/ieee_cs_cu.png"
                 alt="IEEE CS CHRIST University"
                 fill
-                sizes="(max-width: 768px) 0vw, 192px"
                 className="object-contain object-left"
                 priority
               />
@@ -116,9 +114,9 @@ export const Navbar = () => {
                           ? "text-primary font-bold"
                           : "text-primary-foreground hover:text-primary"
                         : pathname === link.href ||
-                          link.submenu.some((sub) => sub.href === pathname)
-                        ? "text-primary font-bold"
-                        : "text-foreground hover:text-primary"
+                            link.submenu.some((sub) => sub.href === pathname)
+                          ? "text-primary font-bold"
+                          : "text-foreground hover:text-primary"
                     }`}
                   >
                     {link.name}
@@ -173,8 +171,8 @@ export const Navbar = () => {
                           ? "text-primary font-bold"
                           : "text-primary-foreground hover:text-primary"
                         : pathname === link.href
-                        ? "text-primary font-bold"
-                        : "text-foreground hover:text-primary"
+                          ? "text-primary font-bold"
+                          : "text-foreground hover:text-primary"
                     }`}
                   >
                     {link.name}

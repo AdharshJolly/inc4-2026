@@ -76,7 +76,7 @@ const PartnerCard = ({ partner }: { partner: any }) => {
               src={partner.image}
               alt={partner.name}
               draggable={false}
-              className="h-full w-auto object-contain py-1 px-2 md:py-2 md:px-3 transition-all duration-300 group-hover:scale-110 drop-shadow-md"
+              className="h-full w-auto object-contain py-2 md:py-4 transition-all duration-300 group-hover:scale-110 brightness-[1.3] contrast-125 group-hover:brightness-[1.5]"
             />
           ) : (
             <Building2 className="w-8 h-8 text-white/50 group-hover:text-white transition-colors duration-300" />
@@ -122,11 +122,26 @@ export const HeroPartnersGallery = () => {
         <h3 className="text-xl md:text-2xl lg:text-3xl font-display font-semibold text-primary-foreground/90 mb-4 md:mb-6 text-center tracking-wide">
           Industry and Academic Partners
         </h3>
-        <div className="w-full bg-white/5 backdrop-blur-md border border-white/10 rounded-[1.5rem] sm:rounded-[2rem] md:rounded-[3rem] shadow-2xl overflow-hidden py-3 px-2 sm:px-4 md:py-4 md:px-6">
-          <div className="flex items-center gap-5 sm:gap-8 md:gap-12 overflow-x-auto px-4 md:px-8 py-4 snap-x snap-mandatory scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-            {partners.map((partner, i) => (
-              <PartnerCard key={i} partner={partner} />
-            ))}
+        <div className="w-full rounded-[1.5rem] sm:rounded-[2rem] md:rounded-[3rem] shadow-2xl overflow-hidden py-3 px-2 sm:px-4 md:py-4 md:px-6">
+          <style>{`
+            @keyframes marquee {
+              0% { transform: translateX(0%); }
+              100% { transform: translateX(-50%); }
+            }
+            .animate-marquee {
+              animation: marquee 35s linear infinite;
+            }
+            .animate-marquee:hover, .animate-marquee:active, .animate-marquee:focus-within {
+              animation-play-state: paused;
+            }
+          `}</style>
+
+          <div className="flex items-center gap-5 sm:gap-8 md:gap-12 w-max px-4 animate-marquee py-4">
+            {[...partners, ...partners, ...partners, ...partners].map(
+              (partner, i) => (
+                <PartnerCard key={i} partner={partner} />
+              ),
+            )}
           </div>
         </div>
       </div>
