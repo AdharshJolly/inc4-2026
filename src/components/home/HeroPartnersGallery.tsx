@@ -34,6 +34,7 @@ const partners = [
     country: "Australia",
     qs: "440",
     image: "/images/partners/cadsi.png",
+    invert: true,
   },
   {
     name: "Universidade Federal de Santa Catarina",
@@ -46,6 +47,7 @@ const partners = [
     country: "Germany",
     qs: "NA",
     image: "/images/partners/thws.png",
+    invert: true,
   },
   {
     name: "Synabl Technologies Pvt Ltd",
@@ -76,7 +78,7 @@ const PartnerCard = ({ partner }: { partner: any }) => {
               src={partner.image}
               alt={partner.name}
               draggable={false}
-              className="h-full w-auto object-contain py-2 md:py-4 transition-all duration-300 group-hover:scale-110 brightness-[1.3] contrast-125 group-hover:brightness-[1.5]"
+              className={`h-full w-auto object-contain py-2 md:py-4 transition-all duration-300 group-hover:scale-110 brightness-[1.3] contrast-125 group-hover:brightness-[1.5] ${partner.invert ? 'invert' : ''}`}
             />
           ) : (
             <Building2 className="w-8 h-8 text-white/50 group-hover:text-white transition-colors duration-300" />
