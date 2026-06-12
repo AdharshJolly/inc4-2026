@@ -196,12 +196,12 @@ export default function RegistrationPage() {
           <Reveal width="100%">
             <div className="flex justify-center">
               <Link
-                href="https://cmt3.research.microsoft.com/InC2026"
+                href="https://www.explara.com/e/2026-ieee-international-conference-on-contemporary-computing-and-communications-inc4"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 <Button size="lg" className="px-8 text-lg h-12">
-                  Submit Paper
+                  Register here
                 </Button>
               </Link>
             </div>

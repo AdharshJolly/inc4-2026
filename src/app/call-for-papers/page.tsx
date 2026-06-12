@@ -1,6 +1,7 @@
 import { PageTitle } from "@/components/common/PageTitle";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/common/Reveal";
+import { TemplateDownloadButton } from "@/components/common/TemplateDownloadButton";
 import {
   ArrowRight,
   FileText,
@@ -15,13 +16,15 @@ import { Metadata } from "next";
 import topics from "@/data/call-for-papers-topics.json";
 
 export const metadata: Metadata = {
-  title: "Call for Papers | 2026 IEEE International Conference on Contemporary Computing and Communications (InC4)",
+  title:
+    "Call for Papers | 2026 IEEE International Conference on Contemporary Computing and Communications (InC4)",
   description:
     "Submit your research papers to InC4 2026. Guidelines for paper submission, research topics, and important deadlines for the 2026 IEEE International Conference on Contemporary Computing and Communications - Conference#70839.",
   keywords:
     "call for papers, paper submission, IEEE, InC4, research papers, conference guidelines, submission deadline",
   openGraph: {
-    title: "Call for Papers | 2026 IEEE International Conference on Contemporary Computing and Communications (InC4)",
+    title:
+      "Call for Papers | 2026 IEEE International Conference on Contemporary Computing and Communications (InC4)",
     description:
       "Submit your research papers to InC4 2026. Guidelines for paper submission, research topics, and important deadlines for the 2026 IEEE International Conference on Contemporary Computing and Communications - Conference#70839.",
     type: "article",
@@ -89,8 +92,8 @@ export default function CallForPapersPage() {
                       and development are solicited. Prospective authors are
                       requested to submit their papers in standard IEEE
                       conference format in not more than 6 pages. The IEEE InC4
-                      2026 conference proceeding will be submitted for
-                      inclusion in{" "}
+                      2026 conference proceeding will be submitted for inclusion
+                      in{" "}
                       <span className="text-foreground font-semibold">
                         IEEE XPLORE
                       </span>{" "}
@@ -98,11 +101,11 @@ export default function CallForPapersPage() {
                     </p>
                     <Button size="lg" className="w-full gap-2" asChild>
                       <a
-                        href="https://cmt3.research.microsoft.com/InC2026"
+                        href="https://www.explara.com/e/2026-ieee-international-conference-on-contemporary-computing-and-communications-inc4"
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        Submit Paper <ArrowRight className="w-4 h-4" />
+                        Register here <ArrowRight className="w-4 h-4" />
                       </a>
                     </Button>
                   </div>
@@ -188,11 +191,13 @@ export default function CallForPapersPage() {
                       <p className="font-bold text-lg mb-4 text-primary">
                         Need Help?
                       </p>
-                      <Button className="w-full gap-2" asChild>
-                        <a href="" target="_blank" rel="noopener noreferrer">
-                          <Download className="w-4 h-4" /> Download Templates
-                        </a>
-                      </Button>
+                      <TemplateDownloadButton
+                        title="Download Templates"
+                        files={[
+                          "/docs/InC4_2026_conference_Template.zip",
+                          "/docs/InC4 2026 Template.doc",
+                        ]}
+                      />
                     </div>
                   </div>
                 </div>
