@@ -21,7 +21,7 @@ const navLinks = [
     name: "Author Information",
     href: "#",
     submenu: [
-      // { name: "CRC Submissions", href: "/crc-submissions" },
+      { name: "CRC Submissions", href: "/crc-submissions" },
       { name: "Call for Papers", href: "/call-for-papers" },
       { name: "Registration fees", href: "/registration" },
       { name: "Important Dates", href: "/important-dates" },
