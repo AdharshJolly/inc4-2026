@@ -66,6 +66,8 @@ export const DatesManager = () => {
     date: "",
     isHighlight: false,
     description: "",
+    actionText: "",
+    actionUrl: "",
   });
   const [confirmDeleteIndex, setConfirmDeleteIndex] = useState<number | null>(
     null
@@ -171,9 +173,13 @@ export const DatesManager = () => {
         date: { old: prev.date, new: editForm.date },
         isHighlight: { old: prev.isHighlight, new: editForm.isHighlight },
         ...(prev.description !== editForm.description
-          ? {
-              description: { old: prev.description, new: editForm.description },
-            }
+          ? { description: { old: prev.description, new: editForm.description } }
+          : {}),
+        ...(prev.actionText !== editForm.actionText
+          ? { actionText: { old: prev.actionText, new: editForm.actionText } }
+          : {}),
+        ...(prev.actionUrl !== editForm.actionUrl
+          ? { actionUrl: { old: prev.actionUrl, new: editForm.actionUrl } }
           : {}),
       },
     });
@@ -347,6 +353,39 @@ export const DatesManager = () => {
                   setEditForm((p) => ({ ...p, description: e.target.value }))
                 }
               />
+            </div>
+
+            <div className="space-y-4 rounded-lg border border-border p-4 bg-secondary/10 mt-4">
+              <div>
+                <h4 className="text-sm font-medium">Action Button (Optional)</h4>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Add a primary button to the date card that links to a specific page (e.g., a registration portal, submission system, or detailed schedule).
+                </p>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="edit-actionText">Button Label</Label>
+                  <Input
+                    id="edit-actionText"
+                    placeholder="e.g., Submit Paper, Register Now"
+                    value={editForm.actionText || ""}
+                    onChange={(e) =>
+                      setEditForm((p) => ({ ...p, actionText: e.target.value }))
+                    }
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="edit-actionUrl">Destination URL</Label>
+                  <Input
+                    id="edit-actionUrl"
+                    placeholder="e.g., https://ic4.co.in/registration"
+                    value={editForm.actionUrl || ""}
+                    onChange={(e) =>
+                      setEditForm((p) => ({ ...p, actionUrl: e.target.value }))
+                    }
+                  />
+                </div>
+              </div>
             </div>
 
             <div className="flex gap-2">

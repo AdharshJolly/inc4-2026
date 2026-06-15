@@ -7,6 +7,8 @@ export interface ImportantDateItem {
   date: string;
   isHighlight?: boolean;
   description?: string;
+  actionText?: string;
+  actionUrl?: string;
 }
 
 export interface ImportantDatesData {

@@ -36,6 +36,8 @@ interface AddDateFormData {
   date: string;
   isHighlight: boolean;
   description?: string;
+  actionText?: string;
+  actionUrl?: string;
 }
 
 interface AddDatesDialogProps {
@@ -52,6 +54,8 @@ export const AddDatesDialog = ({ onDateAdded }: AddDatesDialogProps) => {
     date: "",
     isHighlight: false,
     description: "",
+    actionText: "",
+    actionUrl: "",
   });
   // Initialize local dates state from imported JSON
   const [dates, setDates] = useState<ImportantDatesData["root"]>(() =>
@@ -112,6 +116,8 @@ export const AddDatesDialog = ({ onDateAdded }: AddDatesDialogProps) => {
         date: formData.date,
         isHighlight: formData.isHighlight,
         description: formData.description?.trim() || undefined,
+        actionText: formData.actionText?.trim() || undefined,
+        actionUrl: formData.actionUrl?.trim() || undefined,
       };
 
       // Use immutable approach: create new array with spread operator
@@ -156,6 +162,8 @@ export const AddDatesDialog = ({ onDateAdded }: AddDatesDialogProps) => {
         date: "",
         isHighlight: false,
         description: "",
+        actionText: "",
+        actionUrl: "",
       });
 
       setOpen(false);
@@ -260,6 +268,40 @@ export const AddDatesDialog = ({ onDateAdded }: AddDatesDialogProps) => {
               value={formData.description}
               onChange={(e) => handleInputChange("description", e.target.value)}
             />
+          </div>
+
+          {/* Action Links */}
+          <div className="space-y-4 rounded-lg border border-border p-4 bg-secondary/10">
+            <div>
+              <h4 className="text-sm font-medium">Action Button (Optional)</h4>
+              <p className="text-xs text-muted-foreground mt-1">
+                Add a primary button to the date card that links to a specific page (e.g., a registration portal, submission system, or detailed schedule).
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="actionText" className="text-sm font-medium">
+                  Button Label
+                </Label>
+                <Input
+                  id="actionText"
+                  placeholder="e.g., Submit Paper, Register Now"
+                  value={formData.actionText}
+                  onChange={(e) => handleInputChange("actionText", e.target.value)}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="actionUrl" className="text-sm font-medium">
+                  Destination URL
+                </Label>
+                <Input
+                  id="actionUrl"
+                  placeholder="e.g., https://ic4.co.in/registration"
+                  value={formData.actionUrl}
+                  onChange={(e) => handleInputChange("actionUrl", e.target.value)}
+                />
+              </div>
+            </div>
           </div>
 
           {/* Submit Button */}

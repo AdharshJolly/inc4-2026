@@ -22,11 +22,11 @@ const clientSchema = z.object({
 });
 
 const processEnv = {
-  ADMIN_PASSWORD: process.env.ADMIN_PASSWORD,
-  NEXT_GITHUB_TOKEN: process.env.NEXT_GITHUB_TOKEN,
-  NEXT_GITHUB_BRANCH: process.env.NEXT_GITHUB_BRANCH,
-  NEXT_ERROR_LOG_ENDPOINT: process.env.NEXT_ERROR_LOG_ENDPOINT,
-  NODE_ENV: process.env.NODE_ENV,
+  ADMIN_PASSWORD: process.env.ADMIN_PASSWORD || (process.env.NODE_ENV !== "production" ? "dev_password" : undefined),
+  NEXT_GITHUB_TOKEN: process.env.NEXT_GITHUB_TOKEN || undefined,
+  NEXT_GITHUB_BRANCH: process.env.NEXT_GITHUB_BRANCH || undefined,
+  NEXT_ERROR_LOG_ENDPOINT: process.env.NEXT_ERROR_LOG_ENDPOINT || undefined,
+  NODE_ENV: process.env.NODE_ENV || "development",
 };
 
 // Validate Server Env

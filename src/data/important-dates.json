@@ -4,37 +4,49 @@
       "event": "Submission Deadline",
       "date": "May 20, 2026",
       "isHighlight": false,
-      "description": "Final deadline to submit full papers to InC4 2026 (online submission). Ensure formatting and anonymization are correct before uploading. Submissions close at 23:59 local time; late submissions are not accepted. Details: https://ic4.co.in/important-dates"
+      "description": "Final deadline to submit full papers to InC4 2026 (online submission). Ensure formatting and anonymization are correct before uploading. Submissions close at 23:59 local time; late submissions are not accepted.",
+      "actionText": "Submit Paper",
+      "actionUrl": "https://ic4.co.in/important-dates"
     },
     {
       "event": "Acceptance Notification",
       "date": "July 01, 2026",
       "isHighlight": false,
-      "description": "Acceptance decisions and reviewer feedback for InC4 2026 will be available today (online notification). Check your email and submission portal for your decision and next steps. Details: https://ic4.co.in/important-dates"
+      "description": "Acceptance decisions and reviewer feedback for InC4 2026 will be available today (online notification). Check your email and submission portal for your decision and next steps.",
+      "actionText": "Check Status",
+      "actionUrl": "https://ic4.co.in/important-dates"
     },
     {
       "event": "Early Bird Registration Deadline",
       "date": "July 03, 2026",
       "isHighlight": false,
-      "description": "Final day to register at early-bird rates for InC4 2026 (online registration). Prices increase after today—secure your ticket now. Register: https://ic4.co.in/registration"
+      "description": "Final day to register at early-bird rates for InC4 2026 (online registration). Prices increase after today—secure your ticket now.",
+      "actionText": "Register Now",
+      "actionUrl": "https://ic4.co.in/registration"
     },
     {
       "event": "Registration Hard Deadline",
       "date": "July 15, 2026",
       "isHighlight": false,
-      "description": "Registration closes today for InC4 2026 (online registration). Complete your registration to secure access to sessions and conference materials. Register: https://ic4.co.in/registration"
+      "description": "Registration closes today for InC4 2026 (online registration). Complete your registration to secure access to sessions and conference materials.",
+      "actionText": "Register Now",
+      "actionUrl": "https://ic4.co.in/registration"
     },
     {
       "event": "Camera Ready Submission",
       "date": "July 30, 2026",
       "isHighlight": false,
-      "description": "Submit final camera-ready papers with all reviewer fixes applied (online submission). Verify formatting, author list, and metadata. Missing this deadline may affect inclusion in proceedings. Details: https://ic4.co.in/important-dates"
+      "description": "Submit final camera-ready papers with all reviewer fixes applied (online submission). Verify formatting, author list, and metadata. Missing this deadline may affect inclusion in proceedings.",
+      "actionText": "Submit Final",
+      "actionUrl": "https://ic4.co.in/important-dates"
     },
     {
       "event": "Conference Date",
       "date": "August 07 - 08, 2026",
       "isHighlight": true,
-      "description": "InC4 2026 runs across two days with keynotes, technical sessions, and networking opportunities at CHRIST University, Kengeri Campus, Bangalore. See the schedule for talks, rooms, and updates: https://ic4.co.in/schedule"
+      "description": "InC4 2026 runs across two days with keynotes, technical sessions, and networking opportunities at CHRIST University, Kengeri Campus, Bangalore.",
+      "actionText": "View Schedule",
+      "actionUrl": "https://ic4.co.in/schedule"
     }
   ]
 }
