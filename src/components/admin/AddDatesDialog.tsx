@@ -23,6 +23,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Plus, Calendar as CalendarIcon } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import datesData from "@/data/important-dates.json";
@@ -33,7 +34,7 @@ import type { ImportantDatesData } from "@/types/data";
 interface AddDateFormData {
   event: string;
   date: string;
-  status: "upcoming" | "completed" | "highlight";
+  isHighlight: boolean;
   description?: string;
 }
 
@@ -49,7 +50,7 @@ export const AddDatesDialog = ({ onDateAdded }: AddDatesDialogProps) => {
   const [formData, setFormData] = useState<AddDateFormData>({
     event: "",
     date: "",
-    status: "upcoming",
+    isHighlight: false,
     description: "",
   });
   // Initialize local dates state from imported JSON
@@ -61,10 +62,8 @@ export const AddDatesDialog = ({ onDateAdded }: AddDatesDialogProps) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleStatusChange = (
-    value: "upcoming" | "completed" | "highlight"
-  ) => {
-    setFormData((prev) => ({ ...prev, status: value }));
+  const handleHighlightChange = (checked: boolean) => {
+    setFormData((prev) => ({ ...prev, isHighlight: checked }));
   };
 
   // Format date as "Month Day, Year" to match existing data format
@@ -104,15 +103,6 @@ export const AddDatesDialog = ({ onDateAdded }: AddDatesDialogProps) => {
       return;
     }
 
-    if (!formData.status) {
-      toast({
-        title: "Validation Error",
-        description: "Please select a status",
-        variant: "destructive",
-      });
-      return;
-    }
-
     setIsSubmitting(true);
 
     try {
@@ -120,7 +110,7 @@ export const AddDatesDialog = ({ onDateAdded }: AddDatesDialogProps) => {
       const newDate = {
         event: formData.event,
         date: formData.date,
-        status: formData.status,
+        isHighlight: formData.isHighlight,
         description: formData.description?.trim() || undefined,
       };
 
@@ -164,7 +154,7 @@ export const AddDatesDialog = ({ onDateAdded }: AddDatesDialogProps) => {
       setFormData({
         event: "",
         date: "",
-        status: "upcoming",
+        isHighlight: false,
         description: "",
       });
 
@@ -247,27 +237,15 @@ export const AddDatesDialog = ({ onDateAdded }: AddDatesDialogProps) => {
           </div>
 
           {/* Status */}
-          <div className="space-y-2">
-            <Label htmlFor="status" className="text-sm font-medium">
-              Status *
+          <div className="space-y-2 flex flex-row items-center space-x-2">
+            <Checkbox
+              id="add-isHighlight"
+              checked={formData.isHighlight}
+              onCheckedChange={(checked) => handleHighlightChange(!!checked)}
+            />
+            <Label htmlFor="add-isHighlight" className="!mt-0">
+              Highlight Event
             </Label>
-            <Select
-              value={formData.status}
-              onValueChange={handleStatusChange as (value: string) => void}
-            >
-              <SelectTrigger
-                id="status"
-                aria-label="Event status"
-                aria-required="true"
-              >
-                <SelectValue placeholder="Select status" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="upcoming">Upcoming</SelectItem>
-                <SelectItem value="completed">Completed</SelectItem>
-                <SelectItem value="highlight">Highlight</SelectItem>
-              </SelectContent>
-            </Select>
           </div>
 
           {/* Description */}

@@ -5,7 +5,7 @@
 export interface ImportantDateItem {
   event: string;
   date: string;
-  status: "upcoming" | "completed" | "highlight";
+  isHighlight?: boolean;
   description?: string;
 }
 

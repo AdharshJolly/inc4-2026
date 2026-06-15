@@ -36,6 +36,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -63,24 +64,40 @@ export const DatesManager = () => {
   const [editForm, setEditForm] = useState<ImportantDateItem>({
     event: "",
     date: "",
-    status: "upcoming",
+    isHighlight: false,
     description: "",
   });
   const [confirmDeleteIndex, setConfirmDeleteIndex] = useState<number | null>(
     null
   );
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "upcoming":
-        return "bg-blue-500/10 text-blue-500 border-blue-500/20";
-      case "completed":
-        return "bg-green-500/10 text-green-500 border-green-500/20";
-      case "highlight":
-        return "bg-orange-500/10 text-orange-500 border-orange-500/20";
-      default:
-        return "bg-muted";
+  const isCompleted = (dateStr: string) => {
+    const now = new Date();
+    let dateObj = new Date(dateStr);
+    if (!isNaN(dateObj.getTime())) {
+      dateObj.setHours(23, 59, 59, 999);
+      return dateObj < now;
     }
+    const match = dateStr.match(/([a-zA-Z]+)\s+\d+(?:\s*-\s*(\d+))?,?\s*(\d{4})/);
+    if (match) {
+      const month = match[1];
+      const day = match[2] || dateStr.match(/\d+/)?.[0];
+      const year = match[3];
+      if (day) {
+        dateObj = new Date(`${month} ${day}, ${year}`);
+        if (!isNaN(dateObj.getTime())) {
+          dateObj.setHours(23, 59, 59, 999);
+          return dateObj < now;
+        }
+      }
+    }
+    return false;
+  };
+
+  const getStatusColor = (isHighlight?: boolean, dateStr: string = "") => {
+    if (isHighlight) return "bg-orange-500/10 text-orange-500 border-orange-500/20";
+    if (isCompleted(dateStr)) return "bg-green-500/10 text-green-500 border-green-500/20";
+    return "bg-blue-500/10 text-blue-500 border-blue-500/20";
   };
 
   const formatDate = (date: Date): string => {
@@ -152,7 +169,7 @@ export const DatesManager = () => {
       changes: {
         event: { old: prev.event, new: editForm.event },
         date: { old: prev.date, new: editForm.date },
-        status: { old: prev.status, new: editForm.status },
+        isHighlight: { old: prev.isHighlight, new: editForm.isHighlight },
         ...(prev.description !== editForm.description
           ? {
               description: { old: prev.description, new: editForm.description },
@@ -208,20 +225,20 @@ export const DatesManager = () => {
           >
             <div
               className={`p-3 rounded-full ${
-                date.status === "highlight"
+                date.isHighlight
                   ? "bg-orange-500/10"
-                  : date.status === "upcoming"
-                  ? "bg-blue-500/10"
-                  : "bg-green-500/10"
+                  : isCompleted(date.date)
+                  ? "bg-green-500/10"
+                  : "bg-blue-500/10"
               }`}
             >
               <Calendar
                 className={`w-5 h-5 ${
-                  date.status === "highlight"
+                  date.isHighlight
                     ? "text-orange-500"
-                    : date.status === "upcoming"
-                    ? "text-blue-500"
-                    : "text-green-500"
+                    : isCompleted(date.date)
+                    ? "text-green-500"
+                    : "text-blue-500"
                 }`}
               />
             </div>
@@ -232,8 +249,8 @@ export const DatesManager = () => {
                   <h3 className="font-semibold text-lg">{date.event}</h3>
                   <p className="text-sm text-muted-foreground">{date.date}</p>
                 </div>
-                <Badge className={getStatusColor(date.status)}>
-                  {date.status}
+                <Badge className={getStatusColor(date.isHighlight, date.date)}>
+                  {date.isHighlight ? "Highlight" : isCompleted(date.date) ? "Completed" : "Upcoming"}
                 </Badge>
               </div>
 
@@ -308,26 +325,15 @@ export const DatesManager = () => {
               </Popover>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="edit-status">Status *</Label>
-              <Select
-                value={editForm.status}
-                onValueChange={(v) =>
-                  setEditForm((p) => ({
-                    ...p,
-                    status: v as ImportantDateItem["status"],
-                  }))
+            <div className="space-y-2 flex flex-row items-center space-x-2">
+              <Checkbox
+                id="edit-isHighlight"
+                checked={!!editForm.isHighlight}
+                onCheckedChange={(checked) =>
+                  setEditForm((p) => ({ ...p, isHighlight: !!checked }))
                 }
-              >
-                <SelectTrigger id="edit-status">
-                  <SelectValue placeholder="Select status" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="upcoming">Upcoming</SelectItem>
-                  <SelectItem value="completed">Completed</SelectItem>
-                  <SelectItem value="highlight">Highlight</SelectItem>
-                </SelectContent>
-              </Select>
+              />
+              <Label htmlFor="edit-isHighlight" className="!mt-0">Highlight Event</Label>
             </div>
 
             <div className="space-y-2">

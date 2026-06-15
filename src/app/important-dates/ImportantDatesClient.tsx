@@ -19,6 +19,29 @@ import { useEffect, useState } from "react";
 export default function ImportantDatesClient() {
   const [dates, setDates] = useState((datesData as ImportantDatesData).root);
 
+  const isCompleted = (dateStr: string) => {
+    const now = new Date();
+    let dateObj = new Date(dateStr);
+    if (!isNaN(dateObj.getTime())) {
+      dateObj.setHours(23, 59, 59, 999);
+      return dateObj < now;
+    }
+    const match = dateStr.match(/([a-zA-Z]+)\s+\d+(?:\s*-\s*(\d+))?,?\s*(\d{4})/);
+    if (match) {
+      const month = match[1];
+      const day = match[2] || dateStr.match(/\d+/)?.[0];
+      const year = match[3];
+      if (day) {
+        dateObj = new Date(`${month} ${day}, ${year}`);
+        if (!isNaN(dateObj.getTime())) {
+          dateObj.setHours(23, 59, 59, 999);
+          return dateObj < now;
+        }
+      }
+    }
+    return false;
+  };
+
   useEffect(() => {
     const previewData = getPreviewData("src/data/important-dates.json");
     if (previewData) {
@@ -48,37 +71,41 @@ export default function ImportantDatesClient() {
                 </div>
               </div>
 
-              {dates.map((item, index) => (
+              {dates.map((item, index) => {
+                const completed = isCompleted(item.date);
+                return (
                 <div
                   key={index}
                   className={`grid grid-cols-1 md:grid-cols-2 border-b last:border-0 border-primary/10 hover:bg-primary/5 transition-colors ${
-                    item.status === "highlight" ? "bg-primary/5 font-bold" : ""
-                  }`}
+                    item.isHighlight ? "bg-primary/5 font-bold" : ""
+                  } ${completed && !item.isHighlight ? "opacity-60" : ""}`}
                 >
                   <div
-                    className={`p-6 text-center md:text-left md:pl-8 ${
-                      item.status === "highlight"
+                    className={`p-6 text-center md:text-left md:pl-8 flex flex-col md:flex-row items-center md:justify-start gap-2 ${
+                      item.isHighlight
                         ? "text-primary text-xl"
                         : "font-semibold"
                     }`}
                   >
-                    {item.event}
+                    <span>{item.event}</span>
+                    {completed && <span className="text-xs font-normal bg-secondary/50 px-2 py-1 rounded text-muted-foreground">Completed</span>}
                   </div>
                   <div
                     className={`p-6 text-center ${
-                      item.status === "highlight"
+                      item.isHighlight
                         ? "text-primary text-xl"
                         : "text-muted-foreground"
                     }`}
                   >
                     <div className="flex items-center justify-center md:justify-end gap-3">
-                      <span>{item.date}</span>
+                      <span className={completed ? "line-through opacity-75" : ""}>{item.date}</span>
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                           <Button
                             size="sm"
                             variant="outline"
                             className="whitespace-nowrap"
+                            disabled={completed}
                           >
                             <CalendarPlus className="w-4 h-4 mr-1" /> Add
                           </Button>
@@ -92,7 +119,7 @@ export default function ImportantDatesClient() {
                                     item.description ||
                                     `InC4 2026: ${item.event}`,
                                   location:
-                                    item.status === "highlight"
+                                    item.isHighlight
                                       ? "CHRIST University, Kengeri Campus, Bangalore, India"
                                       : "Online",
                                 }) || "#"
@@ -111,7 +138,7 @@ export default function ImportantDatesClient() {
                                   `InC4 2026: ${item.event}`,
                                 url: "https://ic4.co.in/important-dates",
                                 location:
-                                  item.status === "highlight"
+                                  item.isHighlight
                                     ? "CHRIST University, Kengeri Campus, Bangalore, India"
                                     : "Online",
                               })
@@ -124,7 +151,7 @@ export default function ImportantDatesClient() {
                     </div>
                   </div>
                 </div>
-              ))}
+              )})}
             </CardContent>
           </Card>
 
