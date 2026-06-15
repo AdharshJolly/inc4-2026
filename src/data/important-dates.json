@@ -13,8 +13,8 @@
       "date": "July 01, 2026",
       "isHighlight": false,
       "description": "Acceptance decisions and reviewer feedback for InC4 2026 will be available today (online notification). Check your email and submission portal for your decision and next steps.",
-      "actionText": "Check Status",
-      "actionUrl": "https://ic4.co.in/important-dates"
+      "actionText": "",
+      "actionUrl": ""
     },
     {
       "event": "Early Bird Registration Deadline",
@@ -38,7 +38,7 @@
       "isHighlight": false,
       "description": "Submit final camera-ready papers with all reviewer fixes applied (online submission). Verify formatting, author list, and metadata. Missing this deadline may affect inclusion in proceedings.",
       "actionText": "Submit Final",
-      "actionUrl": "https://ic4.co.in/important-dates"
+      "actionUrl": "https://ic4.co.in/crc-submissions"
     },
     {
       "event": "Conference Date",
