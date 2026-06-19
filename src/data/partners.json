@@ -1,0 +1,79 @@
+{
+  "root": [
+    {
+      "name": "Western Michigan University",
+      "country": "USA",
+      "link": "https://wmich.edu/",
+      "image": "/images/partners/wmu.png"
+    },
+    {
+      "name": "De La Salle University Manila",
+      "country": "Philippines",
+      "link": "https://www.dlsu.edu.ph/",
+      "image": "/images/partners/dlsu.png"
+    },
+    {
+      "name": "Binghamton University",
+      "country": "USA",
+      "link": "https://www.binghamton.edu/",
+      "image": "/images/partners/Binghamton University.png"
+    },
+    {
+      "name": "James Cook University",
+      "country": "Australia",
+      "link": "https://www.jcu.edu.au/cadsi",
+      "image": "/images/partners/cadsi.png",
+      "whiteLogo": true
+    },
+    {
+      "name": "Universidade Federal de Santa Catarina",
+      "country": "Brazil",
+      "link": "https://labsec.ufsc.br/",
+      "image": "/images/partners/labsec.png"
+    },
+    {
+      "name": "University of Applied Sciences Würzburg-Schweinfurt",
+      "country": "Germany",
+      "link": "https://www.thws.de/en/",
+      "image": "/images/partners/thws.png",
+      "whiteLogo": true
+    },
+    {
+      "name": "Synabl Technologies Pvt Ltd",
+      "country": "Bangalore, India",
+      "link": "https://synabl.ai/",
+      "image": "/images/partners/synabl.png"
+    },
+    {
+      "name": "ISEP",
+      "country": "France",
+      "link": "https://www.isep.fr/",
+      "image": "/images/partners/isep.png"
+    },
+    {
+      "name": "IBM",
+      "country": "Global",
+      "link": "https://www.ibm.com/in-en",
+      "image": "/images/partners/ibm.png"
+    },
+    {
+      "name": "Junia",
+      "country": "France",
+      "link": "https://www.junia.com/en/",
+      "image": "/images/partners/junia.png"
+    },
+    {
+      "name": "University of St. Thomas",
+      "country": "USA",
+      "link": "https://www.stthomas.edu/",
+      "image": "/images/partners/uni_st_thomas.png",
+      "whiteLogo": true
+    },
+    {
+      "name": "NJIT Ying Wu College of Computing",
+      "country": "USA",
+      "link": "https://computing.njit.edu/",
+      "image": "/images/partners/njit.png"
+    }
+  ]
+}

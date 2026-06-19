@@ -10,14 +10,17 @@ import { PendingChangesCounter } from "@/components/admin/PendingChangesCounter"
 import committeeData from "@/data/committee.json";
 import speakersData from "@/data/speakers.json";
 import datesData from "@/data/important-dates.json";
+import partnersData from "@/data/partners.json";
 import type {
   CommitteeData,
   SpeakersData,
   ImportantDatesData,
+  PartnersData,
 } from "@/types/data";
 import { CommitteeManager } from "@/components/admin/CommitteeManager";
 import { SpeakersManager } from "@/components/admin/SpeakersManager";
 import { DatesManager } from "@/components/admin/DatesManager";
+import { PartnersManager } from "@/components/admin/PartnersManager";
 import { AdminSessionContext } from "./AdminSessionProvider";
 import { getPendingChanges } from "@/lib/githubSync";
 import { enablePreviewMode } from "@/lib/previewMode";
@@ -28,6 +31,7 @@ export default function AdminDashboard() {
   const committee = (committeeData as CommitteeData).root;
   const speakers = (speakersData as SpeakersData).root;
   const dates = (datesData as ImportantDatesData).root;
+  const partners = (partnersData as PartnersData).root;
 
   // Calculate stats
   const totalMembers = committee.reduce(
@@ -90,6 +94,13 @@ export default function AdminDashboard() {
       color: "text-blue-500",
       bgColor: "bg-blue-500/10",
     },
+    {
+      title: "Partners",
+      value: partners.length,
+      icon: Users,
+      color: "text-orange-500",
+      bgColor: "bg-orange-500/10",
+    },
   ];
 
   const handlePreview = (url: string) => {
@@ -131,7 +142,7 @@ export default function AdminDashboard() {
       </div>
 
       <div className="container mx-auto px-4 pb-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
           {stats.map((stat) => (
             <Card
               key={stat.title}
@@ -186,7 +197,7 @@ export default function AdminDashboard() {
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="committee" className="w-full">
-              <TabsList className="grid w-full grid-cols-3 mb-6">
+              <TabsList className="grid w-full grid-cols-4 mb-6">
                 <TabsTrigger value="committee">
                   <Users className="w-4 h-4 mr-2" />
                   Committee
@@ -198,6 +209,10 @@ export default function AdminDashboard() {
                 <TabsTrigger value="dates">
                   <Calendar className="w-4 h-4 mr-2" />
                   Important Dates
+                </TabsTrigger>
+                <TabsTrigger value="partners">
+                  <Users className="w-4 h-4 mr-2" />
+                  Partners
                 </TabsTrigger>
               </TabsList>
 
@@ -241,6 +256,20 @@ export default function AdminDashboard() {
                   </Button>
                 </div>
                 <DatesManager />
+              </TabsContent>
+
+              <TabsContent value="partners" className="space-y-4">
+                <div className="flex justify-end mb-4">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handlePreview("/")}
+                  >
+                    <Eye className="w-4 h-4 mr-2" />
+                    Preview Partners (Home)
+                  </Button>
+                </div>
+                <PartnersManager />
               </TabsContent>
             </Tabs>
           </CardContent>

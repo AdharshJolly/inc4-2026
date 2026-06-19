@@ -71,3 +71,16 @@ export function normalizeRootData<T>(data: T[] | { root: T[] }): { root: T[] } {
   }
   return data;
 }
+
+export interface PartnerItem {
+  name: string;
+  country: string;
+  link?: string;
+  image: string;
+  whiteLogo?: boolean;
+}
+
+export interface PartnersData {
+  root: PartnerItem[];
+}
+

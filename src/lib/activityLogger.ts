@@ -8,7 +8,7 @@ export type ChangeRecord = Record<string, { old: unknown; new: unknown }>;
 export interface ActivityLogEntry {
   id: string;
   action: string;
-  type: "member" | "speaker" | "date" | "category";
+  type: "member" | "speaker" | "date" | "category" | "partner";
   targetName: string;
   changes?: ChangeRecord;
   timestamp: number;
@@ -217,6 +217,7 @@ export const logAction = {
       "speaker",
       "date",
       "category",
+      "partner",
     ];
     const mappedType: ActivityLogEntry["type"] = validTypes.includes(
       type as ActivityLogEntry["type"]
