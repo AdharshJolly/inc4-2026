@@ -1,34 +1,3 @@
 {
-  "root": [
-    {
-      "name": "Prof. Dr. S.S. Iyengar",
-      "role": "Distinguished University Professor",
-      "affiliation": "Florida International University, Miami",
-      "photo": {
-        "url": "/images/speakers/prof__dr__s_s__iyengar.jpg"
-      },
-      "topic": "AI & Autonomous Systems",
-      "linkedin": ""
-    },
-    {
-      "name": "Damodaran Subramanian",
-      "role": "Chief Executive Officer",
-      "affiliation": "ChipEdge Technologies Pvt Ltd",
-      "photo": {
-        "url": "/images/speakers/damodaran_subramanian.jpg"
-      },
-      "topic": "Semiconductor Innovation",
-      "linkedin": ""
-    },
-    {
-      "name": "Dr. Sourav Kanti Addya",
-      "role": "Assistant Professor",
-      "affiliation": "NITK Surathkal",
-      "photo": {
-        "url": "/images/speakers/dr__sourav_kanti_addya.jpg"
-      },
-      "topic": "Cloud & Edge Computing",
-      "linkedin": ""
-    }
-  ]
+  "root": []
 }
