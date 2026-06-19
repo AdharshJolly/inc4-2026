@@ -34,7 +34,7 @@ const partners = [
     country: "Australia",
     link: "https://www.jcu.edu.au/cadsi",
     image: "/images/partners/cadsi.png",
-    invert: true,
+    whiteLogo: true,
   },
   {
     name: "Universidade Federal de Santa Catarina",
@@ -47,13 +47,44 @@ const partners = [
     country: "Germany",
     link: "https://www.thws.de/en/",
     image: "/images/partners/thws.png",
-    invert: true,
+    whiteLogo: true,
   },
   {
     name: "Synabl Technologies Pvt Ltd",
     country: "Bangalore, India",
     link: "https://synabl.ai/",
     image: "/images/partners/synabl.png",
+  },
+  {
+    name: "ISEP",
+    country: "France",
+    link: "https://www.isep.fr/",
+    image: "/images/partners/isep.png",
+  },
+  {
+    name: "IBM",
+    country: "Global",
+    link: "https://www.ibm.com/in-en",
+    image: "/images/partners/ibm.png",
+  },
+  {
+    name: "Junia",
+    country: "France",
+    link: "https://www.junia.com/en/",
+    image: "/images/partners/junia.png",
+  },
+  {
+    name: "University of St. Thomas",
+    country: "USA",
+    link: "https://www.stthomas.edu/",
+    image: "/images/partners/uni_st_thomas.png",
+    whiteLogo: true,
+  },
+  {
+    name: "NJIT Ying Wu College of Computing",
+    country: "USA",
+    link: "https://computing.njit.edu/",
+    image: "/images/partners/njit.png",
   },
 ];
 
@@ -78,7 +109,7 @@ const PartnerCard = ({ partner }: { partner: any }) => {
               src={partner.image}
               alt={partner.name}
               draggable={false}
-              className={`h-full w-auto object-contain py-2 md:py-4 transition-all duration-300 group-hover:scale-110 brightness-[1.3] contrast-125 group-hover:brightness-[1.5] ${partner.invert ? 'invert' : ''}`}
+              className={`h-full w-auto object-contain py-2 md:py-4 transition-all duration-300 group-hover:scale-110 ${partner.whiteLogo ? 'brightness-0 invert' : 'brightness-[1.3] contrast-125 group-hover:brightness-[1.5]'}`}
             />
           ) : (
             <Building2 className="w-8 h-8 text-white/50 group-hover:text-white transition-colors duration-300" />
