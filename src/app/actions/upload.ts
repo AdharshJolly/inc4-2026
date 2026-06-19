@@ -42,7 +42,7 @@ async function fetchWithRetry(
 export async function uploadImageToGitHubAction(
   base64Content: string,
   filename: string,
-  folder: "committee" | "speakers"
+  folder: "committee" | "speakers" | "partners"
 ): Promise<UploadResult> {
   try {
     const filePath = `public/images/${folder}/${filename}`;

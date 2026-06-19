@@ -86,7 +86,7 @@ function validateImageFile(file: File): { valid: boolean; error?: string } {
  */
 export async function uploadImageToGitHub(
   file: File,
-  folder: "committee" | "speakers"
+  folder: "committee" | "speakers" | "partners"
 ): Promise<UploadResult> {
   try {
     const validation = validateImageFile(file);
@@ -116,7 +116,7 @@ export async function uploadImageToGitHub(
  */
 export function getImageUrl(
   filename: string | undefined,
-  folder: "committee" | "speakers"
+  folder: "committee" | "speakers" | "partners"
 ): string {
   if (!filename) return "";
   return `/images/${folder}/${filename}`;
