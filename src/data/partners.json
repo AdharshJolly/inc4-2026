@@ -75,6 +75,20 @@
       "country": "USA",
       "link": "https://computing.njit.edu/",
       "image": "/images/partners/njit.png"
+    },
+    {
+      "name": "Ball State University",
+      "country": "U.S.A",
+      "link": "https://www.bsu.edu/",
+      "image": "/images/partners/1782383131735-hqc38n.png",
+      "whiteLogo": false
+    },
+    {
+      "name": "UST Digital Transformation Solutions Company",
+      "country": "USA",
+      "link": "https://www.ust.com/",
+      "image": "/images/partners/1782383224460-jd5bng.png",
+      "whiteLogo": true
     }
   ]
 }
