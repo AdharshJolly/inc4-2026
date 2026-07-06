@@ -8,13 +8,15 @@ import { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Registration | 2026 IEEE International Conference on Contemporary Computing and Communications (InC4)",
+  title:
+    "Registration | 2026 IEEE International Conference on Contemporary Computing and Communications (InC4)",
   description:
     "Register for InC4 2026. View registration fees, categories, and payment details for the 2026 IEEE International Conference on Contemporary Computing and Communications - Conference#70839.",
   keywords:
     "InC4 registration, conference registration, registration fees, early bird, IEEE, 2026 conference",
   openGraph: {
-    title: "Registration | 2026 IEEE International Conference on Contemporary Computing and Communications (InC4)",
+    title:
+      "Registration | 2026 IEEE International Conference on Contemporary Computing and Communications (InC4)",
     description:
       "Register for InC4 2026. View registration fees, categories, and payment details for the 2026 IEEE International Conference on Contemporary Computing and Communications - Conference#70839.",
     type: "website",
@@ -181,11 +183,6 @@ export default function RegistrationPage() {
                       the registration fee, a candidate cannot cancel the
                       registration. The registration fee for the conference,
                       once paid, is not refundable.
-                    </li>
-                    <li>
-                      Registered online participants will be entitled to an
-                      E-certificate of presentation/participation (as
-                      applicable) only.
                     </li>
                   </ol>
                 </CardContent>
