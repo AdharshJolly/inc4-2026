@@ -117,13 +117,13 @@ export default function RegistrationPage() {
                       <td className="p-4 font-medium border-r border-primary/10">
                         {row.category}
                       </td>
-                      <td className="p-4 text-center border-r border-primary/10 font-mono text-primary">
+                      <td className="p-4 text-center border-r border-primary/10 font-mono text-primary line-through">
                         {row.inrEarly}
                       </td>
                       <td className="p-4 text-center border-r border-primary/10 font-mono">
                         {row.inrReg}
                       </td>
-                      <td className="p-4 text-center border-r border-primary/10 font-mono text-primary">
+                      <td className="p-4 text-center border-r border-primary/10 font-mono text-primary line-through">
                         {row.usdEarly}
                       </td>
                       <td className="p-4 text-center font-mono">
