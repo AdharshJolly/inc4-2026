@@ -13,6 +13,7 @@ import { uploadImageToGitHub } from "@/lib/fileUpload";
 import type { SpeakersData } from "@/types/data";
 import { PreviewDialog } from "./PreviewDialog";
 import { validatePhotoUpload } from "@/lib/validatePhotoUpload";
+import { z } from "zod";
 
 interface AddSpeakerFormData {
   name: string;
@@ -127,39 +128,34 @@ export const AddSpeakerDialog = ({ onSpeakerAdded }: AddSpeakerDialogProps) => {
   };
 
   const handleSubmit = async () => {
-    // Validation
-    if (!formData.name.trim()) {
-      toast({
-        title: "Validation Error",
-        description: "Please enter speaker name",
-        variant: "destructive",
+    // Validation with Zod
+    const speakerSchema = z.object({
+      name: z.string().min(2, "Speaker name is required"),
+      role: z.string().min(2, "Speaker role is required"),
+      affiliation: z.string().min(2, "Affiliation is required"),
+      topic: z.string().min(2, "Topic/Title is required"),
+      linkedin: z.string().url("Must be a valid LinkedIn URL").or(z.literal("")),
+    });
+
+    try {
+      speakerSchema.parse({
+        name: formData.name,
+        role: formData.role,
+        affiliation: formData.affiliation,
+        topic: formData.topic,
+        linkedin: formData.linkedin,
       });
-      return;
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        toast({
+          title: "Validation Error",
+          description: error.errors[0].message,
+          variant: "destructive",
+        });
+        return;
+      }
     }
-    if (!formData.role.trim()) {
-      toast({
-        title: "Validation Error",
-        description: "Please enter speaker role",
-        variant: "destructive",
-      });
-      return;
-    }
-    if (!formData.affiliation.trim()) {
-      toast({
-        title: "Validation Error",
-        description: "Please enter affiliation",
-        variant: "destructive",
-      });
-      return;
-    }
-    if (!formData.topic.trim()) {
-      toast({
-        title: "Validation Error",
-        description: "Please enter topic",
-        variant: "destructive",
-      });
-      return;
-    }
+
     if (!formData.photoUrl && !formData.photoFile) {
       toast({
         title: "Validation Error",
@@ -274,6 +270,12 @@ export const AddSpeakerDialog = ({ onSpeakerAdded }: AddSpeakerDialogProps) => {
       triggerText="Add Speaker"
       title="Add New Keynote Speaker"
       description="Add a new keynote speaker. Fields with * are required."
+      onInteractOutside={(e) => {
+        // Prevent closing if form is dirty
+        if (formData.name || formData.role || formData.affiliation || formData.topic || formData.photoUrl || formData.photoFile) {
+          e.preventDefault();
+        }
+      }}
     >
       <div className="space-y-4">
           {/* Name */}
