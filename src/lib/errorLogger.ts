@@ -38,7 +38,7 @@ let breadcrumbs: Breadcrumb[] = [];
 /**
  * Initialize error logging (call once on app startup)
  */
-export const initErrorLogger = () => {
+const initErrorLogger = () => {
   if (typeof window === "undefined") return;
   // Load breadcrumbs from localStorage
   try {
@@ -148,7 +148,7 @@ export const logError = (
 /**
  * Log a warning
  */
-export const logWarning = (message: string, context?: Record<string, any>) => {
+const logWarning = (message: string, context?: Record<string, any>) => {
   if (typeof window === "undefined") return;
   const log: ErrorLog = {
     id: `warning_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`,
@@ -170,7 +170,7 @@ export const logWarning = (message: string, context?: Record<string, any>) => {
 /**
  * Log info (for tracing admin actions, etc.)
  */
-export const logInfo = (message: string, context?: Record<string, any>) => {
+const logInfo = (message: string, context?: Record<string, any>) => {
   console.log("[ErrorLogger]", message, context);
   addBreadcrumb("info", message, "info", context);
 };

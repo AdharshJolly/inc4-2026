@@ -19,6 +19,7 @@ import { ActivityLogger } from "@/lib/activityLogger";
 import { uploadImageToGitHub } from "@/lib/fileUpload";
 import type { SpeakersData } from "@/types/data";
 import { PreviewDialog } from "./PreviewDialog";
+import { validatePhotoUpload } from "@/lib/validatePhotoUpload";
 
 interface AddSpeakerFormData {
   name: string;
@@ -109,27 +110,7 @@ export const AddSpeakerDialog = ({ onSpeakerAdded }: AddSpeakerDialogProps) => {
 
   const handlePhotoFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      // Validate file type
-      if (!file.type.startsWith("image/")) {
-        toast({
-          title: "Validation Error",
-          description: "Please select a valid image file",
-          variant: "destructive",
-        });
-        return;
-      }
-
-      // Validate file size (max 5MB)
-      if (file.size > 5 * 1024 * 1024) {
-        toast({
-          title: "Validation Error",
-          description: "File size must be less than 5MB",
-          variant: "destructive",
-        });
-        return;
-      }
-
+    if (validatePhotoUpload(file, toast) && file) {
       // Create preview URL
       const previewUrl = URL.createObjectURL(file);
 

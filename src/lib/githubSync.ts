@@ -39,6 +39,6 @@ export function clearPendingChanges() {
 /**
  * Check if there are pending changes
  */
-export function hasPendingChanges(): boolean {
+function hasPendingChanges(): boolean {
   return getPendingChanges().length > 0;
 }

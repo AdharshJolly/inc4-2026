@@ -17,6 +17,7 @@ import { ActivityLogger } from "@/lib/activityLogger";
 import { storePendingChange } from "@/lib/githubSync";
 import { uploadImageToGitHub } from "@/lib/fileUpload";
 import { useToast } from "@/hooks/use-toast";
+import { PhotoUploadField } from "./PhotoUploadField";
 import type { SpeakersData } from "@/types/data";
 
 interface EditSpeakerDialogProps {
@@ -364,92 +365,16 @@ export const EditSpeakerDialog = ({
             </div>
           </div>
 
-          {/* Photo */}
-          <div>
-            <Label className="mb-3 block">Photo *</Label>
-
-            <Tabs defaultValue="url">
-              <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="url">Photo URL</TabsTrigger>
-                <TabsTrigger value="upload">Upload File</TabsTrigger>
-              </TabsList>
-
-              <TabsContent value="url" className="space-y-3">
-                <Input
-                  type="url"
-                  placeholder="https://example.com/photo.jpg"
-                  value={formData.photoUrl}
-                  onChange={(e) => handleUrlChange(e.target.value)}
-                  disabled={!!formData.photoFile}
-                />
-                {formData.photoFile && (
-                  <p className="text-xs text-amber-600 flex items-center gap-2">
-                    <AlertCircle className="w-4 h-4" />
-                    File upload takes precedence over URL
-                  </p>
-                )}
-              </TabsContent>
-
-              <TabsContent value="upload" className="space-y-3">
-                <div className="border-2 border-dashed rounded-lg p-4">
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleFileUpload}
-                    className="hidden"
-                    id="edit-speaker-photo-upload"
-                  />
-                  <label
-                    htmlFor="edit-speaker-photo-upload"
-                    className="flex flex-col items-center cursor-pointer"
-                  >
-                    <Upload className="w-6 h-6 mb-2 text-muted-foreground" />
-                    <span className="text-sm font-medium text-muted-foreground">
-                      Click to upload
-                    </span>
-                    <span className="text-xs text-muted-foreground">
-                      PNG, JPG, GIF (max 5MB)
-                    </span>
-                  </label>
-                </div>
-
-                {uploadedFileName && (
-                  <div className="flex items-center justify-between bg-muted p-2 rounded">
-                    <span className="text-sm">{uploadedFileName}</span>
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => {
-                        handleClearPhoto();
-                        setUploadedFileName("");
-                      }}
-                    >
-                      <X className="w-4 h-4" />
-                    </Button>
-                  </div>
-                )}
-              </TabsContent>
-            </Tabs>
-
-            {errors.photo && (
-              <p className="text-xs text-red-500 mt-2">{errors.photo}</p>
-            )}
-          </div>
-
-          {/* Photo Preview */}
-          {photoPreview && (
-            <div className="border rounded-lg p-4 bg-muted/50">
-              <p className="text-xs font-medium mb-3 text-muted-foreground">
-                Preview
-              </p>
-              <img
-                src={photoPreview}
-                alt="Preview"
-                className="max-w-full max-h-48 rounded object-cover"
-              />
-            </div>
-          )}
+          <PhotoUploadField
+            photoUrl={formData.photoUrl}
+            photoFile={formData.photoFile}
+            photoPreview={photoPreview}
+            uploadedFileName={uploadedFileName}
+            errors={errors}
+            onFileUpload={handleFileUpload}
+            onUrlChange={handleUrlChange}
+            onClearPhoto={handleClearPhoto}
+          />
 
           {/* Actions */}
           <div className="flex gap-3 justify-end border-t pt-6">

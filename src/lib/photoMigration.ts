@@ -39,7 +39,7 @@ export const getPhotoUrl = (photo: any): string => {
  * Normalize speaker/committee data to ensure photo field exists and legacy
  * file-based data migrates into the current url-only shape.
  */
-export const normalizePhotoField = <T extends { photo?: any; image?: any }>(
+const normalizePhotoField = <T extends { photo?: any; image?: any }>(
   item: T
 ): (T & { photo: { url?: string } }) | null | undefined => {
   // Preserve null/undefined inputs to avoid inventing shapes

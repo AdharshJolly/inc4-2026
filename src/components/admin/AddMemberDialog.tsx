@@ -26,6 +26,7 @@ import { ActivityLogger } from "@/lib/activityLogger";
 import { uploadImageToGitHub } from "@/lib/fileUpload";
 import type { CommitteeData } from "@/types/data";
 import { PreviewDialog } from "./PreviewDialog";
+import { validatePhotoUpload } from "@/lib/validatePhotoUpload";
 
 interface AddMemberFormData {
   name: string;
@@ -86,26 +87,7 @@ export const AddMemberDialog = ({ onMemberAdded }: AddMemberDialogProps) => {
 
   const handlePhotoFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      if (!file.type.startsWith("image/")) {
-        toast({
-          title: "Validation Error",
-          description: "Please select a valid image file",
-          variant: "destructive",
-        });
-        return;
-      }
-
-      // Validate file size (max 5MB)
-      if (file.size > 5 * 1024 * 1024) {
-        toast({
-          title: "Validation Error",
-          description: "File size must be less than 5MB",
-          variant: "destructive",
-        });
-        return;
-      }
-
+    if (validatePhotoUpload(file, toast) && file) {
       // Revoke any existing preview before creating a new one
       if (formData.photoPreviewUrl) {
         URL.revokeObjectURL(formData.photoPreviewUrl);

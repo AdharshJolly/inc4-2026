@@ -12,6 +12,7 @@ import { useToast } from "@/hooks/use-toast";
 import { storePendingChange } from "@/lib/githubSync";
 import { ActivityLogger } from "@/lib/activityLogger";
 import { uploadImageToGitHub } from "@/lib/fileUpload";
+import { validatePhotoUpload } from "@/lib/validatePhotoUpload";
 import {
   Dialog,
   DialogContent,
@@ -79,23 +80,7 @@ export const PartnersManager = () => {
 
   const handleEditPhotoFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      if (!file.type.startsWith("image/")) {
-        toast({
-          title: "Validation Error",
-          description: "Please select a valid image file",
-          variant: "destructive",
-        });
-        return;
-      }
-      if (file.size > 5 * 1024 * 1024) {
-        toast({
-          title: "Validation Error",
-          description: "File size must be less than 5MB",
-          variant: "destructive",
-        });
-        return;
-      }
+    if (validatePhotoUpload(file, toast) && file) {
       const previewUrl = URL.createObjectURL(file);
       setEditImageFile(file);
       setEditImagePreviewUrl(previewUrl);

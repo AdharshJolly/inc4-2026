@@ -7,30 +7,18 @@
 import { uploadImageToGitHubAction, type UploadResult } from "@/app/actions/upload";
 import { logError, addBreadcrumb } from "./errorLogger";
 
+import { fileToBase64 as getBase64DataUrl } from "./photoUpload";
+
 /**
- * Convert File to base64 string for GitHub API
+ * Convert File to base64 string for GitHub API (without data URL prefix)
  */
 async function fileToBase64(file: File): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => {
-      const result = reader.result;
-      if (!result || typeof result !== "string") {
-        reject(new Error("Failed to read file: invalid result"));
-        return;
-      }
-      const base64String = result.split(",")[1];
-      if (!base64String) {
-        reject(new Error("Failed to extract base64 from file"));
-        return;
-      }
-      resolve(base64String);
-    };
-    reader.onerror = () => {
-      reject(new Error(`File read error: ${reader.error?.message || "Unknown error"}`));
-    };
-    reader.readAsDataURL(file);
-  });
+  const dataUrl = await getBase64DataUrl(file);
+  const base64String = dataUrl.split(",")[1];
+  if (!base64String) {
+    throw new Error("Failed to extract base64 from file");
+  }
+  return base64String;
 }
 
 /**
@@ -114,7 +102,7 @@ export async function uploadImageToGitHub(
 /**
  * Get image URL from filename
  */
-export function getImageUrl(
+function getImageUrl(
   filename: string | undefined,
   folder: "committee" | "speakers" | "partners"
 ): string {

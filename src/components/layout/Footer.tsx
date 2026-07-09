@@ -19,6 +19,17 @@ const footerLinks = {
   ],
 };
 
+const renderFooterLink = (link: { name: string; href: string }) => (
+  <li key={link.name}>
+    <Link
+      href={link.href}
+      className="text-primary-foreground/60 hover:text-primary transition-colors text-sm"
+    >
+      {link.name}
+    </Link>
+  </li>
+);
+
 export const Footer = () => {
   return (
     <footer
@@ -75,16 +86,7 @@ export const Footer = () => {
               Quick Links
             </h4>
             <ul className="space-y-3">
-              {footerLinks.quickLinks.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    href={link.href}
-                    className="text-primary-foreground/60 hover:text-primary transition-colors text-sm"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
+              {footerLinks.quickLinks.map(renderFooterLink)}
             </ul>
           </div>
 
@@ -94,16 +96,7 @@ export const Footer = () => {
               Resources
             </h4>
             <ul className="space-y-3">
-              {footerLinks.resources.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    href={link.href}
-                    className="text-primary-foreground/60 hover:text-primary transition-colors text-sm"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
+              {footerLinks.resources.map(renderFooterLink)}
             </ul>
           </div>
 

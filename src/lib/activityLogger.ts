@@ -147,7 +147,7 @@ export const ActivityLogger = {
 /**
  * Log helper functions
  */
-export const logAction = {
+const logAction = {
   addMember: (name: string): ActivityLogEntry =>
     ActivityLogger.log({
       action: "Added new committee member",

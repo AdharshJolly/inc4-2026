@@ -60,7 +60,7 @@ export function getPreviewData(filePath: string): string | null {
 /**
  * Get all preview data
  */
-export function getAllPreviewData(): PreviewData | null {
+function getAllPreviewData(): PreviewData | null {
   if (!isPreviewMode()) return null;
 
   try {

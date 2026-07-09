@@ -53,7 +53,7 @@ export interface CommitteeData {
 /**
  * Type guard to check if data has root property
  */
-export function hasRootProperty<T>(data: any): data is { root: T[] } {
+function hasRootProperty<T>(data: any): data is { root: T[] } {
   return (
     data &&
     typeof data === "object" &&
@@ -66,7 +66,7 @@ export function hasRootProperty<T>(data: any): data is { root: T[] } {
  * Normalize data to ensure it has root property
  * Provides backward compatibility with old array format
  */
-export function normalizeRootData<T>(data: T[] | { root: T[] }): { root: T[] } {
+function normalizeRootData<T>(data: T[] | { root: T[] }): { root: T[] } {
   if (Array.isArray(data)) {
     return { root: data };
   }
