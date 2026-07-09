@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Users, Calendar, Mic, Eye } from "lucide-react";
+import { isCompleted } from "@/lib/dateUtils";
 import { PendingChangesCounter } from "@/components/admin/PendingChangesCounter";
 import committeeData from "@/data/committee.json";
 import speakersData from "@/data/speakers.json";
@@ -40,28 +41,7 @@ export default function AdminDashboard() {
   );
   const categoriesCount = committee.length;
   const speakersCount = speakers.length;
-  const isCompleted = (dateStr: string) => {
-    const now = new Date();
-    let dateObj = new Date(dateStr);
-    if (!isNaN(dateObj.getTime())) {
-      dateObj.setHours(23, 59, 59, 999);
-      return dateObj < now;
-    }
-    const match = dateStr.match(/([a-zA-Z]+)\s+\d+(?:\s*-\s*(\d+))?,?\s*(\d{4})/);
-    if (match) {
-      const month = match[1];
-      const day = match[2] || dateStr.match(/\d+/)?.[0];
-      const year = match[3];
-      if (day) {
-        dateObj = new Date(`${month} ${day}, ${year}`);
-        if (!isNaN(dateObj.getTime())) {
-          dateObj.setHours(23, 59, 59, 999);
-          return dateObj < now;
-        }
-      }
-    }
-    return false;
-  };
+
 
   const upcomingDates = dates.filter((d) => !isCompleted(d.date)).length;
 

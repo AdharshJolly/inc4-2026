@@ -16,32 +16,12 @@ import { Button } from "@/components/ui/button";
 import { buildGoogleCalendarUrl, downloadICSFile } from "@/lib/calendarLinks";
 import { getPreviewData } from "@/lib/previewMode";
 import { useEffect, useState } from "react";
+import { isCompleted } from "@/lib/dateUtils";
 
 export default function ImportantDatesClient() {
   const [dates, setDates] = useState((datesData as ImportantDatesData).root);
 
-  const isCompleted = (dateStr: string) => {
-    const now = new Date();
-    let dateObj = new Date(dateStr);
-    if (!isNaN(dateObj.getTime())) {
-      dateObj.setHours(23, 59, 59, 999);
-      return dateObj < now;
-    }
-    const match = dateStr.match(/([a-zA-Z]+)\s+\d+(?:\s*-\s*(\d+))?,?\s*(\d{4})/);
-    if (match) {
-      const month = match[1];
-      const day = match[2] || dateStr.match(/\d+/)?.[0];
-      const year = match[3];
-      if (day) {
-        dateObj = new Date(`${month} ${day}, ${year}`);
-        if (!isNaN(dateObj.getTime())) {
-          dateObj.setHours(23, 59, 59, 999);
-          return dateObj < now;
-        }
-      }
-    }
-    return false;
-  };
+
 
   const parseDateParts = (dateStr: string) => {
     const match = dateStr.match(/^([A-Za-z]+)\s+([\d\s\-]+),?\s*(\d{4})$/);

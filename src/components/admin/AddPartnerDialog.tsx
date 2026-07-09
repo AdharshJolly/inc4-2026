@@ -2,14 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { SharedDialogWrapper } from "./SharedDialogWrapper";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Plus } from "lucide-react";
@@ -182,19 +175,14 @@ export const AddPartnerDialog = ({ onPartnerAdded }: AddPartnerDialogProps) => {
   };
 
   return (
-    <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogTrigger asChild>
-        <Button className="bg-orange-500 hover:bg-orange-600">
-          <Plus className="w-4 h-4 mr-2" />
-          Add Partner
-        </Button>
-      </DialogTrigger>
-      <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle>Add New Partner</DialogTitle>
-          <DialogDescription>Add a new industry or academic partner.</DialogDescription>
-        </DialogHeader>
-        <div className="space-y-4">
+    <SharedDialogWrapper
+      open={open}
+      onOpenChange={handleOpenChange}
+      triggerText="Add Partner"
+      title="Add New Partner"
+      description="Add a new industry or academic partner."
+    >
+      <div className="space-y-4">
           <div className="space-y-2">
             <Label>Name *</Label>
             <Input value={formData.name} onChange={(e) => handleInputChange("name", e.target.value)} />
@@ -292,7 +280,6 @@ export const AddPartnerDialog = ({ onPartnerAdded }: AddPartnerDialogProps) => {
             {isSubmitting ? "Adding..." : "Add Partner"}
           </Button>
         </div>
-      </DialogContent>
-    </Dialog>
-  );
+      </SharedDialogWrapper>
+    );
 };

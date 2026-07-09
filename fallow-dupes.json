@@ -1,0 +1,376 @@
+{
+  "kind": "dupes",
+  "schema_version": 7,
+  "version": "2.89.0",
+  "elapsed_ms": 124,
+  "clone_groups": [
+    {
+      "instances": [
+        {
+          "file": "src/app/admin/page.tsx",
+          "start_line": 42,
+          "end_line": 66,
+          "start_col": 8,
+          "end_col": 73,
+          "fragment": "speakersCount = speakers.length;\r\n  const isCompleted = (dateStr: string) => {\r\n    const now = new Date();\r\n    let dateObj = new Date(dateStr);\r\n    if (!isNaN(dateObj.getTime())) {\r\n      dateObj.setHours(23, 59, 59, 999);\r\n      return dateObj < now;\r\n    }\r\n    const match = dateStr.match(/([a-zA-Z]+)\\s+\\d+(?:\\s*-\\s*(\\d+))?,?\\s*(\\d{4})/);\r\n    if (match) {\r\n      const month = match[1];\r\n      const day = match[2] || dateStr.match(/\\d+/)?.[0];\r\n      const year = match[3];\r\n      if (day) {\r\n        dateObj = new Date(`${month} ${day}, ${year}`);\r\n        if (!isNaN(dateObj.getTime())) {\r\n          dateObj.setHours(23, 59, 59, 999);\r\n          return dateObj < now;\r\n        }\r\n      }\r\n    }\r\n    return false;\r\n  };\r\n\r\n  const upcomingDates = dates.filter((d) => !isCompleted(d.date)).length;"
+        },
+        {
+          "file": "src/app/important-dates/ImportantDatesClient.tsx",
+          "start_line": 21,
+          "end_line": 56,
+          "start_col": 8,
+          "end_col": 4,
+          "fragment": "[dates, setDates] = useState((datesData as ImportantDatesData).root);\r\n\r\n  const isCompleted = (dateStr: string) => {\r\n    const now = new Date();\r\n    let dateObj = new Date(dateStr);\r\n    if (!isNaN(dateObj.getTime())) {\r\n      dateObj.setHours(23, 59, 59, 999);\r\n      return dateObj < now;\r\n    }\r\n    const match = dateStr.match(/([a-zA-Z]+)\\s+\\d+(?:\\s*-\\s*(\\d+))?,?\\s*(\\d{4})/);\r\n    if (match) {\r\n      const month = match[1];\r\n      const day = match[2] || dateStr.match(/\\d+/)?.[0];\r\n      const year = match[3];\r\n      if (day) {\r\n        dateObj = new Date(`${month} ${day}, ${year}`);\r\n        if (!isNaN(dateObj.getTime())) {\r\n          dateObj.setHours(23, 59, 59, 999);\r\n          return dateObj < now;\r\n        }\r\n      }\r\n    }\r\n    return false;\r\n  };\r\n\r\n  const parseDateParts = (dateStr: string) => {\r\n    const match = dateStr.match(/^([A-Za-z]+)\\s+([\\d\\s\\-]+),?\\s*(\\d{4})$/);\r\n    if (match) {\r\n      return {\r\n        month: match[1],\r\n        day: match[2].trim(),\r\n        year: match[3]\r\n      };\r\n    }\r\n    return { month: \"\", day: dateStr, year: \"\" };\r\n  };"
+        },
+        {
+          "file": "src/components/admin/DatesManager.tsx",
+          "start_line": 72,
+          "end_line": 103,
+          "start_col": 8,
+          "end_col": 4,
+          "fragment": "[confirmDeleteIndex, setConfirmDeleteIndex] = useState<number | null>(\r\n    null\r\n  );\r\n\r\n  const isCompleted = (dateStr: string) => {\r\n    const now = new Date();\r\n    let dateObj = new Date(dateStr);\r\n    if (!isNaN(dateObj.getTime())) {\r\n      dateObj.setHours(23, 59, 59, 999);\r\n      return dateObj < now;\r\n    }\r\n    const match = dateStr.match(/([a-zA-Z]+)\\s+\\d+(?:\\s*-\\s*(\\d+))?,?\\s*(\\d{4})/);\r\n    if (match) {\r\n      const month = match[1];\r\n      const day = match[2] || dateStr.match(/\\d+/)?.[0];\r\n      const year = match[3];\r\n      if (day) {\r\n        dateObj = new Date(`${month} ${day}, ${year}`);\r\n        if (!isNaN(dateObj.getTime())) {\r\n          dateObj.setHours(23, 59, 59, 999);\r\n          return dateObj < now;\r\n        }\r\n      }\r\n    }\r\n    return false;\r\n  };\r\n\r\n  const getStatusColor = (isHighlight?: boolean, dateStr: string = \"\") => {\r\n    if (isHighlight) return \"bg-orange-500/10 text-orange-500 border-orange-500/20\";\r\n    if (isCompleted(dateStr)) return \"bg-green-500/10 text-green-500 border-green-500/20\";\r\n    return \"bg-blue-500/10 text-blue-500 border-blue-500/20\";\r\n  };"
+        }
+      ],
+      "token_count": 170,
+      "line_count": 36,
+      "fingerprint": "dup:234bb56f",
+      "suggested_name": "dateObj",
+      "actions": [
+        {
+          "type": "extract-shared",
+          "auto_fixable": false,
+          "description": "Extract duplicated code (36 lines, 3 instances) into a shared function"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the duplicated code",
+          "comment": "// fallow-ignore-next-line code-duplication"
+        }
+      ]
+    },
+    {
+      "instances": [
+        {
+          "file": "src/components/admin/AddMemberDialog.tsx",
+          "start_line": 246,
+          "end_line": 272,
+          "start_col": 8,
+          "end_col": 18,
+          "fragment": "variant: \"destructive\",\r\n      });\r\n    } finally {\r\n      setIsSubmitting(false);\r\n    }\r\n  };\r\n\r\n  return (\r\n    <Dialog open={open} onOpenChange={handleOpenChange}>\r\n      <DialogTrigger asChild>\r\n        <Button className=\"bg-orange-500 hover:bg-orange-600\">\r\n          <Plus className=\"w-4 h-4 mr-2\" />\r\n          Add Committee Member\r\n        </Button>\r\n      </DialogTrigger>\r\n      <DialogContent className=\"max-w-md max-h-[90vh] overflow-y-auto\">\r\n        <DialogHeader>\r\n          <DialogTitle>Add New Committee Member</DialogTitle>\r\n          <DialogDescription>\r\n            Add a new member to the committee. Fields with * are required.\r\n          </DialogDescription>\r\n        </DialogHeader>\r\n\r\n        <div className=\"space-y-4\">\r\n          {/* Name */}\r\n          <div className=\"space-y-2\">\r\n            <Label"
+        },
+        {
+          "file": "src/components/admin/AddPartnerDialog.tsx",
+          "start_line": 177,
+          "end_line": 199,
+          "start_col": 8,
+          "end_col": 18,
+          "fragment": "variant: \"destructive\",\r\n      });\r\n    } finally {\r\n      setIsSubmitting(false);\r\n    }\r\n  };\r\n\r\n  return (\r\n    <Dialog open={open} onOpenChange={handleOpenChange}>\r\n      <DialogTrigger asChild>\r\n        <Button className=\"bg-orange-500 hover:bg-orange-600\">\r\n          <Plus className=\"w-4 h-4 mr-2\" />\r\n          Add Partner\r\n        </Button>\r\n      </DialogTrigger>\r\n      <DialogContent className=\"max-w-md max-h-[90vh] overflow-y-auto\">\r\n        <DialogHeader>\r\n          <DialogTitle>Add New Partner</DialogTitle>\r\n          <DialogDescription>Add a new industry or academic partner.</DialogDescription>\r\n        </DialogHeader>\r\n        <div className=\"space-y-4\">\r\n          <div className=\"space-y-2\">\r\n            <Label"
+        },
+        {
+          "file": "src/components/admin/AddSpeakerDialog.tsx",
+          "start_line": 270,
+          "end_line": 296,
+          "start_col": 8,
+          "end_col": 18,
+          "fragment": "variant: \"destructive\",\r\n      });\r\n    } finally {\r\n      setIsSubmitting(false);\r\n    }\r\n  };\r\n\r\n  return (\r\n    <Dialog open={open} onOpenChange={handleOpenChange}>\r\n      <DialogTrigger asChild>\r\n        <Button className=\"bg-orange-500 hover:bg-orange-600\">\r\n          <Plus className=\"w-4 h-4 mr-2\" />\r\n          Add Speaker\r\n        </Button>\r\n      </DialogTrigger>\r\n      <DialogContent className=\"max-w-md max-h-[90vh] overflow-y-auto\">\r\n        <DialogHeader>\r\n          <DialogTitle>Add New Keynote Speaker</DialogTitle>\r\n          <DialogDescription>\r\n            Add a new keynote speaker. Fields with * are required.\r\n          </DialogDescription>\r\n        </DialogHeader>\r\n\r\n        <div className=\"space-y-4\">\r\n          {/* Name */}\r\n          <div className=\"space-y-2\">\r\n            <Label"
+        }
+      ],
+      "token_count": 79,
+      "line_count": 27,
+      "fingerprint": "dup:6c88c1d4",
+      "suggested_name": "className",
+      "actions": [
+        {
+          "type": "extract-shared",
+          "auto_fixable": false,
+          "description": "Extract duplicated code (27 lines, 3 instances) into a shared function"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the duplicated code",
+          "comment": "// fallow-ignore-next-line code-duplication"
+        }
+      ]
+    },
+    {
+      "instances": [
+        {
+          "file": "src/components/admin/AddMemberDialog.tsx",
+          "start_line": 325,
+          "end_line": 345,
+          "start_col": 12,
+          "end_col": 29,
+          "fragment": "<Input\r\n              id=\"affiliation\"\r\n              placeholder=\"e.g., University of Example, Tech Corp\"\r\n              value={formData.affiliation}\r\n              onChange={(e) => handleInputChange(\"affiliation\", e.target.value)}\r\n              className=\"border-border\"\r\n            />\r\n          </div>\r\n\r\n          {/* Photo - URL or Upload */}\r\n          <div className=\"space-y-2\">\r\n            <Label className=\"text-sm font-medium\">Photo *</Label>\r\n            <Tabs defaultValue=\"url\" className=\"w-full\">\r\n              <TabsList className=\"grid w-full grid-cols-2\">\r\n                <TabsTrigger value=\"url\">Photo URL</TabsTrigger>\r\n                <TabsTrigger value=\"upload\">Upload File</TabsTrigger>\r\n              </TabsList>\r\n\r\n              <TabsContent value=\"url\" className=\"space-y-2\">\r\n                <Input\r\n                  placeholder"
+        },
+        {
+          "file": "src/components/admin/AddPartnerDialog.tsx",
+          "start_line": 208,
+          "end_line": 222,
+          "start_col": 12,
+          "end_col": 29,
+          "fragment": "<Input value={formData.link || \"\"} onChange={(e) => handleInputChange(\"link\", e.target.value)} />\r\n          </div>\r\n          \r\n          {/* Photo - URL or Upload */}\r\n          <div className=\"space-y-2\">\r\n            <Label className=\"text-sm font-medium\">Image *</Label>\r\n            <Tabs defaultValue=\"url\" className=\"w-full\">\r\n              <TabsList className=\"grid w-full grid-cols-2\">\r\n                <TabsTrigger value=\"url\">Image URL</TabsTrigger>\r\n                <TabsTrigger value=\"upload\">Upload File</TabsTrigger>\r\n              </TabsList>\r\n\r\n              <TabsContent value=\"url\" className=\"space-y-2\">\r\n                <Input\r\n                  placeholder"
+        },
+        {
+          "file": "src/components/admin/AddSpeakerDialog.tsx",
+          "start_line": 355,
+          "end_line": 376,
+          "start_col": 12,
+          "end_col": 29,
+          "fragment": "<Input\r\n              id=\"linkedin\"\r\n              placeholder=\"https://linkedin.com/in/username\"\r\n              type=\"url\"\r\n              value={formData.linkedin}\r\n              onChange={(e) => handleInputChange(\"linkedin\", e.target.value)}\r\n              className=\"border-border\"\r\n            />\r\n          </div>\r\n\r\n          {/* Photo - URL or Upload */}\r\n          <div className=\"space-y-2\">\r\n            <Label className=\"text-sm font-medium\">Photo *</Label>\r\n            <Tabs defaultValue=\"url\" className=\"w-full\">\r\n              <TabsList className=\"grid w-full grid-cols-2\">\r\n                <TabsTrigger value=\"url\">Photo URL</TabsTrigger>\r\n                <TabsTrigger value=\"upload\">Upload File</TabsTrigger>\r\n              </TabsList>\r\n\r\n              <TabsContent value=\"url\" className=\"space-y-2\">\r\n                <Input\r\n                  placeholder"
+        }
+      ],
+      "token_count": 58,
+      "line_count": 22,
+      "fingerprint": "dup:e0c19d60",
+      "suggested_name": "className",
+      "actions": [
+        {
+          "type": "extract-shared",
+          "auto_fixable": false,
+          "description": "Extract duplicated code (22 lines, 3 instances) into a shared function"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the duplicated code",
+          "comment": "// fallow-ignore-next-line code-duplication"
+        }
+      ]
+    }
+  ],
+  "clone_families": [
+    {
+      "files": [
+        "src/app/admin/page.tsx",
+        "src/app/important-dates/ImportantDatesClient.tsx",
+        "src/components/admin/DatesManager.tsx"
+      ],
+      "groups": [
+        {
+          "instances": [
+            {
+              "file": "src/app/admin/page.tsx",
+              "start_line": 42,
+              "end_line": 66,
+              "start_col": 8,
+              "end_col": 73,
+              "fragment": "speakersCount = speakers.length;\r\n  const isCompleted = (dateStr: string) => {\r\n    const now = new Date();\r\n    let dateObj = new Date(dateStr);\r\n    if (!isNaN(dateObj.getTime())) {\r\n      dateObj.setHours(23, 59, 59, 999);\r\n      return dateObj < now;\r\n    }\r\n    const match = dateStr.match(/([a-zA-Z]+)\\s+\\d+(?:\\s*-\\s*(\\d+))?,?\\s*(\\d{4})/);\r\n    if (match) {\r\n      const month = match[1];\r\n      const day = match[2] || dateStr.match(/\\d+/)?.[0];\r\n      const year = match[3];\r\n      if (day) {\r\n        dateObj = new Date(`${month} ${day}, ${year}`);\r\n        if (!isNaN(dateObj.getTime())) {\r\n          dateObj.setHours(23, 59, 59, 999);\r\n          return dateObj < now;\r\n        }\r\n      }\r\n    }\r\n    return false;\r\n  };\r\n\r\n  const upcomingDates = dates.filter((d) => !isCompleted(d.date)).length;"
+            },
+            {
+              "file": "src/app/important-dates/ImportantDatesClient.tsx",
+              "start_line": 21,
+              "end_line": 56,
+              "start_col": 8,
+              "end_col": 4,
+              "fragment": "[dates, setDates] = useState((datesData as ImportantDatesData).root);\r\n\r\n  const isCompleted = (dateStr: string) => {\r\n    const now = new Date();\r\n    let dateObj = new Date(dateStr);\r\n    if (!isNaN(dateObj.getTime())) {\r\n      dateObj.setHours(23, 59, 59, 999);\r\n      return dateObj < now;\r\n    }\r\n    const match = dateStr.match(/([a-zA-Z]+)\\s+\\d+(?:\\s*-\\s*(\\d+))?,?\\s*(\\d{4})/);\r\n    if (match) {\r\n      const month = match[1];\r\n      const day = match[2] || dateStr.match(/\\d+/)?.[0];\r\n      const year = match[3];\r\n      if (day) {\r\n        dateObj = new Date(`${month} ${day}, ${year}`);\r\n        if (!isNaN(dateObj.getTime())) {\r\n          dateObj.setHours(23, 59, 59, 999);\r\n          return dateObj < now;\r\n        }\r\n      }\r\n    }\r\n    return false;\r\n  };\r\n\r\n  const parseDateParts = (dateStr: string) => {\r\n    const match = dateStr.match(/^([A-Za-z]+)\\s+([\\d\\s\\-]+),?\\s*(\\d{4})$/);\r\n    if (match) {\r\n      return {\r\n        month: match[1],\r\n        day: match[2].trim(),\r\n        year: match[3]\r\n      };\r\n    }\r\n    return { month: \"\", day: dateStr, year: \"\" };\r\n  };"
+            },
+            {
+              "file": "src/components/admin/DatesManager.tsx",
+              "start_line": 72,
+              "end_line": 103,
+              "start_col": 8,
+              "end_col": 4,
+              "fragment": "[confirmDeleteIndex, setConfirmDeleteIndex] = useState<number | null>(\r\n    null\r\n  );\r\n\r\n  const isCompleted = (dateStr: string) => {\r\n    const now = new Date();\r\n    let dateObj = new Date(dateStr);\r\n    if (!isNaN(dateObj.getTime())) {\r\n      dateObj.setHours(23, 59, 59, 999);\r\n      return dateObj < now;\r\n    }\r\n    const match = dateStr.match(/([a-zA-Z]+)\\s+\\d+(?:\\s*-\\s*(\\d+))?,?\\s*(\\d{4})/);\r\n    if (match) {\r\n      const month = match[1];\r\n      const day = match[2] || dateStr.match(/\\d+/)?.[0];\r\n      const year = match[3];\r\n      if (day) {\r\n        dateObj = new Date(`${month} ${day}, ${year}`);\r\n        if (!isNaN(dateObj.getTime())) {\r\n          dateObj.setHours(23, 59, 59, 999);\r\n          return dateObj < now;\r\n        }\r\n      }\r\n    }\r\n    return false;\r\n  };\r\n\r\n  const getStatusColor = (isHighlight?: boolean, dateStr: string = \"\") => {\r\n    if (isHighlight) return \"bg-orange-500/10 text-orange-500 border-orange-500/20\";\r\n    if (isCompleted(dateStr)) return \"bg-green-500/10 text-green-500 border-green-500/20\";\r\n    return \"bg-blue-500/10 text-blue-500 border-blue-500/20\";\r\n  };"
+            }
+          ],
+          "token_count": 170,
+          "line_count": 36,
+          "fingerprint": "dup:234bb56f",
+          "suggested_name": "dateObj",
+          "actions": [
+            {
+              "type": "extract-shared",
+              "auto_fixable": false,
+              "description": "Extract duplicated code (36 lines, 3 instances) into a shared function"
+            },
+            {
+              "type": "suppress-line",
+              "auto_fixable": false,
+              "description": "Suppress with an inline comment above the duplicated code",
+              "comment": "// fallow-ignore-next-line code-duplication"
+            }
+          ]
+        }
+      ],
+      "total_duplicated_lines": 36,
+      "total_duplicated_tokens": 170,
+      "suggestions": [
+        {
+          "kind": "ExtractFunction",
+          "description": "Extract shared function (36 lines) from page.tsx, ImportantDatesClient.tsx, DatesManager.tsx",
+          "estimated_savings": 72
+        }
+      ],
+      "actions": [
+        {
+          "type": "extract-shared",
+          "auto_fixable": false,
+          "description": "Extract 1 duplicated code block (36 lines) into a shared module",
+          "note": "These clone groups share the same files, indicating a structural relationship; refactor together"
+        },
+        {
+          "type": "apply-suggestion",
+          "auto_fixable": false,
+          "description": "Extract shared function (36 lines) from page.tsx, ImportantDatesClient.tsx, DatesManager.tsx"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the duplicated code",
+          "comment": "// fallow-ignore-next-line code-duplication"
+        }
+      ]
+    },
+    {
+      "files": [
+        "src/components/admin/AddMemberDialog.tsx",
+        "src/components/admin/AddPartnerDialog.tsx",
+        "src/components/admin/AddSpeakerDialog.tsx"
+      ],
+      "groups": [
+        {
+          "instances": [
+            {
+              "file": "src/components/admin/AddMemberDialog.tsx",
+              "start_line": 246,
+              "end_line": 272,
+              "start_col": 8,
+              "end_col": 18,
+              "fragment": "variant: \"destructive\",\r\n      });\r\n    } finally {\r\n      setIsSubmitting(false);\r\n    }\r\n  };\r\n\r\n  return (\r\n    <Dialog open={open} onOpenChange={handleOpenChange}>\r\n      <DialogTrigger asChild>\r\n        <Button className=\"bg-orange-500 hover:bg-orange-600\">\r\n          <Plus className=\"w-4 h-4 mr-2\" />\r\n          Add Committee Member\r\n        </Button>\r\n      </DialogTrigger>\r\n      <DialogContent className=\"max-w-md max-h-[90vh] overflow-y-auto\">\r\n        <DialogHeader>\r\n          <DialogTitle>Add New Committee Member</DialogTitle>\r\n          <DialogDescription>\r\n            Add a new member to the committee. Fields with * are required.\r\n          </DialogDescription>\r\n        </DialogHeader>\r\n\r\n        <div className=\"space-y-4\">\r\n          {/* Name */}\r\n          <div className=\"space-y-2\">\r\n            <Label"
+            },
+            {
+              "file": "src/components/admin/AddPartnerDialog.tsx",
+              "start_line": 177,
+              "end_line": 199,
+              "start_col": 8,
+              "end_col": 18,
+              "fragment": "variant: \"destructive\",\r\n      });\r\n    } finally {\r\n      setIsSubmitting(false);\r\n    }\r\n  };\r\n\r\n  return (\r\n    <Dialog open={open} onOpenChange={handleOpenChange}>\r\n      <DialogTrigger asChild>\r\n        <Button className=\"bg-orange-500 hover:bg-orange-600\">\r\n          <Plus className=\"w-4 h-4 mr-2\" />\r\n          Add Partner\r\n        </Button>\r\n      </DialogTrigger>\r\n      <DialogContent className=\"max-w-md max-h-[90vh] overflow-y-auto\">\r\n        <DialogHeader>\r\n          <DialogTitle>Add New Partner</DialogTitle>\r\n          <DialogDescription>Add a new industry or academic partner.</DialogDescription>\r\n        </DialogHeader>\r\n        <div className=\"space-y-4\">\r\n          <div className=\"space-y-2\">\r\n            <Label"
+            },
+            {
+              "file": "src/components/admin/AddSpeakerDialog.tsx",
+              "start_line": 270,
+              "end_line": 296,
+              "start_col": 8,
+              "end_col": 18,
+              "fragment": "variant: \"destructive\",\r\n      });\r\n    } finally {\r\n      setIsSubmitting(false);\r\n    }\r\n  };\r\n\r\n  return (\r\n    <Dialog open={open} onOpenChange={handleOpenChange}>\r\n      <DialogTrigger asChild>\r\n        <Button className=\"bg-orange-500 hover:bg-orange-600\">\r\n          <Plus className=\"w-4 h-4 mr-2\" />\r\n          Add Speaker\r\n        </Button>\r\n      </DialogTrigger>\r\n      <DialogContent className=\"max-w-md max-h-[90vh] overflow-y-auto\">\r\n        <DialogHeader>\r\n          <DialogTitle>Add New Keynote Speaker</DialogTitle>\r\n          <DialogDescription>\r\n            Add a new keynote speaker. Fields with * are required.\r\n          </DialogDescription>\r\n        </DialogHeader>\r\n\r\n        <div className=\"space-y-4\">\r\n          {/* Name */}\r\n          <div className=\"space-y-2\">\r\n            <Label"
+            }
+          ],
+          "token_count": 79,
+          "line_count": 27,
+          "fingerprint": "dup:6c88c1d4",
+          "suggested_name": "className",
+          "actions": [
+            {
+              "type": "extract-shared",
+              "auto_fixable": false,
+              "description": "Extract duplicated code (27 lines, 3 instances) into a shared function"
+            },
+            {
+              "type": "suppress-line",
+              "auto_fixable": false,
+              "description": "Suppress with an inline comment above the duplicated code",
+              "comment": "// fallow-ignore-next-line code-duplication"
+            }
+          ]
+        },
+        {
+          "instances": [
+            {
+              "file": "src/components/admin/AddMemberDialog.tsx",
+              "start_line": 325,
+              "end_line": 345,
+              "start_col": 12,
+              "end_col": 29,
+              "fragment": "<Input\r\n              id=\"affiliation\"\r\n              placeholder=\"e.g., University of Example, Tech Corp\"\r\n              value={formData.affiliation}\r\n              onChange={(e) => handleInputChange(\"affiliation\", e.target.value)}\r\n              className=\"border-border\"\r\n            />\r\n          </div>\r\n\r\n          {/* Photo - URL or Upload */}\r\n          <div className=\"space-y-2\">\r\n            <Label className=\"text-sm font-medium\">Photo *</Label>\r\n            <Tabs defaultValue=\"url\" className=\"w-full\">\r\n              <TabsList className=\"grid w-full grid-cols-2\">\r\n                <TabsTrigger value=\"url\">Photo URL</TabsTrigger>\r\n                <TabsTrigger value=\"upload\">Upload File</TabsTrigger>\r\n              </TabsList>\r\n\r\n              <TabsContent value=\"url\" className=\"space-y-2\">\r\n                <Input\r\n                  placeholder"
+            },
+            {
+              "file": "src/components/admin/AddPartnerDialog.tsx",
+              "start_line": 208,
+              "end_line": 222,
+              "start_col": 12,
+              "end_col": 29,
+              "fragment": "<Input value={formData.link || \"\"} onChange={(e) => handleInputChange(\"link\", e.target.value)} />\r\n          </div>\r\n          \r\n          {/* Photo - URL or Upload */}\r\n          <div className=\"space-y-2\">\r\n            <Label className=\"text-sm font-medium\">Image *</Label>\r\n            <Tabs defaultValue=\"url\" className=\"w-full\">\r\n              <TabsList className=\"grid w-full grid-cols-2\">\r\n                <TabsTrigger value=\"url\">Image URL</TabsTrigger>\r\n                <TabsTrigger value=\"upload\">Upload File</TabsTrigger>\r\n              </TabsList>\r\n\r\n              <TabsContent value=\"url\" className=\"space-y-2\">\r\n                <Input\r\n                  placeholder"
+            },
+            {
+              "file": "src/components/admin/AddSpeakerDialog.tsx",
+              "start_line": 355,
+              "end_line": 376,
+              "start_col": 12,
+              "end_col": 29,
+              "fragment": "<Input\r\n              id=\"linkedin\"\r\n              placeholder=\"https://linkedin.com/in/username\"\r\n              type=\"url\"\r\n              value={formData.linkedin}\r\n              onChange={(e) => handleInputChange(\"linkedin\", e.target.value)}\r\n              className=\"border-border\"\r\n            />\r\n          </div>\r\n\r\n          {/* Photo - URL or Upload */}\r\n          <div className=\"space-y-2\">\r\n            <Label className=\"text-sm font-medium\">Photo *</Label>\r\n            <Tabs defaultValue=\"url\" className=\"w-full\">\r\n              <TabsList className=\"grid w-full grid-cols-2\">\r\n                <TabsTrigger value=\"url\">Photo URL</TabsTrigger>\r\n                <TabsTrigger value=\"upload\">Upload File</TabsTrigger>\r\n              </TabsList>\r\n\r\n              <TabsContent value=\"url\" className=\"space-y-2\">\r\n                <Input\r\n                  placeholder"
+            }
+          ],
+          "token_count": 58,
+          "line_count": 22,
+          "fingerprint": "dup:e0c19d60",
+          "suggested_name": "className",
+          "actions": [
+            {
+              "type": "extract-shared",
+              "auto_fixable": false,
+              "description": "Extract duplicated code (22 lines, 3 instances) into a shared function"
+            },
+            {
+              "type": "suppress-line",
+              "auto_fixable": false,
+              "description": "Suppress with an inline comment above the duplicated code",
+              "comment": "// fallow-ignore-next-line code-duplication"
+            }
+          ]
+        }
+      ],
+      "total_duplicated_lines": 49,
+      "total_duplicated_tokens": 137,
+      "suggestions": [
+        {
+          "kind": "ExtractFunction",
+          "description": "Extract shared function (27 lines) from AddMemberDialog.tsx, AddPartnerDialog.tsx, AddSpeakerDialog.tsx",
+          "estimated_savings": 54
+        },
+        {
+          "kind": "ExtractFunction",
+          "description": "Extract shared function (22 lines) from AddMemberDialog.tsx, AddPartnerDialog.tsx, AddSpeakerDialog.tsx",
+          "estimated_savings": 44
+        }
+      ],
+      "actions": [
+        {
+          "type": "extract-shared",
+          "auto_fixable": false,
+          "description": "Extract 2 duplicated code blocks (49 lines) into a shared module",
+          "note": "These clone groups share the same files, indicating a structural relationship; refactor together"
+        },
+        {
+          "type": "apply-suggestion",
+          "auto_fixable": false,
+          "description": "Extract shared function (27 lines) from AddMemberDialog.tsx, AddPartnerDialog.tsx, AddSpeakerDialog.tsx"
+        },
+        {
+          "type": "apply-suggestion",
+          "auto_fixable": false,
+          "description": "Extract shared function (22 lines) from AddMemberDialog.tsx, AddPartnerDialog.tsx, AddSpeakerDialog.tsx"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the duplicated code",
+          "comment": "// fallow-ignore-next-line code-duplication"
+        }
+      ]
+    }
+  ],
+  "stats": {
+    "total_files": 96,
+    "files_with_clones": 20,
+    "total_lines": 13369,
+    "duplicated_lines": 1620,
+    "total_tokens": 50491,
+    "duplicated_tokens": 2816,
+    "clone_groups": 3,
+    "clone_instances": 9,
+    "duplication_percentage": 12.11758545889745,
+    "clone_groups_below_min_occurrences": 28
+  }
+}

@@ -2,14 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { SharedDialogWrapper } from "./SharedDialogWrapper";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Plus, Eye } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
@@ -275,22 +268,14 @@ export const AddSpeakerDialog = ({ onSpeakerAdded }: AddSpeakerDialogProps) => {
   };
 
   return (
-    <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogTrigger asChild>
-        <Button className="bg-orange-500 hover:bg-orange-600">
-          <Plus className="w-4 h-4 mr-2" />
-          Add Speaker
-        </Button>
-      </DialogTrigger>
-      <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle>Add New Keynote Speaker</DialogTitle>
-          <DialogDescription>
-            Add a new keynote speaker. Fields with * are required.
-          </DialogDescription>
-        </DialogHeader>
-
-        <div className="space-y-4">
+    <SharedDialogWrapper
+      open={open}
+      onOpenChange={handleOpenChange}
+      triggerText="Add Speaker"
+      title="Add New Keynote Speaker"
+      description="Add a new keynote speaker. Fields with * are required."
+    >
+      <div className="space-y-4">
           {/* Name */}
           <div className="space-y-2">
             <Label htmlFor="name" className="text-sm font-medium">
@@ -524,7 +509,6 @@ export const AddSpeakerDialog = ({ onSpeakerAdded }: AddSpeakerDialogProps) => {
             Cancel
           </Button>
         </div>
-      </DialogContent>
-    </Dialog>
-  );
+      </SharedDialogWrapper>
+    );
 };
