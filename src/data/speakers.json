@@ -6,7 +6,7 @@
       "affiliation": "DSP DRDO, Hyderabad",
       "linkedin": "https://www.linkedin.com/in/dr-anupam-sharma-04644060/",
       "photo": {
-        "url": "/images/speakers/anupam sharma.jpg"
+        "url": "/images/speakers/anupam sharma.png"
       }
     },
     {
@@ -25,6 +25,92 @@
       "linkedin": "https://www.linkedin.com/in/kirankumar-doreswamy-a4b18368/",
       "photo": {
         "url": "/images/speakers/kiran kumar.jpg"
+      }
+    },
+    {
+      "name": "Dr. Euijoon Ahn",
+      "role": "Professor",
+      "affiliation": "James Cook University, Australia",
+      "linkedin": "https://www.linkedin.com/in/euijoon-ahn-0819102b/",
+      "photo": {
+        "url": "/images/speakers/euijoon_ahn.jpg"
+      }
+    },
+    {
+      "name": "Dr. Jay Bagga",
+      "role": "Professor",
+      "affiliation": "Ball State University, Muncie, Indiana, USA",
+      "topic": "Beyond Open Problems: AI, Hypothesis Generation, and the Future of Research",
+      "linkedin": "https://www.linkedin.com/in/jaybagga/",
+      "photo": {
+        "url": "/images/speakers/jay_bagga.jpg"
+      }
+    },
+    {
+      "name": "Dr. Adithya Kulkarni",
+      "role": "Professor",
+      "affiliation": "Ball State University, Muncie, Indiana, USA",
+      "topic": "Beyond Open Problems: AI, Hypothesis Generation, and the Future of Research",
+      "linkedin": "https://www.linkedin.com/in/adithya-kulkarni-581943a0",
+      "photo": {
+        "url": "/images/speakers/adithya_kulkarni.jpg"
+      }
+    },
+    {
+      "name": "Mtro. Sabel Alejandro Barrón García",
+      "role": "Director of the Applied Engineering Department",
+      "affiliation": "UAG Campus Tabasco, Mexico",
+      "topic": "Computer Vision Algorithms Applied to the Detection of Pests and Diseases in Plants: From Traditional Image Processing to Deep Learning Architectures",
+      "linkedin": "https://www.linkedin.com/in/sabel-alejandro-barr%C3%B3n-garc%C3%ADa-a06664245/",
+      "photo": {
+        "url": "/images/speakers/sabel_barron.jpg"
+      }
+    },
+    {
+      "name": "Prof. Manuel Balderas Victoria",
+      "role": "Associate Professor",
+      "affiliation": "UAG Campus Tabasco, Mexico",
+      "topic": "Augmented Reality (AR) in Education and Industrial Training: Challenges and Best Practices",
+      "photo": {
+        "url": ""
+      }
+    },
+    {
+      "name": "Mtro. Manuel Enrique García Hernández",
+      "role": "Lecturer",
+      "affiliation": "UAG Campus Tabasco, Mexico",
+      "topic": "Optimization of Recycled Aluminum Alloys Modified with Zinc and Copper Using Design of Experiments (DoE) for High-Performance Mechanical Applications",
+      "photo": {
+        "url": ""
+      }
+    },
+    {
+      "name": "Mtro. Sebastian Ledesma Alvarez",
+      "role": "Director of Engineering Programs",
+      "affiliation": "UAG Campus Tabasco, Mexico",
+      "topic": "Integrating Artificial Intelligence in Industrial Engineering: Transforming Operational Data into Decision-Support Systems for Process Improvement",
+      "photo": {
+        "url": ""
+      }
+    },
+    {
+      "name": "Mtro. José Guadalupe Santiago Ovando",
+      "role": "Associate Professor",
+      "affiliation": "UAG Campus Tabasco, Mexico",
+      "topic": "Mechatronic Design and Autonomous Navigation Challenges for Spraying Robots in Irregular Tropical Terrains",
+      "linkedin": "https://www.linkedin.com/in/jos%C3%A9-guadalupe-santiago-ovando-7ba96524a/",
+      "photo": {
+        "url": "/images/speakers/jose_santiago.jpg"
+      }
+    },
+    {
+      "name": "Mtro. Richard Pérez Izquierdo",
+      "role": "Lecturer",
+      "affiliation": "UAG Campus Tabasco, Mexico",
+      "topic": "Determinants of Hand Prosthesis Abandonment: A Systematic Integrative Review",
+      "linkedin": "https://www.linkedin.com/in/richardperezizquierdo/",
+      "photo": {
+        "url": "/images/speakers/richard_perez.jpg"
       }
     }
   ]

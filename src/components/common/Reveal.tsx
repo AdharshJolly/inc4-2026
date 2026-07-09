@@ -40,6 +40,7 @@ export const Reveal = ({
       className={className}
     >
       <motion.div
+        className="h-full"
         variants={{
           hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 75 },
           visible: { opacity: 1, y: 0 },

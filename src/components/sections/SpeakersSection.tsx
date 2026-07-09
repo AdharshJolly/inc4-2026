@@ -50,78 +50,73 @@ export const SpeakersSection = () => {
             const photoUrl = getPhotoUrl(speaker.photo);
 
             return (
-              <Reveal key={speaker.name} width="100%">
-                <div className="pt-20">
-                  <div className="group relative">
-                    {/* Glow Effect properly matching card height */}
-                    <div className="absolute inset-0 bg-primary/5 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                    <div className="relative bg-card border border-border rounded-3xl p-6 pt-24 hover:border-primary/50 transition-all duration-500 hover:shadow-xl hover:-translate-y-2 text-center">
-                      {/* Floating Avatar */}
-                      <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-40 h-40 rounded-full border-4 border-card overflow-hidden bg-muted shadow-xl group-hover:scale-105 transition-transform duration-500">
-                        {photoUrl ? (
-                          <Image
-                            src={photoUrl}
-                            alt={speaker.name}
-                            fill
-                            className="object-cover"
-                            sizes="160px"
-                            unoptimized={isExternalUrl(photoUrl)}
-                          />
-                        ) : (
-                          <div className="w-full h-full flex items-center justify-center bg-muted">
-                            <span className="text-4xl font-bold text-muted-foreground">
-                              {speaker.name?.charAt(0) || "?"}
-                            </span>
-                          </div>
-                        )}
-                      </div>
-
-                      {/* Topic Badge */}
-                      {speaker.topic && (
-                        <div className="mb-4">
-                          <span className="bg-primary/10 text-primary text-xs font-semibold px-3 py-1.5 rounded-full border border-primary/20 inline-block">
-                            {speaker.topic}
+              <Reveal key={speaker.name} width="100%" className="h-full">
+                <div className="pt-20 h-full">
+                  <div className="relative h-full flex flex-col bg-card border border-border rounded-3xl p-6 pt-24 text-center">
+                    {/* Floating Avatar */}
+                    <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-40 h-40 rounded-full border-4 border-card overflow-hidden bg-muted shadow-xl">
+                      {photoUrl ? (
+                        <Image
+                          src={photoUrl}
+                          alt={speaker.name}
+                          fill
+                          className="object-cover"
+                          sizes="160px"
+                          unoptimized={isExternalUrl(photoUrl)}
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center bg-muted">
+                          <span className="text-4xl font-bold text-muted-foreground">
+                            {speaker.name?.charAt(0) || "?"}
                           </span>
                         </div>
                       )}
+                    </div>
 
-                      {/* Content */}
-                      <h3 className="font-display text-xl font-bold text-foreground mb-1">
-                        {speaker.name}
-                      </h3>
-                      <p className="text-primary font-medium text-sm mb-2">
-                        {speaker.role}
-                      </p>
-                      <p className="text-muted-foreground text-sm mb-6 line-clamp-2">
-                        {speaker.affiliation}
-                      </p>
-
-                      {/* Social Links */}
-                      <div className="flex justify-center gap-3">
-                        {speaker.linkedin && (
-                          <a
-                            href={speaker.linkedin}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            aria-label={`${speaker.name} on LinkedIn`}
-                            className="w-10 h-10 bg-muted rounded-full flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors group/social text-muted-foreground"
-                          >
-                            <Linkedin className="w-4 h-4 group-hover/social:scale-110 transition-transform" />
-                          </a>
-                        )}
-                        {speaker.twitter && (
-                          <a
-                            href={speaker.twitter}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            aria-label={`${speaker.name} on Twitter`}
-                            className="w-10 h-10 bg-muted rounded-full flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors group/social text-muted-foreground"
-                          >
-                            <Twitter className="w-4 h-4 group-hover/social:scale-110 transition-transform" />
-                          </a>
-                        )}
+                    {/* Topic Badge */}
+                    {speaker.topic && (
+                      <div className="mb-4">
+                        <span className="bg-primary/10 text-primary text-xs font-semibold px-3 py-1.5 rounded-full border border-primary/20 inline-block">
+                          {speaker.topic}
+                        </span>
                       </div>
+                    )}
+
+                    {/* Content */}
+                    <h3 className="font-display text-xl font-bold text-foreground mb-1">
+                      {speaker.name}
+                    </h3>
+                    <p className="text-primary font-medium text-sm mb-2">
+                      {speaker.role}
+                    </p>
+                    <p className="text-muted-foreground text-sm mb-6">
+                      {speaker.affiliation}
+                    </p>
+
+                    {/* Social Links */}
+                    <div className="flex justify-center gap-3 mt-auto">
+                      {speaker.linkedin && (
+                        <a
+                          href={speaker.linkedin}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`${speaker.name} on LinkedIn`}
+                          className="w-10 h-10 bg-muted rounded-full flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors group/social text-muted-foreground"
+                        >
+                          <Linkedin className="w-4 h-4 group-hover/social:scale-110 transition-transform" />
+                        </a>
+                      )}
+                      {speaker.twitter && (
+                        <a
+                          href={speaker.twitter}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`${speaker.name} on Twitter`}
+                          className="w-10 h-10 bg-muted rounded-full flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors group/social text-muted-foreground"
+                        >
+                          <Twitter className="w-4 h-4 group-hover/social:scale-110 transition-transform" />
+                        </a>
+                      )}
                     </div>
                   </div>
                 </div>
