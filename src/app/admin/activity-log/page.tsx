@@ -6,7 +6,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ActivityLog } from "@/components/admin/ActivityLog";
 import { ArrowLeft } from "lucide-react";
-import { PendingChangesCounter } from "@/components/admin/PendingChangesCounter";
 import { AdminSessionContext } from "../AdminSessionProvider";
 
 export default function ActivityLogPage() {
@@ -17,7 +16,6 @@ export default function ActivityLogPage() {
       <div className="container mx-auto px-4 pb-4 flex items-center justify-between">
         <PageTitle title="Activity Log" />
         <div className="flex items-center gap-3">
-          <PendingChangesCounter />
           {session?.logout && (
             <Button
               onClick={session.logout}

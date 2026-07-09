@@ -1,49 +1,56 @@
 "use client";
 
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import { PageTitle } from "@/components/common/PageTitle";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Users, Calendar, Mic, Eye } from "lucide-react";
 import { isCompleted } from "@/lib/dateUtils";
-import { PendingChangesCounter } from "@/components/admin/PendingChangesCounter";
-import committeeData from "@/data/committee.json";
-import speakersData from "@/data/speakers.json";
-import datesData from "@/data/important-dates.json";
-import partnersData from "@/data/partners.json";
-import type {
-  CommitteeData,
-  SpeakersData,
-  ImportantDatesData,
-  PartnersData,
-} from "@/types/data";
 import { CommitteeManager } from "@/components/admin/CommitteeManager";
 import { SpeakersManager } from "@/components/admin/SpeakersManager";
 import { DatesManager } from "@/components/admin/DatesManager";
 import { PartnersManager } from "@/components/admin/PartnersManager";
 import { AdminSessionContext } from "./AdminSessionProvider";
-import { getPendingChanges } from "@/lib/githubSync";
-import { enablePreviewMode } from "@/lib/previewMode";
-import type { PreviewData } from "@/lib/previewMode";
+import { createClient } from "@/utils/supabase/client";
 
 export default function AdminDashboard() {
   const session = useContext(AdminSessionContext);
-  const committee = (committeeData as CommitteeData).root;
-  const speakers = (speakersData as SpeakersData).root;
-  const dates = (datesData as ImportantDatesData).root;
-  const partners = (partnersData as PartnersData).root;
 
-  // Calculate stats
-  const totalMembers = committee.reduce(
-    (sum, cat) => sum + cat.members.length,
-    0
-  );
-  const categoriesCount = committee.length;
-  const speakersCount = speakers.length;
+  const [upcomingDates, setUpcomingDates] = useState(0);
+  const [partnersCount, setPartnersCount] = useState(0);
+  const [totalMembers, setTotalMembers] = useState(0);
+  const [categoriesCount, setCategoriesCount] = useState(0);
+  const [speakersCount, setSpeakersCount] = useState(0);
 
+  useEffect(() => {
+    const fetchStats = async () => {
+      const supabase = createClient();
+      
+      const { data: dData } = await supabase.from("important_dates").select("event_date");
+      if (dData) {
+        setUpcomingDates(dData.filter((d: any) => !isCompleted(d.event_date)).length);
+      }
+      
+      const { count: pCount } = await supabase.from("partners").select("*", { count: "exact", head: true });
+      if (pCount !== null) {
+        setPartnersCount(pCount);
+      }
 
-  const upcomingDates = dates.filter((d) => !isCompleted(d.date)).length;
+      const { count: sCount } = await supabase.from("speakers").select("*", { count: "exact", head: true });
+      if (sCount !== null) {
+        setSpeakersCount(sCount);
+      }
+
+      const { data: cData } = await supabase.from("committee_members").select("category_id");
+      if (cData) {
+        setTotalMembers(cData.length);
+        const uniqueCategories = new Set(cData.map(c => c.category_id));
+        setCategoriesCount(uniqueCategories.size);
+      }
+    };
+    fetchStats();
+  }, []);
 
   const stats = [
     {
@@ -76,7 +83,7 @@ export default function AdminDashboard() {
     },
     {
       title: "Partners",
-      value: partners.length,
+      value: partnersCount,
       icon: Users,
       color: "text-orange-500",
       bgColor: "bg-orange-500/10",
@@ -84,21 +91,6 @@ export default function AdminDashboard() {
   ];
 
   const handlePreview = (url: string) => {
-    const pending = getPendingChanges();
-    if (pending.length === 0) {
-      window.open(url, "_blank");
-      return;
-    }
-
-    const previewData: PreviewData = {};
-    pending.forEach((change) => {
-      previewData[change.path] =
-        typeof change.content === "string"
-          ? change.content
-          : JSON.stringify(change.content);
-    });
-
-    enablePreviewMode(previewData);
     window.open(url, "_blank");
   };
 
@@ -107,7 +99,6 @@ export default function AdminDashboard() {
       <div className="container mx-auto px-4 pb-4 flex items-center justify-between">
         <PageTitle title="Admin Dashboard" />
         <div className="flex items-center gap-3">
-          <PendingChangesCounter />
           {session?.logout && (
             <Button
               onClick={session.logout}
@@ -144,32 +135,6 @@ export default function AdminDashboard() {
             </Card>
           ))}
         </div>
-
-        <Card className="mb-8 border-primary/20">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Users className="w-5 h-5 text-orange-500" />
-              Committee Breakdown by Category
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              {committee.map((category) => (
-                <div
-                  key={category.id}
-                  className="p-4 rounded-lg border border-border hover:border-primary/40 transition-colors"
-                >
-                  <p className="text-sm font-medium text-muted-foreground mb-1">
-                    {category.label}
-                  </p>
-                  <p className="text-2xl font-bold text-primary">
-                    {category.members.length}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
 
         <Card className="border-primary/20">
           <CardHeader>
@@ -258,3 +223,4 @@ export default function AdminDashboard() {
     </div>
   );
 }
+

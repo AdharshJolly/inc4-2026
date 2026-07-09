@@ -1,8 +1,7 @@
 import { MetadataRoute } from 'next';
-import committeeData from '@/data/committee.json';
-import { CommitteeData } from '@/types/data';
+import { createClient } from '@supabase/supabase-js';
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://ic4.co.in';
 
   // Static routes
@@ -23,12 +22,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: route === '' ? 1 : 0.8,
   }));
 
-  // Dynamic routes for committee categories
-  // Cast to unknown first if strict type checking complains about JSON import not matching interface exactly due to extra properties or slightly different structure inferring
-  const data = committeeData as unknown as CommitteeData;
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!
+  );
   
-  const committeeRoutes = data.root.map((category) => ({
-    url: `${baseUrl}/committee/${category.id}`,
+  const { data } = await supabase.from('committee_members').select('category_id');
+  const uniqueCategories = Array.from(new Set(data?.map(m => m.category_id) || []));
+
+  const committeeRoutes = uniqueCategories.map((category) => ({
+    url: `${baseUrl}/committee/${category}`,
     lastModified: new Date(),
     changeFrequency: 'weekly' as const,
     priority: 0.7,

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
   Dialog,
   DialogContent,
@@ -8,22 +8,16 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Badge } from "@/components/ui/badge";
-import { AlertCircle, Upload, X } from "lucide-react";
-import speakersData from "@/data/speakers.json";
-import { getPhotoUrl } from "@/lib/photoMigration";
 import { ActivityLogger } from "@/lib/activityLogger";
-import { storePendingChange } from "@/lib/githubSync";
 import { uploadImageToGitHub } from "@/lib/fileUpload";
 import { useToast } from "@/hooks/use-toast";
 import { PhotoUploadField } from "./PhotoUploadField";
-import type { SpeakersData } from "@/types/data";
+import { createClient } from "@/utils/supabase/client";
 
 interface EditSpeakerDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  speakerIndex: number;
+  speakerId: string;
   speakerName: string;
   onSpeakerUpdated?: () => void;
 }
@@ -31,46 +25,67 @@ interface EditSpeakerDialogProps {
 export const EditSpeakerDialog = ({
   open,
   onOpenChange,
-  speakerIndex,
+  speakerId,
   speakerName,
   onSpeakerUpdated,
 }: EditSpeakerDialogProps) => {
-  const speakers = (speakersData as SpeakersData).root;
-  const speaker = speakers[speakerIndex];
-
+  const [speaker, setSpeaker] = useState<any>(null);
   const [formData, setFormData] = useState({
-    name: speaker?.name || "",
-    role: speaker?.role || "",
-    affiliation: speaker?.affiliation || "",
-    topic: speaker?.topic || "",
-    linkedin: speaker?.linkedin || "",
-    photoUrl: getPhotoUrl(speaker?.photo) || "",
+    name: "",
+    role: "",
+    affiliation: "",
+    topic: "",
+    linkedin: "",
+    photoUrl: "",
     photoFile: null as File | null,
   });
 
   const [uploadedFileName, setUploadedFileName] = useState("");
-  const [photoPreview, setPhotoPreview] = useState(
-    getPhotoUrl(speaker?.photo) || ""
-  );
+  const [photoPreview, setPhotoPreview] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const { toast } = useToast();
+  const supabase = createClient();
 
-  // Cleanup object URLs to prevent memory leaks
+  const fetchSpeaker = useCallback(async () => {
+    const { data, error } = await supabase
+      .from("speakers")
+      .select("*")
+      .eq("id", speakerId)
+      .single();
+    
+    if (data && !error) {
+      setSpeaker(data);
+      setFormData({
+        name: data.name || "",
+        role: data.role || "",
+        affiliation: data.affiliation || "",
+        topic: data.topic || "",
+        linkedin: data.linkedin || "",
+        photoUrl: data.photo_url || "",
+        photoFile: null,
+      });
+      setPhotoPreview(data.photo_url || "");
+    }
+  }, [supabase, speakerId]);
+
+  useEffect(() => {
+    if (open) {
+      fetchSpeaker();
+    }
+  }, [open, fetchSpeaker]);
+
   useEffect(() => {
     return () => {
-      // Cleanup on unmount
       if (photoPreview?.startsWith("blob:")) {
         URL.revokeObjectURL(photoPreview);
       }
     };
   }, []);
 
-  // Cleanup when dialog closes
   const handleDialogOpenChange = (newOpen: boolean) => {
     if (!newOpen && photoPreview?.startsWith("blob:")) {
-      // Dialog is closing, revoke the preview URL
       URL.revokeObjectURL(photoPreview);
-      setPhotoPreview(getPhotoUrl(speaker?.photo) || "");
+      setPhotoPreview(speaker?.photo_url || "");
     }
     onOpenChange(newOpen);
   };
@@ -124,7 +139,6 @@ export const EditSpeakerDialog = ({
       }));
       setUploadedFileName(file.name);
 
-      // Create blob URL for efficient preview (will be revoked when preview changes or on unmount)
       const blobUrl = URL.createObjectURL(file);
       setPhotoPreview(blobUrl);
 
@@ -158,42 +172,15 @@ export const EditSpeakerDialog = ({
 
   const handleSubmit = async () => {
     if (!validateForm()) return;
-
     if (!speaker) return;
 
     try {
-      // Track changes for activity log
-      const changes: Record<string, { old: string; new: string }> = {};
-
-      if (speaker.name !== formData.name) {
-        changes.name = { old: speaker.name, new: formData.name };
-      }
-      if (speaker.role !== formData.role) {
-        changes.role = { old: speaker.role, new: formData.role };
-      }
-      if (speaker.affiliation !== formData.affiliation) {
-        changes.affiliation = {
-          old: speaker.affiliation,
-          new: formData.affiliation,
-        };
-      }
-      if (speaker.topic !== formData.topic) {
-        changes.topic = { old: speaker.topic || "", new: formData.topic };
-      }
-      if (speaker.linkedin !== formData.linkedin) {
-        changes.linkedin = {
-          old: speaker.linkedin || "N/A",
-          new: formData.linkedin || "N/A",
-        };
-      }
-
-      // Handle photo: upload file if present, otherwise keep existing or use URL
       let photoUrl = formData.photoUrl;
 
       if (formData.photoFile) {
         toast({
           title: "Uploading photo",
-          description: "Please wait while we upload your photo to GitHub...",
+          description: "Please wait while we upload your photo...",
         });
 
         const uploadResult = await uploadImageToGitHub(
@@ -206,38 +193,28 @@ export const EditSpeakerDialog = ({
         }
 
         photoUrl = uploadResult.path || "";
-      } else if (!photoUrl && speaker.photo?.url) {
-        // Keep existing photo if no new upload or URL
-        photoUrl = speaker.photo.url;
+      } else if (!photoUrl && speaker.photo_url) {
+        photoUrl = speaker.photo_url;
       }
 
-      // Update speaker in memory
-      const updatedSpeaker = {
-        ...speaker,
-        name: formData.name,
-        role: formData.role,
-        affiliation: formData.affiliation,
-        topic: formData.topic,
-        linkedin: formData.linkedin,
-        photo: { url: photoUrl },
-      };
+      const { error } = await supabase
+        .from("speakers")
+        .update({
+          name: formData.name,
+          role: formData.role,
+          affiliation: formData.affiliation,
+          topic: formData.topic,
+          linkedin: formData.linkedin,
+          photo_url: photoUrl,
+        })
+        .eq("id", speakerId);
 
-      speakers[speakerIndex] = updatedSpeaker;
+      if (error) throw error;
 
-      // Store pending change for GitHub commit on logout
-      const updatedSpeakers = JSON.stringify(speakersData, null, 2);
-      storePendingChange({
-        path: "src/data/speakers.json",
-        content: updatedSpeakers,
-        message: `Updated speaker: ${formData.name}`,
-      });
-
-      // Log the action
       ActivityLogger.log({
         action: "Updated speaker",
         type: "speaker",
         targetName: formData.name,
-        changes: Object.keys(changes).length > 0 ? changes : undefined,
         status: "success",
       });
 
@@ -268,7 +245,6 @@ export const EditSpeakerDialog = ({
         </DialogHeader>
 
         <div className="space-y-6">
-          {/* Basic Info */}
           <div className="grid grid-cols-2 gap-4">
             <div>
               <Label htmlFor="edit-speaker-name">Name *</Label>
@@ -376,7 +352,6 @@ export const EditSpeakerDialog = ({
             onClearPhoto={handleClearPhoto}
           />
 
-          {/* Actions */}
           <div className="flex gap-3 justify-end border-t pt-6">
             <Button variant="outline" onClick={() => onOpenChange(false)}>
               Cancel

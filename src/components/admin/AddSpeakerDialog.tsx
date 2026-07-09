@@ -4,16 +4,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { SharedDialogWrapper } from "./SharedDialogWrapper";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Plus, Eye } from "lucide-react";
+import { Eye } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import speakersData from "@/data/speakers.json";
-import { storePendingChange } from "@/lib/githubSync";
 import { ActivityLogger } from "@/lib/activityLogger";
 import { uploadImageToGitHub } from "@/lib/fileUpload";
-import type { SpeakersData } from "@/types/data";
 import { PreviewDialog } from "./PreviewDialog";
 import { validatePhotoUpload } from "@/lib/validatePhotoUpload";
 import { z } from "zod";
+import { createClient } from "@/utils/supabase/client";
 
 interface AddSpeakerFormData {
   name: string;
@@ -51,27 +49,23 @@ export const AddSpeakerDialog = ({ onSpeakerAdded }: AddSpeakerDialogProps) => {
   const [lastFailedUrl, setLastFailedUrl] = useState<string | null>(null);
   const { toast } = useToast();
   const [formData, setFormData] = useState<AddSpeakerFormData>(initialFormData);
+  const supabase = createClient();
 
-  // Cleanup object URLs to prevent memory leaks
   useEffect(() => {
     return () => {
-      // Cleanup on unmount: revoke any remaining preview URL
       if (formData.photoPreviewUrl) {
         URL.revokeObjectURL(formData.photoPreviewUrl);
       }
     };
   }, [formData.photoPreviewUrl]);
 
-  // Debounce photo URL input to avoid firing image load/toasts on every keystroke
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedPhotoUrl(formData.photoUrl);
     }, 400);
-
     return () => clearTimeout(timer);
   }, [formData.photoUrl]);
 
-  // Reset image error and failed URL when debounced URL is cleared
   useEffect(() => {
     if (!debouncedPhotoUrl) {
       setImageError(false);
@@ -79,7 +73,6 @@ export const AddSpeakerDialog = ({ onSpeakerAdded }: AddSpeakerDialogProps) => {
     }
   }, [debouncedPhotoUrl]);
 
-  // Cleanup when dialog closes
   const handleOpenChange = (newOpen: boolean) => {
     if (!newOpen) {
       if (formData.photoPreviewUrl) {
@@ -105,21 +98,17 @@ export const AddSpeakerDialog = ({ onSpeakerAdded }: AddSpeakerDialogProps) => {
   const handlePhotoFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (validatePhotoUpload(file, toast) && file) {
-      // Create preview URL
       const previewUrl = URL.createObjectURL(file);
-
       setFormData((prev) => ({
         ...prev,
         photoFile: file,
         photoPreviewUrl: previewUrl,
-        photoUrl: "", // Clear URL if file is selected
+        photoUrl: "",
       }));
     }
   };
 
   const clearPhotoFile = () => {
-    // Don't revoke here - let useEffect cleanup handle revocation
-    // to avoid breaking async uses of the URL by parent
     setFormData((prev) => ({
       ...prev,
       photoFile: null,
@@ -128,7 +117,6 @@ export const AddSpeakerDialog = ({ onSpeakerAdded }: AddSpeakerDialogProps) => {
   };
 
   const handleSubmit = async () => {
-    // Validation with Zod
     const speakerSchema = z.object({
       name: z.string().min(2, "Speaker name is required"),
       role: z.string().min(2, "Speaker role is required"),
@@ -168,15 +156,12 @@ export const AddSpeakerDialog = ({ onSpeakerAdded }: AddSpeakerDialogProps) => {
     setIsSubmitting(true);
 
     try {
-      const speakers = (speakersData as SpeakersData).root;
-
-      // Handle photo: upload file if present, otherwise use URL
       let photoUrl = formData.photoUrl;
 
       if (formData.photoFile) {
         toast({
           title: "Uploading photo",
-          description: "Please wait while we upload your photo to GitHub...",
+          description: "Please wait while we upload your photo...",
         });
 
         const uploadResult = await uploadImageToGitHub(
@@ -191,28 +176,27 @@ export const AddSpeakerDialog = ({ onSpeakerAdded }: AddSpeakerDialogProps) => {
         photoUrl = uploadResult.path || "";
       }
 
-      // Create new speaker object with just the URL
-      const newSpeaker = {
+      // Get max order_index
+      const { data: maxData } = await supabase
+        .from("speakers")
+        .select("order_index")
+        .order("order_index", { ascending: false })
+        .limit(1);
+      
+      const newIndex = maxData && maxData.length > 0 ? maxData[0].order_index + 1 : 0;
+
+      const { error } = await supabase.from("speakers").insert({
         name: formData.name,
         role: formData.role,
         affiliation: formData.affiliation,
         topic: formData.topic,
         linkedin: formData.linkedin || "",
-        photo: photoUrl ? { url: photoUrl } : {},
-      };
-
-      // Add to speakers in memory
-      speakers.push(newSpeaker);
-
-      // Store pending change for GitHub commit on logout
-      const updatedSpeakers = JSON.stringify(speakersData, null, 2);
-      storePendingChange({
-        path: "src/data/speakers.json",
-        content: updatedSpeakers,
-        message: `Added new speaker: ${formData.name}`,
+        photo_url: photoUrl,
+        order_index: newIndex,
       });
 
-      // Log the action
+      if (error) throw error;
+
       ActivityLogger.log({
         action: "Added new speaker",
         type: "speaker",
@@ -222,7 +206,7 @@ export const AddSpeakerDialog = ({ onSpeakerAdded }: AddSpeakerDialogProps) => {
 
       toast({
         title: "Success",
-        description: `Speaker "${formData.name}" added successfully! Changes will sync to GitHub when you log out.`,
+        description: `Speaker "${formData.name}" added successfully!`,
       });
 
       onSpeakerAdded?.({
@@ -234,19 +218,8 @@ export const AddSpeakerDialog = ({ onSpeakerAdded }: AddSpeakerDialogProps) => {
         linkedin: formData.linkedin,
       });
 
-      // Reset form
       clearPhotoFile();
-      setFormData({
-        name: "",
-        role: "",
-        affiliation: "",
-        topic: "",
-        photoUrl: "",
-        photoFile: null,
-        photoPreviewUrl: "",
-        linkedin: "",
-      });
-
+      setFormData(initialFormData);
       setOpen(false);
     } catch (error) {
       console.error("Error adding speaker:", error);
@@ -271,14 +244,12 @@ export const AddSpeakerDialog = ({ onSpeakerAdded }: AddSpeakerDialogProps) => {
       title="Add New Keynote Speaker"
       description="Add a new keynote speaker. Fields with * are required."
       onInteractOutside={(e) => {
-        // Prevent closing if form is dirty
         if (formData.name || formData.role || formData.affiliation || formData.topic || formData.photoUrl || formData.photoFile) {
           e.preventDefault();
         }
       }}
     >
       <div className="space-y-4">
-          {/* Name */}
           <div className="space-y-2">
             <Label htmlFor="name" className="text-sm font-medium">
               Full Name *
@@ -292,7 +263,6 @@ export const AddSpeakerDialog = ({ onSpeakerAdded }: AddSpeakerDialogProps) => {
             />
           </div>
 
-          {/* Role */}
           <div className="space-y-2">
             <Label htmlFor="role" className="text-sm font-medium">
               Role *
@@ -306,7 +276,6 @@ export const AddSpeakerDialog = ({ onSpeakerAdded }: AddSpeakerDialogProps) => {
             />
           </div>
 
-          {/* Affiliation */}
           <div className="space-y-2">
             <Label htmlFor="affiliation" className="text-sm font-medium">
               Affiliation/Institution *
@@ -320,7 +289,6 @@ export const AddSpeakerDialog = ({ onSpeakerAdded }: AddSpeakerDialogProps) => {
             />
           </div>
 
-          {/* Topic */}
           <div className="space-y-2">
             <Label htmlFor="topic" className="text-sm font-medium">
               Topic/Title *
@@ -334,7 +302,6 @@ export const AddSpeakerDialog = ({ onSpeakerAdded }: AddSpeakerDialogProps) => {
             />
           </div>
 
-          {/* LinkedIn */}
           <div className="space-y-2">
             <Label htmlFor="linkedin" className="text-sm font-medium">
               LinkedIn Profile
@@ -349,7 +316,6 @@ export const AddSpeakerDialog = ({ onSpeakerAdded }: AddSpeakerDialogProps) => {
             />
           </div>
 
-          {/* Photo - URL or Upload */}
           <div className="space-y-2">
             <Label className="text-sm font-medium">Photo *</Label>
             <Tabs defaultValue="url" className="w-full">
@@ -365,7 +331,7 @@ export const AddSpeakerDialog = ({ onSpeakerAdded }: AddSpeakerDialogProps) => {
                   value={formData.photoUrl}
                   onChange={(e) => {
                     handleInputChange("photoUrl", e.target.value);
-                    setImageError(false); // Reset error when user changes URL
+                    setImageError(false);
                     setLastFailedUrl(null);
                   }}
                   className="border-border"
@@ -377,7 +343,6 @@ export const AddSpeakerDialog = ({ onSpeakerAdded }: AddSpeakerDialogProps) => {
                       alt="Preview"
                       className="w-full h-32 object-cover rounded"
                       onError={() => {
-                        // Prevent repeated toasts for the same failing URL
                         if (debouncedPhotoUrl === lastFailedUrl) return;
                         setLastFailedUrl(debouncedPhotoUrl);
                         setImageError(true);
@@ -455,7 +420,6 @@ export const AddSpeakerDialog = ({ onSpeakerAdded }: AddSpeakerDialogProps) => {
           </div>
         </div>
 
-        {/* Actions */}
         <div className="flex gap-2 pt-4">
           {formData.name &&
             formData.role &&

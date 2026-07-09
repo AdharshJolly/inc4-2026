@@ -11,13 +11,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
   Popover,
   PopoverContent,
   PopoverTrigger,
@@ -26,10 +19,8 @@ import { Calendar } from "@/components/ui/calendar";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Plus, Calendar as CalendarIcon } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import datesData from "@/data/important-dates.json";
-import { storePendingChange } from "@/lib/githubSync";
 import { ActivityLogger } from "@/lib/activityLogger";
-import type { ImportantDatesData } from "@/types/data";
+import { createClient } from "@/utils/supabase/client";
 
 interface AddDateFormData {
   event: string;
@@ -41,7 +32,7 @@ interface AddDateFormData {
 }
 
 interface AddDatesDialogProps {
-  onDateAdded?: (date: AddDateFormData) => void;
+  onDateAdded?: (date: any) => void;
 }
 
 export const AddDatesDialog = ({ onDateAdded }: AddDatesDialogProps) => {
@@ -49,6 +40,7 @@ export const AddDatesDialog = ({ onDateAdded }: AddDatesDialogProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
   const { toast } = useToast();
+  const supabase = createClient();
   const [formData, setFormData] = useState<AddDateFormData>({
     event: "",
     date: "",
@@ -57,10 +49,6 @@ export const AddDatesDialog = ({ onDateAdded }: AddDatesDialogProps) => {
     actionText: "",
     actionUrl: "",
   });
-  // Initialize local dates state from imported JSON
-  const [dates, setDates] = useState<ImportantDatesData["root"]>(() =>
-    structuredClone((datesData as ImportantDatesData).root)
-  );
 
   const handleInputChange = (field: keyof AddDateFormData, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -70,7 +58,6 @@ export const AddDatesDialog = ({ onDateAdded }: AddDatesDialogProps) => {
     setFormData((prev) => ({ ...prev, isHighlight: checked }));
   };
 
-  // Format date as "Month Day, Year" to match existing data format
   const formatDate = (date: Date): string => {
     return date.toLocaleDateString("en-US", {
       year: "numeric",
@@ -88,7 +75,6 @@ export const AddDatesDialog = ({ onDateAdded }: AddDatesDialogProps) => {
   };
 
   const handleSubmit = async () => {
-    // Validation
     if (!formData.event.trim()) {
       toast({
         title: "Validation Error",
@@ -110,38 +96,27 @@ export const AddDatesDialog = ({ onDateAdded }: AddDatesDialogProps) => {
     setIsSubmitting(true);
 
     try {
-      // Create new date object
-      const newDate = {
+      const { data: maxOrderData } = await supabase
+        .from("important_dates")
+        .select("order_index")
+        .order("order_index", { ascending: false })
+        .limit(1)
+        .single();
+      
+      const newOrderIndex = maxOrderData && maxOrderData.order_index !== null ? maxOrderData.order_index + 1 : 0;
+
+      const { data, error } = await supabase.from("important_dates").insert({
         event: formData.event,
-        date: formData.date,
-        isHighlight: formData.isHighlight,
-        description: formData.description?.trim() || undefined,
-        actionText: formData.actionText?.trim() || undefined,
-        actionUrl: formData.actionUrl?.trim() || undefined,
-      };
+        event_date: formData.date,
+        is_highlight: formData.isHighlight,
+        description: formData.description?.trim() || null,
+        action_text: formData.actionText?.trim() || null,
+        action_url: formData.actionUrl?.trim() || null,
+        order_index: newOrderIndex
+      }).select().single();
 
-      // Use immutable approach: create new array with spread operator
-      // Never mutate the imported JSON module - create a copy instead
-      setDates((prevDates) => {
-        const newDates = [...prevDates, newDate];
+      if (error) throw error;
 
-        // Reconstruct the full data object with the updated dates array
-        const updatedData = {
-          root: newDates,
-        };
-
-        // Store pending change for GitHub commit on logout
-        const updatedDatesJson = JSON.stringify(updatedData, null, 2);
-        storePendingChange({
-          path: "src/data/important-dates.json",
-          content: updatedDatesJson,
-          message: `Added new event date: ${formData.event}`,
-        });
-
-        return newDates;
-      });
-
-      // Log the action
       ActivityLogger.log({
         action: "Added new event date",
         type: "date",
@@ -151,12 +126,11 @@ export const AddDatesDialog = ({ onDateAdded }: AddDatesDialogProps) => {
 
       toast({
         title: "Success",
-        description: `Event "${formData.event}" added successfully! Changes will sync to GitHub when you log out.`,
+        description: `Event "${formData.event}" added successfully!`,
       });
 
-      onDateAdded?.(formData);
+      onDateAdded?.(data);
 
-      // Reset form
       setFormData({
         event: "",
         date: "",
@@ -199,7 +173,6 @@ export const AddDatesDialog = ({ onDateAdded }: AddDatesDialogProps) => {
         </DialogHeader>
 
         <div className="space-y-4">
-          {/* Event Name */}
           <div className="space-y-2">
             <Label htmlFor="event" className="text-sm font-medium">
               Event Name *
@@ -214,7 +187,6 @@ export const AddDatesDialog = ({ onDateAdded }: AddDatesDialogProps) => {
             />
           </div>
 
-          {/* Date */}
           <div className="space-y-2">
             <Label htmlFor="date" className="text-sm font-medium">
               Date *
@@ -244,7 +216,6 @@ export const AddDatesDialog = ({ onDateAdded }: AddDatesDialogProps) => {
             </Popover>
           </div>
 
-          {/* Status */}
           <div className="space-y-2 flex flex-row items-center space-x-2">
             <Checkbox
               id="add-isHighlight"
@@ -256,7 +227,6 @@ export const AddDatesDialog = ({ onDateAdded }: AddDatesDialogProps) => {
             </Label>
           </div>
 
-          {/* Description */}
           <div className="space-y-2">
             <Label htmlFor="description" className="text-sm font-medium">
               Description (optional)
@@ -270,7 +240,6 @@ export const AddDatesDialog = ({ onDateAdded }: AddDatesDialogProps) => {
             />
           </div>
 
-          {/* Action Links */}
           <div className="space-y-4 rounded-lg border border-border p-4 bg-secondary/10">
             <div>
               <h4 className="text-sm font-medium">Action Button (Optional)</h4>
@@ -304,7 +273,6 @@ export const AddDatesDialog = ({ onDateAdded }: AddDatesDialogProps) => {
             </div>
           </div>
 
-          {/* Submit Button */}
           <Button
             onClick={handleSubmit}
             disabled={isSubmitting}

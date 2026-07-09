@@ -1,15 +1,12 @@
-import { useMemo, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Edit, Trash2, Building2, AlertTriangle } from "lucide-react";
-import partnersData from "@/data/partners.json";
-import type { PartnersData, PartnerItem } from "@/types/data";
+import { Edit, Trash2, Building2, AlertTriangle, ArrowUp, ArrowDown } from "lucide-react";
 import { AddPartnerDialog } from "./AddPartnerDialog";
 import { useToast } from "@/hooks/use-toast";
-import { storePendingChange } from "@/lib/githubSync";
 import { ActivityLogger } from "@/lib/activityLogger";
 import { uploadImageToGitHub } from "@/lib/fileUpload";
 import { validatePhotoUpload } from "@/lib/validatePhotoUpload";
@@ -30,11 +27,23 @@ import {
   AlertDialogTitle,
   AlertDialogFooter,
 } from "@/components/ui/alert-dialog";
+import { createClient } from "@/utils/supabase/client";
+
+export type PartnerItem = {
+  id?: number;
+  name: string;
+  country: string;
+  link?: string;
+  image: string;
+  whiteLogo?: boolean;
+  order_index?: number;
+};
 
 export const PartnersManager = () => {
-  const initialPartners = useMemo(() => (partnersData as PartnersData).root || [], []);
-  const [partners, setPartners] = useState<PartnerItem[]>(() => structuredClone(initialPartners));
+  const [partners, setPartners] = useState<PartnerItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
+  const supabase = createClient();
 
   const [editOpen, setEditOpen] = useState(false);
   const [editIndex, setEditIndex] = useState<number | null>(null);
@@ -52,6 +61,35 @@ export const PartnersManager = () => {
 
   const [confirmDeleteIndex, setConfirmDeleteIndex] = useState<number | null>(null);
 
+  const fetchPartners = async () => {
+    setIsLoading(true);
+    const { data, error } = await supabase
+      .from("partners")
+      .select("*")
+      .order("order_index", { ascending: true })
+      .order("id", { ascending: true });
+
+    if (error) {
+      toast({ title: "Error", description: "Failed to load partners.", variant: "destructive" });
+    } else if (data) {
+      const mapped = data.map((d: any) => ({
+        id: d.id,
+        name: d.name,
+        country: d.country,
+        link: d.link,
+        image: d.image_url,
+        whiteLogo: d.white_logo,
+        order_index: d.order_index,
+      }));
+      setPartners(mapped);
+    }
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    fetchPartners();
+  }, []);
+
   useEffect(() => {
     return () => {
       if (editImagePreviewUrl) {
@@ -60,14 +98,8 @@ export const PartnersManager = () => {
     };
   }, [editImagePreviewUrl]);
 
-  const handleAddPartner = (newPartner: PartnerItem) => {
-    const updated = [...partners, newPartner];
-    setPartners(updated);
-    storePendingChange({
-      path: "src/data/partners.json",
-      content: JSON.stringify({ root: updated }, null, 2),
-      message: `Added partner: ${newPartner.name}`,
-    });
+  const handleAddPartner = (newPartner: any) => {
+    fetchPartners();
   };
 
   const openEdit = (index: number) => {
@@ -94,7 +126,7 @@ export const PartnersManager = () => {
   };
 
   const saveEdit = async () => {
-    if (editIndex === null) return;
+    if (editIndex === null || !editForm.id) return;
     if (!editForm.name.trim() || !editForm.country.trim()) {
       toast({
         title: "Validation Error",
@@ -133,16 +165,20 @@ export const PartnersManager = () => {
         imageUrl = uploadResult.path || "";
       }
 
-      const updatedPartner = { ...editForm, image: imageUrl };
-      const updated = [...partners];
-      updated[editIndex] = updatedPartner;
-      setPartners(updated);
+      const { error } = await supabase
+        .from("partners")
+        .update({
+          name: editForm.name,
+          country: editForm.country,
+          link: editForm.link || null,
+          image_url: imageUrl,
+          white_logo: editForm.whiteLogo,
+        })
+        .eq("id", editForm.id);
 
-      storePendingChange({
-        path: "src/data/partners.json",
-        content: JSON.stringify({ root: updated }, null, 2),
-        message: `Updated partner: ${editForm.name}`,
-      });
+      if (error) {
+        throw error;
+      }
 
       ActivityLogger.log({
         action: "Edited partner",
@@ -154,6 +190,7 @@ export const PartnersManager = () => {
       toast({ title: "Saved", description: `Updated "${editForm.name}".` });
       setEditOpen(false);
       setEditIndex(null);
+      fetchPartners();
     } catch (error) {
       toast({
         title: "Error",
@@ -167,17 +204,20 @@ export const PartnersManager = () => {
 
   const confirmDelete = (index: number) => setConfirmDeleteIndex(index);
 
-  const performDelete = () => {
+  const performDelete = async () => {
     if (confirmDeleteIndex === null) return;
     const target = partners[confirmDeleteIndex];
-    const updated = partners.filter((_, i) => i !== confirmDeleteIndex);
-    setPartners(updated);
+    if (!target.id) return;
 
-    storePendingChange({
-      path: "src/data/partners.json",
-      content: JSON.stringify({ root: updated }, null, 2),
-      message: `Deleted partner: ${target.name}`,
-    });
+    const { error } = await supabase
+      .from("partners")
+      .delete()
+      .eq("id", target.id);
+
+    if (error) {
+      toast({ title: "Error", description: "Failed to delete partner.", variant: "destructive" });
+      return;
+    }
 
     ActivityLogger.log({
       action: "Deleted partner",
@@ -188,6 +228,38 @@ export const PartnersManager = () => {
 
     toast({ title: "Deleted", description: `Removed "${target.name}".` });
     setConfirmDeleteIndex(null);
+    fetchPartners();
+  };
+
+  const movePartner = async (index: number, direction: 'up' | 'down') => {
+    if (
+      (direction === 'up' && index === 0) ||
+      (direction === 'down' && index === partners.length - 1)
+    ) return;
+
+    const newPartners = [...partners];
+    const swapIndex = direction === 'up' ? index - 1 : index + 1;
+    
+    // Swap
+    const temp = newPartners[index];
+    newPartners[index] = newPartners[swapIndex];
+    newPartners[swapIndex] = temp;
+    
+    setPartners(newPartners);
+
+    // Persist
+    const updates = newPartners.map((item, idx) => ({
+      id: item.id,
+      order_index: idx
+    }));
+
+    await Promise.all(
+      updates.map(update => 
+        supabase.from("partners").update({ order_index: update.order_index }).eq("id", update.id)
+      )
+    );
+    
+    toast({ title: "Reordered", description: "Partner order updated." });
   };
 
   return (
@@ -196,45 +268,56 @@ export const PartnersManager = () => {
         <AddPartnerDialog onPartnerAdded={handleAddPartner} />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {partners.map((partner, index) => (
-          <div
-            key={index}
-            className="flex flex-col p-4 rounded-lg border border-border hover:border-primary/40 hover:bg-primary/5 transition-colors gap-4"
-          >
-            <div className={`flex items-center justify-center border rounded-md p-4 h-24 ${partner.whiteLogo ? "bg-slate-800 border-slate-700" : "bg-slate-100 border-slate-200 dark:bg-slate-800 dark:border-slate-700"}`}>
-              {partner.image ? (
-                <img
-                  src={partner.image}
-                  alt={partner.name}
-                  className={`max-h-full max-w-full object-contain ${partner.whiteLogo ? "brightness-0 invert" : ""}`}
-                />
-              ) : (
-                <Building2 className="w-8 h-8 text-muted-foreground" />
-              )}
+      {isLoading ? (
+        <p className="text-sm text-muted-foreground">Loading partners...</p>
+      ) : partners.length === 0 ? (
+        <p className="text-sm text-muted-foreground">No partners found.</p>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {partners.map((partner, index) => (
+            <div
+              key={partner.id || index}
+              className="flex flex-col p-4 rounded-lg border border-border hover:border-primary/40 hover:bg-primary/5 transition-colors gap-4"
+            >
+              <div className={`flex items-center justify-center border rounded-md p-4 h-24 ${partner.whiteLogo ? "bg-slate-800 border-slate-700" : "bg-slate-100 border-slate-200 dark:bg-slate-800 dark:border-slate-700"}`}>
+                {partner.image ? (
+                  <img
+                    src={partner.image}
+                    alt={partner.name}
+                    className={`max-h-full max-w-full object-contain ${partner.whiteLogo ? "brightness-0 invert" : ""}`}
+                  />
+                ) : (
+                  <Building2 className="w-8 h-8 text-muted-foreground" />
+                )}
+              </div>
+              <div className="flex-1">
+                <h3 className="font-semibold text-base leading-tight mb-1">{partner.name}</h3>
+                <p className="text-sm text-muted-foreground">{partner.country}</p>
+                {partner.link && (
+                  <a href={partner.link} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-500 hover:underline">
+                    Visit Link
+                  </a>
+                )}
+              </div>
+              <div className="flex gap-2 mt-auto">
+                <Button size="sm" variant="outline" onClick={() => openEdit(index)}>
+                  <Edit className="w-3 h-3 mr-1" /> Edit
+                </Button>
+                <Button size="sm" variant="outline" onClick={() => movePartner(index, 'up')} disabled={index === 0}>
+                  <ArrowUp className="w-3 h-3" />
+                </Button>
+                <Button size="sm" variant="outline" onClick={() => movePartner(index, 'down')} disabled={index === partners.length - 1}>
+                  <ArrowDown className="w-3 h-3" />
+                </Button>
+                <Button size="sm" variant="outline" className="text-red-500 hover:text-red-600" onClick={() => confirmDelete(index)}>
+                  <Trash2 className="w-3 h-3" />
+                </Button>
+              </div>
             </div>
-            <div className="flex-1">
-              <h3 className="font-semibold text-base leading-tight mb-1">{partner.name}</h3>
-              <p className="text-sm text-muted-foreground">{partner.country}</p>
-              {partner.link && (
-                <a href={partner.link} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-500 hover:underline">
-                  Visit Link
-                </a>
-              )}
-            </div>
-            <div className="flex gap-2 mt-auto">
-              <Button size="sm" variant="outline" onClick={() => openEdit(index)}>
-                <Edit className="w-3 h-3 mr-1" /> Edit
-              </Button>
-              <Button size="sm" variant="outline" className="text-red-500 hover:text-red-600" onClick={() => confirmDelete(index)}>
-                <Trash2 className="w-3 h-3" />
-              </Button>
-            </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
 
-      {/* Edit Dialog */}
       <Dialog open={editOpen} onOpenChange={setEditOpen}>
         <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto">
           <DialogHeader>
@@ -264,7 +347,6 @@ export const PartnersManager = () => {
               />
             </div>
             
-            {/* Photo - URL or Upload */}
             <div className="space-y-2">
               <Label className="text-sm font-medium">Image *</Label>
               <Tabs defaultValue={editForm.image && !editImageFile ? "url" : "upload"} className="w-full">
@@ -356,7 +438,6 @@ export const PartnersManager = () => {
         </DialogContent>
       </Dialog>
 
-      {/* Delete Confirmation */}
       <AlertDialog open={confirmDeleteIndex !== null} onOpenChange={(open) => !open && setConfirmDeleteIndex(null)}>
         <AlertDialogContent>
           <AlertDialogHeader>

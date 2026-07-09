@@ -34,7 +34,6 @@ import {
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { PendingChangesCounter } from "@/components/admin/PendingChangesCounter";
 
 type LevelFilter = "all" | "error" | "warning" | "info";
 
@@ -157,7 +156,6 @@ export default function ErrorLogsPage() {
       <div className="container mx-auto px-4 pb-4 flex items-center justify-between">
         <PageTitle title="Error Logs" />
         <div className="flex items-center gap-3">
-          <PendingChangesCounter />
           {session?.logout && (
             <Button
               onClick={session.logout}

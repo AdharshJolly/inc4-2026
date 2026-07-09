@@ -12,17 +12,11 @@ import {
 } from "@/components/ui/dialog";
 import { Plus } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import committeeData from "@/data/committee.json";
-import { storePendingChange } from "@/lib/githubSync";
 import { ActivityLogger } from "@/lib/activityLogger";
-import type { CommitteeData } from "@/types/data";
-
-interface AddCategoryFormData {
-  label: string;
-}
+import { createClient } from "@/utils/supabase/client";
 
 interface AddCategoryDialogProps {
-  onCategoryAdded?: (category: AddCategoryFormData) => void;
+  onCategoryAdded?: () => void;
 }
 
 export const AddCategoryDialog = ({
@@ -31,17 +25,11 @@ export const AddCategoryDialog = ({
   const [open, setOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
-  const [formData, setFormData] = useState<AddCategoryFormData>({
-    label: "",
-  });
-  // Initialize local committee state from imported JSON
-  const [committee, setCommittee] = useState<CommitteeData["root"]>(() =>
-    structuredClone((committeeData as CommitteeData).root)
-  );
+  const [label, setLabel] = useState("");
+  const supabase = createClient();
 
   const handleSubmit = async () => {
-    // Validation
-    if (!formData.label.trim()) {
+    if (!label.trim()) {
       toast({
         title: "Validation Error",
         description: "Please enter a category name",
@@ -53,48 +41,36 @@ export const AddCategoryDialog = ({
     setIsSubmitting(true);
 
     try {
-      // Generate unique ID for category
-      const categoryId = `category-${Date.now()}`;
+      const { data: maxData } = await supabase
+        .from("committee_categories")
+        .select("order_index")
+        .order("order_index", { ascending: false })
+        .limit(1);
+      
+      const newIndex = maxData && maxData.length > 0 ? maxData[0].order_index + 1 : 0;
 
-      // Create new category object
-      const newCategory = {
-        id: categoryId,
-        label: formData.label,
-        members: [],
-      };
-
-      // Use functional updater to avoid stale state across multiple additions
-      const updatedCommitteeArray = [...committee, newCategory];
-      // Keep UI state and persisted data in sync using the same computed array
-      setCommittee(updatedCommitteeArray);
-
-      // Store pending change for GitHub commit on logout (outside updater)
-      const updatedData = {
-        root: updatedCommitteeArray,
-      };
-      const updatedCommitteeJson = JSON.stringify(updatedData, null, 2);
-      storePendingChange({
-        path: "src/data/committee.json",
-        content: updatedCommitteeJson,
-        message: `Added new committee category: ${formData.label}`,
+      const { error } = await supabase.from("committee_categories").insert({
+        label: label,
+        order_index: newIndex,
       });
-      // Log the action
+
+      if (error) throw error;
+
       ActivityLogger.log({
         action: "Added new committee category",
         type: "category",
-        targetName: formData.label,
+        targetName: label,
         status: "success",
       });
 
       toast({
         title: "Success",
-        description: `Category "${formData.label}" added successfully! Changes will sync to GitHub when you log out.`,
+        description: `Category "${label}" added successfully!`,
       });
 
-      onCategoryAdded?.(formData);
+      onCategoryAdded?.();
 
-      // Reset form
-      setFormData({ label: "" });
+      setLabel("");
       setOpen(false);
     } catch (error) {
       console.error("Error adding category:", error);
@@ -128,7 +104,6 @@ export const AddCategoryDialog = ({
         </DialogHeader>
 
         <div className="space-y-4">
-          {/* Label */}
           <div className="space-y-2">
             <Label htmlFor="label" className="text-sm font-medium">
               Category Name *
@@ -136,8 +111,8 @@ export const AddCategoryDialog = ({
             <Input
               id="label"
               placeholder="e.g., Steering Committee, Program Committee"
-              value={formData.label}
-              onChange={(e) => setFormData({ label: e.target.value })}
+              value={label}
+              onChange={(e) => setLabel(e.target.value)}
               className="border-border"
             />
             <p className="text-xs text-muted-foreground">
@@ -146,7 +121,6 @@ export const AddCategoryDialog = ({
           </div>
         </div>
 
-        {/* Actions */}
         <div className="flex gap-2 pt-4">
           <Button
             onClick={handleSubmit}

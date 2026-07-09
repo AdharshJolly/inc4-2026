@@ -4,8 +4,6 @@ import { PageTitle } from "@/components/common/PageTitle";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CalendarPlus, CheckCircle2, Clock, Star, ChevronRight, ExternalLink } from "lucide-react";
-import datesData from "@/data/important-dates.json";
-import type { ImportantDatesData } from "@/types/data";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,16 +12,35 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { buildGoogleCalendarUrl, downloadICSFile } from "@/lib/calendarLinks";
-import { getPreviewData } from "@/lib/previewMode";
 import { useEffect, useState } from "react";
 import { isCompleted } from "@/lib/dateUtils";
 
-export default function ImportantDatesClient() {
-  const [dates, setDates] = useState((datesData as ImportantDatesData).root);
-
-
+export default function ImportantDatesClient({ initialDates = [] }: { initialDates?: any[] }) {
+  const [dates, setDates] = useState(() => {
+    return initialDates.map(d => ({
+      date: d.event_date,
+      event: d.event,
+      isHighlight: d.is_highlight,
+      description: d.description,
+      actionText: d.action_text,
+      actionUrl: d.action_url,
+    }));
+  });
 
   const parseDateParts = (dateStr: string) => {
+    // Try ISO YYYY-MM-DD (Supabase date format)
+    const isoMatch = dateStr.match(/^(\d{4})-(\d{2})-(\d{2})/);
+    if (isoMatch) {
+      const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+      const monthIdx = parseInt(isoMatch[2], 10) - 1;
+      return {
+        month: months[monthIdx],
+        day: parseInt(isoMatch[3], 10).toString(),
+        year: isoMatch[1]
+      };
+    }
+
+    // Try original format (e.g., "May 20 2026" or "May 20, 2026")
     const match = dateStr.match(/^([A-Za-z]+)\s+([\d\s\-]+),?\s*(\d{4})$/);
     if (match) {
       return {
@@ -34,18 +51,6 @@ export default function ImportantDatesClient() {
     }
     return { month: "", day: dateStr, year: "" };
   };
-
-  useEffect(() => {
-    const previewData = getPreviewData("src/data/important-dates.json");
-    if (previewData) {
-      try {
-        const parsed = JSON.parse(previewData) as ImportantDatesData;
-        setDates(parsed.root);
-      } catch (e) {
-        console.error("Failed to parse preview data", e);
-      }
-    }
-  }, []);
 
   return (
     <div className="min-h-screen bg-background">

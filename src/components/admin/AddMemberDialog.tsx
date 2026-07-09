@@ -11,15 +11,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Plus, Eye } from "lucide-react";
+import { Eye } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import committeeData from "@/data/committee.json";
-import { storePendingChange } from "@/lib/githubSync";
 import { ActivityLogger } from "@/lib/activityLogger";
 import { uploadImageToGitHub } from "@/lib/fileUpload";
-import type { CommitteeData } from "@/types/data";
 import { PreviewDialog } from "./PreviewDialog";
 import { validatePhotoUpload } from "@/lib/validatePhotoUpload";
+import { createClient } from "@/utils/supabase/client";
 
 interface AddMemberFormData {
   name: string;
@@ -32,13 +30,15 @@ interface AddMemberFormData {
 }
 
 interface AddMemberDialogProps {
-  onMemberAdded?: (member: AddMemberFormData & { categoryId: string }) => void;
+  categories: any[];
+  onMemberAdded?: () => void;
 }
 
-export const AddMemberDialog = ({ onMemberAdded }: AddMemberDialogProps) => {
+export const AddMemberDialog = ({ categories, onMemberAdded }: AddMemberDialogProps) => {
   const [open, setOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
+  const supabase = createClient();
   const [formData, setFormData] = useState<AddMemberFormData>({
     name: "",
     role: "",
@@ -49,22 +49,16 @@ export const AddMemberDialog = ({ onMemberAdded }: AddMemberDialogProps) => {
     categoryId: "",
   });
 
-  const committee = (committeeData as CommitteeData).root;
-
-  // Cleanup object URLs to prevent memory leaks
   useEffect(() => {
     return () => {
-      // Cleanup on unmount
       if (formData.photoPreviewUrl) {
         URL.revokeObjectURL(formData.photoPreviewUrl);
       }
     };
   }, []);
 
-  // Cleanup when dialog closes
   const handleOpenChange = (newOpen: boolean) => {
     if (!newOpen && formData.photoPreviewUrl) {
-      // Dialog is closing, revoke the preview URL
       URL.revokeObjectURL(formData.photoPreviewUrl);
       setFormData((prev) => ({
         ...prev,
@@ -81,19 +75,15 @@ export const AddMemberDialog = ({ onMemberAdded }: AddMemberDialogProps) => {
   const handlePhotoFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (validatePhotoUpload(file, toast) && file) {
-      // Revoke any existing preview before creating a new one
       if (formData.photoPreviewUrl) {
         URL.revokeObjectURL(formData.photoPreviewUrl);
       }
-
-      // Create preview URL
       const previewUrl = URL.createObjectURL(file);
-
       setFormData((prev) => ({
         ...prev,
         photoFile: file,
         photoPreviewUrl: previewUrl,
-        photoUrl: "", // Clear URL if file is selected
+        photoUrl: "",
       }));
     }
   };
@@ -110,7 +100,6 @@ export const AddMemberDialog = ({ onMemberAdded }: AddMemberDialogProps) => {
   };
 
   const handleSubmit = async () => {
-    // Validation
     if (!formData.name.trim()) {
       toast({
         title: "Validation Error",
@@ -147,18 +136,17 @@ export const AddMemberDialog = ({ onMemberAdded }: AddMemberDialogProps) => {
     setIsSubmitting(true);
 
     try {
-      const category = committee.find((c) => c.id === formData.categoryId);
+      const category = categories.find((c) => c.id === formData.categoryId);
       if (!category) {
         throw new Error("Category not found");
       }
 
-      // Handle photo: upload file if present, otherwise use URL
       let photoUrl = formData.photoUrl;
 
       if (formData.photoFile) {
         toast({
           title: "Uploading photo",
-          description: "Please wait while we upload your photo to GitHub...",
+          description: "Please wait while we upload your photo...",
         });
 
         const uploadResult = await uploadImageToGitHub(
@@ -173,26 +161,26 @@ export const AddMemberDialog = ({ onMemberAdded }: AddMemberDialogProps) => {
         photoUrl = uploadResult.path || "";
       }
 
-      // Create new member object with just the URL
-      const newMember = {
+      const { data: maxData } = await supabase
+        .from("committee_members")
+        .select("order_index")
+        .eq("category_id", formData.categoryId)
+        .order("order_index", { ascending: false })
+        .limit(1);
+      
+      const newIndex = maxData && maxData.length > 0 ? maxData[0].order_index + 1 : 0;
+
+      const { error } = await supabase.from("committee_members").insert({
         name: formData.name,
         role: formData.role || "",
         affiliation: formData.affiliation,
-        photo: photoUrl ? { url: photoUrl } : {},
-      };
-
-      // Add to category in memory
-      category.members.push(newMember);
-
-      // Store pending change for GitHub commit on logout
-      const updatedCommittee = JSON.stringify(committeeData, null, 2);
-      storePendingChange({
-        path: "src/data/committee.json",
-        content: updatedCommittee,
-        message: `Added new committee member: ${formData.name}`,
+        photo_url: photoUrl,
+        category_id: formData.categoryId,
+        order_index: newIndex,
       });
 
-      // Log the action
+      if (error) throw error;
+
       ActivityLogger.log({
         action: "Added new committee member",
         type: "member",
@@ -202,20 +190,11 @@ export const AddMemberDialog = ({ onMemberAdded }: AddMemberDialogProps) => {
 
       toast({
         title: "Success",
-        description: `Member "${formData.name}" added successfully! Changes will sync to GitHub when you log out.`,
+        description: `Member "${formData.name}" added successfully!`,
       });
 
-      onMemberAdded?.({
-        name: formData.name,
-        role: formData.role,
-        affiliation: formData.affiliation,
-        photoUrl: photoUrl || formData.photoPreviewUrl,
-        photoFile: null,
-        photoPreviewUrl: "",
-        categoryId: formData.categoryId,
-      });
+      onMemberAdded?.();
 
-      // Reset form
       clearPhotoFile();
       setFormData({
         name: "",
@@ -252,7 +231,6 @@ export const AddMemberDialog = ({ onMemberAdded }: AddMemberDialogProps) => {
       description="Add a new member to the committee. Fields with * are required."
     >
       <div className="space-y-4">
-          {/* Name */}
           <div className="space-y-2">
             <Label htmlFor="name" className="text-sm font-medium">
               Full Name *
@@ -266,7 +244,6 @@ export const AddMemberDialog = ({ onMemberAdded }: AddMemberDialogProps) => {
             />
           </div>
 
-          {/* Category */}
           <div className="space-y-2">
             <Label htmlFor="category" className="text-sm font-medium">
               Category *
@@ -279,7 +256,7 @@ export const AddMemberDialog = ({ onMemberAdded }: AddMemberDialogProps) => {
                 <SelectValue placeholder="Select a category" />
               </SelectTrigger>
               <SelectContent>
-                {committee.map((cat) => (
+                {categories.map((cat) => (
                   <SelectItem key={cat.id} value={cat.id}>
                     {cat.label}
                   </SelectItem>
@@ -288,7 +265,6 @@ export const AddMemberDialog = ({ onMemberAdded }: AddMemberDialogProps) => {
             </Select>
           </div>
 
-          {/* Role */}
           <div className="space-y-2">
             <Label htmlFor="role" className="text-sm font-medium">
               Role
@@ -302,7 +278,6 @@ export const AddMemberDialog = ({ onMemberAdded }: AddMemberDialogProps) => {
             />
           </div>
 
-          {/* Affiliation */}
           <div className="space-y-2">
             <Label htmlFor="affiliation" className="text-sm font-medium">
               Affiliation/Institution *
@@ -316,7 +291,6 @@ export const AddMemberDialog = ({ onMemberAdded }: AddMemberDialogProps) => {
             />
           </div>
 
-          {/* Photo - URL or Upload */}
           <div className="space-y-2">
             <Label className="text-sm font-medium">Photo *</Label>
             <Tabs defaultValue="url" className="w-full">
@@ -341,9 +315,7 @@ export const AddMemberDialog = ({ onMemberAdded }: AddMemberDialogProps) => {
                       src={formData.photoUrl}
                       alt="Preview"
                       className="w-full h-32 object-cover rounded"
-                      onError={() => {
-                        // Handle invalid image URL
-                      }}
+                      onError={() => {}}
                     />
                   </div>
                 )}
@@ -400,7 +372,6 @@ export const AddMemberDialog = ({ onMemberAdded }: AddMemberDialogProps) => {
           </div>
         </div>
 
-        {/* Actions */}
         <div className="flex gap-2 pt-4">
           {formData.name &&
             formData.affiliation &&
@@ -414,7 +385,7 @@ export const AddMemberDialog = ({ onMemberAdded }: AddMemberDialogProps) => {
                     role: formData.role,
                     affiliation: formData.affiliation,
                     photoUrl: formData.photoUrl || formData.photoPreviewUrl,
-                    categoryLabel: committee.find(
+                    categoryLabel: categories.find(
                       (c) => c.id === formData.categoryId
                     )?.label,
                   },

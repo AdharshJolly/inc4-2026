@@ -7,26 +7,31 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Plus } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import partnersData from "@/data/partners.json";
-import { storePendingChange } from "@/lib/githubSync";
 import { ActivityLogger } from "@/lib/activityLogger";
 import { uploadImageToGitHub } from "@/lib/fileUpload";
-import type { PartnersData, PartnerItem } from "@/types/data";
 import { validatePhotoUpload } from "@/lib/validatePhotoUpload";
+import { createClient } from "@/utils/supabase/client";
+import type { PartnerItem } from "./PartnersManager";
 
-interface AddPartnerFormData extends PartnerItem {
+interface AddPartnerFormData {
+  name: string;
+  country: string;
+  link?: string;
+  image: string;
+  whiteLogo?: boolean;
   imageFile: File | null;
   imagePreviewUrl: string;
 }
 
 interface AddPartnerDialogProps {
-  onPartnerAdded?: (partner: PartnerItem) => void;
+  onPartnerAdded?: (partner: any) => void;
 }
 
 export const AddPartnerDialog = ({ onPartnerAdded }: AddPartnerDialogProps) => {
   const [open, setOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
+  const supabase = createClient();
   const [formData, setFormData] = useState<AddPartnerFormData>({
     name: "",
     country: "",
@@ -36,10 +41,6 @@ export const AddPartnerDialog = ({ onPartnerAdded }: AddPartnerDialogProps) => {
     imageFile: null,
     imagePreviewUrl: "",
   });
-
-  const [partners, setPartners] = useState<PartnersData["root"]>(() =>
-    structuredClone((partnersData as PartnersData).root)
-  );
 
   useEffect(() => {
     return () => {
@@ -131,23 +132,25 @@ export const AddPartnerDialog = ({ onPartnerAdded }: AddPartnerDialogProps) => {
         imageUrl = uploadResult.path || "";
       }
 
-      const newPartner: PartnerItem = {
+      const { data: maxOrderData } = await supabase
+        .from("partners")
+        .select("order_index")
+        .order("order_index", { ascending: false })
+        .limit(1)
+        .single();
+      
+      const newOrderIndex = maxOrderData && maxOrderData.order_index !== null ? maxOrderData.order_index + 1 : 0;
+
+      const { data, error } = await supabase.from("partners").insert({
         name: formData.name,
         country: formData.country,
-        link: formData.link?.trim() || undefined,
-        image: imageUrl,
-        whiteLogo: formData.whiteLogo,
-      };
+        link: formData.link?.trim() || null,
+        image_url: imageUrl,
+        white_logo: formData.whiteLogo,
+        order_index: newOrderIndex
+      }).select().single();
 
-      setPartners((prev) => {
-        const updated = [...prev, newPartner];
-        storePendingChange({
-          path: "src/data/partners.json",
-          content: JSON.stringify({ root: updated }, null, 2),
-          message: `Added new partner: ${formData.name}`,
-        });
-        return updated;
-      });
+      if (error) throw error;
 
       ActivityLogger.log({
         action: "Added new partner",
@@ -161,7 +164,7 @@ export const AddPartnerDialog = ({ onPartnerAdded }: AddPartnerDialogProps) => {
         description: `Partner "${formData.name}" added successfully!`,
       });
 
-      onPartnerAdded?.(newPartner);
+      onPartnerAdded?.(data);
       handleOpenChange(false);
     } catch (error) {
       toast({
@@ -196,7 +199,6 @@ export const AddPartnerDialog = ({ onPartnerAdded }: AddPartnerDialogProps) => {
             <Input value={formData.link || ""} onChange={(e) => handleInputChange("link", e.target.value)} />
           </div>
           
-          {/* Photo - URL or Upload */}
           <div className="space-y-2">
             <Label className="text-sm font-medium">Image *</Label>
             <Tabs defaultValue="url" className="w-full">

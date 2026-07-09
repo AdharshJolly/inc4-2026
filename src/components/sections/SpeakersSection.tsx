@@ -3,16 +3,30 @@ import { ArrowRight, Linkedin, Twitter } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { Reveal } from "@/components/common/Reveal";
-import speakersData from "@/data/speakers.json";
-import { getPhotoUrl, normalizePhotoFields } from "@/lib/photoMigration";
+import { getPhotoUrl } from "@/lib/photoMigration";
 import { isExternalUrl } from "@/lib/utils";
-import type { SpeakersData } from "@/types/data";
+import { createClient } from '@/utils/supabase/server';
+import { cookies } from 'next/headers';
 
-// Get first 3 speakers from JSON data
-const allSpeakers = normalizePhotoFields((speakersData as SpeakersData).root);
-const speakers = allSpeakers.slice(0, 3);
+export const SpeakersSection = async () => {
+  const cookieStore = await cookies();
+  const supabase = createClient(cookieStore);
+  const { data: dbSpeakers } = await supabase
+    .from('speakers')
+    .select()
+    .order('order_index')
+    .limit(3);
 
-export const SpeakersSection = () => {
+  const speakers = (dbSpeakers || []).map(s => ({
+    name: s.name,
+    role: s.role,
+    affiliation: s.affiliation,
+    topic: s.topic,
+    linkedin: s.linkedin,
+    twitter: null, // Note: DB doesn't have twitter
+    photo: { url: s.photo_url }
+  }));
+
   return (
     <section
       id="speakers"

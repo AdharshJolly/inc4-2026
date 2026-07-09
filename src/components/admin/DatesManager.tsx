@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -10,12 +10,11 @@ import {
   Trash2,
   Calendar,
   AlertTriangle,
+  ArrowUp,
+  ArrowDown
 } from "lucide-react";
-import datesData from "@/data/important-dates.json";
-import type { ImportantDatesData, ImportantDateItem } from "@/types/data";
 import { AddDatesDialog } from "./AddDatesDialog";
 import { useToast } from "@/hooks/use-toast";
-import { storePendingChange } from "@/lib/githubSync";
 import { ActivityLogger } from "@/lib/activityLogger";
 import {
   Dialog,
@@ -30,13 +29,6 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Calendar as DatePicker } from "@/components/ui/calendar";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   AlertDialog,
@@ -48,16 +40,24 @@ import {
   AlertDialogTitle,
   AlertDialogFooter,
 } from "@/components/ui/alert-dialog";
+import { createClient } from "@/utils/supabase/client";
+
+export type ImportantDateItem = {
+  id?: number;
+  event: string;
+  date: string;
+  isHighlight?: boolean;
+  description?: string;
+  actionText?: string;
+  actionUrl?: string;
+  order_index?: number;
+};
 
 export const DatesManager = () => {
-  const initialDates = useMemo(
-    () => (datesData as ImportantDatesData).root || [],
-    []
-  );
-  const [dates, setDates] = useState<ImportantDateItem[]>(() =>
-    structuredClone(initialDates)
-  );
+  const [dates, setDates] = useState<ImportantDateItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
+  const supabase = createClient();
 
   const [editOpen, setEditOpen] = useState(false);
   const [editIndex, setEditIndex] = useState<number | null>(null);
@@ -70,11 +70,37 @@ export const DatesManager = () => {
     actionText: "",
     actionUrl: "",
   });
-  const [confirmDeleteIndex, setConfirmDeleteIndex] = useState<number | null>(
-    null
-  );
+  const [confirmDeleteIndex, setConfirmDeleteIndex] = useState<number | null>(null);
 
+  const fetchDates = async () => {
+    setIsLoading(true);
+    const { data, error } = await supabase
+      .from("important_dates")
+      .select("*")
+      .order("order_index", { ascending: true })
+      .order("id", { ascending: true });
 
+    if (error) {
+      toast({ title: "Error", description: "Failed to load dates.", variant: "destructive" });
+    } else if (data) {
+      const mapped = data.map((d: any) => ({
+        id: d.id,
+        event: d.event,
+        date: d.event_date,
+        isHighlight: d.is_highlight,
+        description: d.description,
+        actionText: d.action_text,
+        actionUrl: d.action_url,
+        order_index: d.order_index,
+      }));
+      setDates(mapped);
+    }
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    fetchDates();
+  }, []);
 
   const getStatusColor = (isHighlight?: boolean, dateStr: string = "") => {
     if (isHighlight) return "bg-orange-500/10 text-orange-500 border-orange-500/20";
@@ -90,23 +116,14 @@ export const DatesManager = () => {
     });
   };
 
-  const handleAddDate = (newDate: ImportantDateItem) => {
-    const newDates = [...dates, newDate];
-    setDates(newDates);
-
-    const updatedData = { root: newDates };
-    storePendingChange({
-      path: "src/data/important-dates.json",
-      content: JSON.stringify(updatedData, null, 2),
-      message: `Added event date: ${newDate.event}`,
-    });
+  const handleAddDate = (newDate: any) => {
+    fetchDates();
   };
 
   const openEdit = (index: number) => {
     const d = dates[index];
     setEditIndex(index);
     setEditForm({ ...d });
-    // Try parsing to a Date for picker convenience
     const maybeDate = new Date(d.date);
     setSelectedDate(isNaN(maybeDate.getTime()) ? undefined : maybeDate);
     setEditOpen(true);
@@ -120,8 +137,8 @@ export const DatesManager = () => {
     }
   };
 
-  const saveEdit = () => {
-    if (editIndex === null) return;
+  const saveEdit = async () => {
+    if (editIndex === null || !editForm.id) return;
     const prev = dates[editIndex];
     if (!editForm.event.trim() || !editForm.date.trim()) {
       toast({
@@ -132,57 +149,52 @@ export const DatesManager = () => {
       return;
     }
 
-    const updated = [...dates];
-    updated[editIndex] = { ...editForm };
-    setDates(updated);
+    const { error } = await supabase
+      .from("important_dates")
+      .update({
+        event: editForm.event,
+        event_date: editForm.date,
+        is_highlight: editForm.isHighlight,
+        description: editForm.description || null,
+        action_text: editForm.actionText || null,
+        action_url: editForm.actionUrl || null,
+      })
+      .eq("id", editForm.id);
 
-    const updatedData = { root: updated };
-    storePendingChange({
-      path: "src/data/important-dates.json",
-      content: JSON.stringify(updatedData, null, 2),
-      message: `Updated event date: ${prev.event} → ${editForm.event}`,
-    });
+    if (error) {
+      toast({ title: "Error", description: "Failed to update date.", variant: "destructive" });
+      return;
+    }
 
     ActivityLogger.log({
       action: "Edited event date",
       type: "date",
       targetName: editForm.event,
       status: "success",
-      changes: {
-        event: { old: prev.event, new: editForm.event },
-        date: { old: prev.date, new: editForm.date },
-        isHighlight: { old: prev.isHighlight, new: editForm.isHighlight },
-        ...(prev.description !== editForm.description
-          ? { description: { old: prev.description, new: editForm.description } }
-          : {}),
-        ...(prev.actionText !== editForm.actionText
-          ? { actionText: { old: prev.actionText, new: editForm.actionText } }
-          : {}),
-        ...(prev.actionUrl !== editForm.actionUrl
-          ? { actionUrl: { old: prev.actionUrl, new: editForm.actionUrl } }
-          : {}),
-      },
     });
 
     toast({ title: "Saved", description: `Updated "${editForm.event}".` });
     setEditOpen(false);
     setEditIndex(null);
+    fetchDates();
   };
 
   const confirmDelete = (index: number) => setConfirmDeleteIndex(index);
 
-  const performDelete = () => {
+  const performDelete = async () => {
     if (confirmDeleteIndex === null) return;
     const target = dates[confirmDeleteIndex];
-    const updated = dates.filter((_, i) => i !== confirmDeleteIndex);
-    setDates(updated);
+    if (!target.id) return;
 
-    const updatedData = { root: updated };
-    storePendingChange({
-      path: "src/data/important-dates.json",
-      content: JSON.stringify(updatedData, null, 2),
-      message: `Deleted event date: ${target.event}`,
-    });
+    const { error } = await supabase
+      .from("important_dates")
+      .delete()
+      .eq("id", target.id);
+
+    if (error) {
+      toast({ title: "Error", description: "Failed to delete date.", variant: "destructive" });
+      return;
+    }
 
     ActivityLogger.log({
       action: "Deleted event date",
@@ -193,77 +205,132 @@ export const DatesManager = () => {
 
     toast({ title: "Deleted", description: `Removed "${target.event}".` });
     setConfirmDeleteIndex(null);
+    fetchDates();
+  };
+
+  const moveDate = async (index: number, direction: 'up' | 'down') => {
+    if (
+      (direction === 'up' && index === 0) ||
+      (direction === 'down' && index === dates.length - 1)
+    ) return;
+
+    const newDates = [...dates];
+    const swapIndex = direction === 'up' ? index - 1 : index + 1;
+    
+    // Swap items
+    const temp = newDates[index];
+    newDates[index] = newDates[swapIndex];
+    newDates[swapIndex] = temp;
+    
+    // Update order_index
+    setDates(newDates);
+
+    // Persist to Supabase
+    const updates = newDates.map((item, idx) => ({
+      id: item.id,
+      order_index: idx
+    }));
+
+    // Wait for all updates
+    await Promise.all(
+      updates.map(update => 
+        supabase.from("important_dates").update({ order_index: update.order_index }).eq("id", update.id)
+      )
+    );
+    
+    toast({ title: "Reordered", description: "Event order updated." });
   };
 
   return (
     <div className="space-y-6">
-      {/* Actions */}
       <div className="flex gap-2">
         <AddDatesDialog onDateAdded={handleAddDate} />
       </div>
 
-      {/* Timeline */}
       <div className="space-y-3">
-        {dates.map((date, index) => (
-          <div
-            key={index}
-            className="flex items-start gap-4 p-4 rounded-lg border border-border hover:border-primary/40 hover:bg-primary/5 transition-colors"
-          >
+        {isLoading ? (
+          <p className="text-sm text-muted-foreground">Loading dates...</p>
+        ) : dates.length === 0 ? (
+          <p className="text-sm text-muted-foreground">No dates found.</p>
+        ) : (
+          dates.map((date, index) => (
             <div
-              className={`p-3 rounded-full ${
-                date.isHighlight
-                  ? "bg-orange-500/10"
-                  : isCompleted(date.date)
-                  ? "bg-green-500/10"
-                  : "bg-blue-500/10"
-              }`}
+              key={date.id || index}
+              className="flex items-start gap-4 p-4 rounded-lg border border-border hover:border-primary/40 hover:bg-primary/5 transition-colors"
             >
-              <Calendar
-                className={`w-5 h-5 ${
+              <div
+                className={`p-3 rounded-full ${
                   date.isHighlight
-                    ? "text-orange-500"
+                    ? "bg-orange-500/10"
                     : isCompleted(date.date)
-                    ? "text-green-500"
-                    : "text-blue-500"
+                    ? "bg-green-500/10"
+                    : "bg-blue-500/10"
                 }`}
-              />
-            </div>
+              >
+                <Calendar
+                  className={`w-5 h-5 ${
+                    date.isHighlight
+                      ? "text-orange-500"
+                      : isCompleted(date.date)
+                      ? "text-green-500"
+                      : "text-blue-500"
+                  }`}
+                />
+              </div>
 
-            <div className="flex-1">
-              <div className="flex items-start justify-between gap-4 mb-2">
-                <div>
-                  <h3 className="font-semibold text-lg">{date.event}</h3>
-                  <p className="text-sm text-muted-foreground">{date.date}</p>
+              <div className="flex-1">
+                <div className="flex items-start justify-between gap-4 mb-2">
+                  <div>
+                    <h3 className="font-semibold text-lg">{date.event}</h3>
+                    <p className="text-sm text-muted-foreground">
+                      {new Date(date.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+                    </p>
+                  </div>
+                  <Badge className={getStatusColor(date.isHighlight, date.date)}>
+                    {date.isHighlight ? "Highlight" : isCompleted(date.date) ? "Completed" : "Upcoming"}
+                  </Badge>
                 </div>
-                <Badge className={getStatusColor(date.isHighlight, date.date)}>
-                  {date.isHighlight ? "Highlight" : isCompleted(date.date) ? "Completed" : "Upcoming"}
-                </Badge>
-              </div>
 
-              <div className="flex gap-2">
-                <Button
-                  size="sm"
-                  variant="outline"
-                  onClick={() => openEdit(index)}
-                >
-                  <Edit className="w-3 h-3 mr-1" />
-                  Edit
-                </Button>
-                <Button
-                  size="sm"
-                  variant="outline"
-                  className="text-red-500 hover:text-red-600"
-                  onClick={() => confirmDelete(index)}
-                >
-                  <Trash2 className="w-3 h-3" />
-                </Button>
+                <div className="flex gap-2">
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => openEdit(index)}
+                  >
+                    <Edit className="w-3 h-3 mr-1" />
+                    Edit
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => moveDate(index, 'up')}
+                    disabled={index === 0}
+                  >
+                    <ArrowUp className="w-3 h-3" />
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => moveDate(index, 'down')}
+                    disabled={index === dates.length - 1}
+                  >
+                    <ArrowDown className="w-3 h-3" />
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="text-red-500 hover:text-red-600"
+                    onClick={() => confirmDelete(index)}
+                  >
+                    <Trash2 className="w-3 h-3" />
+                  </Button>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))
+        )}
       </div>
 
-      {/* Edit Dialog */}
       <Dialog open={editOpen} onOpenChange={setEditOpen}>
         <DialogContent className="max-w-md">
           <DialogHeader>
@@ -387,7 +454,6 @@ export const DatesManager = () => {
         </DialogContent>
       </Dialog>
 
-      {/* Delete Confirmation */}
       <AlertDialog
         open={confirmDeleteIndex !== null}
         onOpenChange={(open) => !open && setConfirmDeleteIndex(null)}

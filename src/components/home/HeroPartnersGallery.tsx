@@ -1,20 +1,12 @@
 "use client";
 
-import React from "react";
-import Image from "next/image";
+import React, { useState } from "react";
 import { Building2, MapPin, ExternalLink } from "lucide-react";
 import {
   Popover,
   PopoverContent,
   PopoverAnchor,
 } from "@/components/ui/popover";
-import { Badge } from "@/components/ui/badge";
-import partnersData from "@/data/partners.json";
-import { PartnersData } from "@/types/data";
-
-const partners = (partnersData as PartnersData).root;
-
-
 const PartnerCard = ({ partner }: { partner: any }) => {
   const [open, setOpen] = React.useState(false);
 
@@ -70,7 +62,19 @@ const PartnerCard = ({ partner }: { partner: any }) => {
   );
 };
 
-export const HeroPartnersGallery = () => {
+export const HeroPartnersGallery = ({ initialPartners = [] }: { initialPartners?: any[] }) => {
+  const [partners] = useState(() => {
+    return initialPartners.map(p => ({
+      name: p.name,
+      country: p.country,
+      link: p.link,
+      image: p.image_url,
+      whiteLogo: p.white_logo,
+    }));
+  });
+
+  if (!partners || partners.length === 0) return null;
+
   return (
     <div className="mt-12 mb-10 w-full flex flex-col items-center justify-center opacity-95">
       <div className="w-full max-w-7xl mx-auto px-2 sm:px-4">

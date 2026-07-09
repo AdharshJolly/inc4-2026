@@ -10,22 +10,21 @@ import type { SpeakerItem } from '@/types/data';
 
 interface SortableSpeakerCardProps {
   speaker: SpeakerItem;
-  originalIndex: number;
+  id: string;
   isSelected: boolean;
   onSelect: (id: string) => void;
-  onEdit: (index: number, name: string) => void;
+  onEdit: (id: string, name: string) => void;
   onDeleteClick: (id: string) => void;
 }
 
 export function SortableSpeakerCard({
   speaker,
-  originalIndex,
+  id,
   isSelected,
   onSelect,
   onEdit,
   onDeleteClick,
 }: SortableSpeakerCardProps) {
-  const id = String(originalIndex);
   
   const {
     attributes,
@@ -121,7 +120,7 @@ export function SortableSpeakerCard({
             className="flex-1"
             onClick={(e) => {
               e.stopPropagation();
-              onEdit(originalIndex, speaker.name);
+              onEdit(id, speaker.name);
             }}
           >
             <Edit className="w-3 h-3 mr-1" />

@@ -4,29 +4,21 @@ import { PageTitle } from "@/components/common/PageTitle";
 import { Card, CardContent } from "@/components/ui/card";
 import { Reveal } from "@/components/common/Reveal";
 import { Badge } from "@/components/ui/badge";
-import { getPhotoUrl, normalizePhotoFields } from "@/lib/photoMigration";
-import type { SpeakersData } from "@/types/data";
-import speakersData from "@/data/speakers.json";
-import { getPreviewData } from "@/lib/previewMode";
-import { useEffect, useState } from "react";
-import { Users, Linkedin, Twitter } from "lucide-react";
+import { getPhotoUrl } from "@/lib/photoMigration";
+import { useState } from "react";
+import { Users, Linkedin } from "lucide-react";
 
-export default function SpeakersClient() {
-  const [speakers, setSpeakers] = useState(
-    normalizePhotoFields((speakersData as SpeakersData).root),
-  );
-
-  useEffect(() => {
-    const previewData = getPreviewData("src/data/speakers.json");
-    if (previewData) {
-      try {
-        const parsed = JSON.parse(previewData) as SpeakersData;
-        setSpeakers(normalizePhotoFields(parsed.root));
-      } catch (e) {
-        console.error("Failed to parse preview data", e);
-      }
-    }
-  }, []);
+export default function SpeakersClient({ initialSpeakers = [] }: { initialSpeakers?: any[] }) {
+  const [speakers, setSpeakers] = useState(() => {
+    return initialSpeakers.map(s => ({
+      name: s.name,
+      role: s.role,
+      affiliation: s.affiliation,
+      topic: s.topic,
+      linkedin: s.linkedin,
+      photo: { url: s.photo_url }
+    }));
+  });
 
   return (
     <div className="min-h-screen bg-background pt-24 pb-16 md:pt-32 md:pb-24">
@@ -122,17 +114,6 @@ export default function SpeakersClient() {
                             className="w-10 h-10 bg-muted rounded-full flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors group/social text-muted-foreground"
                           >
                             <Linkedin className="w-4 h-4 group-hover/social:scale-110 transition-transform" />
-                          </a>
-                        )}
-                        {speaker.twitter && (
-                          <a
-                            href={speaker.twitter}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            aria-label={`${speaker.name} on Twitter`}
-                            className="w-10 h-10 bg-muted rounded-full flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors group/social text-muted-foreground"
-                          >
-                            <Twitter className="w-4 h-4 group-hover/social:scale-110 transition-transform" />
                           </a>
                         )}
                       </div>

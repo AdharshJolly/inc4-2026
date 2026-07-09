@@ -1,9 +1,7 @@
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
-import speakersData from "@/data/speakers.json";
-import type { SpeakersData } from "@/types/data";
 import { AddSpeakerDialog } from "./AddSpeakerDialog";
 import { EditSpeakerDialog } from "./EditSpeakerDialog";
 import { BulkActionsDialog } from "./BulkActionsDialog";
@@ -23,26 +21,47 @@ import {
   sortableKeyboardCoordinates,
   rectSortingStrategy,
 } from "@dnd-kit/sortable";
-import { storePendingChange } from "@/lib/githubSync";
 import { ActivityLogger } from "@/lib/activityLogger";
 import { useToast } from "@/hooks/use-toast";
+import { createClient } from "@/utils/supabase/client";
 
 export const SpeakersManager = () => {
-  const [speakers, setSpeakers] = useState(() => (speakersData as SpeakersData).root);
+  const [speakers, setSpeakers] = useState<any[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedSpeakers, setSelectedSpeakers] = useState<Set<string>>(
     new Set()
   );
   const [editingSpeaker, setEditingSpeaker] = useState<{
-    index: number;
+    id: string;
     name: string;
   } | null>(null);
   const [bulkActionsOpen, setBulkActionsOpen] = useState(false);
   const { toast } = useToast();
+  const supabase = createClient();
+
+  const fetchSpeakers = useCallback(async () => {
+    const { data, error } = await supabase
+      .from("speakers")
+      .select("*")
+      .order("order_index", { ascending: true });
+    
+    if (data && !error) {
+      const mapped = data.map((s: any) => ({
+        ...s,
+        photo: { url: s.photo_url },
+        originalIndex: s.order_index,
+      }));
+      setSpeakers(mapped);
+    }
+  }, [supabase]);
+
+  useEffect(() => {
+    fetchSpeakers();
+  }, [fetchSpeakers]);
 
   const filteredSpeakers = useMemo(
     () =>
-      speakers.map((s, originalIndex) => ({ ...s, originalIndex })).filter(
+      speakers.filter(
         (speaker) =>
           speaker.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
           speaker.affiliation
@@ -56,7 +75,7 @@ export const SpeakersManager = () => {
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
-        distance: 5, // 5px drag tolerance to allow checking checkboxes and clicking edit
+        distance: 5,
       },
     }),
     useSensor(KeyboardSensor, {
@@ -64,36 +83,40 @@ export const SpeakersManager = () => {
     })
   );
 
-  const handleDragEnd = (event: DragEndEvent) => {
+  const handleDragEnd = async (event: DragEndEvent) => {
     const { active, over } = event;
     if (over && active.id !== over.id) {
-      setSpeakers((items) => {
-        const oldIndex = items.findIndex((_, index) => String(index) === active.id);
-        const newIndex = items.findIndex((_, index) => String(index) === over.id);
+      const oldIndex = speakers.findIndex((s) => s.id === active.id);
+      const newIndex = speakers.findIndex((s) => s.id === over.id);
 
-        const newSpeakers = arrayMove(items, oldIndex, newIndex);
-        
-        // Save reordered array
-        const updatedData = { root: newSpeakers };
-        storePendingChange({
-          path: "src/data/speakers.json",
-          content: JSON.stringify(updatedData, null, 2),
-          message: `Reordered speakers`,
-        });
+      const newSpeakers = arrayMove(speakers, oldIndex, newIndex);
+      
+      // Optimistic update
+      setSpeakers(newSpeakers.map((s, idx) => ({ ...s, order_index: idx, originalIndex: idx })));
 
-        ActivityLogger.log({
-          action: "Reordered speakers",
-          type: "speaker",
-          targetName: "Multiple speakers",
-          status: "success",
-        });
+      // Update in Supabase
+      const updates = newSpeakers.map((speaker, index) => ({
+        id: speaker.id,
+        order_index: index,
+      }));
 
-        toast({
-          title: "Order Updated",
-          description: "Speakers reordered successfully.",
-        });
+      for (const update of updates) {
+        await supabase
+          .from("speakers")
+          .update({ order_index: update.order_index })
+          .eq("id", update.id);
+      }
 
-        return newSpeakers;
+      ActivityLogger.log({
+        action: "Reordered speakers",
+        type: "speaker",
+        targetName: "Multiple speakers",
+        status: "success",
+      });
+
+      toast({
+        title: "Order Updated",
+        description: "Speakers reordered successfully.",
       });
     }
   };
@@ -114,17 +137,15 @@ export const SpeakersManager = () => {
     if (selectedSpeakers.size === filteredSpeakers.length) {
       setSelectedSpeakers(new Set());
     } else {
-      const allIds = filteredSpeakers.map((fs) => String(fs.originalIndex));
+      const allIds = filteredSpeakers.map((fs) => fs.id);
       setSelectedSpeakers(new Set(allIds));
     }
   }, [filteredSpeakers, selectedSpeakers.size]);
 
-  // If user is searching, disable drag and drop to avoid index corruption
   const isSearchActive = searchTerm.trim().length > 0;
 
   return (
     <div className="space-y-6">
-      {/* Search */}
       <div className="flex gap-4">
         <div className="flex-1 relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
@@ -135,10 +156,9 @@ export const SpeakersManager = () => {
             className="pl-10"
           />
         </div>
-        <AddSpeakerDialog />
+        <AddSpeakerDialog onSpeakerAdded={fetchSpeakers} />
       </div>
 
-      {/* Bulk Actions Section */}
       {selectedSpeakers.size > 0 && (
         <div className="p-4 rounded-lg border border-orange-500/30 bg-orange-500/5 flex items-center justify-between">
           <div>
@@ -158,39 +178,36 @@ export const SpeakersManager = () => {
         </div>
       )}
 
-      {/* Bulk Actions Dialog */}
       <BulkActionsDialog
         open={bulkActionsOpen}
         onOpenChange={setBulkActionsOpen}
         type="speakers"
         selectedIds={Array.from(selectedSpeakers)}
         selectedNames={filteredSpeakers
-          .filter((s) => selectedSpeakers.has(String(s.originalIndex)))
+          .filter((s) => selectedSpeakers.has(s.id))
           .map((s) => s.name)}
         onActionComplete={() => {
           setSelectedSpeakers(new Set());
           setBulkActionsOpen(false);
-          // Need to reload window to get fresh state since we don't pass setSpeakers down yet,
-          // but relying on existing architecture
+          fetchSpeakers();
         }}
       />
 
-      {/* Edit Speaker Dialog */}
       {editingSpeaker && (
         <EditSpeakerDialog
           open={!!editingSpeaker}
           onOpenChange={(open) => {
             if (!open) setEditingSpeaker(null);
           }}
-          speakerIndex={editingSpeaker.index}
+          speakerId={editingSpeaker.id}
           speakerName={editingSpeaker.name}
           onSpeakerUpdated={() => {
             setEditingSpeaker(null);
+            fetchSpeakers();
           }}
         />
       )}
 
-      {/* Select All Checkbox */}
       {filteredSpeakers.length > 0 && (
         <div className="mb-4 flex items-center gap-2">
           <input
@@ -218,27 +235,25 @@ export const SpeakersManager = () => {
         </div>
       )}
 
-      {/* Speaker Cards */}
       <DndContext
         sensors={sensors}
         collisionDetection={closestCenter}
         onDragEnd={handleDragEnd}
       >
         <SortableContext
-          items={filteredSpeakers.map((s) => String(s.originalIndex))}
+          items={filteredSpeakers.map((s) => s.id)}
           strategy={rectSortingStrategy}
         >
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredSpeakers.map((speaker) => (
               <SortableSpeakerCard
-                key={speaker.originalIndex}
+                key={speaker.id}
                 speaker={speaker}
-                originalIndex={speaker.originalIndex}
-                isSelected={selectedSpeakers.has(String(speaker.originalIndex))}
+                id={speaker.id}
+                isSelected={selectedSpeakers.has(speaker.id)}
                 onSelect={handleSelectSpeaker}
-                onEdit={(index, name) => setEditingSpeaker({ index, name })}
+                onEdit={(id, name) => setEditingSpeaker({ id, name })}
                 onDeleteClick={(id) => {
-                  // This is a bit hacky, but matches the old UI flow for deleting a single speaker
                   handleSelectSpeaker(id);
                   setBulkActionsOpen(true);
                 }}

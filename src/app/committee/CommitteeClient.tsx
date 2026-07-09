@@ -8,23 +8,45 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { getCommitteePersonSchema } from "@/lib/schema";
-import committeeDataImport from "@/data/committee.json";
-import { getPhotoUrl, normalizePhotoFields } from "@/lib/photoMigration";
 import { isExternalUrl } from "@/lib/utils";
-import type { CommitteeData } from "@/types/data";
-import { getPreviewData } from "@/lib/previewMode";
+import { getPhotoUrl } from "@/lib/photoMigration";
 
-export default function CommitteeClient() {
+const CATEGORIES = [
+  { id: "chief-patron", label: "Chief Patron" },
+  { id: "patrons", label: "Patrons" },
+  { id: "honorary-chairs", label: "Honorary Chairs" },
+  { id: "general-chairs", label: "General Chairs" },
+  { id: "general-co-chairs", label: "General Co-Chairs" },
+  { id: "steering", label: "Steering Committee" },
+  { id: "technical-program-committee", label: "Technical Program Committee" },
+  { id: "organizing-committee", label: "Organizing Committee" },
+  { id: "volunteers", label: "Student Volunteers" }
+];
+
+export default function CommitteeClient({ initialMembers = [] }: { initialMembers?: any[] }) {
   const params = useParams();
   const category = params?.category as string | undefined;
   const router = useRouter();
 
   const [committeeCategories, setCommitteeCategories] = useState(() => {
-     const committeeData = committeeDataImport as CommitteeData;
-     return committeeData.root.map((cat) => ({
-        ...cat,
-        members: normalizePhotoFields(cat.members),
-      }));
+    // Group members by category_id
+    const grouped = new Map<string, any[]>();
+    initialMembers.forEach((member: any) => {
+      if (!grouped.has(member.category_id)) {
+        grouped.set(member.category_id, []);
+      }
+      grouped.get(member.category_id)!.push({
+        name: member.name,
+        role: member.role,
+        affiliation: member.affiliation,
+        photo: { url: member.photo_url },
+      });
+    });
+
+    return CATEGORIES.map((cat) => ({
+      ...cat,
+      members: grouped.get(cat.id) || [],
+    })).filter((cat) => cat.members.length > 0);
   });
 
   const [activeTab, setActiveTab] = useState(() => {
@@ -34,23 +56,8 @@ export default function CommitteeClient() {
     ) {
       return category;
     }
-    return "chief-patron";
+    return committeeCategories[0]?.id || "chief-patron";
   });
-
-  useEffect(() => {
-    const previewData = getPreviewData("src/data/committee.json");
-    if (previewData) {
-      try {
-        const committeeData = JSON.parse(previewData) as CommitteeData;
-        setCommitteeCategories(committeeData.root.map((cat) => ({
-          ...cat,
-          members: normalizePhotoFields(cat.members),
-        })));
-      } catch (e) {
-        console.error("Failed to parse preview data", e);
-      }
-    }
-  }, []);
 
   // Handle URL path-based navigation
   useEffect(() => {

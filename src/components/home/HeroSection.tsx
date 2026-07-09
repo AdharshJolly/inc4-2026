@@ -26,7 +26,7 @@ const item: Variants = {
   },
 };
 
-export const HeroSection = () => {
+export const HeroSection = ({ initialPartners = [] }: { initialPartners?: any[] }) => {
   const shouldReduceMotion = useReducedMotion();
 
   return (
@@ -111,7 +111,7 @@ export const HeroSection = () => {
             </div>
           </motion.div>
 
-          <HeroPartnersGallery />
+          <HeroPartnersGallery initialPartners={initialPartners} />
 
           {/* CTA Buttons */}
           <motion.div

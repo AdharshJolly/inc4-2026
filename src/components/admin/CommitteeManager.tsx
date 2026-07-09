@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
@@ -10,17 +10,35 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Search, Download } from "lucide-react";
-import committeeData from "@/data/committee.json";
-import type { CommitteeData } from "@/types/data";
-import { getPhotoUrl } from "@/lib/photoMigration";
 import { isExternalUrl } from "@/lib/utils";
 import { AddMemberDialog } from "./AddMemberDialog";
 import { AddCategoryDialog } from "./AddCategoryDialog";
 import { EditMemberDialog } from "./EditMemberDialog";
 import { BulkActionsDialog } from "./BulkActionsDialog";
+import { createClient } from "@/utils/supabase/client";
 
 export const CommitteeManager = () => {
-  const committee = (committeeData as CommitteeData).root;
+  const [categories, setCategories] = useState<any[]>([]);
+  const [members, setMembers] = useState<any[]>([]);
+  const supabase = createClient();
+
+  const fetchCommittee = useCallback(async () => {
+    const [categoriesResult, membersResult] = await Promise.all([
+      supabase.from("committee_categories").select("*"),
+      supabase.from("committee_members").select("*").order("order_index", { ascending: true })
+    ]);
+    if (categoriesResult.data) {
+      setCategories(categoriesResult.data);
+    }
+    if (membersResult.data) {
+      setMembers(membersResult.data);
+    }
+  }, [supabase]);
+
+  useEffect(() => {
+    fetchCommittee();
+  }, [fetchCommittee]);
+
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [selectedRole, setSelectedRole] = useState<string>("all");
@@ -28,31 +46,29 @@ export const CommitteeManager = () => {
     new Set()
   );
   const [editingMember, setEditingMember] = useState<{
-    categoryId: string;
-    index: number;
+    id: string;
     name: string;
   } | null>(null);
   const [bulkActionsOpen, setBulkActionsOpen] = useState(false);
 
-  // Flatten all members for filtering
   const allMembers = useMemo(() => {
-    return committee.flatMap((cat) =>
-      cat.members.map((member, memberIndex) => ({
+    return members.map((member) => {
+      const cat = categories.find(c => c.id === member.category_id);
+      return {
         ...member,
-        categoryId: cat.id,
-        categoryLabel: cat.label,
-        memberIndex,
-      }))
-    );
-  }, [committee]);
+        categoryId: member.category_id,
+        categoryLabel: cat?.label || "Unknown",
+        memberIndex: member.id, // using member.id for consistency
+        photo: { url: member.photo_url },
+      };
+    });
+  }, [categories, members]);
 
-  // Get unique roles
   const uniqueRoles = useMemo(() => {
     const roles = new Set(allMembers.map((m) => m.role).filter(Boolean));
     return Array.from(roles).sort();
   }, [allMembers]);
 
-  // Filter members
   const filteredMembers = useMemo(() => {
     return allMembers.filter((member) => {
       const matchesSearch =
@@ -84,7 +100,7 @@ export const CommitteeManager = () => {
     if (selectedMembers.size === filteredMembers.length) {
       setSelectedMembers(new Set());
     } else {
-      const allIds = filteredMembers.map((m) => `${m.categoryId}-${m.memberIndex}`);
+      const allIds = filteredMembers.map((m) => m.id);
       setSelectedMembers(new Set(allIds));
     }
   }, [filteredMembers, selectedMembers.size]);
@@ -98,7 +114,7 @@ export const CommitteeManager = () => {
           m.role,
           m.affiliation,
           m.categoryLabel,
-          getPhotoUrl(m.photo),
+          m.photo.url || "",
         ]
           .map((field) => `"${field}"`)
           .join(",")
@@ -117,7 +133,6 @@ export const CommitteeManager = () => {
 
   return (
     <div className="space-y-6">
-      {/* Filters */}
       <div className="flex flex-col md:flex-row gap-4">
         <div className="flex-1 relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
@@ -135,9 +150,9 @@ export const CommitteeManager = () => {
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">All Categories</SelectItem>
-            {committee.map((cat) => (
+            {categories.map((cat) => (
               <SelectItem key={cat.id} value={cat.id}>
-                {cat.label} ({cat.members.length})
+                {cat.label}
               </SelectItem>
             ))}
           </SelectContent>
@@ -158,17 +173,15 @@ export const CommitteeManager = () => {
         </Select>
       </div>
 
-      {/* Actions */}
       <div className="flex flex-wrap gap-2">
-        <AddMemberDialog />
-        <AddCategoryDialog />
+        <AddMemberDialog categories={categories} onMemberAdded={fetchCommittee} />
+        <AddCategoryDialog onCategoryAdded={fetchCommittee} />
         <Button onClick={handleExportCSV} variant="outline">
           <Download className="w-4 h-4 mr-2" />
           Export CSV
         </Button>
       </div>
 
-      {/* Bulk Actions Section */}
       {selectedMembers.size > 0 && (
         <div className="p-4 rounded-lg border border-orange-500/30 bg-orange-500/5 flex items-center justify-between">
           <div>
@@ -188,44 +201,42 @@ export const CommitteeManager = () => {
         </div>
       )}
 
-      {/* Bulk Actions Dialog */}
       <BulkActionsDialog
         open={bulkActionsOpen}
         onOpenChange={setBulkActionsOpen}
         type="members"
         selectedIds={Array.from(selectedMembers)}
         selectedNames={filteredMembers
-          .filter((m) => selectedMembers.has(`${m.categoryId}-${m.memberIndex}`))
+          .filter((m) => selectedMembers.has(m.id))
           .map((m) => m.name)}
         onActionComplete={() => {
           setSelectedMembers(new Set());
           setBulkActionsOpen(false);
+          fetchCommittee();
         }}
       />
 
-      {/* Edit Member Dialog */}
       {editingMember && (
         <EditMemberDialog
           open={!!editingMember}
           onOpenChange={(open) => {
             if (!open) setEditingMember(null);
           }}
-          categoryId={editingMember.categoryId}
-          memberIndex={editingMember.index}
+          memberId={editingMember.id}
           memberName={editingMember.name}
+          categories={categories}
           onMemberUpdated={() => {
             setEditingMember(null);
+            fetchCommittee();
           }}
         />
       )}
 
-      {/* Results */}
       <div className="border border-border rounded-lg p-4">
         <p className="text-sm text-muted-foreground mb-4">
           Showing {filteredMembers.length} of {allMembers.length} members
         </p>
 
-        {/* Select All Checkbox */}
         {filteredMembers.length > 0 && (
           <div className="mb-4 flex items-center gap-2">
             <input
@@ -249,7 +260,7 @@ export const CommitteeManager = () => {
 
         <div className="space-y-2 max-h-[600px] overflow-y-auto">
           {filteredMembers.map((member) => {
-            const memberId = `${member.categoryId}-${member.memberIndex}`;
+            const memberId = member.id;
             const isSelected = selectedMembers.has(memberId);
             return (
               <div
@@ -270,14 +281,14 @@ export const CommitteeManager = () => {
                 />
 
                 <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-border flex-shrink-0">
-                  {getPhotoUrl(member.photo) ? (
+                  {member.photo.url ? (
                     <Image
-                      src={getPhotoUrl(member.photo)}
+                      src={member.photo.url}
                       alt={member.name}
                       fill
                       className="object-cover"
                       sizes="40px"
-                      unoptimized={isExternalUrl(getPhotoUrl(member.photo))}
+                      unoptimized={isExternalUrl(member.photo.url)}
                     />
                   ) : (
                     <div className="w-full h-full bg-muted flex items-center justify-center">
@@ -312,8 +323,7 @@ export const CommitteeManager = () => {
                   onClick={(e) => {
                     e.stopPropagation();
                     setEditingMember({
-                      categoryId: member.categoryId,
-                      index: member.memberIndex,
+                      id: member.id,
                       name: member.name,
                     });
                   }}

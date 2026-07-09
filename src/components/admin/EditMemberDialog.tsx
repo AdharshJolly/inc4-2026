@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import {
   Dialog,
   DialogContent,
@@ -8,86 +8,90 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { AlertCircle, Upload, X } from "lucide-react";
-import committeeData from "@/data/committee.json";
-import { getPhotoUrl } from "@/lib/photoMigration";
 import { ActivityLogger } from "@/lib/activityLogger";
-import { storePendingChange } from "@/lib/githubSync";
 import { uploadImageToGitHub } from "@/lib/fileUpload";
 import { useToast } from "@/hooks/use-toast";
 import { PhotoUploadField } from "./PhotoUploadField";
-import type { CommitteeData } from "@/types/data";
+import { createClient } from "@/utils/supabase/client";
 
 interface EditMemberDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  categoryId: string;
-  memberIndex: number;
+  memberId: string;
   memberName: string;
+  categories: any[];
   onMemberUpdated?: () => void;
 }
 
 export const EditMemberDialog = ({
   open,
   onOpenChange,
-  categoryId,
-  memberIndex,
+  memberId,
   memberName,
+  categories,
   onMemberUpdated,
 }: EditMemberDialogProps) => {
-  const committee = (committeeData as CommitteeData).root;
-  const category = committee.find((c) => c.id === categoryId);
-  const member = category?.members[memberIndex];
-
+  const [member, setMember] = useState<any>(null);
   const [formData, setFormData] = useState({
-    name: member?.name || "",
-    role: member?.role || "",
-    affiliation: member?.affiliation || "",
-    photoUrl: getPhotoUrl(member?.photo) || "",
+    name: "",
+    role: "",
+    affiliation: "",
+    photoUrl: "",
     photoFile: null as File | null,
   });
 
   const [uploadedFileName, setUploadedFileName] = useState("");
-  const [photoPreview, setPhotoPreview] = useState(
-    getPhotoUrl(member?.photo) || ""
-  );
+  const [photoPreview, setPhotoPreview] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
-  // Ref to track the latest blob URL for proper cleanup
   const photoPreviewRef = useRef<string>("");
+  const supabase = createClient();
 
-  // Update ref whenever preview changes
+  const fetchMember = useCallback(async () => {
+    const { data, error } = await supabase
+      .from("committee_members")
+      .select("*")
+      .eq("id", memberId)
+      .single();
+    
+    if (data && !error) {
+      setMember(data);
+      setFormData({
+        name: data.name || "",
+        role: data.role || "",
+        affiliation: data.affiliation || "",
+        photoUrl: data.photo_url || "",
+        photoFile: null,
+      });
+      setPhotoPreview(data.photo_url || "");
+    }
+  }, [supabase, memberId]);
+
+  useEffect(() => {
+    if (open) {
+      fetchMember();
+    }
+  }, [open, fetchMember]);
+
   useEffect(() => {
     photoPreviewRef.current = photoPreview;
   }, [photoPreview]);
 
-  // Cleanup blob URLs on unmount
   useEffect(() => {
     return () => {
-      // Cleanup on unmount - revoke only blob URLs
       if (photoPreviewRef.current?.startsWith("blob:")) {
         URL.revokeObjectURL(photoPreviewRef.current);
       }
     };
   }, []);
 
-  // Cleanup when dialog closes
   const handleDialogOpenChange = (newOpen: boolean) => {
     if (!newOpen) {
-      // Dialog is closing, revoke blob URL if present
       if (photoPreviewRef.current?.startsWith("blob:")) {
         URL.revokeObjectURL(photoPreviewRef.current);
       }
-      setPhotoPreview(getPhotoUrl(member?.photo) || "");
+      setPhotoPreview(member?.photo_url || "");
     }
     onOpenChange(newOpen);
   };
@@ -135,11 +139,9 @@ export const EditMemberDialog = ({
       }));
       setUploadedFileName(file.name);
 
-      // Revoke previous blob preview if present to prevent leaks
       if (photoPreviewRef.current?.startsWith("blob:")) {
         URL.revokeObjectURL(photoPreviewRef.current);
       }
-      // Create blob URL for efficient preview (will be revoked on unmount)
       const blobUrl = URL.createObjectURL(file);
       setPhotoPreview(blobUrl);
 
@@ -152,7 +154,6 @@ export const EditMemberDialog = ({
   };
 
   const handleUrlChange = (url: string) => {
-    // Revoke previous blob preview if present when switching to URL
     if (photoPreviewRef.current?.startsWith("blob:")) {
       URL.revokeObjectURL(photoPreviewRef.current);
     }
@@ -177,35 +178,17 @@ export const EditMemberDialog = ({
 
   const handleSubmit = async () => {
     if (!validateForm()) return;
-
-    if (!member || !category) return;
+    if (!member) return;
 
     setIsSubmitting(true);
 
     try {
-      // Track changes for activity log
-      const changes: Record<string, { old: string; new: string }> = {};
-
-      if (member.name !== formData.name) {
-        changes.name = { old: member.name, new: formData.name };
-      }
-      if (member.role !== formData.role) {
-        changes.role = { old: member.role, new: formData.role };
-      }
-      if (member.affiliation !== formData.affiliation) {
-        changes.affiliation = {
-          old: member.affiliation,
-          new: formData.affiliation,
-        };
-      }
-
-      // Handle photo: upload file if present, otherwise keep existing or use URL
       let photoUrl = formData.photoUrl;
 
       if (formData.photoFile) {
         toast({
           title: "Uploading photo",
-          description: "Please wait while we upload your photo to GitHub...",
+          description: "Please wait while we upload your photo...",
         });
 
         const uploadResult = await uploadImageToGitHub(
@@ -218,36 +201,26 @@ export const EditMemberDialog = ({
         }
 
         photoUrl = uploadResult.path || "";
-      } else if (!photoUrl && member.photo?.url) {
-        // Keep existing photo if no new upload or URL
-        photoUrl = member.photo.url;
+      } else if (!photoUrl && member.photo_url) {
+        photoUrl = member.photo_url;
       }
 
-      // Update member in memory
-      const updatedMember = {
-        ...member,
-        name: formData.name,
-        role: formData.role,
-        affiliation: formData.affiliation,
-        photo: photoUrl ? { url: photoUrl } : {},
-      };
+      const { error } = await supabase
+        .from("committee_members")
+        .update({
+          name: formData.name,
+          role: formData.role,
+          affiliation: formData.affiliation,
+          photo_url: photoUrl,
+        })
+        .eq("id", memberId);
 
-      category.members[memberIndex] = updatedMember;
+      if (error) throw error;
 
-      // Store pending change for GitHub commit on logout
-      const updatedCommittee = JSON.stringify(committeeData, null, 2);
-      storePendingChange({
-        path: "src/data/committee.json",
-        content: updatedCommittee,
-        message: `Updated committee member: ${formData.name}`,
-      });
-
-      // Log the action
       ActivityLogger.log({
         action: "Updated committee member",
         type: "member",
         targetName: formData.name,
-        changes: Object.keys(changes).length > 0 ? changes : undefined,
         status: "success",
       });
 
@@ -273,13 +246,9 @@ export const EditMemberDialog = ({
     }
   };
 
-  if (!member || !category) {
+  if (!member) {
     return null;
   }
-
-  // Note: CommitteeCategory uses `label`, not `name`. If needed for future use,
-  // map to `{ id, label }`. Currently unused; removing avoids type errors.
-  // const categories = committee.map((c) => ({ id: c.id, label: c.label }));
 
   return (
     <Dialog open={open} onOpenChange={handleDialogOpenChange}>
@@ -289,7 +258,6 @@ export const EditMemberDialog = ({
         </DialogHeader>
 
         <div className="space-y-6">
-          {/* Basic Info */}
           <div className="grid grid-cols-2 gap-4">
             <div>
               <Label htmlFor="edit-name">Name *</Label>
@@ -358,7 +326,6 @@ export const EditMemberDialog = ({
             onClearPhoto={handleClearPhoto}
           />
 
-          {/* Actions */}
           <div className="flex gap-3 justify-end border-t pt-6">
             <Button
               variant="outline"

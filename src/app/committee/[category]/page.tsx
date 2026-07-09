@@ -1,11 +1,19 @@
 import { Metadata } from "next";
-import committeeData from "@/data/committee.json";
-import { CommitteeData } from "@/types/data";
+import { createClient } from "@supabase/supabase-js";
 
-export function generateStaticParams() {
-  const data = committeeData as unknown as CommitteeData;
-  return data.root.map((category) => ({
-    category: category.id,
+export async function generateStaticParams() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || "";
+  
+  if (!supabaseUrl || !supabaseKey) {
+    return [];
+  }
+
+  const supabase = createClient(supabaseUrl, supabaseKey);
+  const { data } = await supabase.from('committee_members').select('category_id');
+  const uniqueCategories = Array.from(new Set(data?.map(m => m.category_id) || []));
+  return uniqueCategories.map((category) => ({
+    category,
   }));
 }
 
