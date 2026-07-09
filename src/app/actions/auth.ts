@@ -3,7 +3,6 @@
 import { cookies, headers } from "next/headers";
 import { randomBytes, timingSafeEqual } from "crypto";
 import { env } from "@/lib/env";
-import { createClient } from "@/utils/supabase/server";
 
 const SESSION_COOKIE_NAME = "admin_session";
 const MAX_AGE = 30 * 60; // 30 minutes in seconds
@@ -79,28 +78,6 @@ export async function loginAction(password: string) {
       success: false, 
       error: `Too many failed attempts. Please try again in ${waitSeconds} seconds.` 
     };
-  }
-
-  // Check if another admin is currently active
-  const cookieStore = cookies();
-  const supabase = createClient(cookieStore);
-  
-  // Ignore error if table doesn't exist yet (for smooth transition)
-  const { data: lockData, error: lockError } = await supabase
-    .from("admin_lock")
-    .select("*")
-    .eq("id", 1)
-    .single();
-    
-  if (!lockError && lockData && lockData.locked_by) {
-    const lastActive = new Date(lockData.last_active_at).getTime();
-    // If active within the last 30 seconds
-    if (Date.now() - lastActive < 30000) {
-      return { 
-        success: false, 
-        error: "Someone is currently using the system. Kindly wait." 
-      };
-    }
   }
 
   // Constant-time comparison to prevent timing attacks
