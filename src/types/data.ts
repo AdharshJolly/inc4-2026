@@ -26,6 +26,7 @@ export interface SpeakerItem {
   photo: PhotoField;
   topic?: string;
   linkedin?: string;
+  twitter?: string;
 }
 
 export interface SpeakersData {

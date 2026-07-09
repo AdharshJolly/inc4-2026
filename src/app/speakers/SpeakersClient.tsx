@@ -9,10 +9,12 @@ import type { SpeakersData } from "@/types/data";
 import speakersData from "@/data/speakers.json";
 import { getPreviewData } from "@/lib/previewMode";
 import { useEffect, useState } from "react";
-import { Users } from "lucide-react";
+import { Users, Linkedin, Twitter } from "lucide-react";
 
 export default function SpeakersClient() {
-  const [speakers, setSpeakers] = useState(normalizePhotoFields((speakersData as SpeakersData).root));
+  const [speakers, setSpeakers] = useState(
+    normalizePhotoFields((speakersData as SpeakersData).root),
+  );
 
   useEffect(() => {
     const previewData = getPreviewData("src/data/speakers.json");
@@ -27,73 +29,117 @@ export default function SpeakersClient() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background">
-      <PageTitle title="Keynote Speakers" />
+    <div className="min-h-screen bg-background pt-24 pb-16 md:pt-32 md:pb-24">
+      <div className="container mx-auto px-4">
+        {/* Header */}
+        <div className="text-center mb-16 md:mb-24">
+          <Reveal width="100%">
+            <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
+              Our <span className="text-gradient-primary">Speakers</span>
+            </h1>
+          </Reveal>
+          <Reveal width="100%">
+            <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto">
+              Learn from industry leaders, renowned academics, and visionary
+              thinkers shaping the future of computing.
+            </p>
+          </Reveal>
+        </div>
 
-      <div className="container mx-auto px-4 pb-20">
         {speakers.length === 0 ? (
-          <div className="py-20 text-center space-y-8">
+          <div className="max-w-4xl mx-auto text-center py-20">
             <Reveal width="100%">
-              <div className="flex justify-center mb-6">
-                <div className="p-6 bg-primary/5 rounded-full border border-primary/10">
-                  <Users className="w-16 h-16 text-primary" />
-                </div>
+              <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary/10 mb-6 border border-primary/20">
+                <Users className="w-10 h-10 text-primary" />
               </div>
-              <h3 className="text-2xl md:text-3xl font-bold">
-                Keynote Speakers Coming Soon
-              </h3>
-              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-                We are currently inviting distinguished speakers for InC4 2026.
-                Please check back later to see the lineup of experts who will be
-                sharing their insights.
+            </Reveal>
+            <Reveal width="100%">
+              <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">
+                Speakers to be Announced
+              </h2>
+            </Reveal>
+            <Reveal width="100%">
+              <p className="text-muted-foreground text-lg">
+                We are currently curating an exceptional lineup of speakers for
+                InC4 2026. Please check back later for updates.
               </p>
             </Reveal>
           </div>
         ) : (
-          <div className="py-12 grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-24 mb-12 mt-16 max-w-7xl mx-auto">
             {speakers.map((speaker, index) => {
               const photoUrl = getPhotoUrl(speaker.photo);
 
               return (
-                <Reveal key={`${speaker.name}-${index}`} width="100%">
-                  <div className="group relative">
-                    <div className="absolute inset-0 gradient-primary rounded-3xl blur-xl opacity-0 group-hover:opacity-30 transition-opacity duration-500" />
+                <Reveal key={speaker.name} width="100%">
+                  <div className="pt-20">
+                    <div className="group relative">
+                      {/* Glow Effect */}
+                      <div className="absolute inset-0 bg-primary/5 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                    <div className="relative bg-dark-card border border-dark-border rounded-3xl overflow-hidden hover:border-primary/50 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2">
-                      <div className="relative h-64 overflow-hidden">
-                        {photoUrl ? (
-                          <img
-                            src={photoUrl}
-                            alt={speaker.name}
-                            className="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-700"
-                          />
-                        ) : (
-                          <div className="w-full h-full flex items-center justify-center bg-dark-card/80">
-                            <span className="text-5xl font-bold text-primary-foreground/60">
-                              {speaker.name?.charAt(0) || "?"}
-                            </span>
-                          </div>
-                        )}
-                        <div className="absolute inset-0 bg-gradient-to-t from-dark-card via-transparent to-transparent" />
+                      <div className="relative bg-card border border-border rounded-3xl p-6 pt-24 hover:border-primary/50 transition-all duration-500 hover:shadow-xl hover:-translate-y-2 text-center">
+                        {/* Floating Avatar */}
+                        <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-40 h-40 rounded-full border-4 border-card overflow-hidden bg-muted shadow-xl group-hover:scale-105 transition-transform duration-500">
+                          {photoUrl ? (
+                            <img
+                              src={photoUrl}
+                              alt={speaker.name}
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center bg-muted">
+                              <span className="text-4xl font-bold text-muted-foreground">
+                                {speaker.name?.charAt(0) || "?"}
+                              </span>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Topic Badge */}
                         {speaker.topic && (
-                          <div className="absolute top-4 left-4">
-                            <span className="bg-primary/90 text-primary-foreground text-xs font-semibold px-3 py-1.5 rounded-full">
+                          <div className="mb-4">
+                            <span className="bg-primary/10 text-primary text-xs font-semibold px-3 py-1.5 rounded-full border border-primary/20 inline-block">
                               {speaker.topic}
                             </span>
                           </div>
                         )}
-                      </div>
 
-                      <div className="p-6">
-                        <h3 className="font-display text-xl font-bold text-primary-foreground mb-1">
+                        {/* Content */}
+                        <h3 className="font-display text-xl font-bold text-foreground mb-1">
                           {speaker.name}
                         </h3>
                         <p className="text-primary font-medium text-sm mb-2">
                           {speaker.role}
                         </p>
-                        <p className="text-primary-foreground/60 text-sm">
+                        <p className="text-muted-foreground text-sm mb-6 line-clamp-2">
                           {speaker.affiliation}
                         </p>
+
+                        {/* Social Links */}
+                        <div className="flex justify-center gap-3">
+                          {speaker.linkedin && (
+                            <a
+                              href={speaker.linkedin}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              aria-label={`${speaker.name} on LinkedIn`}
+                              className="w-10 h-10 bg-muted rounded-full flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors group/social text-muted-foreground"
+                            >
+                              <Linkedin className="w-4 h-4 group-hover/social:scale-110 transition-transform" />
+                            </a>
+                          )}
+                          {speaker.twitter && (
+                            <a
+                              href={speaker.twitter}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              aria-label={`${speaker.name} on Twitter`}
+                              className="w-10 h-10 bg-muted rounded-full flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors group/social text-muted-foreground"
+                            >
+                              <Twitter className="w-4 h-4 group-hover/social:scale-110 transition-transform" />
+                            </a>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>
