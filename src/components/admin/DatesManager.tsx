@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -11,7 +11,8 @@ import {
   Calendar,
   AlertTriangle,
   ArrowUp,
-  ArrowDown
+  ArrowDown,
+  Search,
 } from "lucide-react";
 import { AddDatesDialog } from "./AddDatesDialog";
 import { useToast } from "@/hooks/use-toast";
@@ -56,6 +57,7 @@ export type ImportantDateItem = {
 export const DatesManager = () => {
   const [dates, setDates] = useState<ImportantDateItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
   const { toast } = useToast();
   const supabase = createClient();
 
@@ -71,6 +73,14 @@ export const DatesManager = () => {
     actionUrl: "",
   });
   const [confirmDeleteIndex, setConfirmDeleteIndex] = useState<number | null>(null);
+
+  const filteredDates = useMemo(() => {
+    if (!searchTerm.trim()) return dates;
+    return dates.filter((d) =>
+      d.event.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      d.date.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [dates, searchTerm]);
 
   const fetchDates = async () => {
     setIsLoading(true);
@@ -243,17 +253,26 @@ export const DatesManager = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex gap-2">
+      <div className="flex flex-col sm:flex-row gap-3">
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+          <Input
+            placeholder="Search events or dates…"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="pl-9"
+          />
+        </div>
         <AddDatesDialog onDateAdded={handleAddDate} />
       </div>
 
       <div className="space-y-3">
         {isLoading ? (
           <p className="text-sm text-muted-foreground">Loading dates...</p>
-        ) : dates.length === 0 ? (
-          <p className="text-sm text-muted-foreground">No dates found.</p>
+        ) : filteredDates.length === 0 ? (
+          <p className="text-sm text-muted-foreground">{searchTerm ? "No matches found." : "No dates found."}</p>
         ) : (
-          dates.map((date, index) => (
+          filteredDates.map((date, index) => (
             <div
               key={date.id || index}
               className="flex items-start gap-4 p-4 rounded-lg border border-border hover:border-primary/40 hover:bg-primary/5 transition-colors"

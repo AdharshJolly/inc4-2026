@@ -3,14 +3,11 @@ import { Inter, Space_Grotesk } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import { Providers } from "@/components/common/Providers";
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
 import { SchemaOrg } from "@/components/common/SchemaOrg";
 import { PreviewModeBanner } from "@/components/common/PreviewModeBanner";
-import ScrollToTop from "@/components/layout/ScrollToTop";
 import { ContentWrapper } from "@/components/layout/ContentWrapper";
-import { ScrollProgress } from "@/components/ui/scroll-progress";
 import { Analytics } from "@/components/common/Analytics";
+import { ConditionalLayout } from "@/components/layout/ConditionalLayout";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -72,7 +69,7 @@ export const metadata: Metadata = {
     description:
       "Join us at InC4 2026, the 2026 IEEE International Conference on Contemporary Computing and Communications - Conference#70839.",
     images: ["/images/InC4 Logo White.png"],
-    creator: "@ieeecomputers", // Assuming this handle based on schema data
+    creator: "@ieeecomputers",
   },
   robots: {
     index: true,
@@ -151,16 +148,14 @@ export default function RootLayout({
           </>
         ) : null}
         <Providers>
-          <ScrollProgress />
-          <ScrollToTop />
-          <SchemaOrg />
-          {gaId ? <Analytics /> : null}
-          <PreviewModeBanner />
-          <Navbar />
-          <ContentWrapper>
-            <main>{children}</main>
-          </ContentWrapper>
-          <Footer />
+          <ConditionalLayout>
+            <SchemaOrg />
+            {gaId ? <Analytics /> : null}
+            <PreviewModeBanner />
+            <ContentWrapper>
+              <main>{children}</main>
+            </ContentWrapper>
+          </ConditionalLayout>
         </Providers>
       </body>
     </html>

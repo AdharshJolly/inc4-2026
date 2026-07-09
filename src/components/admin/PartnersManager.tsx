@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Edit, Trash2, Building2, AlertTriangle, ArrowUp, ArrowDown } from "lucide-react";
+import { Edit, Trash2, Building2, AlertTriangle, ArrowUp, ArrowDown, Search } from "lucide-react";
 import { AddPartnerDialog } from "./AddPartnerDialog";
 import { useToast } from "@/hooks/use-toast";
 import { ActivityLogger } from "@/lib/activityLogger";
@@ -42,8 +42,17 @@ export type PartnerItem = {
 export const PartnersManager = () => {
   const [partners, setPartners] = useState<PartnerItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
   const { toast } = useToast();
   const supabase = createClient();
+
+  const filteredPartners = useMemo(() => {
+    if (!searchTerm.trim()) return partners;
+    return partners.filter((p) =>
+      p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      p.country.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [partners, searchTerm]);
 
   const [editOpen, setEditOpen] = useState(false);
   const [editIndex, setEditIndex] = useState<number | null>(null);
@@ -264,17 +273,26 @@ export const PartnersManager = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex gap-2">
+      <div className="flex flex-col sm:flex-row gap-3">
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+          <Input
+            placeholder="Search by name or country…"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="pl-9"
+          />
+        </div>
         <AddPartnerDialog onPartnerAdded={handleAddPartner} />
       </div>
 
       {isLoading ? (
         <p className="text-sm text-muted-foreground">Loading partners...</p>
-      ) : partners.length === 0 ? (
-        <p className="text-sm text-muted-foreground">No partners found.</p>
+      ) : filteredPartners.length === 0 ? (
+        <p className="text-sm text-muted-foreground">{searchTerm ? "No matches found." : "No partners found."}</p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {partners.map((partner, index) => (
+          {filteredPartners.map((partner, index) => (
             <div
               key={partner.id || index}
               className="flex flex-col p-4 rounded-lg border border-border hover:border-primary/40 hover:bg-primary/5 transition-colors gap-4"

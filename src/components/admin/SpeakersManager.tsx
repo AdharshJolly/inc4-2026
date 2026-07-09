@@ -145,33 +145,31 @@ export const SpeakersManager = () => {
   const isSearchActive = searchTerm.trim().length > 0;
 
   return (
-    <div className="space-y-6">
-      <div className="flex gap-4">
+    <div className="space-y-4">
+      {/* Toolbar */}
+      <div className="flex gap-3">
         <div className="flex-1 relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <Input
-            placeholder="Search speakers..."
+            placeholder="Search by name, affiliation or topic…"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10"
+            className="pl-9 h-9 text-[13px]"
           />
         </div>
         <AddSpeakerDialog onSpeakerAdded={fetchSpeakers} />
       </div>
 
+      {/* Selection bar */}
       {selectedSpeakers.size > 0 && (
-        <div className="p-4 rounded-lg border border-orange-500/30 bg-orange-500/5 flex items-center justify-between">
-          <div>
-            <p className="font-medium text-sm">
-              {selectedSpeakers.size} speaker{selectedSpeakers.size !== 1 ? "s" : ""} selected
-            </p>
-            <p className="text-xs text-muted-foreground mt-1">
-              Use the bulk actions button to manage selected speakers
-            </p>
-          </div>
+        <div className="flex items-center justify-between px-4 py-3 rounded-xl border border-orange-500/30 bg-orange-500/5">
+          <p className="text-[13px] font-medium">
+            {selectedSpeakers.size} speaker{selectedSpeakers.size !== 1 ? "s" : ""} selected
+          </p>
           <Button
+            size="sm"
             onClick={() => setBulkActionsOpen(true)}
-            className="bg-orange-600 hover:bg-orange-700"
+            className="h-8 text-xs bg-orange-600 hover:bg-orange-700"
           >
             Bulk Actions
           </Button>
@@ -196,55 +194,38 @@ export const SpeakersManager = () => {
       {editingSpeaker && (
         <EditSpeakerDialog
           open={!!editingSpeaker}
-          onOpenChange={(open) => {
-            if (!open) setEditingSpeaker(null);
-          }}
+          onOpenChange={(open) => { if (!open) setEditingSpeaker(null); }}
           speakerId={editingSpeaker.id}
           speakerName={editingSpeaker.name}
-          onSpeakerUpdated={() => {
-            setEditingSpeaker(null);
-            fetchSpeakers();
-          }}
+          onSpeakerUpdated={() => { setEditingSpeaker(null); fetchSpeakers(); }}
         />
       )}
 
+      {/* Select-all row */}
       {filteredSpeakers.length > 0 && (
-        <div className="mb-4 flex items-center gap-2">
+        <div className="flex items-center gap-2 px-1">
           <input
             type="checkbox"
-            checked={
-              filteredSpeakers.length > 0 &&
-              selectedSpeakers.size === filteredSpeakers.length
-            }
+            checked={filteredSpeakers.length > 0 && selectedSpeakers.size === filteredSpeakers.length}
             onChange={handleSelectAll}
-            className="rounded cursor-pointer"
+            className="w-3.5 h-3.5 rounded cursor-pointer accent-orange-500"
             id="select-all-speakers"
           />
-          <label
-            htmlFor="select-all-speakers"
-            className="text-sm cursor-pointer"
-          >
-            Select all shown ({filteredSpeakers.length})
+          <label htmlFor="select-all-speakers" className="text-[12px] text-muted-foreground cursor-pointer select-none">
+            Select all ({filteredSpeakers.length})
           </label>
-          
           {!isSearchActive && (
-            <span className="ml-auto text-sm text-muted-foreground italic">
-              Drag and drop cards to reorder
+            <span className="ml-auto text-[11px] text-muted-foreground/60 italic">
+              Drag to reorder
             </span>
           )}
         </div>
       )}
 
-      <DndContext
-        sensors={sensors}
-        collisionDetection={closestCenter}
-        onDragEnd={handleDragEnd}
-      >
-        <SortableContext
-          items={filteredSpeakers.map((s) => s.id)}
-          strategy={rectSortingStrategy}
-        >
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* Speaker list */}
+      <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+        <SortableContext items={filteredSpeakers.map((s) => s.id)} strategy={rectSortingStrategy}>
+          <div className="space-y-2">
             {filteredSpeakers.map((speaker) => (
               <SortableSpeakerCard
                 key={speaker.id}
@@ -264,10 +245,11 @@ export const SpeakersManager = () => {
       </DndContext>
 
       {filteredSpeakers.length === 0 && (
-        <div className="text-center py-12 text-muted-foreground">
-          No speakers found matching your search.
+        <div className="text-center py-16 text-muted-foreground text-[13px]">
+          {searchTerm ? "No speakers match your search." : "No speakers added yet."}
         </div>
       )}
     </div>
   );
 };
+
