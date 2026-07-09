@@ -1,3 +1,31 @@
 {
-  "root": []
+  "root": [
+    {
+      "name": "Dr Anupam Sharma",
+      "role": "Director",
+      "affiliation": "DSP DRDO, Hyderabad",
+      "linkedin": "https://www.linkedin.com/in/dr-anupam-sharma-04644060/",
+      "photo": {
+        "url": "/images/speakers/anupam sharma.jpg"
+      }
+    },
+    {
+      "name": "Dr G K Patra",
+      "role": "Director",
+      "affiliation": "CSIR Lab, Bangalore",
+      "linkedin": "https://www.linkedin.com/in/gkpatra/",
+      "photo": {
+        "url": "/images/speakers/gk patra.jpg"
+      }
+    },
+    {
+      "name": "KiranKumar Doreswamy",
+      "role": "Vice President and Center Head",
+      "affiliation": "UST Bengaluru",
+      "linkedin": "https://www.linkedin.com/in/kirankumar-doreswamy-a4b18368/",
+      "photo": {
+        "url": "/images/speakers/kiran kumar.jpg"
+      }
+    }
+  ]
 }

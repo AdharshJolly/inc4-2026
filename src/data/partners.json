@@ -89,6 +89,24 @@
       "link": "https://www.ust.com/",
       "image": "/images/partners/1782383224460-jd5bng.png",
       "whiteLogo": true
+    },
+    {
+      "name": "The Catholic University of America",
+      "country": "USA",
+      "link": "https://www.catholic.edu/",
+      "image": "/images/partners/Catholic_univ_america_full_logo.png"
+    },
+    {
+      "name": "University of Arizona",
+      "country": "USA",
+      "link": "https://www.arizona.edu/",
+      "image": "/images/partners/UAG-arizona univeristy.png"
+    },
+    {
+      "name": "Intel Unnati",
+      "country": "India",
+      "link": "https://www.intel.in/content/www/in/en/corporate-responsibility/unnati.html",
+      "image": "/images/partners/intel-unnati.png"
     }
   ]
 }
