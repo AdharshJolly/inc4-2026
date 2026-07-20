@@ -6,8 +6,6 @@ import { z } from "zod";
  */
 const serverSchema = z.object({
   ADMIN_PASSWORD: z.string().min(1, "ADMIN_PASSWORD is required for authentication"),
-  NEXT_GITHUB_TOKEN: z.string().min(1, "NEXT_GITHUB_TOKEN is required for admin features if provided").optional(),
-  NEXT_GITHUB_BRANCH: z.string().default("development"),
   NEXT_ERROR_LOG_ENDPOINT: z.string().url().optional(),
   NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
 });
@@ -23,8 +21,6 @@ const clientSchema = z.object({
 
 const processEnv = {
   ADMIN_PASSWORD: process.env.ADMIN_PASSWORD || (process.env.NODE_ENV !== "production" ? "dev_password" : undefined),
-  NEXT_GITHUB_TOKEN: process.env.NEXT_GITHUB_TOKEN || undefined,
-  NEXT_GITHUB_BRANCH: process.env.NEXT_GITHUB_BRANCH || undefined,
   NEXT_ERROR_LOG_ENDPOINT: process.env.NEXT_ERROR_LOG_ENDPOINT || undefined,
   NODE_ENV: process.env.NODE_ENV || "development",
 };

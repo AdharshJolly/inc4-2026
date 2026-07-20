@@ -5,13 +5,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Trash2, AlertCircle, Calendar, RefreshCcw } from "lucide-react";
-import { getLogs, clearLogs, exportLogs, getBreadcrumbs } from "@/lib/errorLogger";
+import { getLogs, clearLogs, exportLogs } from "@/lib/errorLogger";
 import type { ErrorLog } from "@/lib/errorLogger";
 import { useEffect, useState, useContext, useMemo } from "react";
 import Link from "next/link";
 import { useToast } from "@/hooks/use-toast";
 import { AdminSessionContext } from "../AdminSessionProvider";
-import { createGitHubIssue } from "@/app/actions/github";
+
 import {
   Table,
   TableBody,
@@ -57,10 +57,6 @@ export default function ErrorLogsPage() {
       .reverse();
   }, [logs, filter]);
 
-  const selectedLog = useMemo(() => {
-    return filtered.find((l) => l.id === selectedId) || filtered[0] || null;
-  }, [filtered, selectedId]);
-
   const levelBadge = (level: ErrorLog["level"]) => {
     const map: Record<ErrorLog["level"], string> = {
       error: "bg-red-500/15 text-red-600",
@@ -97,60 +93,6 @@ export default function ErrorLogsPage() {
     });
   };
 
-  const handleCreateIssue = async () => {
-    const log =
-      selectedLog || filtered.find((l) => l.level === "error") || null;
-    if (!log) {
-      toast({
-        title: "No error selected",
-        description: "Select a log row or ensure an error exists.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    const breadcrumbs = getBreadcrumbs();
-    const body = [
-      `Time: ${new Date(log.timestamp).toISOString()}`,
-      `Level: ${log.level}`,
-      `Message: ${log.message}`,
-      `URL: ${log.url || "-"}`,
-      `UserAgent: ${log.userAgent || "-"}`,
-      `Session: ${log.sessionId || "-"}`,
-      "",
-      "Context:",
-      "```json",
-      JSON.stringify(log.context || {}, null, 2),
-      "```",
-      "",
-      "Stack:",
-      "```",
-      log.stack || "-",
-      "```",
-      "",
-      "Recent Breadcrumbs:",
-      "```json",
-      JSON.stringify(breadcrumbs.slice(-20), null, 2),
-      "```",
-    ].join("\n");
-
-    const res = await createGitHubIssue({
-      title: `Admin Error: ${log.message.slice(0, 80)}`,
-      body,
-      labels: ["bug", "admin", "observability"],
-    });
-
-    if (res.success) {
-      toast({ title: "Issue created", description: res.url });
-    } else {
-      toast({
-        title: "Failed to create issue",
-        description: res.error || "Unknown error",
-        variant: "destructive",
-      });
-    }
-  };
-
   return (
     <div className="min-h-screen bg-background pt-[110px]">
       <div className="container mx-auto px-4 pb-4 flex items-center justify-between">
@@ -185,7 +127,6 @@ export default function ErrorLogsPage() {
                 >
                   Clear All
                 </Button>
-                <Button onClick={handleCreateIssue}>Create GitHub Issue</Button>
               </div>
             </CardTitle>
             <div className="flex items-center gap-3">
