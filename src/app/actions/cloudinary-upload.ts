@@ -16,7 +16,8 @@ export interface CloudinaryUploadResult {
 export async function uploadToCloudinary(
   base64Data: string,
   folder: string,
-  originalName: string
+  originalName: string,
+  mimeType: string = "image/jpeg"
 ): Promise<CloudinaryUploadResult> {
   try {
     const publicId = generatePublicId(originalName, folder);
@@ -24,7 +25,7 @@ export async function uploadToCloudinary(
     // Upload to Cloudinary
     const result = await new Promise<any>((resolve, reject) => {
       cloudinary.uploader.upload(
-        `data:image/jpeg;base64,${base64Data}`,
+        `data:${mimeType};base64,${base64Data}`,
         {
           public_id: publicId,
           folder: `${CLOUDINARY_FOLDER}/${folder}`,
@@ -75,14 +76,14 @@ export async function deleteFromCloudinary(
 }
 
 // Get optimized URL for display
-export function getOptimizedImageUrl(
+export async function getOptimizedImageUrl(
   publicId: string,
   options?: {
     width?: number;
     height?: number;
     quality?: number;
   }
-): string {
+): Promise<string> {
   const transformations: string[] = [];
 
   if (options?.width) transformations.push(`w_${options.width}`);
