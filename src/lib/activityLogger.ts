@@ -8,7 +8,7 @@ export type ChangeRecord = Record<string, { old: unknown; new: unknown }>;
 export interface ActivityLogEntry {
   id: string;
   action: string;
-  type: "member" | "speaker" | "date" | "category" | "partner";
+  type: "member" | "speaker" | "date" | "category" | "partner" | "event";
   targetName: string;
   changes?: ChangeRecord;
   timestamp: number;
