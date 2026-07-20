@@ -8,7 +8,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Plus } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { ActivityLogger } from "@/lib/activityLogger";
-import { uploadImageToGitHub } from "@/lib/fileUpload";
+import { uploadImageToCloudinary } from "@/lib/cloudinaryUpload";
 import { validatePhotoUpload } from "@/lib/validatePhotoUpload";
 import { createClient } from "@/utils/supabase/client";
 import type { PartnerItem } from "./PartnersManager";
@@ -120,10 +120,10 @@ export const AddPartnerDialog = ({ onPartnerAdded }: AddPartnerDialogProps) => {
       if (formData.imageFile) {
         toast({
           title: "Uploading image",
-          description: "Please wait while we upload your image to GitHub...",
+          description: "Please wait while we upload your image to Cloudinary...",
         });
 
-        const uploadResult = await uploadImageToGitHub(formData.imageFile, "partners");
+        const uploadResult = await uploadImageToCloudinary(formData.imageFile, "partners");
 
         if (!uploadResult.success) {
           throw new Error(uploadResult.error || "Failed to upload image");
