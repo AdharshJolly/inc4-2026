@@ -7,7 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Eye } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { ActivityLogger } from "@/lib/activityLogger";
-import { uploadImageToGitHub } from "@/lib/fileUpload";
+import { uploadImageToCloudinary } from "@/lib/cloudinaryUpload";
 import { PreviewDialog } from "./PreviewDialog";
 import { validatePhotoUpload } from "@/lib/validatePhotoUpload";
 import { z } from "zod";
@@ -164,7 +164,7 @@ export const AddSpeakerDialog = ({ onSpeakerAdded }: AddSpeakerDialogProps) => {
           description: "Please wait while we upload your photo...",
         });
 
-        const uploadResult = await uploadImageToGitHub(
+        const uploadResult = await uploadImageToCloudinary(
           formData.photoFile,
           "speakers"
         );
