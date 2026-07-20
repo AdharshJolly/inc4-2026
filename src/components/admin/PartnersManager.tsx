@@ -8,7 +8,7 @@ import { Edit, Trash2, Building2, AlertTriangle, ArrowUp, ArrowDown, Search } fr
 import { AddPartnerDialog } from "./AddPartnerDialog";
 import { useToast } from "@/hooks/use-toast";
 import { ActivityLogger } from "@/lib/activityLogger";
-import { uploadImageToGitHub } from "@/lib/fileUpload";
+import { uploadImageToCloudinary } from "@/lib/cloudinaryUpload";
 import { validatePhotoUpload } from "@/lib/validatePhotoUpload";
 import {
   Dialog,
@@ -162,10 +162,10 @@ export const PartnersManager = () => {
       if (editImageFile) {
         toast({
           title: "Uploading image",
-          description: "Please wait while we upload your image to GitHub...",
+          description: "Please wait while we upload your image to Cloudinary...",
         });
 
-        const uploadResult = await uploadImageToGitHub(editImageFile, "partners");
+        const uploadResult = await uploadImageToCloudinary(editImageFile, "partners");
 
         if (!uploadResult.success) {
           throw new Error(uploadResult.error || "Failed to upload image");
