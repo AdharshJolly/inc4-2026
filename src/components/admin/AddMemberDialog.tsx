@@ -14,7 +14,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Eye } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { ActivityLogger } from "@/lib/activityLogger";
-import { uploadImageToGitHub } from "@/lib/fileUpload";
+import { uploadImageToCloudinary } from "@/lib/cloudinaryUpload";
 import { PreviewDialog } from "./PreviewDialog";
 import { validatePhotoUpload } from "@/lib/validatePhotoUpload";
 import { createClient } from "@/utils/supabase/client";
@@ -149,7 +149,7 @@ export const AddMemberDialog = ({ categories, onMemberAdded }: AddMemberDialogPr
           description: "Please wait while we upload your photo...",
         });
 
-        const uploadResult = await uploadImageToGitHub(
+        const uploadResult = await uploadImageToCloudinary(
           formData.photoFile,
           "committee"
         );
