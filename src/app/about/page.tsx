@@ -58,7 +58,7 @@ export default function AboutPage() {
                   <p>
                     InC4 2026 brings together researchers and practitioners from
                     academia, industry, and government to deliberate upon
-                    contemporary computing and communication's algorithmic,
+                    contemporary computing and communication&apos;s algorithmic,
                     systemic, applied, and educational aspects. The conference
                     will witness multiple eminent keynote speakers from academia
                     and industry worldwide and the presentation of accepted
@@ -182,7 +182,7 @@ export default function AboutPage() {
                     of Christ University. One of the first institutions in India
                     to be accredited in 1998 by the NAAC, and subsequently in
                     2004 and 2016, CHRIST (Deemed to be University) has the top
-                    grade 'A' in the 4-point scale.
+                    grade &apos;A&apos; in the 4-point scale.
                   </p>
                 </div>
               </Reveal>
