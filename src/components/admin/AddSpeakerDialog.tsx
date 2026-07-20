@@ -173,7 +173,7 @@ export const AddSpeakerDialog = ({ onSpeakerAdded }: AddSpeakerDialogProps) => {
           throw new Error(uploadResult.error || "Failed to upload photo");
         }
 
-        photoUrl = uploadResult.path || "";
+        photoUrl = uploadResult.url || "";
       }
 
       // Get max order_index

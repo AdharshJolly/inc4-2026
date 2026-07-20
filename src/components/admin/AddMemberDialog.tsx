@@ -158,7 +158,7 @@ export const AddMemberDialog = ({ categories, onMemberAdded }: AddMemberDialogPr
           throw new Error(uploadResult.error || "Failed to upload photo");
         }
 
-        photoUrl = uploadResult.path || "";
+        photoUrl = uploadResult.url || "";
       }
 
       const { data: maxData } = await supabase

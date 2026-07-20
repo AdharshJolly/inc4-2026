@@ -129,7 +129,7 @@ export const AddPartnerDialog = ({ onPartnerAdded }: AddPartnerDialogProps) => {
           throw new Error(uploadResult.error || "Failed to upload image");
         }
 
-        imageUrl = uploadResult.path || "";
+        imageUrl = uploadResult.url || "";
       }
 
       const { data: maxOrderData } = await supabase

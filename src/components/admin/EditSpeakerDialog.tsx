@@ -192,7 +192,7 @@ export const EditSpeakerDialog = ({
           throw new Error(uploadResult.error || "Failed to upload photo");
         }
 
-        photoUrl = uploadResult.path || "";
+        photoUrl = uploadResult.url || "";
       } else if (!photoUrl && speaker.photo_url) {
         photoUrl = speaker.photo_url;
       }

@@ -171,7 +171,7 @@ export const PartnersManager = () => {
           throw new Error(uploadResult.error || "Failed to upload image");
         }
 
-        imageUrl = uploadResult.path || "";
+        imageUrl = uploadResult.url || "";
       }
 
       const { error } = await supabase

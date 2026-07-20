@@ -200,7 +200,7 @@ export const EditMemberDialog = ({
           throw new Error(uploadResult.error || "Failed to upload photo");
         }
 
-        photoUrl = uploadResult.path || "";
+        photoUrl = uploadResult.url || "";
       } else if (!photoUrl && member.photo_url) {
         photoUrl = member.photo_url;
       }
