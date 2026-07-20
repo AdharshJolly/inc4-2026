@@ -358,7 +358,7 @@ export const EditSpeakerDialog = ({
             </Button>
             <Button
               onClick={handleSubmit}
-              className="bg-orange-600 hover:bg-orange-700"
+              className="bg-primary hover:bg-primary/90"
             >
               Save Changes
             </Button>

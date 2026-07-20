@@ -35,7 +35,7 @@ export function SharedDialogWrapper({
     <Dialog open={open} onOpenChange={onOpenChange}>
       {!hideTrigger && triggerText && (
         <DialogTrigger asChild>
-          <Button className="bg-orange-500 hover:bg-orange-600">
+          <Button className="bg-primary hover:bg-primary/90">
             <Plus className="w-4 h-4 mr-2" />
             {triggerText}
           </Button>

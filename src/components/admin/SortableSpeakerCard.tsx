@@ -89,9 +89,9 @@ export function SortableSpeakerCard({
 
       {/* Info */}
       <div className="flex-1 min-w-0 pr-6">
-        <p className="font-semibold text-[13px] text-foreground truncate leading-tight">{speaker.name}</p>
-        <p className="text-[11px] text-orange-500 font-medium truncate mt-0.5">{speaker.role}</p>
-        <p className="text-[11px] text-muted-foreground truncate mt-0.5">{speaker.affiliation}</p>
+        <p className="font-semibold text-sm text-foreground truncate leading-tight">{speaker.name}</p>
+        <p className="text-xs text-orange-500 font-medium truncate mt-0.5">{speaker.role}</p>
+        <p className="text-xs text-muted-foreground truncate mt-0.5">{speaker.affiliation}</p>
         {speaker.topic && (
           <span className="inline-block mt-1.5 text-[10px] font-semibold bg-orange-500/10 text-orange-500 rounded-full px-2 py-0.5 border border-orange-500/20 truncate max-w-full">
             {speaker.topic}

@@ -191,7 +191,7 @@ export default function AdminDashboard() {
                 <button
                   key={item.id}
                   onClick={() => setActiveCmsTab(item.id)}
-                  className={`w-full flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-[13px] transition-all duration-150 ${
+                  className={`w-full flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-sm transition-all duration-150 ${
                     activeCmsTab === item.id
                       ? "bg-muted text-foreground font-semibold"
                       : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
@@ -210,7 +210,7 @@ export default function AdminDashboard() {
         <div className="px-3 pb-5 pt-3 border-t border-border/60 space-y-0.5">
           <button
             onClick={() => window.open("/", "_blank")}
-            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-150"
+            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-150"
           >
             <ExternalLink className="w-4 h-4 shrink-0" />
             View Live Site
@@ -218,7 +218,7 @@ export default function AdminDashboard() {
           {session?.logout && (
             <button
               onClick={session.logout}
-              className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] text-red-500 hover:bg-red-500/8 transition-all duration-150"
+              className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-red-500 hover:bg-red-500/8 transition-all duration-150"
             >
               <LogOut className="w-4 h-4 shrink-0" />
               Sign Out
@@ -232,7 +232,7 @@ export default function AdminDashboard() {
 
         {/* Top bar */}
         <header className="sticky top-0 z-30 h-14 bg-background/80 backdrop-blur-xl border-b border-border/60 flex items-center px-8 gap-4">
-          <div className="flex items-center gap-2 text-muted-foreground text-[13px]">
+          <div className="flex items-center gap-2 text-muted-foreground text-sm">
             <span className="font-medium text-foreground">
               {activeSection === "overview" ? "Overview" : "Content Management"}
             </span>
@@ -270,7 +270,7 @@ export default function AdminDashboard() {
             <div className="max-w-5xl">
               <div className="mb-8">
                 <h1 className="text-2xl font-black tracking-tight text-foreground">Dashboard Overview</h1>
-                <p className="text-muted-foreground text-[13px] mt-1">
+                <p className="text-muted-foreground text-sm mt-1">
                   Here's what's happening with InC4 2026.
                 </p>
               </div>
@@ -280,7 +280,7 @@ export default function AdminDashboard() {
                 {stats.map((stat) => (
                   <div
                     key={stat.title}
-                    className={`relative overflow-hidden rounded-2xl border bg-gradient-to-br ${stat.gradient} ${stat.border} p-5 transition-all duration-200 hover:shadow-lg cursor-default group`}
+                    className={`relative overflow-hidden rounded-2xl border bg-gradient-to-br ${stat.gradient} ${stat.border} p-5 transition-all duration-200 hover:shadow-lg hover:scale-[1.02] cursor-default group`}
                   >
                     {/* Glow orb */}
                     <div className={`absolute -top-6 -right-6 w-24 h-24 rounded-full ${stat.iconBg} blur-2xl opacity-50 group-hover:opacity-80 transition-opacity`} />
@@ -289,13 +289,13 @@ export default function AdminDashboard() {
                       <div className={`inline-flex p-2.5 rounded-xl ${stat.iconBg} ring-1 ${stat.ring} mb-4`}>
                         <stat.icon className={`w-4 h-4 ${stat.iconColor}`} />
                       </div>
-                      <p className="text-[12px] font-medium text-muted-foreground mb-0.5">{stat.title}</p>
+                      <p className="text-xs font-medium text-muted-foreground mb-0.5">{stat.title}</p>
                       <p className="text-4xl font-black tracking-tight text-foreground">
                         {isLoading ? (
                           <span className="inline-block w-10 h-8 bg-muted rounded animate-pulse" />
                         ) : stat.value}
                       </p>
-                      <div className={`flex items-center gap-1 mt-3 text-[11px] font-semibold ${stat.iconColor}`}>
+                      <div className={`flex items-center gap-1 mt-3 text-xs font-semibold ${stat.iconColor}`}>
                         <stat.trendIcon className="w-3 h-3" />
                         {stat.sub}
                       </div>
@@ -306,7 +306,7 @@ export default function AdminDashboard() {
 
               {/* CMS shortcuts */}
               <div className="rounded-2xl border border-border/60 bg-card/60 p-6">
-                <p className="text-[12px] font-semibold uppercase tracking-widest text-muted-foreground mb-4">Manage Content</p>
+                <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-4">Manage Content</p>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                   {cmsItems.map((item) => (
                     <button
@@ -318,8 +318,8 @@ export default function AdminDashboard() {
                         <item.icon className={`w-4 h-4 ${item.color}`} />
                       </div>
                       <div>
-                        <p className="font-semibold text-foreground text-[13px]">{item.label}</p>
-                        <p className="text-[11px] text-muted-foreground mt-0.5">Edit & manage</p>
+                        <p className="font-semibold text-foreground text-sm">{item.label}</p>
+                        <p className="text-xs text-muted-foreground mt-0.5">Edit & manage</p>
                       </div>
                     </button>
                   ))}
@@ -333,7 +333,7 @@ export default function AdminDashboard() {
             <div className="max-w-6xl">
               <div className="mb-6">
                 <h1 className="text-2xl font-black tracking-tight text-foreground">Content Management</h1>
-                <p className="text-muted-foreground text-[13px] mt-1">Changes go live immediately on the public site.</p>
+                <p className="text-muted-foreground text-sm mt-1">Changes go live immediately on the public site.</p>
               </div>
 
               <div className="rounded-2xl border border-border/60 bg-card/60 overflow-hidden" style={{ minHeight: "640px" }}>
@@ -367,7 +367,7 @@ function SidebarButton({
   return (
     <button
       onClick={onClick}
-      className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] font-medium transition-all duration-150 ${
+      className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 ${
         active
           ? "bg-primary/10 text-primary border border-primary/20"
           : "text-muted-foreground hover:bg-muted/60 hover:text-foreground"

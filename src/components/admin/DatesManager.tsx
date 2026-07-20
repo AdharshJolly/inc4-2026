@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { AddDatesDialog } from "./AddDatesDialog";
 import { useToast } from "@/hooks/use-toast";
+import { SkeletonCard } from "./Skeleton";
 import { ActivityLogger } from "@/lib/activityLogger";
 import {
   Dialog,
@@ -268,14 +269,28 @@ export const DatesManager = () => {
 
       <div className="space-y-3">
         {isLoading ? (
-          <p className="text-sm text-muted-foreground">Loading dates...</p>
+          <div className="space-y-3">
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+          </div>
         ) : filteredDates.length === 0 ? (
-          <p className="text-sm text-muted-foreground">{searchTerm ? "No matches found." : "No dates found."}</p>
+          <div className="flex flex-col items-center justify-center py-16 text-center">
+            <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center mb-4">
+              <Calendar className="w-8 h-8 text-muted-foreground" />
+            </div>
+            <p className="text-sm font-medium text-foreground mb-1">
+              {searchTerm ? "No dates match your search" : "No dates yet"}
+            </p>
+            <p className="text-xs text-muted-foreground">
+              {searchTerm ? "Try adjusting your search terms" : "Add your first event date to get started"}
+            </p>
+          </div>
         ) : (
           filteredDates.map((date, index) => (
             <div
               key={date.id || index}
-              className="flex items-start gap-4 p-4 rounded-lg border border-border hover:border-primary/40 hover:bg-primary/5 transition-colors"
+              className="flex items-start gap-4 p-4 rounded-xl border border-border shadow-sm hover:shadow-md hover:border-primary/40 hover:bg-primary/5 transition-all duration-200"
             >
               <div
                 className={`p-3 rounded-full ${
@@ -457,7 +472,7 @@ export const DatesManager = () => {
             <div className="flex gap-2">
               <Button
                 onClick={saveEdit}
-                className="w-full bg-orange-500 hover:bg-orange-600"
+                className="w-full bg-primary hover:bg-primary/90"
               >
                 Save Changes
               </Button>

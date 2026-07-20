@@ -1,11 +1,12 @@
 import { useState, useCallback, useMemo, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Search } from "lucide-react";
+import { Search, Users } from "lucide-react";
 import { AddSpeakerDialog } from "./AddSpeakerDialog";
 import { EditSpeakerDialog } from "./EditSpeakerDialog";
 import { BulkActionsDialog } from "./BulkActionsDialog";
 import { SortableSpeakerCard } from "./SortableSpeakerCard";
+import { SkeletonList } from "./Skeleton";
 import {
   DndContext,
   closestCenter,
@@ -27,6 +28,7 @@ import { createClient } from "@/utils/supabase/client";
 
 export const SpeakersManager = () => {
   const [speakers, setSpeakers] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedSpeakers, setSelectedSpeakers] = useState<Set<string>>(
     new Set()
@@ -40,11 +42,12 @@ export const SpeakersManager = () => {
   const supabase = createClient();
 
   const fetchSpeakers = useCallback(async () => {
+    setIsLoading(true);
     const { data, error } = await supabase
       .from("speakers")
       .select("*")
       .order("order_index", { ascending: true });
-    
+
     if (data && !error) {
       const mapped = data.map((s: any) => ({
         ...s,
@@ -53,6 +56,7 @@ export const SpeakersManager = () => {
       }));
       setSpeakers(mapped);
     }
+    setIsLoading(false);
   }, [supabase]);
 
   useEffect(() => {
@@ -154,7 +158,7 @@ export const SpeakersManager = () => {
             placeholder="Search by name, affiliation or topic…"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-9 h-9 text-[13px]"
+            className="pl-9 h-9 text-sm"
           />
         </div>
         <AddSpeakerDialog onSpeakerAdded={fetchSpeakers} />
@@ -163,13 +167,13 @@ export const SpeakersManager = () => {
       {/* Selection bar */}
       {selectedSpeakers.size > 0 && (
         <div className="flex items-center justify-between px-4 py-3 rounded-xl border border-orange-500/30 bg-orange-500/5">
-          <p className="text-[13px] font-medium">
+          <p className="text-sm font-medium">
             {selectedSpeakers.size} speaker{selectedSpeakers.size !== 1 ? "s" : ""} selected
           </p>
           <Button
             size="sm"
             onClick={() => setBulkActionsOpen(true)}
-            className="h-8 text-xs bg-orange-600 hover:bg-orange-700"
+            className="h-8 text-xs bg-primary hover:bg-primary/90"
           >
             Bulk Actions
           </Button>
@@ -211,11 +215,11 @@ export const SpeakersManager = () => {
             className="w-3.5 h-3.5 rounded cursor-pointer accent-orange-500"
             id="select-all-speakers"
           />
-          <label htmlFor="select-all-speakers" className="text-[12px] text-muted-foreground cursor-pointer select-none">
+          <label htmlFor="select-all-speakers" className="text-xs text-muted-foreground cursor-pointer select-none">
             Select all ({filteredSpeakers.length})
           </label>
           {!isSearchActive && (
-            <span className="ml-auto text-[11px] text-muted-foreground/60 italic">
+            <span className="ml-auto text-xs text-muted-foreground/60 italic">
               Drag to reorder
             </span>
           )}
@@ -223,30 +227,42 @@ export const SpeakersManager = () => {
       )}
 
       {/* Speaker list */}
-      <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-        <SortableContext items={filteredSpeakers.map((s) => s.id)} strategy={rectSortingStrategy}>
-          <div className="space-y-2">
-            {filteredSpeakers.map((speaker) => (
-              <SortableSpeakerCard
-                key={speaker.id}
-                speaker={speaker}
-                id={speaker.id}
-                isSelected={selectedSpeakers.has(speaker.id)}
-                onSelect={handleSelectSpeaker}
-                onEdit={(id, name) => setEditingSpeaker({ id, name })}
-                onDeleteClick={(id) => {
-                  handleSelectSpeaker(id);
-                  setBulkActionsOpen(true);
-                }}
-              />
-            ))}
-          </div>
-        </SortableContext>
-      </DndContext>
+      {isLoading ? (
+        <SkeletonList count={4} />
+      ) : (
+        <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+          <SortableContext items={filteredSpeakers.map((s) => s.id)} strategy={rectSortingStrategy}>
+            <div className="space-y-2">
+              {filteredSpeakers.map((speaker) => (
+                <SortableSpeakerCard
+                  key={speaker.id}
+                  speaker={speaker}
+                  id={speaker.id}
+                  isSelected={selectedSpeakers.has(speaker.id)}
+                  onSelect={handleSelectSpeaker}
+                  onEdit={(id, name) => setEditingSpeaker({ id, name })}
+                  onDeleteClick={(id) => {
+                    handleSelectSpeaker(id);
+                    setBulkActionsOpen(true);
+                  }}
+                />
+              ))}
+            </div>
+          </SortableContext>
+        </DndContext>
+      )}
 
-      {filteredSpeakers.length === 0 && (
-        <div className="text-center py-16 text-muted-foreground text-[13px]">
-          {searchTerm ? "No speakers match your search." : "No speakers added yet."}
+      {!isLoading && filteredSpeakers.length === 0 && (
+        <div className="flex flex-col items-center justify-center py-16 text-center">
+          <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center mb-4">
+            <Users className="w-8 h-8 text-muted-foreground" />
+          </div>
+          <p className="text-sm font-medium text-foreground mb-1">
+            {searchTerm ? "No speakers match your search" : "No speakers yet"}
+          </p>
+          <p className="text-xs text-muted-foreground">
+            {searchTerm ? "Try adjusting your search terms" : "Add your first speaker to get started"}
+          </p>
         </div>
       )}
     </div>

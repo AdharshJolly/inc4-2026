@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Edit, Trash2, Building2, AlertTriangle, ArrowUp, ArrowDown, Search } from "lucide-react";
+import { SkeletonCard } from "./Skeleton";
 import { AddPartnerDialog } from "./AddPartnerDialog";
 import { useToast } from "@/hooks/use-toast";
 import { ActivityLogger } from "@/lib/activityLogger";
@@ -287,15 +288,29 @@ export const PartnersManager = () => {
       </div>
 
       {isLoading ? (
-        <p className="text-sm text-muted-foreground">Loading partners...</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <SkeletonCard />
+          <SkeletonCard />
+          <SkeletonCard />
+        </div>
       ) : filteredPartners.length === 0 ? (
-        <p className="text-sm text-muted-foreground">{searchTerm ? "No matches found." : "No partners found."}</p>
+        <div className="flex flex-col items-center justify-center py-16 text-center">
+          <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center mb-4">
+            <Building2 className="w-8 h-8 text-muted-foreground" />
+          </div>
+          <p className="text-sm font-medium text-foreground mb-1">
+            {searchTerm ? "No partners match your search" : "No partners yet"}
+          </p>
+          <p className="text-xs text-muted-foreground">
+            {searchTerm ? "Try adjusting your search terms" : "Add your first partner to get started"}
+          </p>
+        </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredPartners.map((partner, index) => (
             <div
               key={partner.id || index}
-              className="flex flex-col p-4 rounded-lg border border-border hover:border-primary/40 hover:bg-primary/5 transition-colors gap-4"
+              className="flex flex-col p-4 rounded-xl border border-border shadow-sm hover:shadow-md hover:border-primary/40 hover:bg-primary/5 transition-all duration-200 gap-4"
             >
               <div className={`flex items-center justify-center border rounded-md p-4 h-24 ${partner.whiteLogo ? "bg-slate-800 border-slate-700" : "bg-slate-100 border-slate-200 dark:bg-slate-800 dark:border-slate-700"}`}>
                 {partner.image ? (
@@ -445,7 +460,7 @@ export const PartnersManager = () => {
               <Label className="!mt-0">Force White Logo</Label>
             </div>
             <div className="flex gap-2">
-              <Button onClick={saveEdit} disabled={isSubmitting} className="w-full bg-orange-500 hover:bg-orange-600">
+              <Button onClick={saveEdit} disabled={isSubmitting} className="w-full bg-primary hover:bg-primary/90">
                 {isSubmitting ? "Saving..." : "Save Changes"}
               </Button>
               <Button variant="outline" disabled={isSubmitting} className="w-full" onClick={() => setEditOpen(false)}>

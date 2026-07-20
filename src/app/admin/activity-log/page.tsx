@@ -1,44 +1,34 @@
 "use client";
 
-import { useContext } from "react";
-import { PageTitle } from "@/components/common/PageTitle";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { ActivityLog } from "@/components/admin/ActivityLog";
-import { ArrowLeft } from "lucide-react";
-import { AdminSessionContext } from "../AdminSessionProvider";
+import { AdminShell } from "@/components/admin/AdminShell";
 
 export default function ActivityLogPage() {
-  const session = useContext(AdminSessionContext);
-
   return (
-    <div className="min-h-screen bg-background pt-[110px]">
-      <div className="container mx-auto px-4 pb-4 flex items-center justify-between">
-        <PageTitle title="Activity Log" />
-        <div className="flex items-center gap-3">
-          {session?.logout && (
-            <Button
-              onClick={session.logout}
-              variant="outline"
-              size="sm"
-              className="border-red-500 text-red-500 hover:bg-red-500 hover:text-white"
-            >
-              Logout
-            </Button>
-          )}
-        </div>
-      </div>
+    <AdminShell>
+      {/* Header */}
+      <header className="sticky top-0 z-30 h-14 bg-background/80 backdrop-blur-xl border-b border-border/60 flex items-center px-8 gap-4">
+        <span className="font-medium text-foreground">Activity Log</span>
+      </header>
 
-      <div className="container mx-auto px-4 pb-20">
-        <Card className="border-primary/20">
-          <CardHeader>
-            <CardTitle>Admin Activity Audit Trail</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ActivityLog />
-          </CardContent>
-        </Card>
-      </div>
-    </div>
+      <main className="flex-1 px-8 py-8">
+        <div className="max-w-6xl">
+          <div className="mb-6">
+            <h1 className="text-2xl font-black tracking-tight text-foreground">Activity Log</h1>
+            <p className="text-muted-foreground text-sm mt-1">View admin activity audit trail.</p>
+          </div>
+
+          <Card className="border-primary/20 shadow-sm">
+            <CardHeader>
+              <CardTitle>Admin Activity Audit Trail</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ActivityLog />
+            </CardContent>
+          </Card>
+        </div>
+      </main>
+    </AdminShell>
   );
 }

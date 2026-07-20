@@ -157,7 +157,7 @@ export const AddDatesDialog = ({ onDateAdded }: AddDatesDialogProps) => {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button
-          className="bg-orange-500 hover:bg-orange-600"
+          className="bg-primary hover:bg-primary/90"
           aria-label="Add new event date"
         >
           <Plus className="w-4 h-4 mr-2" />
@@ -276,7 +276,7 @@ export const AddDatesDialog = ({ onDateAdded }: AddDatesDialogProps) => {
           <Button
             onClick={handleSubmit}
             disabled={isSubmitting}
-            className="w-full bg-orange-500 hover:bg-orange-600"
+            className="w-full bg-primary hover:bg-primary/90"
             aria-label="Submit new event date"
           >
             {isSubmitting ? "Adding..." : "Add Event Date"}

@@ -9,20 +9,23 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Search, Download } from "lucide-react";
+import { Search, Download, Users } from "lucide-react";
 import { isExternalUrl } from "@/lib/utils";
 import { AddMemberDialog } from "./AddMemberDialog";
 import { AddCategoryDialog } from "./AddCategoryDialog";
 import { EditMemberDialog } from "./EditMemberDialog";
 import { BulkActionsDialog } from "./BulkActionsDialog";
+import { SkeletonList } from "./Skeleton";
 import { createClient } from "@/utils/supabase/client";
 
 export const CommitteeManager = () => {
   const [categories, setCategories] = useState<any[]>([]);
   const [members, setMembers] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const supabase = createClient();
 
   const fetchCommittee = useCallback(async () => {
+    setIsLoading(true);
     const [categoriesResult, membersResult] = await Promise.all([
       supabase.from("committee_categories").select("*"),
       supabase.from("committee_members").select("*").order("order_index", { ascending: true })
@@ -33,6 +36,7 @@ export const CommitteeManager = () => {
     if (membersResult.data) {
       setMembers(membersResult.data);
     }
+    setIsLoading(false);
   }, [supabase]);
 
   useEffect(() => {
@@ -194,7 +198,7 @@ export const CommitteeManager = () => {
           </div>
           <Button
             onClick={() => setBulkActionsOpen(true)}
-            className="bg-orange-600 hover:bg-orange-700"
+            className="bg-primary hover:bg-primary/90"
           >
             Bulk Actions
           </Button>
@@ -259,80 +263,96 @@ export const CommitteeManager = () => {
         )}
 
         <div className="space-y-2 max-h-[600px] overflow-y-auto">
-          {filteredMembers.map((member) => {
-            const memberId = member.id;
-            const isSelected = selectedMembers.has(memberId);
-            return (
-              <div
-                key={memberId}
-                className={`flex items-center gap-4 p-3 rounded-lg border transition-colors cursor-pointer ${
-                  isSelected
-                    ? "border-orange-500/50 bg-orange-500/10"
-                    : "border-border hover:border-primary/40 hover:bg-primary/5"
-                }`}
-                onClick={() => handleSelectMember(memberId)}
-              >
-                <input
-                  type="checkbox"
-                  checked={isSelected}
-                  onChange={() => handleSelectMember(memberId)}
-                  onClick={(e) => e.stopPropagation()}
-                  className="rounded cursor-pointer"
-                />
-
-                <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-border flex-shrink-0">
-                  {member.photo.url ? (
-                    <Image
-                      src={member.photo.url}
-                      alt={member.name}
-                      fill
-                      className="object-cover"
-                      sizes="40px"
-                      unoptimized={isExternalUrl(member.photo.url)}
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-muted flex items-center justify-center">
-                      <span className="text-lg font-bold text-muted-foreground">
-                        {member.name.charAt(0)}
-                      </span>
-                    </div>
-                  )}
-                </div>
-
-                <div className="flex-1 min-w-0">
-                  <p className="font-semibold text-sm truncate">
-                    {member.name}
-                  </p>
-                  <p className="text-xs text-muted-foreground truncate">
-                    {member.role || "No role specified"}
-                  </p>
-                  <p className="text-xs text-muted-foreground truncate opacity-70">
-                    {member.categoryLabel}
-                  </p>
-                </div>
-
-                <div className="text-right hidden sm:block">
-                  <p className="text-xs text-muted-foreground line-clamp-2 max-w-[200px]">
-                    {member.affiliation}
-                  </p>
-                </div>
-
-                <Button
-                  size="sm"
-                  variant="outline"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setEditingMember({
-                      id: member.id,
-                      name: member.name,
-                    });
-                  }}
-                >
-                  Edit
-                </Button>
+          {isLoading ? (
+            <SkeletonList count={4} />
+          ) : filteredMembers.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-16 text-center">
+              <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center mb-4">
+                <Users className="w-8 h-8 text-muted-foreground" />
               </div>
-            );
-          })}
+              <p className="text-sm font-medium text-foreground mb-1">
+                {searchTerm || selectedCategory !== "all" || selectedRole !== "all" ? "No members match your filters" : "No committee members yet"}
+              </p>
+              <p className="text-xs text-muted-foreground">
+                {searchTerm || selectedCategory !== "all" || selectedRole !== "all" ? "Try adjusting your search or filters" : "Add your first committee member to get started"}
+              </p>
+            </div>
+          ) : (
+            filteredMembers.map((member) => {
+              const memberId = member.id;
+              const isSelected = selectedMembers.has(memberId);
+              return (
+                <div
+                  key={memberId}
+                  className={`flex items-center gap-4 p-3 rounded-xl border shadow-sm transition-all duration-200 cursor-pointer ${
+                    isSelected
+                      ? "border-orange-500/50 bg-orange-500/10"
+                      : "border-border hover:border-primary/40 hover:bg-primary/5"
+                  }`}
+                  onClick={() => handleSelectMember(memberId)}
+                >
+                  <input
+                    type="checkbox"
+                    checked={isSelected}
+                    onChange={() => handleSelectMember(memberId)}
+                    onClick={(e) => e.stopPropagation()}
+                    className="rounded cursor-pointer"
+                  />
+
+                  <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-border flex-shrink-0">
+                    {member.photo.url ? (
+                      <Image
+                        src={member.photo.url}
+                        alt={member.name}
+                        fill
+                        className="object-cover"
+                        sizes="40px"
+                        unoptimized={isExternalUrl(member.photo.url)}
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-muted flex items-center justify-center">
+                        <span className="text-lg font-bold text-muted-foreground">
+                          {member.name.charAt(0)}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="flex-1 min-w-0">
+                    <p className="font-semibold text-sm truncate">
+                      {member.name}
+                    </p>
+                    <p className="text-xs text-muted-foreground truncate">
+                      {member.role || "No role specified"}
+                    </p>
+                    <p className="text-xs text-muted-foreground truncate opacity-70">
+                      {member.categoryLabel}
+                    </p>
+                  </div>
+
+                  <div className="text-right hidden sm:block">
+                    <p className="text-xs text-muted-foreground line-clamp-2 max-w-[200px]">
+                      {member.affiliation}
+                    </p>
+                  </div>
+
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setEditingMember({
+                        id: member.id,
+                        name: member.name,
+                      });
+                    }}
+                  >
+                    Edit
+                  </Button>
+                </div>
+              );
+            })
+          )}
         </div>
       </div>
     </div>

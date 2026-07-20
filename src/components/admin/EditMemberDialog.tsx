@@ -337,7 +337,7 @@ export const EditMemberDialog = ({
             <Button
               onClick={handleSubmit}
               disabled={isSubmitting}
-              className="bg-orange-600 hover:bg-orange-700"
+              className="bg-primary hover:bg-primary/90"
             >
               {isSubmitting ? "Saving..." : "Save Changes"}
             </Button>

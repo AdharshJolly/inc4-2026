@@ -459,7 +459,7 @@ export const AddSpeakerDialog = ({ onSpeakerAdded }: AddSpeakerDialogProps) => {
               (formData.photoUrl || formData.photoFile)
                 ? "flex-1"
                 : "flex-auto"
-            } bg-orange-500 hover:bg-orange-600`}
+            } bg-primary hover:bg-primary/90`}
           >
             {isSubmitting ? "Adding..." : "Add Speaker"}
           </Button>
