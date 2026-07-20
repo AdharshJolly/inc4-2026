@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ActivityLogger } from "@/lib/activityLogger";
-import { uploadImageToGitHub } from "@/lib/fileUpload";
+import { uploadImageToCloudinary } from "@/lib/cloudinaryUpload";
 import { useToast } from "@/hooks/use-toast";
 import { PhotoUploadField } from "./PhotoUploadField";
 import { createClient } from "@/utils/supabase/client";
@@ -191,7 +191,7 @@ export const EditMemberDialog = ({
           description: "Please wait while we upload your photo...",
         });
 
-        const uploadResult = await uploadImageToGitHub(
+        const uploadResult = await uploadImageToCloudinary(
           formData.photoFile,
           "committee"
         );
