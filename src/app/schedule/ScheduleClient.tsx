@@ -87,6 +87,16 @@ const EVENT_STYLES: Record<
   },
 };
 
+// ── Time formatting ──
+function formatTime(time: string): string {
+  // Handle "09:00" (HTML time input) or "09:00 AM" (already formatted)
+  if (time.includes("AM") || time.includes("PM")) return time;
+  const [h, m] = time.split(":").map(Number);
+  const period = h >= 12 ? "PM" : "AM";
+  const hour12 = h === 0 ? 12 : h > 12 ? h - 12 : h;
+  return `${hour12}:${m.toString().padStart(2, "0")} ${period}`;
+}
+
 const EVENT_TYPE_LABELS: Record<ScheduleEvent["event_type"], string> = {
   keynote: "Keynote",
   inauguration: "Inauguration",
@@ -141,7 +151,7 @@ function EventCard({ event, papers }: { event: ScheduleEvent; papers: SchedulePa
           <span className="text-sm font-medium truncate block">{event.title}</span>
         </div>
         <span className="text-xs text-muted-foreground whitespace-nowrap">
-          {event.time_start} – {event.time_end}
+          {formatTime(event.time_start)} – {formatTime(event.time_end)}
         </span>
       </div>
     );
@@ -216,23 +226,29 @@ function TimeSlot({ group }: { group: TimeSlotGroup }) {
 
   return (
     <div className="flex gap-4">
-      {/* Time label */}
-      <div className="shrink-0 w-20 pt-2 text-right">
+      {/* Time label - hidden on mobile */}
+      <div className="shrink-0 w-20 pt-2 text-right hidden sm:block">
         <span className="text-sm font-mono font-medium text-muted-foreground">
-          {timeLabel}
+          {formatTime(timeLabel)}
         </span>
       </div>
 
-      {/* Dot + line */}
-      <div className="relative flex flex-col items-center shrink-0">
+      {/* Dot + line - hidden on mobile */}
+      <div className="relative flex flex-col items-center shrink-0 hidden sm:flex">
         <div className="w-3 h-3 rounded-full bg-primary border-2 border-background z-10 mt-3" />
         <div className="w-px flex-1 bg-border" />
       </div>
 
       {/* Events */}
       <div className="flex-1 pb-8 min-w-0">
+        {/* Mobile time label */}
+        <div className="sm:hidden mb-2">
+          <span className="text-xs font-mono font-medium text-muted-foreground bg-muted/50 px-2 py-1 rounded">
+            {formatTime(timeLabel)}
+          </span>
+        </div>
         {isParallel ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3">
             {events.map((event) => (
               <EventCard
                 key={event.id}

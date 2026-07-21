@@ -69,6 +69,15 @@ function getEventTypeInfo(type: EventType) {
   return EVENT_TYPES.find((et) => et.value === type) || EVENT_TYPES[7];
 }
 
+function formatTime(time: string): string {
+  if (!time) return time;
+  if (time.includes("AM") || time.includes("PM")) return time;
+  const [h, m] = time.split(":").map(Number);
+  const period = h >= 12 ? "PM" : "AM";
+  const hour12 = h === 0 ? 12 : h > 12 ? h - 12 : h;
+  return `${hour12}:${m.toString().padStart(2, "0")} ${period}`;
+}
+
 type EventFormData = {
   time_start: string;
   time_end: string;
@@ -131,7 +140,10 @@ export const ScheduleManager = () => {
       .select("*")
       .order("sort_order", { ascending: true });
 
+    setIsLoading(false);
+
     if (error) {
+      console.error("ScheduleManager: Failed to load days", error);
       toast({ title: "Error", description: "Failed to load schedule days.", variant: "destructive" });
       return;
     }
@@ -550,7 +562,7 @@ export const ScheduleManager = () => {
                             <div className="flex items-center gap-3 text-sm text-muted-foreground flex-wrap">
                               <span className="flex items-center gap-1">
                                 <Clock className="w-3.5 h-3.5" />
-                                {event.time_start} — {event.time_end}
+                                {formatTime(event.time_start)} — {formatTime(event.time_end)}
                               </span>
                               {event.location && (
                                 <span className="flex items-center gap-1">
