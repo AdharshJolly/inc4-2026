@@ -26,7 +26,11 @@ const item: Variants = {
   },
 };
 
-export const HeroSection = ({ initialPartners = [] }: { initialPartners?: any[] }) => {
+export const HeroSection = ({
+  initialPartners = [],
+}: {
+  initialPartners?: any[];
+}) => {
   const shouldReduceMotion = useReducedMotion();
 
   return (
@@ -51,7 +55,7 @@ export const HeroSection = ({ initialPartners = [] }: { initialPartners?: any[] 
         </>
       )}
 
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-4 mt-6 relative z-10">
         <motion.div
           className="max-w-5xl mx-auto text-center"
           variants={container}
