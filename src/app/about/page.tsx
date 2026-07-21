@@ -335,6 +335,25 @@ export default function AboutPage() {
               </Reveal>
             </div>
           </section>
+
+          {/* Internal Links */}
+          <section>
+            <Reveal width="100%">
+              <div className="rounded-2xl border border-border/50 bg-card/50 p-8">
+                <h3 className="text-xl font-bold mb-4">Explore InC4 2026</h3>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  <a href="/schedule" className="text-sm text-primary hover:underline">Schedule</a>
+                  <a href="/speakers" className="text-sm text-primary hover:underline">Speakers</a>
+                  <a href="/committee" className="text-sm text-primary hover:underline">Committee</a>
+                  <a href="/call-for-papers" className="text-sm text-primary hover:underline">Call for Papers</a>
+                  <a href="/important-dates" className="text-sm text-primary hover:underline">Important Dates</a>
+                  <a href="/registration" className="text-sm text-primary hover:underline">Registration</a>
+                  <a href="/contact" className="text-sm text-primary hover:underline">Contact</a>
+                  <a href="/crc-submissions" className="text-sm text-primary hover:underline">CRC Submissions</a>
+                </div>
+              </div>
+            </Reveal>
+          </section>
         </div>
       </div>
     </div>
