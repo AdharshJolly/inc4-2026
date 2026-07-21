@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
-import { createClient } from "@/utils/supabase/client";
+import { useState, useMemo } from "react";
 import type {
   ScheduleDay,
   ScheduleEvent,
@@ -20,7 +19,6 @@ import {
   Coffee,
   Clock,
   Users,
-  Loader2,
 } from "lucide-react";
 
 // ── Event type styling config ──
@@ -107,31 +105,6 @@ const EVENT_TYPE_LABELS: Record<ScheduleEvent["event_type"], string> = {
   break: "Break",
   other: "Event",
 };
-
-// ── Skeleton loader ──
-function ScheduleSkeleton() {
-  return (
-    <div className="space-y-8">
-      {/* Tab skeleton */}
-      <div className="flex gap-3">
-        <div className="h-10 w-24 rounded-full bg-muted animate-pulse" />
-        <div className="h-10 w-24 rounded-full bg-muted animate-pulse" />
-      </div>
-      {/* Timeline skeleton */}
-      {[1, 2, 3, 4].map((i) => (
-        <div key={i} className="flex gap-4">
-          <div className="h-8 w-20 bg-muted rounded animate-pulse shrink-0" />
-          <div className="flex-1 space-y-3">
-            <div className="h-24 bg-muted rounded-xl animate-pulse" />
-            {i % 2 === 0 && (
-              <div className="h-24 bg-muted rounded-xl animate-pulse" />
-            )}
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
 
 // ── Event Card ──
 function EventCard({ event, papers }: { event: ScheduleEvent; papers: SchedulePaper[] }) {
@@ -269,50 +242,23 @@ function TimeSlot({ group }: { group: TimeSlotGroup }) {
 }
 
 // ── Main Client Component ──
-export default function ScheduleClient() {
-  const [days, setDays] = useState<ScheduleDay[]>([]);
-  const [events, setEvents] = useState<ScheduleEvent[]>([]);
-  const [papers, setPapers] = useState<SchedulePaper[]>([]);
-  const [activeDay, setActiveDay] = useState<string>("");
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+interface ScheduleClientProps {
+  initialDays: ScheduleDay[];
+  initialEvents: ScheduleEvent[];
+  initialPapers: SchedulePaper[];
+}
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const supabase = createClient();
-
-        const [daysRes, eventsRes, papersRes] = await Promise.all([
-          supabase.from("schedule_days").select("*").order("sort_order"),
-          supabase.from("schedule_events").select("*").order("sort_order"),
-          supabase.from("schedule_papers").select("*").order("sort_order"),
-        ]);
-
-        if (daysRes.error) throw daysRes.error;
-        if (eventsRes.error) throw eventsRes.error;
-        if (papersRes.error) throw papersRes.error;
-
-        const fetchedDays = (daysRes.data || []) as ScheduleDay[];
-        const fetchedEvents = (eventsRes.data || []) as ScheduleEvent[];
-        const fetchedPapers = (papersRes.data || []) as SchedulePaper[];
-
-        setDays(fetchedDays);
-        setEvents(fetchedEvents);
-        setPapers(fetchedPapers);
-
-        if (fetchedDays.length > 0) {
-          setActiveDay(fetchedDays[0].id);
-        }
-      } catch (err) {
-        console.error("Failed to fetch schedule:", err);
-        setError("Failed to load schedule. Please try again later.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
+export default function ScheduleClient({
+  initialDays,
+  initialEvents,
+  initialPapers,
+}: ScheduleClientProps) {
+  const [days] = useState<ScheduleDay[]>(initialDays);
+  const [events] = useState<ScheduleEvent[]>(initialEvents);
+  const [papers] = useState<SchedulePaper[]>(initialPapers);
+  const [activeDay, setActiveDay] = useState<string>(
+    initialDays.length > 0 ? initialDays[0].id : ""
+  );
 
   // Filter events for active day
   const dayEvents = useMemo(
@@ -349,32 +295,6 @@ export default function ScheduleClient() {
   }, [dayEvents, papers]);
 
   const activeDayData = days.find((d) => d.id === activeDay);
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-background">
-        <PageTitle title="Schedule" />
-        <div className="container mx-auto px-4 pb-20">
-          <div className="max-w-6xl mx-auto">
-            <ScheduleSkeleton />
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="min-h-screen bg-background">
-        <PageTitle title="Schedule" />
-        <div className="container mx-auto px-4 pb-20">
-          <div className="max-w-6xl mx-auto text-center py-20">
-            <p className="text-destructive text-lg">{error}</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-background">
