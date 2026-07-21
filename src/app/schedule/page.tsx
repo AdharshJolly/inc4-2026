@@ -1,7 +1,11 @@
 import { Metadata } from "next";
 import { cookies } from "next/headers";
 import { createClient } from "@/utils/supabase/server";
+import { getFeatureFlag } from "@/lib/featureFlags";
 import ScheduleClient from "./ScheduleClient";
+import { Calendar, Lock } from "lucide-react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 import type { ScheduleDay, ScheduleEvent, SchedulePaper } from "@/types/data";
 
 export const metadata: Metadata = {
@@ -21,7 +25,6 @@ export const metadata: Metadata = {
   },
 };
 
-// Revalidate every 60 seconds (ISR) — balances freshness with performance
 export const revalidate = 60;
 
 async function getScheduleData(): Promise<{
@@ -51,7 +54,41 @@ async function getScheduleData(): Promise<{
 }
 
 export default async function SchedulePage() {
-  const { days, events, papers } = await getScheduleData();
+  const [scheduleVisible, { days, events, papers }] = await Promise.all([
+    getFeatureFlag("schedule_visible", false),
+    getScheduleData(),
+  ]);
+
+  if (!scheduleVisible) {
+    return (
+      <div className="min-h-screen bg-background">
+        <div className="container mx-auto px-4 pb-20">
+          <div className="max-w-6xl mx-auto">
+            <div className="flex flex-col items-center justify-center py-32 text-center space-y-6">
+              <div className="p-4 bg-muted rounded-full">
+                <Lock className="w-8 h-8 text-muted-foreground" />
+              </div>
+              <h1 className="text-3xl md:text-4xl font-bold">
+                Schedule Coming Soon
+              </h1>
+              <p className="text-muted-foreground text-lg max-w-md">
+                The detailed conference schedule will be published shortly.
+                Check back later or follow us for updates.
+              </p>
+              <div className="flex gap-3 pt-4">
+                <Link href="/">
+                  <Button variant="outline">Back to Home</Button>
+                </Link>
+                <Link href="/important-dates">
+                  <Button>View Important Dates</Button>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <ScheduleClient

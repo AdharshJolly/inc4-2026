@@ -115,3 +115,11 @@ export interface SchedulePaper {
   sort_order: number;
 }
 
+// ── Site config / feature flags ──
+
+export interface SiteConfig {
+  key: string;
+  value: boolean;
+  description: string | null;
+}
+
