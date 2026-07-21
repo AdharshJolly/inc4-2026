@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { Building2, MapPin, ExternalLink } from "lucide-react";
+import Image from "next/image";
 import {
   Popover,
   PopoverContent,
@@ -14,7 +15,7 @@ const PartnerCard = ({ partner }: { partner: any }) => {
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverAnchor asChild>
         <div
-          className="flex-shrink-0 snap-center relative h-16 sm:h-20 md:h-24 lg:h-28 w-auto flex items-center justify-center group cursor-pointer transition-all bg-white/[0.07] backdrop-blur-md border border-white/[0.08] hover:bg-white/[0.12] hover:border-white/[0.15] rounded-xl sm:rounded-2xl px-4 sm:px-6 shadow-[0_4px_20px_-4px_rgba(255,255,255,0.05)] hover:shadow-[0_4px_24px_-4px_rgba(255,255,255,0.1)]"
+          className="flex-shrink-0 snap-center relative h-16 sm:h-20 md:h-24 lg:h-28 w-auto flex items-center justify-center group cursor-pointer transition-all bg-white/[0.09] backdrop-blur-md border border-white/[0.08] hover:bg-white/[0.12] hover:border-white/[0.15] rounded-xl sm:rounded-2xl px-4 sm:px-6 shadow-[0_4px_20px_-4px_rgba(255,255,255,0.05)] hover:shadow-[0_4px_24px_-4px_rgba(255,255,255,0.1)]"
           onPointerEnter={(e) => {
             if (e.pointerType === "mouse") setOpen(true);
           }}
@@ -24,11 +25,14 @@ const PartnerCard = ({ partner }: { partner: any }) => {
           onClick={() => setOpen(!open)}
         >
           {partner.image ? (
-            <img
+            <Image
               src={partner.image}
               alt={partner.name}
+              width={120}
+              height={80}
               draggable={false}
-              className={`h-full w-auto object-contain py-2 md:py-4 transition-all duration-300 group-hover:scale-110 ${partner.whiteLogo ? 'brightness-0 invert' : 'brightness-[1.6] contrast-125 group-hover:brightness-[1.8]'}`}
+              loading="lazy"
+              className={`h-full w-auto object-contain py-2 md:py-4 transition-all duration-300 group-hover:scale-110 ${partner.whiteLogo ? "brightness-0 invert" : "brightness-[1.3] contrast-125 group-hover:brightness-[1.5]"}`}
             />
           ) : (
             <Building2 className="w-8 h-8 text-white/50 group-hover:text-white transition-colors duration-300" />
@@ -51,7 +55,12 @@ const PartnerCard = ({ partner }: { partner: any }) => {
               {partner.country}
             </div>
             {partner.link && (
-              <a href={partner.link} target="_blank" rel="noopener noreferrer" className="text-xs text-primary hover:underline inline-flex items-center gap-1 font-medium">
+              <a
+                href={partner.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs text-primary hover:underline inline-flex items-center gap-1 font-medium"
+              >
                 Visit Website <ExternalLink className="w-3 h-3" />
               </a>
             )}
@@ -62,9 +71,13 @@ const PartnerCard = ({ partner }: { partner: any }) => {
   );
 };
 
-export const HeroPartnersGallery = ({ initialPartners = [] }: { initialPartners?: any[] }) => {
+export const HeroPartnersGallery = ({
+  initialPartners = [],
+}: {
+  initialPartners?: any[];
+}) => {
   const [partners] = useState(() => {
-    return initialPartners.map(p => ({
+    return initialPartners.map((p) => ({
       name: p.name,
       country: p.country,
       link: p.link,
@@ -88,7 +101,13 @@ export const HeroPartnersGallery = ({ initialPartners = [] }: { initialPartners?
               100% { transform: translateX(-50%); }
             }
             .animate-marquee {
-              animation: marquee 35s linear infinite;
+              animation: marquee 50s linear infinite;
+              will-change: transform;
+            }
+            @media (prefers-reduced-motion: reduce) {
+              .animate-marquee {
+                animation: none;
+              }
             }
             .animate-marquee:hover, .animate-marquee:active, .animate-marquee:focus-within {
               animation-play-state: paused;

@@ -5,11 +5,12 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Reveal } from "@/components/common/Reveal";
 import { Badge } from "@/components/ui/badge";
 import { getPhotoUrl } from "@/lib/photoMigration";
+import Image from "next/image";
 import { useState } from "react";
 import { Users, Linkedin } from "lucide-react";
 
 export default function SpeakersClient({ initialSpeakers = [] }: { initialSpeakers?: any[] }) {
-  const [speakers, setSpeakers] = useState(() => {
+  const [speakers] = useState(() => {
     return initialSpeakers.map(s => ({
       name: s.name,
       role: s.role,
@@ -69,10 +70,13 @@ export default function SpeakersClient({ initialSpeakers = [] }: { initialSpeake
                       {/* Floating Avatar */}
                       <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-40 h-40 rounded-full border-4 border-card overflow-hidden bg-muted shadow-xl">
                         {photoUrl ? (
-                          <img
+                          <Image
                             src={photoUrl}
                             alt={speaker.name}
+                            width={160}
+                            height={160}
                             className="w-full h-full object-cover"
+                            loading="lazy"
                           />
                         ) : (
                           <div className="w-full h-full flex items-center justify-center bg-muted">

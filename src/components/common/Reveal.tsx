@@ -20,7 +20,7 @@ export const Reveal = ({
   className = "",
 }: Props) => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true });
+  const isInView = useInView(ref, { once: true, margin: "50px" });
   const shouldReduceMotion = useReducedMotion();
 
   const mainControls = useAnimation();
@@ -42,15 +42,17 @@ export const Reveal = ({
       <motion.div
         className="h-full"
         variants={{
-          hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 75 },
+          hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 40 },
           visible: { opacity: 1, y: 0 },
         }}
-        initial="hidden"
+        initial="visible"
         animate={mainControls}
         transition={{
-          duration: shouldReduceMotion ? 0.01 : 0.5,
-          delay: shouldReduceMotion ? 0 : 0.25,
+          duration: shouldReduceMotion ? 0.01 : 0.4,
+          delay: shouldReduceMotion ? 0 : 0.1,
+          ease: "easeOut",
         }}
+        style={{ willChange: "transform, opacity" }}
       >
         {children}
       </motion.div>

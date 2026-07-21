@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 interface TimeLeft {
   days: number;
@@ -9,42 +9,40 @@ interface TimeLeft {
   seconds: number;
 }
 
+function calculateTimeLeft(): TimeLeft {
+  const targetDate = new Date("2026-08-07T09:00:00+05:30").getTime();
+  const now = new Date().getTime();
+  const difference = targetDate - now;
+
+  if (difference <= 0) {
+    return { days: 0, hours: 0, minutes: 0, seconds: 0 };
+  }
+
+  return {
+    days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+    hours: Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+    minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
+    seconds: Math.floor((difference % (1000 * 60)) / 1000),
+  };
+}
+
 export const CountdownTimer = () => {
-  const [timeLeft, setTimeLeft] = useState<TimeLeft>({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  });
+  const [timeLeft, setTimeLeft] = useState<TimeLeft>(() => calculateTimeLeft());
 
   useEffect(() => {
-    const targetDate = new Date("2026-08-07T09:00:00+05:30").getTime();
-
     const timer = setInterval(() => {
-      const now = new Date().getTime();
-      const difference = targetDate - now;
-
-      if (difference > 0) {
-        setTimeLeft({
-          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-          hours: Math.floor(
-            (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-          ),
-          minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
-          seconds: Math.floor((difference % (1000 * 60)) / 1000),
-        });
-      }
+      setTimeLeft(calculateTimeLeft());
     }, 1000);
 
     return () => clearInterval(timer);
   }, []);
 
-  const timeBlocks = [
+  const timeBlocks = useMemo(() => [
     { value: timeLeft.days, label: "Days" },
     { value: timeLeft.hours, label: "Hours" },
     { value: timeLeft.minutes, label: "Minutes" },
     { value: timeLeft.seconds, label: "Seconds" },
-  ];
+  ], [timeLeft]);
 
   return (
     <div className="flex justify-center gap-2 md:gap-6">
