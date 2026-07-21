@@ -6,6 +6,8 @@ import {
   getInC4EventSchema,
   getOrganizationSchema,
   getBreadcrumbSchema,
+  getDeveloperSchema,
+  getWebSiteSchema,
 } from "@/lib/schema";
 
 export const SchemaOrg = () => {
@@ -23,6 +25,18 @@ export const SchemaOrg = () => {
     orgScript.type = "application/ld+json";
     orgScript.textContent = JSON.stringify(getOrganizationSchema());
     document.head.appendChild(orgScript);
+
+    // Add Developer Schema (hidden, for search indexing)
+    const devScript = document.createElement("script");
+    devScript.type = "application/ld+json";
+    devScript.textContent = JSON.stringify(getDeveloperSchema());
+    document.head.appendChild(devScript);
+
+    // Add WebSite Schema
+    const siteScript = document.createElement("script");
+    siteScript.type = "application/ld+json";
+    siteScript.textContent = JSON.stringify(getWebSiteSchema());
+    document.head.appendChild(siteScript);
 
     // Add Breadcrumb Schema based on current route
     const breadcrumbMap: Record<
@@ -78,6 +92,8 @@ export const SchemaOrg = () => {
     return () => {
       document.head.removeChild(eventScript);
       document.head.removeChild(orgScript);
+      document.head.removeChild(devScript);
+      document.head.removeChild(siteScript);
       document.head.removeChild(breadcrumbScript);
     };
   }, [pathname]);
