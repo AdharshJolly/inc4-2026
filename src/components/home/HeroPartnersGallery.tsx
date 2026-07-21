@@ -14,7 +14,7 @@ const PartnerCard = ({ partner }: { partner: any }) => {
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverAnchor asChild>
         <div
-          className="flex-shrink-0 snap-center relative h-16 sm:h-20 md:h-24 lg:h-28 w-auto flex items-center justify-center group cursor-pointer transition-all bg-white/5 backdrop-blur-md border border-white/10 hover:bg-white/10 hover:border-white/20 rounded-xl sm:rounded-2xl px-4 sm:px-6 shadow-[0_4px_20px_-4px_rgba(255,255,255,0.05)] hover:shadow-[0_4px_24px_-4px_rgba(255,255,255,0.1)]"
+          className="flex-shrink-0 snap-center relative h-16 sm:h-20 md:h-24 lg:h-28 w-auto flex items-center justify-center group cursor-pointer transition-all bg-white/[0.07] backdrop-blur-md border border-white/[0.08] hover:bg-white/[0.12] hover:border-white/[0.15] rounded-xl sm:rounded-2xl px-4 sm:px-6 shadow-[0_4px_20px_-4px_rgba(255,255,255,0.05)] hover:shadow-[0_4px_24px_-4px_rgba(255,255,255,0.1)]"
           onPointerEnter={(e) => {
             if (e.pointerType === "mouse") setOpen(true);
           }}
@@ -28,7 +28,7 @@ const PartnerCard = ({ partner }: { partner: any }) => {
               src={partner.image}
               alt={partner.name}
               draggable={false}
-              className={`h-full w-auto object-contain py-2 md:py-4 transition-all duration-300 group-hover:scale-110 ${partner.whiteLogo ? 'brightness-0 invert' : 'brightness-[1.3] contrast-125 group-hover:brightness-[1.5]'}`}
+              className={`h-full w-auto object-contain py-2 md:py-4 transition-all duration-300 group-hover:scale-110 ${partner.whiteLogo ? 'brightness-0 invert' : 'brightness-[1.6] contrast-125 group-hover:brightness-[1.8]'}`}
             />
           ) : (
             <Building2 className="w-8 h-8 text-white/50 group-hover:text-white transition-colors duration-300" />

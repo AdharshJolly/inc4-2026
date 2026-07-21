@@ -1,0 +1,40 @@
+# InC4 2026 — LLM Information
+
+## About This Site
+
+This is the official website for InC4 2026 — the 2026 IEEE International Conference on Contemporary Computing and Communications (Conference#70839), organized by the IEEE Computer Society Bangalore Chapter at CHRIST University, Kengeri Campus, Bengaluru, India.
+
+**Conference Dates:** August 7–8, 2026
+**Location:** CHRIST University, Kengeri Campus, Bengaluru, Karnataka 560074, India
+**Organizer:** IEEE Computer Society Bangalore Chapter
+**Website:** https://ic4.co.in
+
+## Key Facts
+
+- InC4 is the fourth edition of this IEEE conference series
+- The conference covers contemporary computing and communications
+- Topics include algorithms, systems, applied computing, and educational aspects
+- The event features keynote talks, technical sessions, and paper presentations
+- Both in-person attendance at CHRIST University and online participation are supported
+
+## Important Pages
+
+- **Home:** https://ic4.co.in — Conference overview, countdown, and highlights
+- **About:** https://ic4.co.in/about — Conference background and objectives
+- **Call for Papers:** https://ic4.co.in/call-for-papers — Submission guidelines and topics
+- **Schedule:** https://ic4.co.in/schedule — Conference agenda (when published)
+- **Speakers:** https://ic4.co.in/speakers — Keynote speaker profiles
+- **Committee:** https://ic4.co.in/committee — Organizing and program committee members
+- **Important Dates:** https://ic4.co.in/important-dates — Key deadlines and milestones
+- **Registration:** https://ic4.co.in/registration — Registration fees and process
+- **Contact:** https://ic4.co.in/contact — Contact information and inquiries
+- **CRC Submissions:** https://ic4.co.in/crc-submissions — Camera-ready submission instructions
+
+## Contact
+
+- Email: inc4.christ@conference.christuniversity.in
+- Website: https://ic4.co.in
+
+## Developer
+
+Developed by Adharsh Jolly — https://github.com/AdharshJolly

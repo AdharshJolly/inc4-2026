@@ -1,8 +1,9 @@
 import { Metadata } from "next";
 import SpeakersClient from "./SpeakersClient";
+import { createClient } from '@/utils/supabase/server';
+import { cookies } from 'next/headers';
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: "Keynote Speakers | InC4 2026",
@@ -19,16 +20,18 @@ export const metadata: Metadata = {
   },
 };
 
-import { createClient } from '@/utils/supabase/server';
-import { cookies } from 'next/headers';
-
 export default async function SpeakersPage() {
-  const cookieStore = await cookies();
-  const supabase = createClient(cookieStore);
-  const { data: speakers } = await supabase
-    .from('speakers')
-    .select()
-    .order('order_index');
+  try {
+    const cookieStore = await cookies();
+    const supabase = createClient(cookieStore);
+    const { data: speakers } = await supabase
+      .from('speakers')
+      .select()
+      .order('order_index');
 
-  return <SpeakersClient initialSpeakers={speakers || []} />;
+    return <SpeakersClient initialSpeakers={speakers || []} />;
+  } catch (err) {
+    console.error("Failed to fetch speakers:", err);
+    return <SpeakersClient initialSpeakers={[]} />;
+  }
 }

@@ -211,8 +211,8 @@ export default function CRCSubmissions() {
                         <li className="flex gap-3">
                           <CheckCircle2 className="w-5 h-5 text-primary shrink-0 mt-0.5" />{" "}
                           Do not change headers, footers, or any template
-                          formatting. Read section III "PREPARE YOUR PAPER
-                          BEFORE STYLING".
+                          formatting. Read section III &quot;PREPARE YOUR PAPER
+                          BEFORE STYLING&quot;.
                         </li>
                         <li className="flex gap-3">
                           <CheckCircle2 className="w-5 h-5 text-primary shrink-0 mt-0.5" />{" "}

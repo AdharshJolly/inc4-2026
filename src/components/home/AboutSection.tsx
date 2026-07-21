@@ -63,7 +63,7 @@ export const AboutSection = () => {
               <p className="text-muted-foreground text-lg leading-relaxed mb-8">
                 InC4 2026 will bring together researchers and practitioners from
                 academia, industry, and government to deliberate upon
-                contemporary computing and communication's algorithmic,
+                contemporary computing and communication&apos;s algorithmic,
                 systemic, applied, and educational aspects.
               </p>
             </Reveal>

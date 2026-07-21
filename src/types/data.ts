@@ -85,3 +85,41 @@ export interface PartnersData {
   root: PartnerItem[];
 }
 
+// ── Schedule types ──
+
+export interface ScheduleDay {
+  id: string;
+  day_number: number;
+  date: string;
+  label: string;
+  sort_order: number;
+}
+
+export interface ScheduleEvent {
+  id: string;
+  day_id: string;
+  time_start: string;
+  time_end: string;
+  title: string;
+  event_type: "keynote" | "inauguration" | "valedictory" | "session" | "lunch" | "high_tea" | "break" | "other";
+  location: string | null;
+  session_chair: string | null;
+  sort_order: number;
+}
+
+export interface SchedulePaper {
+  id: string;
+  event_id: string;
+  title: string;
+  presenter: string;
+  sort_order: number;
+}
+
+// ── Site config / feature flags ──
+
+export interface SiteConfig {
+  key: string;
+  value: boolean;
+  description: string | null;
+}
+

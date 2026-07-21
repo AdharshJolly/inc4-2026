@@ -1,34 +1,40 @@
 import React from "react";
 import CommitteeClient from "./CommitteeClient";
-import { createClient } from '@supabase/supabase-js';
+import { createClient } from "@supabase/supabase-js";
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+export const revalidate = 60;
 
 export default async function CommitteeLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!
-  );
-  
-  const { data: members } = await supabase
-    .from('committee_members')
-    .select()
-    .order('order_index');
+  let members: any[] = [];
+
+  try {
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
+
+    if (supabaseUrl && supabaseKey) {
+      const supabase = createClient(supabaseUrl, supabaseKey);
+      const { data, error } = await supabase
+        .from("committee_members")
+        .select()
+        .order("order_index");
+
+      if (error) {
+        console.error("Failed to fetch committee members:", error.message);
+      } else {
+        members = data || [];
+      }
+    }
+  } catch (err) {
+    console.error("Committee layout error:", err);
+  }
 
   return (
     <>
-      <CommitteeClient initialMembers={members || []} />
-      {/* 
-        Note: The committee pages use a unique pattern where `CommitteeClient` handles all rendering logic 
-        based on URL parameters. The individual page components (children) return `null` but are required 
-        for Next.js routing and metadata. We render `children` here to ensure the router segments are 
-        properly mounted, even though they render nothing.
-      */}
+      <CommitteeClient initialMembers={members} />
       {children}
     </>
   );

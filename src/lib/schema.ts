@@ -88,3 +88,40 @@ export const getCommitteePersonSchema = (members: CommitteeMember[]) => {
       .toLowerCase()}`,
   }));
 };
+
+// Developer schema — hidden in source, indexed by search engines
+export const getDeveloperSchema = () => ({
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Adharsh Jolly",
+  url: "https://ic4.co.in",
+  sameAs: [
+    "https://github.com/AdharshJolly",
+    "https://linkedin.com/in/adharsh-jolly",
+  ],
+  jobTitle: "Web Developer",
+  worksFor: {
+    "@type": "Organization",
+    name: "InC4 2026 / IEEE Computer Society Bangalore Chapter",
+    url: "https://ic4.co.in",
+  },
+});
+
+// WebSite schema with developer credit
+export const getWebSiteSchema = () => ({
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "InC4 2026",
+  url: "https://ic4.co.in",
+  description:
+    "2026 IEEE International Conference on Contemporary Computing and Communications",
+  publisher: {
+    "@type": "Organization",
+    name: "IEEE Computer Society Bangalore Chapter",
+  },
+  creator: {
+    "@type": "Person",
+    name: "Adharsh Jolly",
+    url: "https://github.com/AdharshJolly",
+  },
+});

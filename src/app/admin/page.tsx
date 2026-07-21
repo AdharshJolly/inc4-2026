@@ -7,6 +7,7 @@ import { CommitteeManager } from "@/components/admin/CommitteeManager";
 import { SpeakersManager } from "@/components/admin/SpeakersManager";
 import { DatesManager } from "@/components/admin/DatesManager";
 import { PartnersManager } from "@/components/admin/PartnersManager";
+import { ScheduleManager } from "@/components/admin/ScheduleManager";
 import { AdminSessionContext } from "./AdminSessionProvider";
 import { createClient } from "@/utils/supabase/client";
 import {
@@ -23,6 +24,8 @@ import {
   ChevronRight,
   ExternalLink,
   Layers,
+  ListOrdered,
+  Settings,
 } from "lucide-react";
 
 const cmsItems = [
@@ -58,11 +61,19 @@ const cmsItems = [
     bg: "bg-emerald-500/10",
     previewUrl: "/",
   },
+  {
+    id: "schedule",
+    label: "Schedule",
+    icon: ListOrdered,
+    color: "text-cyan-500",
+    bg: "bg-cyan-500/10",
+    previewUrl: "/schedule",
+  },
 ];
 
 export default function AdminDashboard() {
   const session = useContext(AdminSessionContext);
-  const [activeSection, setActiveSection] = useState<"overview" | "cms">("overview");
+  const [activeSection, setActiveSection] = useState<"overview" | "cms" | "settings">("overview");
   const [activeCmsTab, setActiveCmsTab] = useState("committee");
 
   const [upcomingDates, setUpcomingDates] = useState(0);
@@ -70,20 +81,23 @@ export default function AdminDashboard() {
   const [totalMembers, setTotalMembers] = useState(0);
   const [categoriesCount, setCategoriesCount] = useState(0);
   const [speakersCount, setSpeakersCount] = useState(0);
+  const [eventsCount, setEventsCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchStats = async () => {
       const supabase = createClient();
-      const [dResult, pResult, sResult, cResult] = await Promise.all([
+      const [dResult, pResult, sResult, cResult, schResult] = await Promise.all([
         supabase.from("important_dates").select("event_date"),
         supabase.from("partners").select("*", { count: "exact", head: true }),
         supabase.from("speakers").select("*", { count: "exact", head: true }),
         supabase.from("committee_members").select("category_id"),
+        supabase.from("schedule_events").select("*", { count: "exact", head: true }),
       ]);
       if (dResult.data) setUpcomingDates(dResult.data.filter((d: any) => !isCompleted(d.event_date)).length);
       if (pResult.count !== null) setPartnersCount(pResult.count);
       if (sResult.count !== null) setSpeakersCount(sResult.count);
+      if (schResult.count !== null) setEventsCount(schResult.count);
       if (cResult.data) {
         setTotalMembers(cResult.data.length);
         setCategoriesCount(new Set(cResult.data.map((c: any) => c.category_id)).size);
@@ -142,6 +156,18 @@ export default function AdminDashboard() {
       ring: "ring-emerald-500/20",
       trendIcon: Globe,
     },
+    {
+      title: "Schedule Events",
+      value: eventsCount,
+      sub: "Across 2 days",
+      icon: ListOrdered,
+      gradient: "from-cyan-500/15 via-cyan-500/5 to-transparent",
+      border: "border-cyan-500/25 hover:border-cyan-500/50",
+      iconBg: "bg-cyan-500/10",
+      iconColor: "text-cyan-500",
+      ring: "ring-cyan-500/20",
+      trendIcon: TrendingUp,
+    },
   ];
 
   const activeCmsItem = cmsItems.find((i) => i.id === activeCmsTab)!;
@@ -183,6 +209,14 @@ export default function AdminDashboard() {
             onClick={() => setActiveSection("cms")}
             icon={Database}
             label="Content"
+          />
+
+          {/* Settings */}
+          <SidebarButton
+            active={activeSection === "settings"}
+            onClick={() => setActiveSection("settings")}
+            icon={Settings}
+            label="Settings"
           />
 
           {activeSection === "cms" && (
@@ -271,7 +305,7 @@ export default function AdminDashboard() {
               <div className="mb-8">
                 <h1 className="text-2xl font-black tracking-tight text-foreground">Dashboard Overview</h1>
                 <p className="text-muted-foreground text-sm mt-1">
-                  Here's what's happening with InC4 2026.
+                  Here&apos;s what&apos;s happening with InC4 2026.
                 </p>
               </div>
 
@@ -342,12 +376,115 @@ export default function AdminDashboard() {
                   {activeCmsTab === "speakers" && <SpeakersManager />}
                   {activeCmsTab === "dates" && <DatesManager />}
                   {activeCmsTab === "partners" && <PartnersManager />}
+                  {activeCmsTab === "schedule" && <ScheduleManager />}
                 </div>
               </div>
             </div>
           )}
+
+          {/* ── SETTINGS ── */}
+          {activeSection === "settings" && (
+            <FeatureFlagsSection />
+          )}
         </main>
       </div>
+    </div>
+  );
+}
+
+// ── Feature Flags Section ──
+function FeatureFlagsSection() {
+  const [scheduleVisible, setScheduleVisible] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const supabase = createClient();
+
+  useEffect(() => {
+    const fetchFlags = async () => {
+      const { data } = await supabase
+        .from("site_config")
+        .select("value")
+        .eq("key", "schedule_visible")
+        .single();
+      if (data) setScheduleVisible(data.value === true || data.value === "true");
+      setLoading(false);
+    };
+    fetchFlags();
+  }, [supabase]);
+
+  const toggleFlag = async (key: string, current: boolean) => {
+    setSaving(true);
+    const newVal = !current;
+    const { error } = await supabase
+      .from("site_config")
+      .upsert({ key, value: newVal, updated_at: new Date().toISOString() }, { onConflict: "key" });
+    if (!error) {
+      if (key === "schedule_visible") setScheduleVisible(newVal);
+    }
+    setSaving(false);
+  };
+
+  if (loading) {
+    return (
+      <div className="max-w-3xl space-y-4">
+        <div className="h-8 w-48 bg-muted rounded animate-pulse" />
+        <div className="h-20 bg-muted rounded-xl animate-pulse" />
+      </div>
+    );
+  }
+
+  return (
+    <div className="max-w-3xl">
+      <div className="mb-6">
+        <h1 className="text-2xl font-black tracking-tight text-foreground">Settings</h1>
+        <p className="text-muted-foreground text-sm mt-1">Toggle features on or off for the public site.</p>
+      </div>
+
+      <div className="rounded-2xl border border-border/60 bg-card/60 p-6 space-y-1">
+        <FlagRow
+          label="Show Schedule Page"
+          description="When off, visitors see &quot;Schedule Coming Soon&quot; instead of the full schedule."
+          enabled={scheduleVisible}
+          onToggle={() => toggleFlag("schedule_visible", scheduleVisible)}
+          disabled={saving}
+        />
+      </div>
+    </div>
+  );
+}
+
+function FlagRow({
+  label,
+  description,
+  enabled,
+  onToggle,
+  disabled,
+}: {
+  label: string;
+  description: string;
+  enabled: boolean;
+  onToggle: () => void;
+  disabled?: boolean;
+}) {
+  return (
+    <div className="flex items-center justify-between gap-4 py-3 px-2 rounded-lg hover:bg-muted/30 transition-colors">
+      <div className="min-w-0">
+        <p className="text-sm font-semibold text-foreground">{label}</p>
+        <p className="text-xs text-muted-foreground mt-0.5" dangerouslySetInnerHTML={{ __html: description }} />
+      </div>
+      <button
+        onClick={onToggle}
+        disabled={disabled}
+        className={`relative shrink-0 w-11 h-6 rounded-full transition-colors duration-200 ${
+          enabled ? "bg-primary" : "bg-muted"
+        } ${disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
+      >
+        <span
+          className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white shadow-sm transition-transform duration-200 ${
+            enabled ? "translate-x-5" : "translate-x-0"
+          }`}
+        />
+      </button>
     </div>
   );
 }

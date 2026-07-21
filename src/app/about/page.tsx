@@ -58,7 +58,7 @@ export default function AboutPage() {
                   <p>
                     InC4 2026 brings together researchers and practitioners from
                     academia, industry, and government to deliberate upon
-                    contemporary computing and communication's algorithmic,
+                    contemporary computing and communication&apos;s algorithmic,
                     systemic, applied, and educational aspects. The conference
                     will witness multiple eminent keynote speakers from academia
                     and industry worldwide and the presentation of accepted
@@ -182,7 +182,7 @@ export default function AboutPage() {
                     of Christ University. One of the first institutions in India
                     to be accredited in 1998 by the NAAC, and subsequently in
                     2004 and 2016, CHRIST (Deemed to be University) has the top
-                    grade 'A' in the 4-point scale.
+                    grade &apos;A&apos; in the 4-point scale.
                   </p>
                 </div>
               </Reveal>
@@ -334,6 +334,25 @@ export default function AboutPage() {
                 </Button>
               </Reveal>
             </div>
+          </section>
+
+          {/* Internal Links */}
+          <section>
+            <Reveal width="100%">
+              <div className="rounded-2xl border border-border/50 bg-card/50 p-8">
+                <h3 className="text-xl font-bold mb-4">Explore InC4 2026</h3>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  <a href="/schedule" className="text-sm text-primary hover:underline">Schedule</a>
+                  <a href="/speakers" className="text-sm text-primary hover:underline">Speakers</a>
+                  <a href="/committee" className="text-sm text-primary hover:underline">Committee</a>
+                  <a href="/call-for-papers" className="text-sm text-primary hover:underline">Call for Papers</a>
+                  <a href="/important-dates" className="text-sm text-primary hover:underline">Important Dates</a>
+                  <a href="/registration" className="text-sm text-primary hover:underline">Registration</a>
+                  <a href="/contact" className="text-sm text-primary hover:underline">Contact</a>
+                  <a href="/crc-submissions" className="text-sm text-primary hover:underline">CRC Submissions</a>
+                </div>
+              </div>
+            </Reveal>
           </section>
         </div>
       </div>

@@ -38,8 +38,8 @@ export const metadata: Metadata = {
     "Christ University",
     "Research",
   ],
-  authors: [{ name: "IEEE Computer Society Bangalore Chapter" }],
-  creator: "IEEE Computer Society Bangalore Chapter",
+  authors: [{ name: "IEEE Computer Society Bangalore Chapter" }, { name: "Adharsh Jolly", url: "https://github.com/AdharshJolly" }],
+  creator: "Adharsh Jolly",
   publisher: "CHRIST (Deemed to be University)",
   verification: {
     google: "4prcouKfo645DwvNat-O8rq_AkPLzAzRNMnA4qssBKI",
