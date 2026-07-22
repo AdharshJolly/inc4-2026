@@ -12,7 +12,7 @@ cloudinary.config({
 export const CLOUDINARY_FOLDER = "inc4-2026";
 
 // Allowed image types
-export const ALLOWED_IMAGE_TYPES = [
+const ALLOWED_IMAGE_TYPES = [
   "image/jpeg",
   "image/png",
   "image/gif",
@@ -20,7 +20,7 @@ export const ALLOWED_IMAGE_TYPES = [
 ];
 
 // Max file size (5MB)
-export const MAX_FILE_SIZE = 5 * 1024 * 1024;
+const MAX_FILE_SIZE = 5 * 1024 * 1024;
 
 // Generate unique public_id for Cloudinary
 export function generatePublicId(
@@ -39,7 +39,7 @@ export function generatePublicId(
 }
 
 // Validate image file
-export function validateImageFile(file: File): {
+function validateImageFile(file: File): {
   valid: boolean;
   error?: string;
 } {
@@ -61,7 +61,7 @@ export function validateImageFile(file: File): {
 }
 
 // Generate Cloudinary URL with transformations
-export function getCloudinaryUrl(
+function getCloudinaryUrl(
   publicId: string,
   options?: {
     width?: number;

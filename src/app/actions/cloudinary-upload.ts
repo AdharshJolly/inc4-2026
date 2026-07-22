@@ -60,7 +60,7 @@ export async function uploadToCloudinary(
 }
 
 // Delete image from Cloudinary
-export async function deleteFromCloudinary(
+async function deleteFromCloudinary(
   publicId: string
 ): Promise<{ success: boolean; error?: string }> {
   try {
@@ -76,7 +76,7 @@ export async function deleteFromCloudinary(
 }
 
 // Get optimized URL for display
-export async function getOptimizedImageUrl(
+async function getOptimizedImageUrl(
   publicId: string,
   options?: {
     width?: number;

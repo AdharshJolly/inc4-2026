@@ -13,7 +13,7 @@ export interface PreviewData {
 /**
  * Enable preview mode and store pending changes data
  */
-export function enablePreviewMode(data: PreviewData): void {
+function enablePreviewMode(data: PreviewData): void {
   if (typeof window === "undefined") return;
   localStorage.setItem(PREVIEW_MODE_KEY, "true");
   localStorage.setItem(PREVIEW_DATA_KEY, JSON.stringify(data));
@@ -39,7 +39,7 @@ export function isPreviewMode(): boolean {
 /**
  * Get preview data for a specific file path (returns JSON string)
  */
-export function getPreviewData(filePath: string): string | null {
+function getPreviewData(filePath: string): string | null {
   if (!isPreviewMode()) return null;
 
   try {

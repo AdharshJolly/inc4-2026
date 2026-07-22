@@ -80,7 +80,7 @@ const initErrorLogger = () => {
 /**
  * Add a breadcrumb (diagnostic event trace)
  */
-export const addBreadcrumb = (
+const addBreadcrumb = (
   category: string,
   message: string,
   level: "info" | "warning" | "error" = "info",
@@ -117,7 +117,7 @@ export const addBreadcrumb = (
 /**
  * Log an error
  */
-export const logError = (
+const logError = (
   message: string,
   context?: Record<string, any>,
   stack?: string
@@ -257,7 +257,7 @@ const sendToRemote = async (log: ErrorLog): Promise<void> => {
 /**
  * Get current breadcrumbs (for debugging)
  */
-export const getBreadcrumbs = (): Breadcrumb[] => {
+const getBreadcrumbs = (): Breadcrumb[] => {
   return [...breadcrumbs];
 };
 

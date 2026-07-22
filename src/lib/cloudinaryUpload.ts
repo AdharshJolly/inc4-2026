@@ -46,7 +46,7 @@ export async function uploadImageToCloudinary(
 }
 
 // Get image URL with optional transformations
-export function getImageUrl(
+function getImageUrl(
   publicId: string | null | undefined,
   options?: {
     width?: number;

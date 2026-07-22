@@ -56,7 +56,7 @@ const normalizePhotoField = <T extends { photo?: any; image?: any }>(
 /**
  * Batch normalize an array of items
  */
-export const normalizePhotoFields = <T extends { photo?: any; image?: any }>(
+const normalizePhotoFields = <T extends { photo?: any; image?: any }>(
   items: T[]
 ): Array<T & { photo: { url?: string } }> => {
   const normalized = items.map((item) => normalizePhotoField(item));
