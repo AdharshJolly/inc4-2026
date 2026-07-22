@@ -123,6 +123,12 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <meta name="theme-color" content="#ffffff" />
+        <meta name="author" content="Adharsh Jolly" />
+        <meta name="creator" content="Adharsh Jolly" />
+        <meta name="developer" content="Adharsh Jolly" />
+        <meta name="generator" content="Next.js" />
+        <meta property="og:site_name" content="InC4 2026" />
+        <meta property="og:see_also" content="https://github.com/AdharshJolly" />
       </head>
       <body className="bg-background text-foreground antialiased font-sans">
         {gaId ? (

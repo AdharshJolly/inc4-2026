@@ -45,7 +45,7 @@ export const CTASection = () => {
                 rel="noopener noreferrer"
               >
                 <Button variant="hero" size="xl">
-                  Register here
+                  Register for InC4 2026
                   <ArrowRight className="w-5 h-5" />
                 </Button>
               </Link>

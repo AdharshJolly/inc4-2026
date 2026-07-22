@@ -8,6 +8,8 @@ import {
   getBreadcrumbSchema,
   getDeveloperSchema,
   getWebSiteSchema,
+  getFAQSchema,
+  getWebsiteAppSchema,
 } from "@/lib/schema";
 
 export const SchemaOrg = () => {
@@ -37,6 +39,18 @@ export const SchemaOrg = () => {
     siteScript.type = "application/ld+json";
     siteScript.textContent = JSON.stringify(getWebSiteSchema());
     document.head.appendChild(siteScript);
+
+    // Add FAQ Schema
+    const faqScript = document.createElement("script");
+    faqScript.type = "application/ld+json";
+    faqScript.textContent = JSON.stringify(getFAQSchema());
+    document.head.appendChild(faqScript);
+
+    // Add Website Application Schema (credits developer)
+    const webAppScript = document.createElement("script");
+    webAppScript.type = "application/ld+json";
+    webAppScript.textContent = JSON.stringify(getWebsiteAppSchema());
+    document.head.appendChild(webAppScript);
 
     // Add Breadcrumb Schema based on current route
     const breadcrumbMap: Record<
@@ -94,6 +108,8 @@ export const SchemaOrg = () => {
       document.head.removeChild(orgScript);
       document.head.removeChild(devScript);
       document.head.removeChild(siteScript);
+      document.head.removeChild(faqScript);
+      document.head.removeChild(webAppScript);
       document.head.removeChild(breadcrumbScript);
     };
   }, [pathname]);

@@ -105,7 +105,7 @@ export default function CallForPapersPage() {
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        Register here <ArrowRight className="w-4 h-4" />
+                        Register for InC4 2026 <ArrowRight className="w-4 h-4" />
                       </a>
                     </Button>
                   </div>

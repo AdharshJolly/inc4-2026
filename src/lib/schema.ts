@@ -94,16 +94,58 @@ export const getDeveloperSchema = () => ({
   "@context": "https://schema.org",
   "@type": "Person",
   name: "Adharsh Jolly",
-  url: "https://ic4.co.in",
+  url: "https://github.com/AdharshJolly",
+  image: "https://github.com/AdharshJolly.png",
   sameAs: [
     "https://github.com/AdharshJolly",
     "https://linkedin.com/in/adharsh-jolly",
   ],
-  jobTitle: "Web Developer",
+  jobTitle: "Full Stack Developer & Web Engineer",
+  description: "Developer and creator of the InC4 2026 conference website (ic4.co.in). Built with Next.js, React, and modern web technologies.",
+  knowsAbout: [
+    "Web Development",
+    "Next.js",
+    "React",
+    "TypeScript",
+    "Full Stack Development",
+    "UI/UX Design",
+    "Performance Optimization",
+  ],
   worksFor: {
     "@type": "Organization",
     name: "InC4 2026 / IEEE Computer Society Bangalore Chapter",
     url: "https://ic4.co.in",
+  },
+  mainEntityOfPage: {
+    "@type": "WebSite",
+    "@id": "https://ic4.co.in",
+    name: "InC4 2026",
+    description: "Website developed and maintained by Adharsh Jolly",
+  },
+});
+
+// SoftwareApplication schema for the website itself
+export const getWebsiteAppSchema = () => ({
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: "InC4 2026 Conference Website",
+  url: "https://ic4.co.in",
+  description: "Official website for InC4 2026 - IEEE International Conference on Contemporary Computing and Communications",
+  applicationCategory: "EducationalApplication",
+  operatingSystem: "Web",
+  creator: {
+    "@type": "Person",
+    name: "Adharsh Jolly",
+    url: "https://github.com/AdharshJolly",
+    sameAs: [
+      "https://github.com/AdharshJolly",
+      "https://linkedin.com/in/adharsh-jolly",
+    ],
+  },
+  offers: {
+    "@type": "Offer",
+    price: "0",
+    priceCurrency: "USD",
   },
 });
 
@@ -124,4 +166,52 @@ export const getWebSiteSchema = () => ({
     name: "Adharsh Jolly",
     url: "https://github.com/AdharshJolly",
   },
+});
+
+// FAQ Schema for common conference questions
+export const getFAQSchema = () => ({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "What is InC4 2026?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "InC4 2026 is the 2026 IEEE International Conference on Contemporary Computing and Communications (Conference#70839), organized by IEEE Computer Society Bangalore Chapter at CHRIST University, Bengaluru on August 7-8, 2026.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "When and where is InC4 2026?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "InC4 2026 will be held on August 7-8, 2026 at CHRIST University, Kengeri Campus, Bengaluru, India.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How do I register for InC4 2026?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "You can register for InC4 2026 through the Explara registration portal. Visit the registration page on ic4.co.in for fees and categories.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "What are the paper submission guidelines for InC4 2026?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Papers must follow the standard IEEE two-column format and be no more than 6 pages. Accepted papers will be submitted for inclusion in IEEE Xplore digital library.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "What topics are covered at InC4 2026?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "InC4 2026 covers contemporary computing and communications topics including AI/ML, cloud computing, IoT, cybersecurity, data science, and more.",
+      },
+    },
+  ],
 });
