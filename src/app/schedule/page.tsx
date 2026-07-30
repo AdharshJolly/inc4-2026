@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   },
 };
 
-export const revalidate = 60;
+export const dynamic = 'force-dynamic';
 
 async function getScheduleData(): Promise<{
   days: ScheduleDay[];

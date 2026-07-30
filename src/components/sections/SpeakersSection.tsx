@@ -15,7 +15,7 @@ export const SpeakersSection = async () => {
     .from('speakers')
     .select()
     .order('order_index')
-    .limit(3);
+    .limit(4);
 
   const speakers = (dbSpeakers || []).map(s => ({
     name: s.name,
@@ -59,7 +59,7 @@ export const SpeakersSection = async () => {
         </div>
 
         {/* Speakers Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-24 mb-12 mt-16">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-24 mb-12 mt-16">
           {speakers.map((speaker) => {
             const photoUrl = getPhotoUrl(speaker.photo);
 

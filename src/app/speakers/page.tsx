@@ -3,7 +3,7 @@ import SpeakersClient from "./SpeakersClient";
 import { createClient } from '@/utils/supabase/server';
 import { cookies } from 'next/headers';
 
-export const revalidate = 60;
+export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: "Keynote Speakers | InC4 2026",

@@ -9,15 +9,19 @@ import Image from "next/image";
 import { useState } from "react";
 import { Users, Linkedin } from "lucide-react";
 
-export default function SpeakersClient({ initialSpeakers = [] }: { initialSpeakers?: any[] }) {
+export default function SpeakersClient({
+  initialSpeakers = [],
+}: {
+  initialSpeakers?: any[];
+}) {
   const [speakers] = useState(() => {
-    return initialSpeakers.map(s => ({
+    return initialSpeakers.map((s) => ({
       name: s.name,
       role: s.role,
       affiliation: s.affiliation,
       topic: s.topic,
       linkedin: s.linkedin,
-      photo: { url: s.photo_url }
+      photo: { url: s.photo_url },
     }));
   });
 
@@ -59,7 +63,7 @@ export default function SpeakersClient({ initialSpeakers = [] }: { initialSpeake
             </Reveal>
           </div>
         ) : (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-24 mb-12 mt-16 max-w-7xl mx-auto">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-24 mb-12 mt-16 max-w-7xl mx-auto">
             {speakers.map((speaker, index) => {
               const photoUrl = getPhotoUrl(speaker.photo);
 
@@ -133,14 +137,48 @@ export default function SpeakersClient({ initialSpeakers = [] }: { initialSpeake
         <div className="mt-16 rounded-2xl border border-border/50 bg-card/50 p-8">
           <h3 className="text-xl font-bold mb-4">Explore InC4 2026</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            <a href="/schedule" className="text-sm text-primary hover:underline">Schedule</a>
-            <a href="/committee" className="text-sm text-primary hover:underline">Committee</a>
-            <a href="/call-for-papers" className="text-sm text-primary hover:underline">Call for Papers</a>
-            <a href="/important-dates" className="text-sm text-primary hover:underline">Important Dates</a>
-            <a href="/registration" className="text-sm text-primary hover:underline">Registration</a>
-            <a href="/about" className="text-sm text-primary hover:underline">About</a>
-            <a href="/contact" className="text-sm text-primary hover:underline">Contact</a>
-            <a href="/crc-submissions" className="text-sm text-primary hover:underline">CRC Submissions</a>
+            <a
+              href="/schedule"
+              className="text-sm text-primary hover:underline"
+            >
+              Schedule
+            </a>
+            <a
+              href="/committee"
+              className="text-sm text-primary hover:underline"
+            >
+              Committee
+            </a>
+            <a
+              href="/call-for-papers"
+              className="text-sm text-primary hover:underline"
+            >
+              Call for Papers
+            </a>
+            <a
+              href="/important-dates"
+              className="text-sm text-primary hover:underline"
+            >
+              Important Dates
+            </a>
+            <a
+              href="/registration"
+              className="text-sm text-primary hover:underline"
+            >
+              Registration
+            </a>
+            <a href="/about" className="text-sm text-primary hover:underline">
+              About
+            </a>
+            <a href="/contact" className="text-sm text-primary hover:underline">
+              Contact
+            </a>
+            <a
+              href="/crc-submissions"
+              className="text-sm text-primary hover:underline"
+            >
+              CRC Submissions
+            </a>
           </div>
         </div>
       </div>

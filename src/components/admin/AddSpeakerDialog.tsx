@@ -121,7 +121,7 @@ export const AddSpeakerDialog = ({ onSpeakerAdded }: AddSpeakerDialogProps) => {
       name: z.string().min(2, "Speaker name is required"),
       role: z.string().min(2, "Speaker role is required"),
       affiliation: z.string().min(2, "Affiliation is required"),
-      topic: z.string().min(2, "Topic/Title is required"),
+      topic: z.string().optional().or(z.literal("")),
       linkedin: z.string().url("Must be a valid LinkedIn URL").or(z.literal("")),
     });
 
@@ -291,7 +291,7 @@ export const AddSpeakerDialog = ({ onSpeakerAdded }: AddSpeakerDialogProps) => {
 
           <div className="space-y-2">
             <Label htmlFor="topic" className="text-sm font-medium">
-              Topic/Title *
+              Topic/Title
             </Label>
             <Input
               id="topic"
@@ -424,7 +424,6 @@ export const AddSpeakerDialog = ({ onSpeakerAdded }: AddSpeakerDialogProps) => {
           {formData.name &&
             formData.role &&
             formData.affiliation &&
-            formData.topic &&
             (formData.photoUrl || formData.photoFile) && (
               <PreviewDialog
                 content={{
@@ -455,7 +454,6 @@ export const AddSpeakerDialog = ({ onSpeakerAdded }: AddSpeakerDialogProps) => {
               formData.name &&
               formData.role &&
               formData.affiliation &&
-              formData.topic &&
               (formData.photoUrl || formData.photoFile)
                 ? "flex-1"
                 : "flex-auto"

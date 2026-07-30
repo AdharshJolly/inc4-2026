@@ -102,9 +102,7 @@ export const EditSpeakerDialog = ({
     if (!formData.affiliation.trim()) {
       newErrors.affiliation = "Affiliation is required";
     }
-    if (!formData.topic.trim()) {
-      newErrors.topic = "Topic is required";
-    }
+
     if (!formData.photoUrl && !formData.photoFile) {
       newErrors.photo = "Please add a photo (URL or file)";
     }
@@ -306,7 +304,7 @@ export const EditSpeakerDialog = ({
             </div>
 
             <div className="col-span-2">
-              <Label htmlFor="edit-speaker-topic">Topic *</Label>
+              <Label htmlFor="edit-speaker-topic">Topic</Label>
               <Input
                 id="edit-speaker-topic"
                 value={formData.topic}
@@ -317,11 +315,7 @@ export const EditSpeakerDialog = ({
                   }))
                 }
                 placeholder="Presentation topic/title"
-                className={errors.topic ? "border-red-500" : ""}
               />
-              {errors.topic && (
-                <p className="text-xs text-red-500 mt-1">{errors.topic}</p>
-              )}
             </div>
 
             <div className="col-span-2">
