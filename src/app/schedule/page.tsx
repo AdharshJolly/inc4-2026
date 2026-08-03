@@ -27,37 +27,20 @@ export const metadata: Metadata = {
 
 export const dynamic = 'force-dynamic';
 
-async function getScheduleData(): Promise<{
-  days: ScheduleDay[];
-  events: ScheduleEvent[];
-  papers: SchedulePaper[];
-}> {
-  try {
-    const cookieStore = await cookies();
-    const supabase = createClient(cookieStore);
-
-    const [daysRes, eventsRes, papersRes] = await Promise.all([
-      supabase.from("schedule_days").select("*").order("sort_order"),
-      supabase.from("schedule_events").select("*").order("sort_order"),
-      supabase.from("schedule_papers").select("*").order("sort_order"),
-    ]);
-
-    return {
-      days: (daysRes.data || []) as ScheduleDay[],
-      events: (eventsRes.data || []) as ScheduleEvent[],
-      papers: (papersRes.data || []) as SchedulePaper[],
-    };
-  } catch (err) {
-    console.error("Failed to fetch schedule data server-side:", err);
-    return { days: [], events: [], papers: [] };
-  }
-}
-
 export default async function SchedulePage() {
-  const [scheduleVisible, { days, events, papers }] = await Promise.all([
-    getFeatureFlag("schedule_visible", false),
-    getScheduleData(),
+  const scheduleVisible = await getFeatureFlag("schedule_visible", false);
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
+
+  const [daysRes, eventsRes, papersRes] = await Promise.all([
+    supabase.from("schedule_days").select("*").order("sort_order"),
+    supabase.from("schedule_events").select("*").order("sort_order"),
+    supabase.from("schedule_papers").select("*").order("sort_order"),
   ]);
+
+  const days = (daysRes.data as ScheduleDay[]) || [];
+  const events = (eventsRes.data as ScheduleEvent[]) || [];
+  const papers = (papersRes.data as SchedulePaper[]) || [];
 
   if (!scheduleVisible) {
     return (
