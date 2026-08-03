@@ -98,6 +98,29 @@ function formatTime(time: string): string {
   return `${hour12}:${m.toString().padStart(2, "0")} ${period}`;
 }
 
+function parseTimeToMinutes(timeStr: string): number {
+  if (timeStr.toUpperCase().includes("AM") || timeStr.toUpperCase().includes("PM")) {
+    const match = timeStr.match(/(\d+):(\d+)\s*(AM|PM)/i);
+    if (match) {
+      let h = parseInt(match[1], 10);
+      const m = parseInt(match[2], 10);
+      const period = match[3].toUpperCase();
+      if (period === "PM" && h !== 12) h += 12;
+      if (period === "AM" && h === 12) h = 0;
+      return h * 60 + m;
+    }
+  }
+  
+  const parts = timeStr.split(":");
+  if (parts.length >= 2) {
+    const h = parseInt(parts[0], 10);
+    const m = parseInt(parts[1], 10);
+    return h * 60 + (isNaN(m) ? 0 : m);
+  }
+  return 0;
+}
+
+
 const EVENT_TYPE_LABELS: Record<ScheduleEvent["event_type"], string> = {
   keynote: "Keynote",
   inauguration: "Inauguration",
@@ -334,8 +357,8 @@ export default function ScheduleClient({
     }
 
     return Array.from(grouped.values()).sort((a, b) => {
-      // Sort by time start
-      return a.timeLabel.localeCompare(b.timeLabel);
+      // Sort chronologically by time start
+      return parseTimeToMinutes(a.timeLabel) - parseTimeToMinutes(b.timeLabel);
     });
   }, [filteredEvents, filteredPapers, papers, searchQuery]);
 
