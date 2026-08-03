@@ -1,77 +1,1382 @@
 {
-  "day1Offline": {
-    "title": "August 7, 2026 (Offline)",
-    "events": [
-      {
-        "time": "09:00 AM - 10:00 AM",
-        "title": "Inauguration Ceremony",
-        "location": "Main Auditorium"
-      },
-      {
-        "time": "10:30 AM - 11:30 AM",
-        "title": "Keynote Address I",
-        "location": "Main Auditorium"
-      },
-      {
-        "time": "11:30 AM - 01:00 PM",
-        "title": "Technical Session I",
-        "location": "Hall A"
-      },
-      {
-        "time": "01:00 PM - 02:00 PM",
-        "title": "Lunch Break",
-        "location": "Cafeteria"
-      },
-      {
-        "time": "02:00 PM - 04:00 PM",
-        "title": "Technical Session II",
-        "location": "Hall A"
-      }
-    ]
-  },
-  "day1Online": {
-    "title": "August 7, 2026 (Online)",
-    "events": [
-      {
-        "time": "10:30 AM - 11:30 AM",
-        "title": "Keynote Address I (Stream)",
-        "link": "#"
-      },
-      {
-        "time": "11:30 AM - 01:00 PM",
-        "title": "Online Technical Session I",
-        "link": "#"
-      },
-      {
-        "time": "02:00 PM - 04:00 PM",
-        "title": "Online Technical Session II",
-        "link": "#"
-      }
-    ]
-  },
-  "day2Online": {
-    "title": "August 8, 2026 (Online)",
-    "events": [
-      {
-        "time": "09:30 AM - 10:30 AM",
-        "title": "Keynote Address II (Stream)",
-        "link": "#"
-      },
-      {
-        "time": "10:45 AM - 01:00 PM",
-        "title": "Online Technical Session III",
-        "link": "#"
-      },
-      {
-        "time": "02:00 PM - 03:30 PM",
-        "title": "Online Technical Session IV",
-        "link": "#"
-      },
-      {
-        "time": "04:00 PM - 05:00 PM",
-        "title": "Valedictory Function",
-        "link": "#"
-      }
-    ]
-  }
+  "days": [
+    {
+      "id": "aug_07__2026",
+      "day_number": 1,
+      "date": "Aug 07, 2026",
+      "label": "Day 1",
+      "sort_order": 0
+    },
+    {
+      "id": "aug_08__2026",
+      "day_number": 2,
+      "date": "Aug 08, 2026",
+      "label": "Day 2",
+      "sort_order": 1
+    }
+  ],
+  "events": [
+    {
+      "id": "aug_07__2026_ccs1",
+      "day_id": "aug_07__2026",
+      "time_start": "2:00 PM",
+      "time_end": "4:30 PM",
+      "title": "Paper Session: CCS1",
+      "event_type": "session",
+      "location": "Block 1 Panel Room",
+      "session_chair": "Dr Pooja Agarwal, PES University Bangalore, Dr. Sujatha  A K",
+      "invited_speakers": "",
+      "sort_order": 1
+    },
+    {
+      "id": "aug_07__2026_ccs2",
+      "day_id": "aug_07__2026",
+      "time_start": "2:00 PM",
+      "time_end": "4:30 PM",
+      "title": "Paper Session: CCS2",
+      "event_type": "session",
+      "location": "Block 2 Third Floor Seminar Hall",
+      "session_chair": "SMRITI SRIVASTAVA, RV College of Engineering Bangalore, Dr. Amos Bortiew, Dr. Manju, PES University Bangalore",
+      "invited_speakers": "",
+      "sort_order": 2
+    },
+    {
+      "id": "aug_07__2026_ccs3",
+      "day_id": "aug_07__2026",
+      "time_start": "2:00 PM",
+      "time_end": "4:30 PM",
+      "title": "Paper Session: CCS3",
+      "event_type": "session",
+      "location": "Block 2 Third Floor Lab 242",
+      "session_chair": "Dr. R RAJKUMAR, Global Academy of Technology, Bengaluru, India, Dr. Mausumi  Goswami",
+      "invited_speakers": "",
+      "sort_order": 3
+    },
+    {
+      "id": "aug_07__2026_ina1",
+      "day_id": "aug_07__2026",
+      "time_start": "2:00 PM",
+      "time_end": "4:30 PM",
+      "title": "Paper Session: InA1",
+      "event_type": "session",
+      "location": "Block 2 Fourth Floor Seminar Hall",
+      "session_chair": "Dr. Shaleen Bhatnagar, Manipal Institute of Technology, Bengaluru, Dr. Aruna S K",
+      "invited_speakers": "",
+      "sort_order": 4
+    },
+    {
+      "id": "aug_07__2026_ina2",
+      "day_id": "aug_07__2026",
+      "time_start": "2:00 PM",
+      "time_end": "4:30 PM",
+      "title": "Paper Session: InA2",
+      "event_type": "session",
+      "location": "Block 2 Ground Floor Conference Hall",
+      "session_chair": "Dr. Venugopal.N, PES University Bangalore, Dr. Jyothi Mandala",
+      "invited_speakers": "",
+      "sort_order": 5
+    },
+    {
+      "id": "aug_07__2026_ins1",
+      "day_id": "aug_07__2026",
+      "time_start": "2:00 PM",
+      "time_end": "4:30 PM",
+      "title": "Paper Session: InS1",
+      "event_type": "session",
+      "location": "Block 5 Third Floor CDI Conference Hall",
+      "session_chair": "Dr. JYOTI SHETTY, RV COLLEGE OF ENGINEERING Bangalore, Dr. Rathi Devi T",
+      "invited_speakers": "",
+      "sort_order": 6
+    },
+    {
+      "id": "aug_07__2026_ins2",
+      "day_id": "aug_07__2026",
+      "time_start": "2:00 PM",
+      "time_end": "4:30 PM",
+      "title": "Paper Session: InS2",
+      "event_type": "session",
+      "location": "Block 5 Third Floor Conference Room (Opp Lift)",
+      "session_chair": "Dr. Prapulla S B, R V College of Engineering, Dr. Jayapandian N",
+      "invited_speakers": "",
+      "sort_order": 7
+    },
+    {
+      "id": "aug_07__2026_ccs4",
+      "day_id": "aug_07__2026",
+      "time_start": "6:30 PM",
+      "time_end": "8:30 PM",
+      "title": "Paper Session: CCS4",
+      "event_type": "session",
+      "location": "Block 1 Panel Room",
+      "session_chair": "Dr. Harish Sharma, Rajesh Balaji",
+      "invited_speakers": "Raji Reddy, Ranjith Singhu Ganapathy, Aneri Shah",
+      "sort_order": 8
+    },
+    {
+      "id": "aug_08__2026_ccs4",
+      "day_id": "aug_08__2026",
+      "time_start": "9:00AM",
+      "time_end": "11:00AM",
+      "title": "Paper Session: CCS4",
+      "event_type": "session",
+      "location": "Block 1 Conference Room",
+      "session_chair": "",
+      "invited_speakers": "",
+      "sort_order": 9
+    },
+    {
+      "id": "aug_07__2026_ina3",
+      "day_id": "aug_07__2026",
+      "time_start": "6:30 PM",
+      "time_end": "8:30 PM",
+      "title": "Paper Session: InA3",
+      "event_type": "session",
+      "location": "Block 2 Third Floor Lab 242",
+      "session_chair": "Dr. Mukesh Saraswat, Dr. Manjunath Ramanna Lamani, Moodlakatte Institute of Technology, Kundapura, India",
+      "invited_speakers": "Paras Patel, Niraj Shrikhande, Spandan Brahmbhatt",
+      "sort_order": 10
+    },
+    {
+      "id": "aug_07__2026_ina4",
+      "day_id": "aug_07__2026",
+      "time_start": "6:30 PM",
+      "time_end": "8:30 PM",
+      "title": "Paper Session: InA4",
+      "event_type": "session",
+      "location": "Block 2 Third Floor Seminar Hall",
+      "session_chair": "Dr. P S Rana, Ravindra Rajasekhar Kavuru",
+      "invited_speakers": "Deep Patel, Sidharth Gopakumar, Krishna Ravichandran",
+      "sort_order": 11
+    },
+    {
+      "id": "aug_08__2026_ina5",
+      "day_id": "aug_08__2026",
+      "time_start": "9:00AM",
+      "time_end": "11:00AM",
+      "title": "Paper Session: InA5",
+      "event_type": "session",
+      "location": "Block 2 Third Floor Seminar Hall",
+      "session_chair": "",
+      "invited_speakers": "",
+      "sort_order": 12
+    },
+    {
+      "id": "aug_07__2026_ida1",
+      "day_id": "aug_07__2026",
+      "time_start": "6:30 PM",
+      "time_end": "8:30 PM",
+      "title": "Paper Session: IDA1",
+      "event_type": "session",
+      "location": "Block 2 Fourth Floor Seminar Hall",
+      "session_chair": "Dr. Ambily Balaram, Dr. Deepak Panwar, Manipal University Jaipur",
+      "invited_speakers": "Rajesh Balaji, Ravindra Rajasekhar Kavuru, Sunil Netra",
+      "sort_order": 13
+    },
+    {
+      "id": "aug_07__2026_ins3",
+      "day_id": "aug_07__2026",
+      "time_start": "6:30 PM",
+      "time_end": "8:30 PM",
+      "title": "Paper Session: InS3",
+      "event_type": "session",
+      "location": "Block 5 Third Floor Conference Room (Opp Lift)",
+      "session_chair": "Dr. Amos Bortiew, Krishna Ravichandran",
+      "invited_speakers": "Pareshkumar Gandhi, Rahul Prathikantam",
+      "sort_order": 14
+    },
+    {
+      "id": "aug_08__2026_ccs7",
+      "day_id": "aug_08__2026",
+      "time_start": "2:00PM",
+      "time_end": "4:00PM",
+      "title": "Paper Session: CCS7",
+      "event_type": "session",
+      "location": "Block 1 Panel Room",
+      "session_chair": "Dr. Ramakrishna Hegde, RV University, Mysuru, India, Dr. Sincy John",
+      "invited_speakers": "",
+      "sort_order": 15
+    },
+    {
+      "id": "aug_08__2026_ina7",
+      "day_id": "aug_08__2026",
+      "time_start": "2:00PM",
+      "time_end": "4:00PM",
+      "title": "Paper Session: InA7",
+      "event_type": "session",
+      "location": "Block 1 Conference Room",
+      "session_chair": "Dr Samiksha Shukla, Professor & Dean, Computer Science Engineering, Global Academy of Technology, Bengaluru, Dr. Sujatha  A K",
+      "invited_speakers": "",
+      "sort_order": 16
+    },
+    {
+      "id": "aug_08__2026_ida5",
+      "day_id": "aug_08__2026",
+      "time_start": "2:00PM",
+      "time_end": "4:00PM",
+      "title": "Paper Session: IDA5",
+      "event_type": "session",
+      "location": "Block 2 Third Floor Seminar Hall",
+      "session_chair": "Dr. Alok Ranjan, Senior Expert and Research Architect, Bosch, Bengaluru, Dr. Mausumi  Goswami, Dr. Aruna S K",
+      "invited_speakers": "",
+      "sort_order": 17
+    },
+    {
+      "id": "aug_08__2026_ida6",
+      "day_id": "aug_08__2026",
+      "time_start": "2:00PM",
+      "time_end": "4:00PM",
+      "title": "Paper Session: IDA6",
+      "event_type": "session",
+      "location": "Block 2 Fourth Floor Seminar Hall",
+      "session_chair": "Dilip Kumar Dalei, Scientist, Centre for Artificial Intelligence and Robotics (CAIR), DRDO, Bengaluru, Dr. Alpha Vijayan, Dr. Ambily Balaram",
+      "invited_speakers": "",
+      "sort_order": 18
+    },
+    {
+      "id": "aug_08__2026_ida7",
+      "day_id": "aug_08__2026",
+      "time_start": "2:00PM",
+      "time_end": "4:00PM",
+      "title": "Paper Session: IDA7",
+      "event_type": "session",
+      "location": "Block 2 Ground Floor Conference Hall",
+      "session_chair": "Dr. Rohit Verma, Research Scientist Intel Labs, Bengaluru, Dr. Jyothi Mandala, Prof..  Athulya S",
+      "invited_speakers": "",
+      "sort_order": 19
+    },
+    {
+      "id": "aug_08__2026_ins5",
+      "day_id": "aug_08__2026",
+      "time_start": "2:00PM",
+      "time_end": "4:00PM",
+      "title": "Paper Session: InS5",
+      "event_type": "session",
+      "location": "Block 5 Third Floor CDI Conference Hall",
+      "session_chair": "Dr. Smita Agrawal, Associate Professor, Dept. of Artificial Intelligence and Machine Learning, Rajarajeshwari College of Engineering, Dr. Rathi Devi T",
+      "invited_speakers": "",
+      "sort_order": 20
+    },
+    {
+      "id": "aug_08__2026_ins6",
+      "day_id": "aug_08__2026",
+      "time_start": "2:00PM",
+      "time_end": "4:00PM",
+      "title": "Paper Session: InS6",
+      "event_type": "session",
+      "location": "Block 5 Third Floor Conference Room (Opp Lift)",
+      "session_chair": "Kishan J, Advance Technical Leader, Gaurav Pathak, Cisco Bangalore, Dr. Jayapandian N",
+      "invited_speakers": "",
+      "sort_order": 21
+    },
+    {
+      "id": "aug_08__2026_ccs5",
+      "day_id": "aug_08__2026",
+      "time_start": "9:00AM",
+      "time_end": "11:00AM",
+      "title": "Paper Session: CCS5",
+      "event_type": "session",
+      "location": "Block 1 Panel Room",
+      "session_chair": "Dr Mithun B N, A P S College of Engineering, Bengaluru, Dr. Sujatha  A K",
+      "invited_speakers": "Dr. Euijoon Ahn, James Cook University, Australia",
+      "sort_order": 22
+    },
+    {
+      "id": "aug_08__2026_ccs6",
+      "day_id": "aug_08__2026",
+      "time_start": "9:00AM",
+      "time_end": "11:00AM",
+      "title": "Paper Session: CCS6",
+      "event_type": "session",
+      "location": "Block 1 Conference Room",
+      "session_chair": "Dr. Sudhamani M J, PES University, Bengaluru, Karnataka, India, Dr. Amos Bortiew",
+      "invited_speakers": "Dr. Jay Bagga and Dr. Adithya Kulkarni, Ball State University, Muncie, Indiana, USA",
+      "sort_order": 23
+    },
+    {
+      "id": "aug_08__2026_ina6",
+      "day_id": "aug_08__2026",
+      "time_start": "9:00AM",
+      "time_end": "11:00AM",
+      "title": "Paper Session: InA6",
+      "event_type": "session",
+      "location": "Block 2 Fourth Floor Seminar Hall",
+      "session_chair": "Dr. Gurudas V R, MIT Bengaluru, Dr. Praveen Kulkarni, Dayananda Sagar University Bangalore, Dr. Jayapandian N",
+      "invited_speakers": "Prof. Manuel Balderas Victoria, Associate Professor, UAG Campus Tabasco, Mexico",
+      "sort_order": 24
+    },
+    {
+      "id": "aug_08__2026_ida2",
+      "day_id": "aug_08__2026",
+      "time_start": "9:00AM",
+      "time_end": "11:00AM",
+      "title": "Paper Session: IDA2",
+      "event_type": "session",
+      "location": "Block 2 Ground Floor Conference Hall",
+      "session_chair": "Dr. P Naresh, Dayananda Sagar University Bangalore, Dr. Jyothi Mandala",
+      "invited_speakers": "Mtro. Manuel Enrique García Hernández, Lecturer, UAG Campus Tabasco, México",
+      "sort_order": 25
+    },
+    {
+      "id": "aug_08__2026_ida3",
+      "day_id": "aug_08__2026",
+      "time_start": "9:00AM",
+      "time_end": "11:00AM",
+      "title": "Paper Session: IDA3",
+      "event_type": "session",
+      "location": "Block 5 Third Floor CDI Conference Hall",
+      "session_chair": "Dr. Deepak N R, Atria Institute of Technology Bangalore, Dr. Rathi Devi T",
+      "invited_speakers": "Mtro. Sebastian Ledesma Alvarez, Director of Engineering Programs, UAG Campus Tabasco, Mexico",
+      "sort_order": 26
+    },
+    {
+      "id": "aug_08__2026_ida4",
+      "day_id": "aug_08__2026",
+      "time_start": "9:00AM",
+      "time_end": "11:00AM",
+      "title": "Paper Session: IDA4",
+      "event_type": "session",
+      "location": "Block 5 Third Floor Conference Room (Opp Lift)",
+      "session_chair": "Dr. K Saravanan, Kathir College of Engineering, Neelambur, Tamil Nadu, Dr. Aruna S K, Ambika J, Finastra Bangalore",
+      "invited_speakers": "Mtro. José Guadalupe Santiago Ovando, Associate Professor, UAG Campus Tabasco, Mexico",
+      "sort_order": 27
+    },
+    {
+      "id": "aug_08__2026_ins4",
+      "day_id": "aug_08__2026",
+      "time_start": "9:00AM",
+      "time_end": "11:00AM",
+      "title": "Paper Session: InS4",
+      "event_type": "session",
+      "location": "Block 1 Audi",
+      "session_chair": "Dr. SHEBA SELVAM, BNM INSTITUTE OF TECHNOLOGY BANGALORE, Dr. Manjunatha Swamy C",
+      "invited_speakers": "Mtro. Richard Pérez Izquierdo, Lecturer, UAG Campus Tabasco, Mexico",
+      "sort_order": 28
+    }
+  ],
+  "papers": [
+    {
+      "id": "paper_3187",
+      "event_id": "aug_07__2026_ccs1",
+      "paper_id": "3187",
+      "title": "BlindOS: Privacy-Preserving On-Device Mobile Automation via DP-LoRA",
+      "presenter": "Irene Joseph, Aswin Sidharthan, Jyothi Mandala and Sandeep J",
+      "sort_order": 1
+    },
+    {
+      "id": "paper_2486",
+      "event_id": "aug_07__2026_ccs1",
+      "paper_id": "2486",
+      "title": "Terminal Sliding Mode Control for Trajectory Tracking of Nonlinear Systems: Application to an Unmanned Surface Vehicle with Input Constraints",
+      "presenter": "Madhumita Pal, Sanjoy Mondal, Amal Barman, Debabrata Bhattacharya, Nirban Kumar Saha and Santosh Sonar",
+      "sort_order": 2
+    },
+    {
+      "id": "paper_3250",
+      "event_id": "aug_07__2026_ccs1",
+      "paper_id": "3250",
+      "title": "A Novel VSS Horse Herd Optimization-Based IC Controller for Tracking the MPP Position of the PV with Boost DC Converter",
+      "presenter": "Rayini Nagarani, CH Hussaian Basha and Md Mujahid Irfan",
+      "sort_order": 3
+    },
+    {
+      "id": "paper_3258",
+      "event_id": "aug_07__2026_ccs1",
+      "paper_id": "3258",
+      "title": "Energy-Efficient Hybrid VLC/IR Uplink for 6G IoT using Sectorized Active Transmitter Selection",
+      "presenter": "Abel Binu Mathew, Jossy George and Bosco Paul Alapatt",
+      "sort_order": 4
+    },
+    {
+      "id": "paper_3109",
+      "event_id": "aug_07__2026_ccs1",
+      "paper_id": "3109",
+      "title": "Design and Implementation of a Secure, Scalable Smart Campus Network Using VLANs, OSPF, and Dual-Layered Security",
+      "presenter": "Thanmai, Sambit Manna, Namrata Chacko and Sahana Roshan",
+      "sort_order": 5
+    },
+    {
+      "id": "paper_1555",
+      "event_id": "aug_07__2026_ccs2",
+      "paper_id": "1555",
+      "title": "Dynamic Scheduling of Traffic Signal in Real-Time Metro Cities Using Edge-AI",
+      "presenter": "Syed Thouheed Ahmed, L Sai Pavan Preetham, Rahul Kumar Dutta, Kore Ranga Akshaya and Harini Vattikuti",
+      "sort_order": 6
+    },
+    {
+      "id": "paper_3215",
+      "event_id": "aug_07__2026_ccs2",
+      "paper_id": "3215",
+      "title": "Decision-Driven Cross-Cloud Disaster Recovery with Fail-Safe Restoration for Object Storage",
+      "presenter": "R Keerthana Prasad, N Sukhitha Bhushan and Aparna R",
+      "sort_order": 7
+    },
+    {
+      "id": "paper_1296",
+      "event_id": "aug_07__2026_ccs2",
+      "paper_id": "1296",
+      "title": "Intelligent Anomaly Detection in Ultraviolet Wireless Sensor Networks using Multi-Task Learning Autoencoders",
+      "presenter": "Soham Khare, Kaushik Haran, Baskar P, Abhijit Bhowmick, Yogesh Kumar Choukiker and Sudhanshu Arya",
+      "sort_order": 8
+    },
+    {
+      "id": "paper_382",
+      "event_id": "aug_07__2026_ccs2",
+      "paper_id": "382",
+      "title": "Design and Simulation of a Dipole Antenna for FM Band Communication Using MATLAB",
+      "presenter": "R S Hoysala, Sarvagya Mrinal, D H Punith Kumar",
+      "sort_order": 9
+    },
+    {
+      "id": "paper_667",
+      "event_id": "aug_07__2026_ccs2",
+      "paper_id": "667",
+      "title": "A Gradient Ascent framework for Real-Time RIS phase Optimization for Mobile NOMA systems",
+      "presenter": "Sagnik Saha, Agnisom Mahanty, Baskar P, Abhijit Bhowmick, Yogesh Kumar Choukiker and Sudhanshu Arya",
+      "sort_order": 10
+    },
+    {
+      "id": "paper_696",
+      "event_id": "aug_07__2026_ccs3",
+      "paper_id": "696",
+      "title": "Hybrid Ambient Backscatter Communication for Energy-Efficient IoT Networks",
+      "presenter": "Ratheesh Yadav, P Baskar, Choukiker Yogesh Kumar, Bhowmick Abhijit, Arya Sudhanshu",
+      "sort_order": 11
+    },
+    {
+      "id": "paper_2316",
+      "event_id": "aug_07__2026_ccs3",
+      "paper_id": "2316",
+      "title": "MediscopeAI: A Multimodal Deep Learning Framework for Brain Tumor Classification, Stage Prediction, and Prognostic Analysis",
+      "presenter": "Sinchana S R",
+      "sort_order": 12
+    },
+    {
+      "id": "paper_2187",
+      "event_id": "aug_07__2026_ccs3",
+      "paper_id": "2187",
+      "title": "Intelligent Facial Recognition Framework for Enhancing Security in Modern Educational Institutions",
+      "presenter": "Rehana Begum",
+      "sort_order": 13
+    },
+    {
+      "id": "paper_3064",
+      "event_id": "aug_07__2026_ccs3",
+      "paper_id": "3064",
+      "title": "Lightweight Deep Learning-Based Intrusion Detection for CAN-Enabled Secure V2X Communication",
+      "presenter": "Harsh Kumar, Nishant Sharma, P K Gupta and Sudhanshu Saurabh",
+      "sort_order": 14
+    },
+    {
+      "id": "paper_1905",
+      "event_id": "aug_07__2026_ina1",
+      "paper_id": "1905",
+      "title": "Preprocessing and Mean Shift Clustering Approach for Lung Region Segmentation in CT Images",
+      "presenter": "Surekha Kamath, sonal D Patrina Almeida and Srilaxmi",
+      "sort_order": 15
+    },
+    {
+      "id": "paper_2758",
+      "event_id": "aug_07__2026_ina1",
+      "paper_id": "2758",
+      "title": "A Unified Transformer-Based Pipeline for Multi-Domain Threat Detection: Hate Speech and Phishing",
+      "presenter": "Arshia Shaik and BEEBI NASEEBA",
+      "sort_order": 16
+    },
+    {
+      "id": "paper_3251",
+      "event_id": "aug_07__2026_ina1",
+      "paper_id": "3251",
+      "title": "Application of Adaptive Neural Networks for Rapid Variation of the PV Irradiation Conditions",
+      "presenter": "Rayini Nagarani, CH Hussaian Basha and Md Mujahid Irfan",
+      "sort_order": 17
+    },
+    {
+      "id": "paper_3075",
+      "event_id": "aug_07__2026_ina1",
+      "paper_id": "3075",
+      "title": "Power Efficient 6T SRAM for Wearable Devices Using NMOS Footer Technique",
+      "presenter": "Sheetal Belaldavar, Sangamesh S N, Suhas G, Yashwanth H S and Shridhar S K",
+      "sort_order": 18
+    },
+    {
+      "id": "paper_3080",
+      "event_id": "aug_07__2026_ina1",
+      "paper_id": "3080",
+      "title": "Power-Efficient CMOS Schmitt Trigger Design with Power Gating for Biomedical Signal Processing",
+      "presenter": "Sheetal Belaldavar, Shahid M D, Nithin Kumar K S, Shreyas V and Rajath S G",
+      "sort_order": 19
+    },
+    {
+      "id": "paper_608",
+      "event_id": "aug_07__2026_ina2",
+      "paper_id": "608",
+      "title": "Energy-Efficient Data Processing on Edge Devices for Sustainable Monitoring in Smart Agriculture and Wildlife Environments",
+      "presenter": "Busetty Sai Swaroop, K K Baseer, Chandana G M, Chimbili Karthik and Cheruvupalli Shanmukha Teja",
+      "sort_order": 20
+    },
+    {
+      "id": "paper_3208",
+      "event_id": "aug_07__2026_ina2",
+      "paper_id": "3208",
+      "title": "Secure and Transparent Aid Distribution Framework using Blockchain and Zero Knowledge Proofs",
+      "presenter": "Thejeesh G, Srivarsha S and Anubha Pearline S",
+      "sort_order": 21
+    },
+    {
+      "id": "paper_2359",
+      "event_id": "aug_07__2026_ina2",
+      "paper_id": "2359",
+      "title": "Coverage Optimization in Wireless Sensor Networks using Q-Learning-Driven Multi-Strategic Differential Evolution Algorithm",
+      "presenter": "Deepak Sahu, Shubham Gupta, Balkrishna Dwivedi , Vinay Kumar and Kuldeep Gautam",
+      "sort_order": 22
+    },
+    {
+      "id": "paper_2966",
+      "event_id": "aug_07__2026_ina2",
+      "paper_id": "2966",
+      "title": "Privacy-Preserving Machine Learning in Smart Transportation Systems",
+      "presenter": "Rachel George and Dr. Umadevi Ramamoorthy",
+      "sort_order": 23
+    },
+    {
+      "id": "paper_3212",
+      "event_id": "aug_07__2026_ina2",
+      "paper_id": "3212",
+      "title": "MedTruthGuard: Clinically Governed Medical Hallucination Detection along with Human-in-the-Loop Framework",
+      "presenter": "Ankita Kundgir and Vaishali Kolhe",
+      "sort_order": 24
+    },
+    {
+      "id": "paper_2464",
+      "event_id": "aug_07__2026_ins1",
+      "paper_id": "2464",
+      "title": "Intelligent Smart Farming Framework for Climate Prediction and Crop Optimization Using Machine Learning",
+      "presenter": "Sanjay P, Yugapriyan K and Dr. Vijayalakshmi J",
+      "sort_order": 25
+    },
+    {
+      "id": "paper_3216",
+      "event_id": "aug_07__2026_ins1",
+      "paper_id": "3216",
+      "title": "SE-Attention Augmented EfficientNetB0 for Explainable Breast Cancer Histopathology Classification with Grad-CAM Visualization",
+      "presenter": "Sharron Teena J and Mariammal K",
+      "sort_order": 26
+    },
+    {
+      "id": "paper_1043",
+      "event_id": "aug_07__2026_ins1",
+      "paper_id": "1043",
+      "title": "AI-Based Multimodal Stress Detection System Using Speech and Text Data",
+      "presenter": "P SREE LAKSHMI, C Aparna, M L Nagaraju",
+      "sort_order": 27
+    },
+    {
+      "id": "paper_2127",
+      "event_id": "aug_07__2026_ins1",
+      "paper_id": "2127",
+      "title": "Tap2Speak: A Tap-Based Assistive Communication and Environmental Awareness System for Visually and Speech-Impaired Users",
+      "presenter": "Sahanaa V, Banupriya V, Maithili R G, Priyadharshini S and Subhiksha S",
+      "sort_order": 28
+    },
+    {
+      "id": "paper_2258",
+      "event_id": "aug_07__2026_ins1",
+      "paper_id": "2258",
+      "title": "Digital Dravyaguna: A Graph-Based Framework for Ayurvedic Herb Synergy Prediction",
+      "presenter": "Abhishek V Jadav, Abhishek Kashyap J and M R Anjan",
+      "sort_order": 29
+    },
+    {
+      "id": "paper_2393",
+      "event_id": "aug_07__2026_ins2",
+      "paper_id": "2393",
+      "title": "Time-Series EEG-Based Personalized Sentiment Tracking Framework for Assistive Emotional Understanding in Autism Spectrum Disorder",
+      "presenter": "Reya Josephine H, Amalroja F and Dr. Nisha A. S.",
+      "sort_order": 30
+    },
+    {
+      "id": "paper_2407",
+      "event_id": "aug_07__2026_ins2",
+      "paper_id": "2407",
+      "title": "K-PERMIT (Knowledge + Persona Enhanced Response Model with Integrated Template)",
+      "presenter": "Harihar Pai, Nilay Shekhar and Nagendra Devireddy",
+      "sort_order": 31
+    },
+    {
+      "id": "paper_3257",
+      "event_id": "aug_07__2026_ins2",
+      "paper_id": "3257",
+      "title": "A Synergistic CNN and LGBM Hybrid for Advanced Intracranial Hemorrhage Prognosis",
+      "presenter": "Karol Roy, Jossy George and Nimitha John",
+      "sort_order": 32
+    },
+    {
+      "id": "paper_2312",
+      "event_id": "aug_07__2026_ins2",
+      "paper_id": "2312",
+      "title": "An n8n-Orchestrated Agentic LLM Framework for Smart Agricultural Finance for Indian Smallholder Farmers",
+      "presenter": "Sailaja Thota, Deekshitha Prabhakar, Vinay Sai S, Bharathan M, GJ Gautham and Pranav Kandukuru",
+      "sort_order": 33
+    },
+    {
+      "id": "paper_2646",
+      "event_id": "aug_07__2026_ccs4",
+      "paper_id": "2646",
+      "title": "Maximizing Coverage with Minimal LEO Satellites: Optimization Strategies for Next-Generation Space Networks",
+      "presenter": "Kumar Choudhary and Hritesh Chowdhury",
+      "sort_order": 34
+    },
+    {
+      "id": "paper_2132",
+      "event_id": "aug_07__2026_ccs4",
+      "paper_id": "2132",
+      "title": "VR-Aware Polar-Domain Sparse Channel Estimation for XL-MIMO with Coarse-to-Fine Refinement",
+      "presenter": "Sukanya R. Kolate, Amit Anand, Juan Vidal Alegr´ıa and Prabhat Thakur",
+      "sort_order": 35
+    },
+    {
+      "id": "paper_3238",
+      "event_id": "aug_07__2026_ccs4",
+      "paper_id": "3238",
+      "title": "Priority-Aware Resource Scheduling and Adaptive Data Routing in Fog-Cloud Smart Agriculture Networks",
+      "presenter": "Sneha, Prabh Deep Singh, Vikas Tripathi and G.L. Saini",
+      "sort_order": 36
+    },
+    {
+      "id": "paper_3259",
+      "event_id": "aug_07__2026_ccs4",
+      "paper_id": "3259",
+      "title": "Distinguishing Human from Automated Agents Using Account Behavior and Interaction Features",
+      "presenter": "Spandan Brahmbhatt",
+      "sort_order": 37
+    },
+    {
+      "id": "paper_2178",
+      "event_id": "aug_08__2026_ccs4",
+      "paper_id": "2178",
+      "title": "A Unified PI–VSM Control Approach for Stable Operation of Hybrid Microgrids Under Severe Transients",
+      "presenter": "Shafna Meethale Purayil, Abdul Haleem M I, Nirmal Mukundan C M, Baburaj P and Jerin James",
+      "sort_order": 38
+    },
+    {
+      "id": "paper_3260",
+      "event_id": "aug_07__2026_ina3",
+      "paper_id": "3260",
+      "title": "The Connected Campus and Mission: Architecting the Unified Agentforce, MCP, and Data Cloud Triad for Higher Ed Scale",
+      "presenter": "Niraj Shrikhande",
+      "sort_order": 39
+    },
+    {
+      "id": "paper_2242",
+      "event_id": "aug_07__2026_ina3",
+      "paper_id": "2242",
+      "title": "Stress Classification from Multimodal Biometrics: Implications for Learning and Cognitive Well-being",
+      "presenter": "Surekha Yashodharan, Vijayanand KS and Shiju George",
+      "sort_order": 40
+    },
+    {
+      "id": "paper_2699",
+      "event_id": "aug_07__2026_ina3",
+      "paper_id": "2699",
+      "title": "A Hybrid Approach for Brain Tumor Detection Using VGG19 and ResNet50 with Feature Fusion and Imbalance Correction",
+      "presenter": "K VARUN KUMAR REDDY and B ESWARA REDDY",
+      "sort_order": 41
+    },
+    {
+      "id": "paper_3092",
+      "event_id": "aug_07__2026_ina3",
+      "paper_id": "3092",
+      "title": "STREAM-BSG: A Streaming Graph Architecture for Real-Time Fraud Detection in Block 2B Payment Networks",
+      "presenter": "Abhishek Sharma",
+      "sort_order": 42
+    },
+    {
+      "id": "paper_3242",
+      "event_id": "aug_07__2026_ina4",
+      "paper_id": "3242",
+      "title": "SCPSS: A Multi-Layered Secure Cyber-Physical Surveillance Architecture with Closed-Loop AI-Driven Threat Detection for Smart City Public Safety",
+      "presenter": "Kiran Deep Singh, Narinder Kaur, Prabh Deep Singh and G. L. Saini",
+      "sort_order": 43
+    },
+    {
+      "id": "paper_2647",
+      "event_id": "aug_07__2026_ina4",
+      "paper_id": "2647",
+      "title": "Comparative Analysis of Machine Learning and Deep Learning Models for Multi-Cancer Detection",
+      "presenter": "Kumar Choudhary, Hritesh Chowdhury, S Kirthika and Aurpan Majumder",
+      "sort_order": 44
+    },
+    {
+      "id": "paper_3173",
+      "event_id": "aug_07__2026_ina4",
+      "paper_id": "3173",
+      "title": "An ETL Pipeline with Rule-Based Validation, Imputation, and Monitoring for Large-Scale Transportation Data",
+      "presenter": "Brumancia Easpin, Syed Mujeebuddin, Annette Nellyet and Amala Jayanthi",
+      "sort_order": 45
+    },
+    {
+      "id": "paper_336",
+      "event_id": "aug_07__2026_ina4",
+      "paper_id": "336",
+      "title": "REACT: Region-Conditioned Adaptive Cascade with Uncertainty-AwareGating for Contextual Reasoning in E-Commerce Video Analytics",
+      "presenter": "Gaurang Munje, Nishank Soni and Neelakshi Soni",
+      "sort_order": 46
+    },
+    {
+      "id": "paper_2782",
+      "event_id": "aug_08__2026_ina5",
+      "paper_id": "2782",
+      "title": "Security-Aware Collaborative Edge Caching for IoT Networks Using Multi-Agent RL",
+      "presenter": "Abdul Tawab Akrami, Girija Attigeri and Manjula C Belavagi",
+      "sort_order": 47
+    },
+    {
+      "id": "paper_3044",
+      "event_id": "aug_07__2026_ida1",
+      "paper_id": "3044",
+      "title": "Enhancing Network Intrusion Detection with Ensemble Learning and Explainable AI",
+      "presenter": "Muhmmad Shaban, Tanishqpreet Kaur, Akshay Juneja, Parveen Siwach, Priyanka Kumari and Vijay Kumar",
+      "sort_order": 48
+    },
+    {
+      "id": "paper_3106",
+      "event_id": "aug_07__2026_ida1",
+      "paper_id": "3106",
+      "title": "Enhancing Microservice Observability Using Event-Driven Audit Pipelines and Intelligent Observability Analysis Under Stress Conditions",
+      "presenter": "Vinothkumar Arputharaj",
+      "sort_order": 49
+    },
+    {
+      "id": "paper_1048",
+      "event_id": "aug_07__2026_ida1",
+      "paper_id": "1048",
+      "title": "An Explainable Machine Learning Framework for Network Intrusion Detection and Cybersecurity",
+      "presenter": "Rachana Phuyal",
+      "sort_order": 50
+    },
+    {
+      "id": "paper_3245",
+      "event_id": "aug_07__2026_ida1",
+      "paper_id": "3245",
+      "title": "Multi-Objective Prompt Optimization of Small Language Models via DSPy-GEPA for Domain-Specific RAG",
+      "presenter": "Taha Elsayed, Mohamed Mostafa and Mohammed Asaad",
+      "sort_order": 51
+    },
+    {
+      "id": "paper_2031",
+      "event_id": "aug_07__2026_ins3",
+      "paper_id": "2031",
+      "title": "NeuroTrace: A Machine Learning Pipeline for Speech-Based Dementia Screening in Resource-Constrained Settings",
+      "presenter": "Sheron Xalxo and Chitra R",
+      "sort_order": 52
+    },
+    {
+      "id": "paper_2257",
+      "event_id": "aug_07__2026_ins3",
+      "paper_id": "2257",
+      "title": "Intelligent Adaptive Source Selection for Hybrid CDN–P2P Content Delivery Using Lightweight Machine Learning",
+      "presenter": "Sunny Kathait, Ruchira Rawat and Swati Devliyal",
+      "sort_order": 53
+    },
+    {
+      "id": "paper_3236",
+      "event_id": "aug_07__2026_ins3",
+      "paper_id": "3236",
+      "title": "Symplectic Shadow Forensics Network: Deepfake Detection via Shadow-Consistent Hamiltonian Dynamics",
+      "presenter": "Pawan Kumar, Tanupriya Choudhury, Gagan Deep Singh and Minakshi.",
+      "sort_order": 54
+    },
+    {
+      "id": "paper_3252",
+      "event_id": "aug_07__2026_ins3",
+      "paper_id": "3252",
+      "title": "Art Museum Feedback Sentiment Analysis: A Self-Trained Word2Vec, LightGBM and Chaotic Genetic Variable Neighbourhood Search Approach",
+      "presenter": "Samson O. Offorjindu, Miodrag Zivkovic, Marina Milovanovic, Milos Antonijevic, Komplen Lalovic, Srdjan Milic, Valentine Thomas, Marko Vukicevic and Nebojsa Bacanin",
+      "sort_order": 55
+    },
+    {
+      "id": "paper_3010",
+      "event_id": "aug_08__2026_ccs7",
+      "paper_id": "3010",
+      "title": "Miniaturized Hexagonal Novel Slot Antenna Using Substrate Integrated Waveguide Technology for 5 GHz Applications",
+      "presenter": "Ashutosh Srivastava and Venkateswaran K",
+      "sort_order": 56
+    },
+    {
+      "id": "paper_3078",
+      "event_id": "aug_08__2026_ccs7",
+      "paper_id": "3078",
+      "title": "Named Entity Recognition Based Resume Parsing and Summarization System",
+      "presenter": "Aman Kumar and Dr.C. Bagyalakshmi",
+      "sort_order": 57
+    },
+    {
+      "id": "paper_3161",
+      "event_id": "aug_08__2026_ccs7",
+      "paper_id": "3161",
+      "title": "Sparse Channel Estimation using Alternating Minimization in Fluid Antenna System",
+      "presenter": "Angana Malik, Dr. Aurpan Majumder, Dr. Anirban Bose and Dr. Subhankar Chatterjee",
+      "sort_order": 58
+    },
+    {
+      "id": "paper_3162",
+      "event_id": "aug_08__2026_ccs7",
+      "paper_id": "3162",
+      "title": "A Comprehensive Analysis of Attacks on Elliptic Curve Digital Signature Algorithm and their Countermeasures",
+      "presenter": "K Marina Singha and Chukhu Chunka",
+      "sort_order": 59
+    },
+    {
+      "id": "paper_1543",
+      "event_id": "aug_08__2026_ccs7",
+      "paper_id": "1543",
+      "title": "ATSF: Adaptive Temporal-Structural Fusion for Demand Forecasting",
+      "presenter": "S.Sandeep Kumar, Sree Shiva R, Viraj Vishwas Nandalikar and Dr. Leelambika K.V",
+      "sort_order": 60
+    },
+    {
+      "id": "paper_3050",
+      "event_id": "aug_08__2026_ina7",
+      "paper_id": "3050",
+      "title": "Noise-Robust ECG Arrhythmia Detection with Explainable 1D-CNN",
+      "presenter": "Mayank Sharma, Manushree G, Devipriya K and Megha Arakeri",
+      "sort_order": 61
+    },
+    {
+      "id": "paper_3256",
+      "event_id": "aug_08__2026_ina7",
+      "paper_id": "3256",
+      "title": "Two-Stage Deep Learning Framework for Improved License Plate Detection via Bounding Box Refinement",
+      "presenter": "Mrinalini Tapadia, Jossy George, Nimitha John and Mrinalini Tapadia",
+      "sort_order": 62
+    },
+    {
+      "id": "paper_3267",
+      "event_id": "aug_08__2026_ina7",
+      "paper_id": "3267",
+      "title": "An ML Based Colorimetric Sensor for Water Quality Sensing Applications",
+      "presenter": "D Mohanapriya, S.Vinoth Kumar and G. R. Kanagachidambaresan",
+      "sort_order": 63
+    },
+    {
+      "id": "paper_3268",
+      "event_id": "aug_08__2026_ina7",
+      "paper_id": "3268",
+      "title": "Cryptographically Verifiable AI-Driven Redaction: Zero-Knowledge Proofs for Auditable Privacy Preservation in Multi-Modal Sensitive Data Systems",
+      "presenter": "Amarendra Behera, Linesh Raja and C. S. Lamba",
+      "sort_order": 64
+    },
+    {
+      "id": "paper_3133",
+      "event_id": "aug_08__2026_ina7",
+      "paper_id": "3133",
+      "title": "IoT based low-cost smart energy meter for domestic consumption monitoring and forecasting using Deep Learning in Smart-grid Cyber Physical System",
+      "presenter": "Ayaskanta Mishra and Sruti Suvadarsini Singh",
+      "sort_order": 65
+    },
+    {
+      "id": "paper_1922",
+      "event_id": "aug_08__2026_ida5",
+      "paper_id": "1922",
+      "title": "A Framework for Data Poisoning Detection in Machine Learning",
+      "presenter": "D. K. Sreekantha, Aisha Banu",
+      "sort_order": 66
+    },
+    {
+      "id": "paper_2995",
+      "event_id": "aug_08__2026_ida5",
+      "paper_id": "2995",
+      "title": "Contract IQ : A Secure Contract Management System with AI-Based Analysis and Auditability",
+      "presenter": "SAHIL SUTHAR and TAMAL DEY",
+      "sort_order": 67
+    },
+    {
+      "id": "paper_3047",
+      "event_id": "aug_08__2026_ida5",
+      "paper_id": "3047",
+      "title": "HTA-Net: A Hybrid Transformer-Attention Network for Robust Multi-Modal Brain Tumor Segmentation",
+      "presenter": "Neha Verma, Vijay Kumar Bohat",
+      "sort_order": 68
+    },
+    {
+      "id": "paper_3195",
+      "event_id": "aug_08__2026_ida5",
+      "paper_id": "3195",
+      "title": "Evaluating Compiler Optimisation and Timing Behaviour of Lightweight Cryptography on RV32IMC IoT Platforms",
+      "presenter": "Mohana Sundari L, Akshara Siddharthan and Rogith R Johan",
+      "sort_order": 69
+    },
+    {
+      "id": "paper_3266",
+      "event_id": "aug_08__2026_ida5",
+      "paper_id": "3266",
+      "title": "Smart IoT based Indoor Air Quality Monitoring and Prediction in Multiple Indoor Environments",
+      "presenter": "Sivasankari. S . and Arun C. A",
+      "sort_order": 70
+    },
+    {
+      "id": "paper_76",
+      "event_id": "aug_08__2026_ida6",
+      "paper_id": "76",
+      "title": "Mamba State Space Model for Automated ADHD Detection from EEG Signals",
+      "presenter": "Sanjith V, Pradeep Kumar D and Sowmya BJ",
+      "sort_order": 71
+    },
+    {
+      "id": "paper_832",
+      "event_id": "aug_08__2026_ida6",
+      "paper_id": "832",
+      "title": "DriftGuard: An Autonomous Self-Adaptive Framework for Cyber Threat Detection in Anonymous Dark Web Networks",
+      "presenter": "Prema S , Dr. Thirumal",
+      "sort_order": 72
+    },
+    {
+      "id": "paper_863",
+      "event_id": "aug_08__2026_ida6",
+      "paper_id": "863",
+      "title": "Intervexa: A Context-Aware Multimodal AI Platform for Fair and Scalable Automated Candidate Assessment",
+      "presenter": "Aswin Asokan, Abin A C, Albin Binu Sebastian, Aaron Stephen Cherian and Jisha G",
+      "sort_order": 73
+    },
+    {
+      "id": "paper_3220",
+      "event_id": "aug_08__2026_ida6",
+      "paper_id": "3220",
+      "title": "Evaluating C-Flat++ as a Plug-in Optimizer for Elastic Weight Consolidation on Split-CIFAR-100",
+      "presenter": "Devang Choudhari, Shilpa Ankalaki and Shaleen Bhatnagar",
+      "sort_order": 74
+    },
+    {
+      "id": "paper_2539",
+      "event_id": "aug_08__2026_ida6",
+      "paper_id": "2539",
+      "title": "On Reconstruction Behaviour Under Heterogeneous Corruption Distributions in Remote Sensing Imagery",
+      "presenter": "Prabhjot Kaur, Aditya Bhateja and Bhumika Vij",
+      "sort_order": 75
+    },
+    {
+      "id": "paper_3061",
+      "event_id": "aug_08__2026_ida7",
+      "paper_id": "3061",
+      "title": "TOXISCOPE: Toxic Meme Classification Using Machine Learning",
+      "presenter": "Noell Michael, Fabeela Ali Rawther and Geevarghese Titus",
+      "sort_order": 76
+    },
+    {
+      "id": "paper_3135",
+      "event_id": "aug_08__2026_ida7",
+      "paper_id": "3135",
+      "title": "LLM-BASED AGENTIC CONTROLLERS FOR CARBON-AWARE CONTAINER ROUTING IN KUBERNETES",
+      "presenter": "Anjana A R K, Pavithiran P, Rafsal Rahim and Ajay Victor",
+      "sort_order": 77
+    },
+    {
+      "id": "paper_3213",
+      "event_id": "aug_08__2026_ida7",
+      "paper_id": "3213",
+      "title": "Heartbeat Sound Classification Using CNN with MFCC Features and Grad-CAM Interpretability",
+      "presenter": "Yash Inani, Aditya Tulsyan, Shaleen Bhatnagar and Shilpa Ankalaki",
+      "sort_order": 78
+    },
+    {
+      "id": "paper_2960",
+      "event_id": "aug_08__2026_ida7",
+      "paper_id": "2960",
+      "title": "NoiseFormer - Noise Diffused Symmetric Attention Transformer",
+      "presenter": "Phani Kumar Nyshadham and Jyothendra Varma Polisetty",
+      "sort_order": 79
+    },
+    {
+      "id": "paper_2487",
+      "event_id": "aug_08__2026_ida7",
+      "paper_id": "2487",
+      "title": "Python Code Snippet Generation from Natural Language Description using LSTM Model with Attention Mechanism",
+      "presenter": "Moble Jacob and Philip Samuel",
+      "sort_order": 80
+    },
+    {
+      "id": "paper_2428",
+      "event_id": "aug_08__2026_ins5",
+      "paper_id": "2428",
+      "title": "Intelligent Call Transition: An AI-Driven Framework for Autonomous Audio Route Switching and Contextual Application Launching",
+      "presenter": "Naveen Verma, Dheerendra Kumar, Himanshu Sharma",
+      "sort_order": 81
+    },
+    {
+      "id": "paper_2168",
+      "event_id": "aug_08__2026_ins5",
+      "paper_id": "2168",
+      "title": "PII Guard: Real-Time Multimodal Privacy Protection for Screenshots",
+      "presenter": "Sathish Devuni, Srilakshmi V, Nadendla Lokesh and Karthik Kolla",
+      "sort_order": 82
+    },
+    {
+      "id": "paper_2146",
+      "event_id": "aug_08__2026_ins5",
+      "paper_id": "2146",
+      "title": "AI-Enabled Augmented Reality Learning Assistant for Interactive and Personalized Education",
+      "presenter": "Md. Tauseef, Ankitha Y Nayak, S Rowan Reynold, Devika Sreeraj, Ajay Krishna and Sunil D M",
+      "sort_order": 83
+    },
+    {
+      "id": "paper_1170",
+      "event_id": "aug_08__2026_ins5",
+      "paper_id": "1170",
+      "title": "Design and analysis robust authentication frameworks for DICOM medical images",
+      "presenter": "Anisha sheikh and Amit Kumar Dewangan",
+      "sort_order": 84
+    },
+    {
+      "id": "paper_2396",
+      "event_id": "aug_08__2026_ins5",
+      "paper_id": "2396",
+      "title": "BillBuster: An AI-Powered Multi-Agent Framework for Intelligent Electricity Consumption Analysis Using LangGraph and RAG",
+      "presenter": "M. Anuradha, Hrushi kesava reddy Pothireddy, Nithin Gajula, Upendar Para, Srinivas Lingampelli and Narendra Vardhan Vadnala",
+      "sort_order": 85
+    },
+    {
+      "id": "paper_2437",
+      "event_id": "aug_08__2026_ins6",
+      "paper_id": "2437",
+      "title": "RadarVision: Intelligent Real-Time Radar Signal Analysis for Surveillance Applications",
+      "presenter": "Dinesh Babu H, Jayachandra Harsith J and Kavitha G",
+      "sort_order": 86
+    },
+    {
+      "id": "paper_2453",
+      "event_id": "aug_08__2026_ins6",
+      "paper_id": "2453",
+      "title": "Loco-Net: A LiDAR-to-Image Conversion Based Neural Model for Railway Track Hazard Detection",
+      "presenter": "SUMUKH L, T BHANU PRABHAS, K SAIRAM, LEENA K S and SHYLAJA S S",
+      "sort_order": 87
+    },
+    {
+      "id": "paper_3241",
+      "event_id": "aug_08__2026_ins6",
+      "paper_id": "3241",
+      "title": "A Novel Automatic Grading and Feedback System for Assignments using NLP",
+      "presenter": "Marie Kesy Alizé Moutou, Roopesh Kevin Sungkur and Loovesh Sharma Ramwodin",
+      "sort_order": 88
+    },
+    {
+      "id": "paper_3254",
+      "event_id": "aug_08__2026_ins6",
+      "paper_id": "3254",
+      "title": "Edge-Optimized Multilingual Audio Deepfake Detection and Robustness Under Cross-Platform Compression",
+      "presenter": "Madhumitha Kodeboina, Mantradi Sameeksha Rao, Pravallika Kodeboina, Sneha V and Jyoti Shetty",
+      "sort_order": 89
+    },
+    {
+      "id": "paper_3271",
+      "event_id": "aug_08__2026_ins6",
+      "paper_id": "3271",
+      "title": "TRUE VISION : An Intelligent Computer Vision Framework for Trustworthy Utility Readings",
+      "presenter": "Prabhpreet Singh, Gurshaan Bajwa, Ashpreet Singh, Harsaihaj Singh, Prashant Singh Rana",
+      "sort_order": 90
+    },
+    {
+      "id": "paper_2270",
+      "event_id": "aug_08__2026_ccs5",
+      "paper_id": "2270",
+      "title": "GSEL: A Closed-Loop AI Framework for Datacenter Qualification via Test Optimization and Bug Efficacy",
+      "presenter": "Shilpi Gupta, Chockalingam Arumugam, George Kingsley Deva Arul David Asirvatharaj and Mihir Gagpalliwar",
+      "sort_order": 91
+    },
+    {
+      "id": "paper_2344",
+      "event_id": "aug_08__2026_ccs5",
+      "paper_id": "2344",
+      "title": "VeloGuard: Adaptive AI-Driven API Rate Limiting Using Bidirectional LSTM with Temporal Attention",
+      "presenter": "Yuvaraj Natarajan and Hardik Ahuja",
+      "sort_order": 92
+    },
+    {
+      "id": "paper_2373",
+      "event_id": "aug_08__2026_ccs5",
+      "paper_id": "2373",
+      "title": "ESP32 based Remote Controlled Robotic Rover for Hazardous Environment Monitoring and Sample Collection",
+      "presenter": "Martin Babu T R, Vijayalakshmi C, Awasth A B and Harisepranesh S",
+      "sort_order": 93
+    },
+    {
+      "id": "paper_2452",
+      "event_id": "aug_08__2026_ccs5",
+      "paper_id": "2452",
+      "title": "Design and Implementation of a Multi-Layer Biometric Access Control System with Integrated Intrusion Detection and Tamper-Aware Security for Real-World Critical Applications",
+      "presenter": "Anuchinmayee C, Priyadarshini K Desai and K J Shreesha",
+      "sort_order": 94
+    },
+    {
+      "id": "paper_2670",
+      "event_id": "aug_08__2026_ccs5",
+      "paper_id": "2670",
+      "title": "Deep Joint Source-Channel Coding for Robust Image Transmission Over Multipath OFDM Channels",
+      "presenter": "BHINIT ROUT and M Monica Subashini",
+      "sort_order": 95
+    },
+    {
+      "id": "paper_2743",
+      "event_id": "aug_08__2026_ccs6",
+      "paper_id": "2743",
+      "title": "Stability-Aware Inter-Satellite Link Routing in LEO Constellations Using Proximal Policy Optimization",
+      "presenter": "Aishwarya Nalla and Naresh Kar",
+      "sort_order": 96
+    },
+    {
+      "id": "paper_3125",
+      "event_id": "aug_08__2026_ccs6",
+      "paper_id": "3125",
+      "title": "Near-Field Passive Authentication using Spatial Signatures in XL-MIMO Systems",
+      "presenter": "A. Kasi Vishwanathan, R.P. Nirmal Kumar, R.P. Niranjan Kumar and M. Sakthivel",
+      "sort_order": 97
+    },
+    {
+      "id": "paper_3168",
+      "event_id": "aug_08__2026_ccs6",
+      "paper_id": "3168",
+      "title": "Leakage-Aware CMOS Oscillator for IoT and Portable Applications",
+      "presenter": "Sheetal Belaldavar, T S Sai Likhith, Preethi M D and Sakshi N Patted",
+      "sort_order": 98
+    },
+    {
+      "id": "paper_3219",
+      "event_id": "aug_08__2026_ccs6",
+      "paper_id": "3219",
+      "title": "A Secure and Intelligent Feature-as-a-Service (FaaS) Framework for Cost and Latency Optimization in Cloud Computing",
+      "presenter": "Maheshwari Dasar, Nandika S S, Supreeth S, Chetana R Jakate, Prakash G L and Veerasagar S S",
+      "sort_order": 99
+    },
+    {
+      "id": "paper_931",
+      "event_id": "aug_08__2026_ina5",
+      "paper_id": "931",
+      "title": "A patient centric decentralized multimedia ehr framework for secure data sharing and governance",
+      "presenter": "Shruthi K and Raman Nag N",
+      "sort_order": 100
+    },
+    {
+      "id": "paper_1850",
+      "event_id": "aug_08__2026_ina5",
+      "paper_id": "1850",
+      "title": "AutoDine: A Low-Cost IoT-Based Smart Restaurant Automation Platform with Autonomous Waiter Robot",
+      "presenter": "Pusuluri Jathin Chowdary, Kailasam Shanmugam, Ramkiran B, Yuvasree Thupalli and Chukka Sri Vishnu Siddarth",
+      "sort_order": 101
+    },
+    {
+      "id": "paper_2937",
+      "event_id": "aug_08__2026_ina5",
+      "paper_id": "2937",
+      "title": "GAN-based Adversarial Attacks on SLM- based Agentic Intrusion Detection Systems",
+      "presenter": "Rakshitha and Sannidhan M S",
+      "sort_order": 102
+    },
+    {
+      "id": "paper_3046",
+      "event_id": "aug_08__2026_ina5",
+      "paper_id": "3046",
+      "title": "A Robust Deep Learning Framework for On-Tree Coffee Maturity Detection under Illumination and Occlusion Variability",
+      "presenter": "Lavanya Achhanala, Megha Arakeri and Ambika B J",
+      "sort_order": 103
+    },
+    {
+      "id": "paper_2505",
+      "event_id": "aug_08__2026_ina6",
+      "paper_id": "2505",
+      "title": "A Novel Approach on AI-Based Decision Support System for Predicting Mental Health Disorders in Patients with Non-Communicable Diseases",
+      "presenter": "Ashwini Rayannavar and Kiran P",
+      "sort_order": 104
+    },
+    {
+      "id": "paper_978",
+      "event_id": "aug_08__2026_ina6",
+      "paper_id": "978",
+      "title": "Real-Time Threat Detection and Human-in-the-Loop Response for Low-Cost SOC Automation",
+      "presenter": "Anusha Sriram, Spurthi Raghothama, Swetha P and Prasad B Honnavalli",
+      "sort_order": 105
+    },
+    {
+      "id": "paper_335",
+      "event_id": "aug_08__2026_ina6",
+      "paper_id": "335",
+      "title": "Resource-Aware Federated Learning with Spark-on-YARN Aggregation",
+      "presenter": "Anandha Kumar J, Jothisai M, Nitish P, Pandidurai B and Malin Bruntha P",
+      "sort_order": 106
+    },
+    {
+      "id": "paper_256",
+      "event_id": "aug_08__2026_ina6",
+      "paper_id": "256",
+      "title": "Deep Learning-Based Multi-Crop Disease Detection Using MobileNetV2",
+      "presenter": "Darshan M, Shruti Jalapur and Ganesh Kumar",
+      "sort_order": 107
+    },
+    {
+      "id": "paper_1457",
+      "event_id": "aug_08__2026_ina6",
+      "paper_id": "1457",
+      "title": "Evaluating Deep Sequential Approaches for Real-Time Air Quality Monitoring",
+      "presenter": "Kapil Ratan, Akshata Gadagin",
+      "sort_order": 108
+    },
+    {
+      "id": "paper_1766",
+      "event_id": "aug_08__2026_ida2",
+      "paper_id": "1766",
+      "title": "Detection of Vegetation Stress in Riparian Zones using Satellite Imagery",
+      "presenter": "Bhakti Takale, Pratham Kallayyanavar, Naman Karadennavar, Satish Chikkamath and Suneeta V Budihal",
+      "sort_order": 109
+    },
+    {
+      "id": "paper_108",
+      "event_id": "aug_08__2026_ida2",
+      "paper_id": "108",
+      "title": "Adaptive Phishing Defense: An Ensemble and Feedback-Driven Learning Framework for Multi-Variant Email Attack Detection",
+      "presenter": "Mohit Pal and Archana A",
+      "sort_order": 110
+    },
+    {
+      "id": "paper_1646",
+      "event_id": "aug_08__2026_ida2",
+      "paper_id": "1646",
+      "title": "SenseCalm: A Companion for Monitoring Stress and Restoring Calm",
+      "presenter": "Sunitha R, Pavithra H C, Abhilasha P Kumar, Dhone Vaishnavi, Disha V Kumar, Lakshmi G C",
+      "sort_order": 111
+    },
+    {
+      "id": "paper_1728",
+      "event_id": "aug_08__2026_ida2",
+      "paper_id": "1728",
+      "title": "An Assistive Multimodal System for Real-Time Food Freshness and Expiry Date Detection for Visually Impaired Users Using YOLOv8 and OCR",
+      "presenter": "Ajith K V, Fakruddin, Kavitha N",
+      "sort_order": 112
+    },
+    {
+      "id": "paper_1781",
+      "event_id": "aug_08__2026_ida2",
+      "paper_id": "1781",
+      "title": "A Hybrid AI-Driven Multi-Agent Framework for Proactive Cyber Defense",
+      "presenter": "SREE LAKSHMI P, Alsaa Fatima, Hemagirish S G",
+      "sort_order": 113
+    },
+    {
+      "id": "paper_1917",
+      "event_id": "aug_08__2026_ida3",
+      "paper_id": "1917",
+      "title": "Robust Federated learning for Cervical Cancer Classification in Heterogeneous Environments",
+      "presenter": "Gayathri A and M DEEPA",
+      "sort_order": 114
+    },
+    {
+      "id": "paper_2369",
+      "event_id": "aug_08__2026_ida3",
+      "paper_id": "2369",
+      "title": "Decoding Public Artisan Welfare: A Validated Multilingual NLP Framework for Sentiment and Topic Analysis of Kerala Traditional Craft Communities",
+      "presenter": "Antony Davis, Md Shaik Amzad Basha, Lakshmy Priya K",
+      "sort_order": 115
+    },
+    {
+      "id": "paper_2568",
+      "event_id": "aug_08__2026_ida3",
+      "paper_id": "2568",
+      "title": "ResidualBoost: Explainable Cardiovascular Risk Quantification Using a Dual-Stage Ensemble Regression Pipeline",
+      "presenter": "Dipesh Kumar M, Saravanan Parthasarathy and Vaishnavi Jayaraman",
+      "sort_order": 116
+    },
+    {
+      "id": "paper_2569",
+      "event_id": "aug_08__2026_ida3",
+      "paper_id": "2569",
+      "title": "Automated Badminton Match Analysis via Unified Detection, Tracking, and Event Understanding",
+      "presenter": "Varagani Pavan Krishna , Dr. K. Gunasekaran, Thanniru Sudarshan and Rajulapati Dhanush",
+      "sort_order": 117
+    },
+    {
+      "id": "paper_2605",
+      "event_id": "aug_08__2026_ida3",
+      "paper_id": "2605",
+      "title": "Real-Time Fall and Fatigue Detection System for Elderly People",
+      "presenter": "Misba Touheed and Santosh Katti",
+      "sort_order": 118
+    },
+    {
+      "id": "paper_3122",
+      "event_id": "aug_08__2026_ida4",
+      "paper_id": "3122",
+      "title": "An Intelligent Optimization Model for Strategic Oil Reserve Response During Strait of Hormuz Disruption",
+      "presenter": "Eshan Pereira, Shashank B S, Shankar Narayan S, Kanishk Upadhyay and Arun K",
+      "sort_order": 119
+    },
+    {
+      "id": "paper_3269",
+      "event_id": "aug_08__2026_ida4",
+      "paper_id": "3269",
+      "title": "Ethical AI-Enabled Sensitive Data Classification: Decomposing Fairness and Explainability Costs in Multi-Model Ensemble Systems",
+      "presenter": "Amarendra Behera, Linesh Raja and C. S. Lamba",
+      "sort_order": 120
+    },
+    {
+      "id": "paper_2803",
+      "event_id": "aug_08__2026_ida4",
+      "paper_id": "2803",
+      "title": "Automated IV Bag Fluid Level Monitoring and Alert System for Enhanced Patient Safety",
+      "presenter": "Santhosh R, Mathan N, Sherin Joannah, Subiksha D and Ravi T",
+      "sort_order": 121
+    },
+    {
+      "id": "paper_3199",
+      "event_id": "aug_08__2026_ida4",
+      "paper_id": "3199",
+      "title": "Comprehensive Brain CT Analysis System: Automated Detection and Classification of Intracranial Hemorrhages with Integrated Clinical Risk Assessment",
+      "presenter": "Aruna K S and Dr. Shamshekhar S Patil",
+      "sort_order": 122
+    },
+    {
+      "id": "paper_1204",
+      "event_id": "aug_08__2026_ida4",
+      "paper_id": "1204",
+      "title": "A Hybrid AI Framework for Real-Time Intrusion Detection in Web Applications Using Deep Learning, Explainable AI, and Blockchain Audit Logging",
+      "presenter": "Avinash Kachchawa, Yogesh Joshi and SHILPA SHARMA",
+      "sort_order": 123
+    },
+    {
+      "id": "paper_1371",
+      "event_id": "aug_08__2026_ins4",
+      "paper_id": "1371",
+      "title": "Hybrid Semantic–Structural Scoring Mechanism for Lightweight Internship Recommendation Systems",
+      "presenter": "Mahindra L Shetty, A R Likith, Prajwal P and Alamelu Mangai J",
+      "sort_order": 124
+    },
+    {
+      "id": "paper_2545",
+      "event_id": "aug_08__2026_ins4",
+      "paper_id": "2545",
+      "title": "Towards Generalizable Deepfake Image Detection with Vision Transformers",
+      "presenter": "Srinanda V Kaliki, M Manvith Prabhu, Hemanth Kumar Mogilipalem, Abhinai S Jayavarapu, Vaibhav Santhosh, Aryan N Herur and Deepu Vijayasenan",
+      "sort_order": 125
+    },
+    {
+      "id": "paper_2554",
+      "event_id": "aug_08__2026_ins4",
+      "paper_id": "2554",
+      "title": "Detecting and Analyzing Social Media Bias using TF-IDF Features",
+      "presenter": "Prasanth Rao, Harsha Chigurupathi, Krish Hashia, Thriveni J, Deepa Shenoy and Venugopal K R",
+      "sort_order": 126
+    },
+    {
+      "id": "paper_3074",
+      "event_id": "aug_08__2026_ins4",
+      "paper_id": "3074",
+      "title": "A Unified Evaluation Framework for Multi-Agent and Interconnected AI Systems",
+      "presenter": "Sanchi Shukla and Sumit Goswami",
+      "sort_order": 127
+    },
+    {
+      "id": "paper_3240",
+      "event_id": "aug_08__2026_ins4",
+      "paper_id": "3240",
+      "title": "Generative AI in learning and educational settings - Multimodal Learning Experiences",
+      "presenter": "Peshal Singh Unmole, Roopesh Kevin Sungkur and Jorge Marx Gómez",
+      "sort_order": 128
+    }
+  ]
 }
