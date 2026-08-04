@@ -18,7 +18,6 @@ import {
   Database,
   Layers,
   ListOrdered,
-  Settings,
   Globe,
   TrendingUp,
   Building2,
@@ -75,7 +74,7 @@ const cmsItems = [
 
 export default function AdminDashboard() {
   const session = useContext(AdminSessionContext);
-  const [activeSection, setActiveSection] = useState<"overview" | "cms" | "settings">("overview");
+  const [activeSection, setActiveSection] = useState<"overview" | "cms">("overview");
   const [activeCmsTab, setActiveCmsTab] = useState("committee");
 
   const [upcomingDates, setUpcomingDates] = useState(0);
@@ -213,13 +212,7 @@ export default function AdminDashboard() {
             label="Content"
           />
 
-          {/* Settings */}
-          <SidebarButton
-            active={activeSection === "settings"}
-            onClick={() => setActiveSection("settings")}
-            icon={Settings}
-            label="Settings"
-          />
+
 
           {activeSection === "cms" && (
             <div className="mt-1 ml-3 pl-3 border-l border-border/60 space-y-0.5">
