@@ -103,8 +103,8 @@ export interface ScheduleEvent {
   title: string;
   event_type: "keynote" | "inauguration" | "valedictory" | "session" | "lunch" | "high_tea" | "break" | "other";
   location: string | null;
-  session_chair: string | null;
-  invited_speakers?: string | null;
+  session_chair: string[] | null;
+  invited_speakers?: string[] | null;
   sort_order: number;
 }
 

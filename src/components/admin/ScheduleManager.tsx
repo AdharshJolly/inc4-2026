@@ -41,6 +41,7 @@ import {
   ArrowDown,
   CalendarDays,
   AlertTriangle,
+  Mic,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { ActivityLogger } from "@/lib/activityLogger";
@@ -84,7 +85,8 @@ type EventFormData = {
   title: string;
   event_type: EventType;
   location: string;
-  session_chair: string;
+  session_chair: string[];
+  invited_speakers: string[];
 };
 
 type PaperFormData = {
@@ -98,7 +100,8 @@ const EMPTY_EVENT_FORM: EventFormData = {
   title: "",
   event_type: "session",
   location: "",
-  session_chair: "",
+  session_chair: [""],
+  invited_speakers: [""],
 };
 
 const EMPTY_PAPER_FORM: PaperFormData = {
@@ -230,7 +233,8 @@ export const ScheduleManager = () => {
       title: event.title,
       event_type: event.event_type,
       location: event.location || "",
-      session_chair: event.session_chair || "",
+      session_chair: event.session_chair && event.session_chair.length > 0 ? event.session_chair : [""],
+      invited_speakers: event.invited_speakers && event.invited_speakers.length > 0 ? event.invited_speakers : [""],
     });
     setEventDialogOpen(true);
   };
@@ -254,7 +258,8 @@ export const ScheduleManager = () => {
           title: eventForm.title.trim(),
           event_type: eventForm.event_type,
           location: eventForm.location.trim() || null,
-          session_chair: eventForm.event_type === "session" ? (eventForm.session_chair.trim() || null) : null,
+          session_chair: eventForm.event_type === "session" ? (eventForm.session_chair.map(c => c.trim()).filter(c => c) || null) : null,
+          invited_speakers: eventForm.event_type === "session" ? (eventForm.invited_speakers.map(s => s.trim()).filter(s => s) || null) : null,
         })
         .eq("id", editingEvent.id);
 
@@ -274,7 +279,8 @@ export const ScheduleManager = () => {
         title: eventForm.title.trim(),
         event_type: eventForm.event_type,
         location: eventForm.location.trim() || null,
-        session_chair: eventForm.event_type === "session" ? (eventForm.session_chair.trim() || null) : null,
+        session_chair: eventForm.event_type === "session" ? (eventForm.session_chair.map(c => c.trim()).filter(c => c) || null) : null,
+        invited_speakers: eventForm.event_type === "session" ? (eventForm.invited_speakers.map(s => s.trim()).filter(s => s) || null) : null,
         sort_order: nextOrder,
       });
 
@@ -570,10 +576,16 @@ export const ScheduleManager = () => {
                                   {event.location}
                                 </span>
                               )}
-                              {event.session_chair && (
-                                <span className="flex items-center gap-1">
-                                  <User className="w-3.5 h-3.5" />
-                                  Chair: {event.session_chair}
+                              {event.invited_speakers && event.invited_speakers.length > 0 && (
+                                <span className="flex items-start gap-1 max-w-[200px] truncate">
+                                  <Mic className="w-3.5 h-3.5 mt-0.5 shrink-0" />
+                                  Speaker(s): {event.invited_speakers.join(", ")}
+                                </span>
+                              )}
+                              {event.session_chair && event.session_chair.length > 0 && (
+                                <span className="flex items-start gap-1 max-w-[200px] truncate">
+                                  <User className="w-3.5 h-3.5 mt-0.5 shrink-0" />
+                                  Chair(s): {event.session_chair.join(", ")}
                                 </span>
                               )}
                             </div>
@@ -745,15 +757,87 @@ export const ScheduleManager = () => {
                 </div>
 
                 {eventForm.event_type === "session" && (
-                  <div className="space-y-2">
-                    <Label htmlFor="ev-chair">Session Chair</Label>
-                    <Input
-                      id="ev-chair"
-                      placeholder="e.g., Dr. Smith"
-                      value={eventForm.session_chair}
-                      onChange={(e) => setEventForm((p) => ({ ...p, session_chair: e.target.value }))}
-                    />
-                  </div>
+                  <>
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <Label>Invited Speaker(s)</Label>
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          className="h-6 px-2 text-xs"
+                          onClick={() => setEventForm(p => ({ ...p, invited_speakers: [...p.invited_speakers, ""] }))}
+                        >
+                          <Plus className="w-3 h-3 mr-1" /> Add
+                        </Button>
+                      </div>
+                      {eventForm.invited_speakers.map((speaker, idx) => (
+                        <div key={idx} className="flex items-center gap-2">
+                          <Input
+                            placeholder="e.g., Dr. Jane Doe"
+                            value={speaker}
+                            onChange={(e) => {
+                              const newSpeakers = [...eventForm.invited_speakers];
+                              newSpeakers[idx] = e.target.value;
+                              setEventForm(p => ({ ...p, invited_speakers: newSpeakers }));
+                            }}
+                          />
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="icon"
+                            className="h-9 w-9 text-red-500 hover:text-red-600 shrink-0"
+                            onClick={() => {
+                              const newSpeakers = eventForm.invited_speakers.filter((_, i) => i !== idx);
+                              setEventForm(p => ({ ...p, invited_speakers: newSpeakers.length ? newSpeakers : [""] }));
+                            }}
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <Label>Session Chair(s)</Label>
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          className="h-6 px-2 text-xs"
+                          onClick={() => setEventForm(p => ({ ...p, session_chair: [...p.session_chair, ""] }))}
+                        >
+                          <Plus className="w-3 h-3 mr-1" /> Add
+                        </Button>
+                      </div>
+                      {eventForm.session_chair.map((chair, idx) => (
+                        <div key={idx} className="flex items-center gap-2">
+                          <Input
+                            placeholder="e.g., Dr. John Smith"
+                            value={chair}
+                            onChange={(e) => {
+                              const newChairs = [...eventForm.session_chair];
+                              newChairs[idx] = e.target.value;
+                              setEventForm(p => ({ ...p, session_chair: newChairs }));
+                            }}
+                          />
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="icon"
+                            className="h-9 w-9 text-red-500 hover:text-red-600 shrink-0"
+                            onClick={() => {
+                              const newChairs = eventForm.session_chair.filter((_, i) => i !== idx);
+                              setEventForm(p => ({ ...p, session_chair: newChairs.length ? newChairs : [""] }));
+                            }}
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
+                        </div>
+                      ))}
+                    </div>
+                  </>
                 )}
               </div>
 

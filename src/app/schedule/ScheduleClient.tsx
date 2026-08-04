@@ -194,18 +194,18 @@ function EventCard({ event, papers, defaultExpanded = false }: { event: Schedule
           )}>
             <div className="overflow-hidden" onClick={(e) => e.stopPropagation()}>
               {/* Chairs & Speakers */}
-              {(event.session_chair || event.invited_speakers) && (
-                <div className="flex flex-col md:flex-row gap-4 md:gap-8 text-sm text-muted-foreground mb-4">
-                  {event.session_chair && (
-                    <span className="flex items-center gap-2">
-                      <div className="p-1 rounded bg-background/50 border border-border/50"><User className="w-3.5 h-3.5" /></div>
-                      <span><strong>Chair:</strong> {event.session_chair}</span>
-                    </span>
-                  )}
-                  {event.invited_speakers && (
+              {((event.session_chair && event.session_chair.length > 0) || (event.invited_speakers && event.invited_speakers.length > 0)) && (
+                <div className="flex flex-col gap-3 text-sm text-muted-foreground mb-4">
+                  {event.invited_speakers && event.invited_speakers.length > 0 && (
                     <span className="flex items-center gap-2">
                       <div className="p-1 rounded bg-background/50 border border-border/50"><Mic className="w-3.5 h-3.5" /></div>
-                      <span><strong>Speaker(s):</strong> {event.invited_speakers}</span>
+                      <span><strong>Speaker(s):</strong> {event.invited_speakers.join(", ")}</span>
+                    </span>
+                  )}
+                  {event.session_chair && event.session_chair.length > 0 && (
+                    <span className="flex items-center gap-2">
+                      <div className="p-1 rounded bg-background/50 border border-border/50"><User className="w-3.5 h-3.5" /></div>
+                      <span><strong>Chair(s):</strong> {event.session_chair.join(", ")}</span>
                     </span>
                   )}
                 </div>
@@ -319,8 +319,8 @@ export default function ScheduleClient({
       // Filter events that match search or have matching papers
       currentEvents = currentEvents.filter(e => 
         e.title.toLowerCase().includes(q) ||
-        (e.session_chair && e.session_chair.toLowerCase().includes(q)) ||
-        (e.invited_speakers && e.invited_speakers.toLowerCase().includes(q)) ||
+        (e.session_chair && e.session_chair.some(c => c.toLowerCase().includes(q))) ||
+        (e.invited_speakers && e.invited_speakers.some(s => s.toLowerCase().includes(q))) ||
         (e.location && e.location.toLowerCase().includes(q)) ||
         matchingPapers.some(p => p.event_id === e.id)
       );
