@@ -12,6 +12,7 @@ import { ActivityLogger } from "@/lib/activityLogger";
 import { uploadImageToCloudinary } from "@/lib/cloudinaryUpload";
 import { useToast } from "@/hooks/use-toast";
 import { PhotoUploadField } from "./PhotoUploadField";
+import { adminDbUpdate } from "@/app/actions/db";
 import { createClient } from "@/utils/supabase/client";
 
 interface EditMemberDialogProps {
@@ -205,17 +206,12 @@ export const EditMemberDialog = ({
         photoUrl = member.photo_url;
       }
 
-      const { error } = await supabase
-        .from("committee_members")
-        .update({
-          name: formData.name,
-          role: formData.role,
-          affiliation: formData.affiliation,
-          photo_url: photoUrl,
-        })
-        .eq("id", memberId);
-
-      if (error) throw error;
+      await adminDbUpdate("committee_members", memberId, {
+        name: formData.name,
+        role: formData.role,
+        affiliation: formData.affiliation,
+        photo_url: photoUrl,
+      });
 
       ActivityLogger.log({
         action: "Updated committee member",

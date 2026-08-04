@@ -10,6 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 import { ActivityLogger } from "@/lib/activityLogger";
 import { uploadImageToCloudinary } from "@/lib/cloudinaryUpload";
 import { validatePhotoUpload } from "@/lib/validatePhotoUpload";
+import { adminDbInsert } from "@/app/actions/db";
 import { createClient } from "@/utils/supabase/client";
 import type { PartnerItem } from "./PartnersManager";
 
@@ -152,20 +153,14 @@ export const AddPartnerDialog = ({ onPartnerAdded }: AddPartnerDialogProps) => {
           ? maxOrderData.order_index + 1
           : 0;
 
-      const { data, error } = await supabase
-        .from("partners")
-        .insert({
-          name: formData.name,
-          country: formData.country,
-          link: formData.link?.trim() || null,
-          image_url: imageUrl,
-          white_logo: formData.whiteLogo,
-          order_index: newOrderIndex,
-        })
-        .select()
-        .single();
-
-      if (error) throw error;
+      const data = await adminDbInsert("partners", {
+        name: formData.name,
+        country: formData.country,
+        link: formData.link?.trim() || null,
+        image_url: imageUrl,
+        white_logo: formData.whiteLogo,
+        order_index: newOrderIndex,
+      });
 
       ActivityLogger.log({
         action: "Added new partner",
@@ -179,7 +174,7 @@ export const AddPartnerDialog = ({ onPartnerAdded }: AddPartnerDialogProps) => {
         description: `Partner "${formData.name}" added successfully!`,
       });
 
-      onPartnerAdded?.(data);
+      onPartnerAdded?.(data[0]);
       handleOpenChange(false);
     } catch (error) {
       toast({

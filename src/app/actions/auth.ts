@@ -126,7 +126,7 @@ export async function logoutAction() {
   return { success: true };
 }
 
-async function isAuthenticatedAction() {
+export async function isAuthenticatedAction() {
   maybeCleanup();
   const cookieStore = cookies();
   const session = cookieStore.get(SESSION_COOKIE_NAME);

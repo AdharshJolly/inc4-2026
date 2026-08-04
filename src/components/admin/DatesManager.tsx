@@ -42,6 +42,7 @@ import {
   AlertDialogTitle,
   AlertDialogFooter,
 } from "@/components/ui/alert-dialog";
+import { adminDbUpdate, adminDbDelete } from "@/app/actions/db";
 import { createClient } from "@/utils/supabase/client";
 
 export type ImportantDateItem = {
@@ -160,19 +161,16 @@ export const DatesManager = () => {
       return;
     }
 
-    const { error } = await supabase
-      .from("important_dates")
-      .update({
+    try {
+      await adminDbUpdate("important_dates", editForm.id, {
         event: editForm.event,
         event_date: editForm.date,
         is_highlight: editForm.isHighlight,
         description: editForm.description || null,
         action_text: editForm.actionText || null,
         action_url: editForm.actionUrl || null,
-      })
-      .eq("id", editForm.id);
-
-    if (error) {
+      });
+    } catch (error) {
       toast({ title: "Error", description: "Failed to update date.", variant: "destructive" });
       return;
     }
@@ -197,12 +195,9 @@ export const DatesManager = () => {
     const target = dates[confirmDeleteIndex];
     if (!target.id) return;
 
-    const { error } = await supabase
-      .from("important_dates")
-      .delete()
-      .eq("id", target.id);
-
-    if (error) {
+    try {
+      await adminDbDelete("important_dates", target.id);
+    } catch (error) {
       toast({ title: "Error", description: "Failed to delete date.", variant: "destructive" });
       return;
     }
@@ -245,7 +240,7 @@ export const DatesManager = () => {
     // Wait for all updates
     await Promise.all(
       updates.map(update => 
-        supabase.from("important_dates").update({ order_index: update.order_index }).eq("id", update.id)
+        adminDbUpdate("important_dates", update.id!, { order_index: update.order_index })
       )
     );
     

@@ -20,6 +20,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Plus, Calendar as CalendarIcon } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { ActivityLogger } from "@/lib/activityLogger";
+import { adminDbInsert } from "@/app/actions/db";
 import { createClient } from "@/utils/supabase/client";
 
 interface AddDateFormData {
@@ -105,7 +106,7 @@ export const AddDatesDialog = ({ onDateAdded }: AddDatesDialogProps) => {
       
       const newOrderIndex = maxOrderData && maxOrderData.order_index !== null ? maxOrderData.order_index + 1 : 0;
 
-      const { data, error } = await supabase.from("important_dates").insert({
+      const data = await adminDbInsert("important_dates", {
         event: formData.event,
         event_date: formData.date,
         is_highlight: formData.isHighlight,
@@ -113,9 +114,8 @@ export const AddDatesDialog = ({ onDateAdded }: AddDatesDialogProps) => {
         action_text: formData.actionText?.trim() || null,
         action_url: formData.actionUrl?.trim() || null,
         order_index: newOrderIndex
-      }).select().single();
+      });
 
-      if (error) throw error;
 
       ActivityLogger.log({
         action: "Added new event date",
@@ -129,7 +129,7 @@ export const AddDatesDialog = ({ onDateAdded }: AddDatesDialogProps) => {
         description: `Event "${formData.event}" added successfully!`,
       });
 
-      onDateAdded?.(data);
+      onDateAdded?.(data[0]);
 
       setFormData({
         event: "",

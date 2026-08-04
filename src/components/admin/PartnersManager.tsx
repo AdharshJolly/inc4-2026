@@ -28,6 +28,7 @@ import {
   AlertDialogTitle,
   AlertDialogFooter,
 } from "@/components/ui/alert-dialog";
+import { adminDbUpdate, adminDbDelete } from "@/app/actions/db";
 import { createClient } from "@/utils/supabase/client";
 
 export type PartnerItem = {
@@ -175,20 +176,13 @@ export const PartnersManager = () => {
         imageUrl = uploadResult.url || "";
       }
 
-      const { error } = await supabase
-        .from("partners")
-        .update({
+      await adminDbUpdate("partners", editForm.id, {
           name: editForm.name,
           country: editForm.country,
           link: editForm.link || null,
           image_url: imageUrl,
           white_logo: editForm.whiteLogo,
-        })
-        .eq("id", editForm.id);
-
-      if (error) {
-        throw error;
-      }
+      });
 
       ActivityLogger.log({
         action: "Edited partner",
@@ -219,12 +213,9 @@ export const PartnersManager = () => {
     const target = partners[confirmDeleteIndex];
     if (!target.id) return;
 
-    const { error } = await supabase
-      .from("partners")
-      .delete()
-      .eq("id", target.id);
-
-    if (error) {
+    try {
+      await adminDbDelete("partners", target.id);
+    } catch (error) {
       toast({ title: "Error", description: "Failed to delete partner.", variant: "destructive" });
       return;
     }
@@ -265,7 +256,7 @@ export const PartnersManager = () => {
 
     await Promise.all(
       updates.map(update => 
-        supabase.from("partners").update({ order_index: update.order_index }).eq("id", update.id)
+        adminDbUpdate("partners", update.id!, { order_index: update.order_index })
       )
     );
     

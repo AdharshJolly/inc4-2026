@@ -14,6 +14,7 @@ import { Plus } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { ActivityLogger } from "@/lib/activityLogger";
 import { createClient } from "@/utils/supabase/client";
+import { adminDbInsert } from "@/app/actions/db";
 
 interface AddCategoryDialogProps {
   onCategoryAdded?: () => void;
@@ -49,12 +50,10 @@ export const AddCategoryDialog = ({
       
       const newIndex = maxData && maxData.length > 0 ? maxData[0].order_index + 1 : 0;
 
-      const { error } = await supabase.from("committee_categories").insert({
+      await adminDbInsert("committee_categories", {
         label: label,
         order_index: newIndex,
       });
-
-      if (error) throw error;
 
       ActivityLogger.log({
         action: "Added new committee category",

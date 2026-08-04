@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/select";
 import { AlertCircle, Trash2 } from "lucide-react";
 import { ActivityLogger } from "@/lib/activityLogger";
+import { adminDbUpdate, adminDbDelete } from "@/app/actions/db";
 import { createClient } from "@/utils/supabase/client";
 
 interface BulkActionsDialogProps {
@@ -57,7 +58,7 @@ export const BulkActionsDialog = ({
     
     // Delete items from Supabase
     for (const id of selectedIds) {
-      await supabase.from(table).delete().eq("id", id);
+      await adminDbDelete(table, id);
     }
 
     ActivityLogger.log({
@@ -75,10 +76,7 @@ export const BulkActionsDialog = ({
     if (!selectedCategory) return;
 
     for (const id of selectedIds) {
-      await supabase
-        .from("committee_members")
-        .update({ category_id: selectedCategory })
-        .eq("id", id);
+      await adminDbUpdate("committee_members", id, { category_id: selectedCategory });
     }
 
     ActivityLogger.log({

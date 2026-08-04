@@ -12,6 +12,7 @@ import { ActivityLogger } from "@/lib/activityLogger";
 import { uploadImageToCloudinary } from "@/lib/cloudinaryUpload";
 import { useToast } from "@/hooks/use-toast";
 import { PhotoUploadField } from "./PhotoUploadField";
+import { adminDbUpdate } from "@/app/actions/db";
 import { createClient } from "@/utils/supabase/client";
 
 interface EditSpeakerDialogProps {
@@ -195,19 +196,14 @@ export const EditSpeakerDialog = ({
         photoUrl = speaker.photo_url;
       }
 
-      const { error } = await supabase
-        .from("speakers")
-        .update({
-          name: formData.name,
-          role: formData.role,
-          affiliation: formData.affiliation,
-          topic: formData.topic,
-          linkedin: formData.linkedin,
-          photo_url: photoUrl,
-        })
-        .eq("id", speakerId);
-
-      if (error) throw error;
+      await adminDbUpdate("speakers", speakerId, {
+        name: formData.name,
+        role: formData.role,
+        affiliation: formData.affiliation,
+        topic: formData.topic,
+        linkedin: formData.linkedin,
+        photo_url: photoUrl,
+      });
 
       ActivityLogger.log({
         action: "Updated speaker",

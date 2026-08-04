@@ -48,6 +48,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { ActivityLogger } from "@/lib/activityLogger";
 import { SkeletonCard } from "./Skeleton";
+import { adminDbInsert, adminDbUpdate, adminDbDelete } from "@/app/actions/db";
 import { createClient } from "@/utils/supabase/client";
 import type {
   ScheduleDay,
@@ -273,9 +274,8 @@ export const ScheduleManager = () => {
     };
 
     if (editingEvent) {
-      const { error } = await supabase
-        .from("schedule_events")
-        .update({
+      try {
+        await adminDbUpdate("schedule_events", editingEvent.id, {
           time_start: eventForm.time_start,
           time_end: eventForm.time_end,
           title: eventForm.title.trim(),
@@ -284,10 +284,8 @@ export const ScheduleManager = () => {
           session_chair: eventForm.event_type === "session" ? (processNames(eventForm.session_chair).length ? processNames(eventForm.session_chair) : null) : null,
           invited_speakers: eventForm.event_type === "session" ? (processNames(eventForm.invited_speakers).length ? processNames(eventForm.invited_speakers) : null) : null,
           keynote_speakers: eventForm.event_type === "keynote" ? (eventForm.keynote_speakers.filter(k => k.name.trim() || k.topic.trim()).length ? eventForm.keynote_speakers.filter(k => k.name.trim() || k.topic.trim()) : null) : null,
-        })
-        .eq("id", editingEvent.id);
-
-      if (error) {
+        });
+      } catch (error) {
         toast({ title: "Error", description: "Failed to update event.", variant: "destructive" });
         return;
       }
@@ -296,20 +294,20 @@ export const ScheduleManager = () => {
       toast({ title: "Saved", description: `Event "${eventForm.title}" updated.` });
     } else {
       const nextOrder = events.length > 0 ? Math.max(...events.map((e) => e.sort_order)) + 1 : 0;
-      const { error } = await supabase.from("schedule_events").insert({
-        day_id: activeDay,
-        time_start: eventForm.time_start,
-        time_end: eventForm.time_end,
-        title: eventForm.title.trim(),
-        event_type: eventForm.event_type,
-        location: eventForm.location.trim() || null,
-        session_chair: eventForm.event_type === "session" ? (processNames(eventForm.session_chair).length ? processNames(eventForm.session_chair) : null) : null,
-        invited_speakers: eventForm.event_type === "session" ? (processNames(eventForm.invited_speakers).length ? processNames(eventForm.invited_speakers) : null) : null,
-        keynote_speakers: eventForm.event_type === "keynote" ? (eventForm.keynote_speakers.filter(k => k.name.trim() || k.topic.trim()).length ? eventForm.keynote_speakers.filter(k => k.name.trim() || k.topic.trim()) : null) : null,
-        sort_order: nextOrder,
-      });
-
-      if (error) {
+      try {
+        await adminDbInsert("schedule_events", {
+          day_id: activeDay,
+          time_start: eventForm.time_start,
+          time_end: eventForm.time_end,
+          title: eventForm.title.trim(),
+          event_type: eventForm.event_type,
+          location: eventForm.location.trim() || null,
+          session_chair: eventForm.event_type === "session" ? (processNames(eventForm.session_chair).length ? processNames(eventForm.session_chair) : null) : null,
+          invited_speakers: eventForm.event_type === "session" ? (processNames(eventForm.invited_speakers).length ? processNames(eventForm.invited_speakers) : null) : null,
+          keynote_speakers: eventForm.event_type === "keynote" ? (eventForm.keynote_speakers.filter(k => k.name.trim() || k.topic.trim()).length ? eventForm.keynote_speakers.filter(k => k.name.trim() || k.topic.trim()) : null) : null,
+          sort_order: nextOrder,
+        });
+      } catch (error) {
         toast({ title: "Error", description: "Failed to add event.", variant: "destructive" });
         return;
       }
@@ -325,17 +323,17 @@ export const ScheduleManager = () => {
   const performDeleteEvent = async () => {
     if (!deleteEventTarget) return;
 
-    // Delete associated papers first
-    if (deleteEventTarget.event_type === "session") {
-      await supabase.from("schedule_papers").delete().eq("event_id", deleteEventTarget.id);
-    }
-
-    const { error } = await supabase
-      .from("schedule_events")
-      .delete()
-      .eq("id", deleteEventTarget.id);
-
-    if (error) {
+    try {
+      if (deleteEventTarget.event_type === "session") {
+        const { data: papersToDelete } = await supabase.from("schedule_papers").select("id").eq("event_id", deleteEventTarget.id);
+        if (papersToDelete) {
+          for (const p of papersToDelete) {
+            await adminDbDelete("schedule_papers", p.id);
+          }
+        }
+      }
+      await adminDbDelete("schedule_events", deleteEventTarget.id);
+    } catch (error) {
       toast({ title: "Error", description: "Failed to delete event.", variant: "destructive" });
       return;
     }
@@ -375,15 +373,12 @@ export const ScheduleManager = () => {
     const eventPapers = papers[paperEventId] || [];
 
     if (editingPaper) {
-      const { error } = await supabase
-        .from("schedule_papers")
-        .update({
+      try {
+        await adminDbUpdate("schedule_papers", editingPaper.id, {
           title: paperForm.title.trim(),
           presenter: paperForm.presenter.trim(),
-        })
-        .eq("id", editingPaper.id);
-
-      if (error) {
+        });
+      } catch (error) {
         toast({ title: "Error", description: "Failed to update paper.", variant: "destructive" });
         return;
       }
@@ -392,14 +387,14 @@ export const ScheduleManager = () => {
       toast({ title: "Saved", description: `Paper "${paperForm.title}" updated.` });
     } else {
       const nextOrder = eventPapers.length > 0 ? Math.max(...eventPapers.map((p) => p.sort_order)) + 1 : 0;
-      const { error } = await supabase.from("schedule_papers").insert({
-        event_id: paperEventId,
-        title: paperForm.title.trim(),
-        presenter: paperForm.presenter.trim(),
-        sort_order: nextOrder,
-      });
-
-      if (error) {
+      try {
+        await adminDbInsert("schedule_papers", {
+          event_id: paperEventId,
+          title: paperForm.title.trim(),
+          presenter: paperForm.presenter.trim(),
+          sort_order: nextOrder,
+        });
+      } catch (error) {
         toast({ title: "Error", description: "Failed to add paper.", variant: "destructive" });
         return;
       }
@@ -415,12 +410,9 @@ export const ScheduleManager = () => {
   const performDeletePaper = async () => {
     if (!deletePaperTarget) return;
 
-    const { error } = await supabase
-      .from("schedule_papers")
-      .delete()
-      .eq("id", deletePaperTarget.id);
-
-    if (error) {
+    try {
+      await adminDbDelete("schedule_papers", deletePaperTarget.id);
+    } catch (error) {
       toast({ title: "Error", description: "Failed to delete paper.", variant: "destructive" });
       return;
     }
@@ -455,7 +447,7 @@ export const ScheduleManager = () => {
 
     await Promise.all(
       updates.map((u) =>
-        supabase.from("schedule_events").update({ sort_order: u.sort_order }).eq("id", u.id)
+        adminDbUpdate("schedule_events", u.id, { sort_order: u.sort_order })
       )
     );
 
@@ -484,7 +476,7 @@ export const ScheduleManager = () => {
 
     await Promise.all(
       updates.map((u) =>
-        supabase.from("schedule_papers").update({ sort_order: u.sort_order }).eq("id", u.id)
+        adminDbUpdate("schedule_papers", u.id, { sort_order: u.sort_order })
       )
     );
 

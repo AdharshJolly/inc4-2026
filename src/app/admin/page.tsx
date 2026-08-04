@@ -14,18 +14,20 @@ import {
   Users,
   Calendar,
   Mic,
-  Eye,
   LayoutDashboard,
   Database,
-  LogOut,
-  Building2,
-  Globe,
-  TrendingUp,
-  ChevronRight,
-  ExternalLink,
   Layers,
   ListOrdered,
   Settings,
+  Globe,
+  TrendingUp,
+  Building2,
+  ChevronRight,
+  ExternalLink,
+  LogOut,
+  Eye,
+  Clock,
+  Handshake,
 } from "lucide-react";
 
 const cmsItems = [
@@ -382,112 +384,14 @@ export default function AdminDashboard() {
             </div>
           )}
 
-          {/* ── SETTINGS ── */}
-          {activeSection === "settings" && (
-            <FeatureFlagsSection />
-          )}
+
         </main>
       </div>
     </div>
   );
 }
 
-// ── Feature Flags Section ──
-function FeatureFlagsSection() {
-  const [scheduleVisible, setScheduleVisible] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false);
-  const supabase = createClient();
 
-  useEffect(() => {
-    const fetchFlags = async () => {
-      const { data } = await supabase
-        .from("site_config")
-        .select("value")
-        .eq("key", "schedule_visible")
-        .single();
-      if (data) setScheduleVisible(data.value === true || data.value === "true");
-      setLoading(false);
-    };
-    fetchFlags();
-  }, [supabase]);
-
-  const toggleFlag = async (key: string, current: boolean) => {
-    setSaving(true);
-    const newVal = !current;
-    const { error } = await supabase
-      .from("site_config")
-      .upsert({ key, value: newVal, updated_at: new Date().toISOString() }, { onConflict: "key" });
-    if (!error) {
-      if (key === "schedule_visible") setScheduleVisible(newVal);
-    }
-    setSaving(false);
-  };
-
-  if (loading) {
-    return (
-      <div className="max-w-3xl space-y-4">
-        <div className="h-8 w-48 bg-muted rounded animate-pulse" />
-        <div className="h-20 bg-muted rounded-xl animate-pulse" />
-      </div>
-    );
-  }
-
-  return (
-    <div className="max-w-3xl">
-      <div className="mb-6">
-        <h1 className="text-2xl font-black tracking-tight text-foreground">Settings</h1>
-        <p className="text-muted-foreground text-sm mt-1">Toggle features on or off for the public site.</p>
-      </div>
-
-      <div className="rounded-2xl border border-border/60 bg-card/60 p-6 space-y-1">
-        <FlagRow
-          label="Show Schedule Page"
-          description="When off, visitors see &quot;Schedule Coming Soon&quot; instead of the full schedule."
-          enabled={scheduleVisible}
-          onToggle={() => toggleFlag("schedule_visible", scheduleVisible)}
-          disabled={saving}
-        />
-      </div>
-    </div>
-  );
-}
-
-function FlagRow({
-  label,
-  description,
-  enabled,
-  onToggle,
-  disabled,
-}: {
-  label: string;
-  description: string;
-  enabled: boolean;
-  onToggle: () => void;
-  disabled?: boolean;
-}) {
-  return (
-    <div className="flex items-center justify-between gap-4 py-3 px-2 rounded-lg hover:bg-muted/30 transition-colors">
-      <div className="min-w-0">
-        <p className="text-sm font-semibold text-foreground">{label}</p>
-        <p className="text-xs text-muted-foreground mt-0.5" dangerouslySetInnerHTML={{ __html: description }} />
-      </div>
-      <button
-        onClick={onToggle}
-        disabled={disabled}
-        className={`relative shrink-0 w-11 h-6 rounded-full transition-colors duration-200 ${
-          enabled ? "bg-primary" : "bg-muted"
-        } ${disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
-      >
-        <span
-          className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white shadow-sm transition-transform duration-200 ${
-            enabled ? "translate-x-5" : "translate-x-0"
-          }`}
-        />
-      </button>
-    </div>
-  );
-}
 
 // ── Shared sidebar button ──
 function SidebarButton({
