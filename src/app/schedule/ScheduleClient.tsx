@@ -121,6 +121,7 @@ function parseTimeToMinutes(timeStr: string): number {
 }
 
 
+
 const EVENT_TYPE_LABELS: Record<ScheduleEvent["event_type"], string> = {
   keynote: "Keynote",
   inauguration: "Inauguration",
@@ -136,7 +137,7 @@ const EVENT_TYPE_LABELS: Record<ScheduleEvent["event_type"], string> = {
 function EventCard({ event, papers, defaultExpanded = false }: { event: ScheduleEvent; papers: SchedulePaper[], defaultExpanded?: boolean }) {
   const style = EVENT_STYLES[event.event_type] || EVENT_STYLES.other;
   const [isExpanded, setIsExpanded] = useState(defaultExpanded);
-  const hasDetails = papers.length > 0 || !!event.session_chair || !!event.invited_speakers;
+  const hasDetails = papers.length > 0 || !!event.session_chair || !!event.invited_speakers || !!event.keynote_speakers;
 
   return (
     <div
@@ -193,20 +194,44 @@ function EventCard({ event, papers, defaultExpanded = false }: { event: Schedule
             isExpanded ? "grid-rows-[1fr] opacity-100 mt-4 pt-4 border-t border-border/50" : "grid-rows-[0fr] opacity-0"
           )}>
             <div className="overflow-hidden" onClick={(e) => e.stopPropagation()}>
-              {/* Chairs & Speakers */}
-              {((event.session_chair && event.session_chair.length > 0) || (event.invited_speakers && event.invited_speakers.length > 0)) && (
-                <div className="flex flex-col gap-3 text-sm text-muted-foreground mb-4">
+              {/* Topic, Chairs & Speakers */}
+              {((event.session_chair && event.session_chair.length > 0) || (event.invited_speakers && event.invited_speakers.length > 0) || (event.keynote_speakers && event.keynote_speakers.length > 0)) && (
+                <div className="flex flex-col gap-4 text-sm text-muted-foreground mb-4">
+                  {event.keynote_speakers && event.keynote_speakers.length > 0 && (
+                    <div className="flex items-start gap-2">
+                      <div className="p-1 rounded bg-background/50 border border-border/50 shrink-0 mt-0.5"><Mic className="w-3.5 h-3.5" /></div>
+                      <div className="flex flex-col gap-1">
+                        <strong>Keynote(s):</strong>
+                        {event.keynote_speakers.map((ks, idx) => (
+                          <div key={idx} className="flex flex-col mb-1.5 last:mb-0">
+                            <span className="text-foreground/90 font-medium">{ks.name.trim()}</span>
+                            {ks.topic && <span className="text-foreground/70 text-xs italic mt-0.5">Topic: {ks.topic.trim()}</span>}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                   {event.invited_speakers && event.invited_speakers.length > 0 && (
-                    <span className="flex items-center gap-2">
-                      <div className="p-1 rounded bg-background/50 border border-border/50"><Mic className="w-3.5 h-3.5" /></div>
-                      <span><strong>Speaker(s):</strong> {event.invited_speakers.join(", ")}</span>
-                    </span>
+                    <div className="flex items-start gap-2">
+                      <div className="p-1 rounded bg-background/50 border border-border/50 shrink-0 mt-0.5"><Mic className="w-3.5 h-3.5" /></div>
+                      <div className="flex flex-col gap-1">
+                        <strong>Speaker(s):</strong>
+                        {event.invited_speakers.map((speaker, idx) => (
+                          <span key={idx} className="text-foreground/90">{speaker.trim()}</span>
+                        ))}
+                      </div>
+                    </div>
                   )}
                   {event.session_chair && event.session_chair.length > 0 && (
-                    <span className="flex items-center gap-2">
-                      <div className="p-1 rounded bg-background/50 border border-border/50"><User className="w-3.5 h-3.5" /></div>
-                      <span><strong>Chair(s):</strong> {event.session_chair.join(", ")}</span>
-                    </span>
+                    <div className="flex items-start gap-2">
+                      <div className="p-1 rounded bg-background/50 border border-border/50 shrink-0 mt-0.5"><User className="w-3.5 h-3.5" /></div>
+                      <div className="flex flex-col gap-1">
+                        <strong>Chair(s):</strong>
+                        {event.session_chair.map((chair, idx) => (
+                          <span key={idx} className="text-foreground/90">{chair.trim()}</span>
+                        ))}
+                      </div>
+                    </div>
                   )}
                 </div>
               )}

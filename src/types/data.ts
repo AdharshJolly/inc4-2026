@@ -105,6 +105,7 @@ export interface ScheduleEvent {
   location: string | null;
   session_chair: string[] | null;
   invited_speakers?: string[] | null;
+  keynote_speakers?: { name: string; topic: string }[] | null;
   sort_order: number;
 }
 

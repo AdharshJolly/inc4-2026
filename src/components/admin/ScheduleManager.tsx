@@ -42,6 +42,8 @@ import {
   CalendarDays,
   AlertTriangle,
   Mic,
+  ChevronDown,
+  ChevronUp,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { ActivityLogger } from "@/lib/activityLogger";
@@ -87,6 +89,7 @@ type EventFormData = {
   location: string;
   session_chair: string[];
   invited_speakers: string[];
+  keynote_speakers: { name: string; topic: string }[];
 };
 
 type PaperFormData = {
@@ -102,6 +105,7 @@ const EMPTY_EVENT_FORM: EventFormData = {
   location: "",
   session_chair: [""],
   invited_speakers: [""],
+  keynote_speakers: [{ name: "", topic: "" }],
 };
 
 const EMPTY_PAPER_FORM: PaperFormData = {
@@ -134,6 +138,18 @@ export const ScheduleManager = () => {
   // Delete confirmations
   const [deleteEventTarget, setDeleteEventTarget] = useState<ScheduleEvent | null>(null);
   const [deletePaperTarget, setDeletePaperTarget] = useState<SchedulePaper | null>(null);
+
+  // Expand state
+  const [expandedEvents, setExpandedEvents] = useState<Set<string>>(new Set());
+
+  const toggleEvent = (eventId: string) => {
+    setExpandedEvents((prev) => {
+      const next = new Set(prev);
+      if (next.has(eventId)) next.delete(eventId);
+      else next.add(eventId);
+      return next;
+    });
+  };
 
   // ── Data fetching ──
 
@@ -228,13 +244,14 @@ export const ScheduleManager = () => {
   const openEditEvent = (event: ScheduleEvent) => {
     setEditingEvent(event);
     setEventForm({
-      time_start: event.time_start,
-      time_end: event.time_end,
+      time_start: event.time_start.slice(0, 5),
+      time_end: event.time_end.slice(0, 5),
       title: event.title,
       event_type: event.event_type,
       location: event.location || "",
       session_chair: event.session_chair && event.session_chair.length > 0 ? event.session_chair : [""],
       invited_speakers: event.invited_speakers && event.invited_speakers.length > 0 ? event.invited_speakers : [""],
+      keynote_speakers: event.keynote_speakers && event.keynote_speakers.length > 0 ? event.keynote_speakers : [{ name: "", topic: "" }],
     });
     setEventDialogOpen(true);
   };
@@ -249,6 +266,12 @@ export const ScheduleManager = () => {
       return;
     }
 
+    const processNames = (names: string[]) => {
+      return names
+        .map(n => n.trim())
+        .filter(n => n);
+    };
+
     if (editingEvent) {
       const { error } = await supabase
         .from("schedule_events")
@@ -258,8 +281,9 @@ export const ScheduleManager = () => {
           title: eventForm.title.trim(),
           event_type: eventForm.event_type,
           location: eventForm.location.trim() || null,
-          session_chair: eventForm.event_type === "session" ? (eventForm.session_chair.map(c => c.trim()).filter(c => c) || null) : null,
-          invited_speakers: eventForm.event_type === "session" ? (eventForm.invited_speakers.map(s => s.trim()).filter(s => s) || null) : null,
+          session_chair: eventForm.event_type === "session" ? (processNames(eventForm.session_chair).length ? processNames(eventForm.session_chair) : null) : null,
+          invited_speakers: eventForm.event_type === "session" ? (processNames(eventForm.invited_speakers).length ? processNames(eventForm.invited_speakers) : null) : null,
+          keynote_speakers: eventForm.event_type === "keynote" ? (eventForm.keynote_speakers.filter(k => k.name.trim() || k.topic.trim()).length ? eventForm.keynote_speakers.filter(k => k.name.trim() || k.topic.trim()) : null) : null,
         })
         .eq("id", editingEvent.id);
 
@@ -279,8 +303,9 @@ export const ScheduleManager = () => {
         title: eventForm.title.trim(),
         event_type: eventForm.event_type,
         location: eventForm.location.trim() || null,
-        session_chair: eventForm.event_type === "session" ? (eventForm.session_chair.map(c => c.trim()).filter(c => c) || null) : null,
-        invited_speakers: eventForm.event_type === "session" ? (eventForm.invited_speakers.map(s => s.trim()).filter(s => s) || null) : null,
+        session_chair: eventForm.event_type === "session" ? (processNames(eventForm.session_chair).length ? processNames(eventForm.session_chair) : null) : null,
+        invited_speakers: eventForm.event_type === "session" ? (processNames(eventForm.invited_speakers).length ? processNames(eventForm.invited_speakers) : null) : null,
+        keynote_speakers: eventForm.event_type === "keynote" ? (eventForm.keynote_speakers.filter(k => k.name.trim() || k.topic.trim()).length ? eventForm.keynote_speakers.filter(k => k.name.trim() || k.topic.trim()) : null) : null,
         sort_order: nextOrder,
       });
 
@@ -527,6 +552,7 @@ export const ScheduleManager = () => {
               {events.map((event, index) => {
                 const typeInfo = getEventTypeInfo(event.event_type);
                 const eventPapers = papers[event.id] || [];
+                const isExpanded = expandedEvents.has(event.id);
 
                 return (
                   <div
@@ -534,8 +560,11 @@ export const ScheduleManager = () => {
                     className="rounded-xl border border-border shadow-sm hover:shadow-md transition-all duration-200"
                   >
                     {/* Event card */}
-                    <div className="flex items-start gap-4 p-4">
-                      <div className="flex flex-col gap-1 pt-0.5">
+                    <div 
+                      className={`flex items-start gap-4 p-4 ${event.event_type === "session" ? "cursor-pointer" : ""}`}
+                      onClick={() => event.event_type === "session" && toggleEvent(event.id)}
+                    >
+                      <div className="flex flex-col gap-1 pt-0.5" onClick={(e) => e.stopPropagation()}>
                         <Button
                           size="sm"
                           variant="ghost"
@@ -560,38 +589,88 @@ export const ScheduleManager = () => {
                         <div className="flex items-start justify-between gap-3">
                           <div className="min-w-0">
                             <div className="flex items-center gap-2 flex-wrap mb-1">
-                              <h3 className="font-semibold text-foreground truncate">{event.title}</h3>
+                              <h3 className="font-semibold text-foreground truncate">
+                                {event.title}
+                                {event.event_type === "session" && (
+                                  <span className="ml-2 text-muted-foreground font-normal text-sm">
+                                    ({eventPapers.length} paper{eventPapers.length !== 1 ? 's' : ''})
+                                  </span>
+                                )}
+                              </h3>
                               <Badge className={typeInfo.color + " text-xs"}>
                                 {typeInfo.label}
                               </Badge>
                             </div>
-                            <div className="flex items-center gap-3 text-sm text-muted-foreground flex-wrap">
-                              <span className="flex items-center gap-1">
-                                <Clock className="w-3.5 h-3.5" />
-                                {formatTime(event.time_start)} — {formatTime(event.time_end)}
-                              </span>
-                              {event.location && (
+                            <div className="flex flex-col gap-1.5 mt-1.5 text-sm text-muted-foreground">
+                              <div className="flex items-center gap-3 flex-wrap">
                                 <span className="flex items-center gap-1">
-                                  <MapPin className="w-3.5 h-3.5" />
-                                  {event.location}
+                                  <Clock className="w-3.5 h-3.5" />
+                                  {formatTime(event.time_start)} — {formatTime(event.time_end)}
                                 </span>
-                              )}
-                              {event.invited_speakers && event.invited_speakers.length > 0 && (
-                                <span className="flex items-start gap-1 max-w-[200px] truncate">
+                                {event.location && (
+                                  <span className="flex items-center gap-1">
+                                    <MapPin className="w-3.5 h-3.5" />
+                                    {event.location}
+                                  </span>
+                                )}
+                              </div>
+                              
+                              {event.keynote_speakers && event.keynote_speakers.length > 0 && (
+                                <div className="flex items-start gap-1.5 mt-1">
                                   <Mic className="w-3.5 h-3.5 mt-0.5 shrink-0" />
-                                  Speaker(s): {event.invited_speakers.join(", ")}
-                                </span>
+                                  <div className="flex flex-col gap-0.5">
+                                    <span className="font-medium">Keynote(s):</span>
+                                    {event.keynote_speakers.map((ks, i) => (
+                                      <div key={i} className="flex flex-col mb-1">
+                                        <span className="text-foreground/90 font-medium">{ks.name}</span>
+                                        {ks.topic && <span className="text-foreground/70 text-xs italic">Topic: {ks.topic}</span>}
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
                               )}
+                              
+                              {event.invited_speakers && event.invited_speakers.length > 0 && (
+                                <div className="flex items-start gap-1.5 mt-1">
+                                  <Mic className="w-3.5 h-3.5 mt-0.5 shrink-0" />
+                                  <div className="flex flex-col gap-0.5">
+                                    <span className="font-medium">Speaker(s):</span>
+                                    {event.invited_speakers.map((s, i) => (
+                                      <span key={i} className="text-foreground/90">{s}</span>
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
+                              
                               {event.session_chair && event.session_chair.length > 0 && (
-                                <span className="flex items-start gap-1 max-w-[200px] truncate">
+                                <div className="flex items-start gap-1.5 mt-1">
                                   <User className="w-3.5 h-3.5 mt-0.5 shrink-0" />
-                                  Chair(s): {event.session_chair.join(", ")}
-                                </span>
+                                  <div className="flex flex-col gap-0.5">
+                                    <span className="font-medium">Chair(s):</span>
+                                    {event.session_chair.map((c, i) => (
+                                      <span key={i} className="text-foreground/90">{c}</span>
+                                    ))}
+                                  </div>
+                                </div>
                               )}
                             </div>
                           </div>
 
-                          <div className="flex gap-1 shrink-0">
+                          <div className="flex gap-1 shrink-0" onClick={(e) => e.stopPropagation()}>
+                            {event.event_type === "session" && (
+                              <Button
+                                size="sm"
+                                variant="ghost"
+                                onClick={() => toggleEvent(event.id)}
+                                className="mr-1 h-8 px-2"
+                              >
+                                {isExpanded ? (
+                                  <ChevronUp className="w-4 h-4 text-muted-foreground" />
+                                ) : (
+                                  <ChevronDown className="w-4 h-4 text-muted-foreground" />
+                                )}
+                              </Button>
+                            )}
                             <Button size="sm" variant="outline" onClick={() => openEditEvent(event)}>
                               Edit
                             </Button>
@@ -609,7 +688,7 @@ export const ScheduleManager = () => {
                     </div>
 
                     {/* Papers section for session events */}
-                    {event.event_type === "session" && (
+                    {event.event_type === "session" && isExpanded && (
                       <div className="border-t border-border bg-muted/30 px-4 py-3">
                         <div className="flex items-center justify-between mb-2">
                           <span className="text-xs font-medium text-muted-foreground flex items-center gap-1">
@@ -757,19 +836,18 @@ export const ScheduleManager = () => {
                 </div>
 
                 {eventForm.event_type === "session" && (
-                  <>
-                    <div className="space-y-2">
-                      <div className="flex items-center justify-between">
-                        <Label>Invited Speaker(s)</Label>
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="sm"
-                          className="h-6 px-2 text-xs"
-                          onClick={() => setEventForm(p => ({ ...p, invited_speakers: [...p.invited_speakers, ""] }))}
-                        >
-                          <Plus className="w-3 h-3 mr-1" /> Add
-                        </Button>
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <Label>Invited Speaker(s)</Label>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        className="h-6 px-2 text-xs"
+                        onClick={() => setEventForm(p => ({ ...p, invited_speakers: [...p.invited_speakers, ""] }))}
+                      >
+                        <Plus className="w-3 h-3 mr-1" /> Add
+                      </Button>
                       </div>
                       {eventForm.invited_speakers.map((speaker, idx) => (
                         <div key={idx} className="flex items-center gap-2">
@@ -797,7 +875,9 @@ export const ScheduleManager = () => {
                         </div>
                       ))}
                     </div>
+                )}
 
+                {eventForm.event_type === "session" && (
                     <div className="space-y-2">
                       <div className="flex items-center justify-between">
                         <Label>Session Chair(s)</Label>
@@ -837,7 +917,57 @@ export const ScheduleManager = () => {
                         </div>
                       ))}
                     </div>
-                  </>
+                )}
+                
+                {eventForm.event_type === "keynote" && (
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <Label>Keynote Speaker(s) & Topic(s)</Label>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        className="h-6 px-2 text-xs"
+                        onClick={() => setEventForm(p => ({ ...p, keynote_speakers: [...p.keynote_speakers, { name: "", topic: "" }] }))}
+                      >
+                        <Plus className="w-3 h-3 mr-1" /> Add
+                      </Button>
+                    </div>
+                    {eventForm.keynote_speakers.map((ks, idx) => (
+                      <div key={idx} className="flex items-center gap-2">
+                        <Input
+                          placeholder="Name (e.g. Dr. Jane Doe)"
+                          value={ks.name}
+                          onChange={(e) => {
+                            const newKS = [...eventForm.keynote_speakers];
+                            newKS[idx] = { ...newKS[idx], name: e.target.value };
+                            setEventForm(p => ({ ...p, keynote_speakers: newKS }));
+                          }}
+                        />
+                        <Input
+                          placeholder="Topic"
+                          value={ks.topic}
+                          onChange={(e) => {
+                            const newKS = [...eventForm.keynote_speakers];
+                            newKS[idx] = { ...newKS[idx], topic: e.target.value };
+                            setEventForm(p => ({ ...p, keynote_speakers: newKS }));
+                          }}
+                        />
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="icon"
+                          className="h-9 w-9 text-red-500 hover:text-red-600 shrink-0"
+                          onClick={() => {
+                            const newKS = eventForm.keynote_speakers.filter((_, i) => i !== idx);
+                            setEventForm(p => ({ ...p, keynote_speakers: newKS.length ? newKS : [{ name: "", topic: "" }] }));
+                          }}
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    ))}
+                  </div>
                 )}
               </div>
 
