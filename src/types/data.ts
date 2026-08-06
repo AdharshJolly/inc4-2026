@@ -114,7 +114,7 @@ export interface SchedulePaper {
   event_id: string;
   title: string;
   paper_id?: string;
-  presenter: string;
+  authors: string;
   sort_order: number;
   created_at: string;
 }

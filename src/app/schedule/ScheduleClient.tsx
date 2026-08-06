@@ -244,7 +244,7 @@ function EventCard({ event, papers, defaultExpanded = false }: { event: Schedule
                     <div className="grid grid-cols-[100px_1fr_200px] gap-4 px-4 py-3 text-xs font-semibold text-muted-foreground border-b border-border/50 bg-muted/30">
                       <div className="text-left">Paper ID</div>
                       <div className="text-left">Title</div>
-                      <div className="text-left">Presenter</div>
+                      <div className="text-left">Authors</div>
                     </div>
                     {/* Rows */}
                     <div className="divide-y divide-border/40">
@@ -267,7 +267,7 @@ function EventCard({ event, papers, defaultExpanded = false }: { event: Schedule
                             </span>
                             <span className="text-sm text-muted-foreground flex items-start gap-1.5 shrink-0 text-left">
                               <User className="w-3.5 h-3.5 shrink-0 mt-0.5" />
-                              <span className="whitespace-normal break-words">{paper.presenter || "-"}</span>
+                              <span className="whitespace-normal break-words">{paper.authors || "-"}</span>
                             </span>
                           </div>
                         );
@@ -356,7 +356,7 @@ export default function ScheduleClient({
       // Filter papers that match search
       const matchingPapers = currentPapers.filter(p => 
         p.title.toLowerCase().includes(q) || 
-        p.presenter.toLowerCase().includes(q) ||
+        p.authors.toLowerCase().includes(q) ||
         p.id.toLowerCase().includes(q) ||
         ((p as any).paper_id && (p as any).paper_id.toLowerCase().includes(q))
       );

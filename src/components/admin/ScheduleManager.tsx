@@ -96,7 +96,7 @@ type EventFormData = {
 type PaperFormData = {
   paper_id?: string;
   title: string;
-  presenter: string;
+  authors: string;
 };
 
 const EMPTY_EVENT_FORM: EventFormData = {
@@ -113,7 +113,7 @@ const EMPTY_EVENT_FORM: EventFormData = {
 const EMPTY_PAPER_FORM: PaperFormData = {
   paper_id: "",
   title: "",
-  presenter: "",
+  authors: "",
 };
 
 export const ScheduleManager = () => {
@@ -357,7 +357,7 @@ export const ScheduleManager = () => {
 
   const openEditPaper = (paper: SchedulePaper) => {
     setEditingPaper(paper);
-    setPaperForm({ paper_id: paper.paper_id || "", title: paper.title, presenter: paper.presenter });
+    setPaperForm({ paper_id: paper.paper_id || "", title: paper.title, authors: paper.authors });
     setPaperEventId(paper.event_id);
     setPaperDialogOpen(true);
   };
@@ -367,8 +367,8 @@ export const ScheduleManager = () => {
       toast({ title: "Validation Error", description: "Paper title is required.", variant: "destructive" });
       return;
     }
-    if (!paperForm.presenter.trim()) {
-      toast({ title: "Validation Error", description: "Presenter name is required.", variant: "destructive" });
+    if (!paperForm.authors.trim()) {
+      toast({ title: "Validation Error", description: "Authors name is required.", variant: "destructive" });
       return;
     }
 
@@ -379,7 +379,7 @@ export const ScheduleManager = () => {
         await adminDbUpdate("schedule_papers", editingPaper.id, {
           paper_id: paperForm.paper_id?.trim() || null,
           title: paperForm.title.trim(),
-          presenter: paperForm.presenter.trim(),
+          authors: paperForm.authors.trim(),
         });
       } catch (error) {
         toast({ title: "Error", description: "Failed to update paper.", variant: "destructive" });
@@ -395,7 +395,7 @@ export const ScheduleManager = () => {
           event_id: paperEventId,
           paper_id: paperForm.paper_id?.trim() || null,
           title: paperForm.title.trim(),
-          presenter: paperForm.presenter.trim(),
+          authors: paperForm.authors.trim(),
           sort_order: nextOrder,
         });
       } catch (error) {
@@ -734,7 +734,7 @@ export const ScheduleManager = () => {
                                 <GripVertical className="w-3 h-3 text-muted-foreground shrink-0" />
                                 <div className="flex-1 min-w-0">
                                   <p className="font-medium truncate">{paper.title}</p>
-                                  <p className="text-xs text-muted-foreground">{paper.presenter}</p>
+                                  <p className="text-xs text-muted-foreground">{paper.authors}</p>
                                 </div>
                                 <div className="flex gap-1 shrink-0">
                                   <Button size="sm" variant="ghost" className="h-7 text-xs" onClick={() => openEditPaper(paper)}>
@@ -1007,12 +1007,12 @@ export const ScheduleManager = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="paper-presenter">Presenter *</Label>
+                  <Label htmlFor="paper-authors">Authors *</Label>
                   <Input
-                    id="paper-presenter"
-                    placeholder="e.g., Dr. Jane Doe"
-                    value={paperForm.presenter}
-                    onChange={(e) => setPaperForm((p) => ({ ...p, presenter: e.target.value }))}
+                    id="paper-authors"
+                    placeholder="e.g., Dr. Jane Doe, John Smith"
+                    value={paperForm.authors}
+                    onChange={(e) => setPaperForm((p) => ({ ...p, authors: e.target.value }))}
                   />
                 </div>
               </div>
