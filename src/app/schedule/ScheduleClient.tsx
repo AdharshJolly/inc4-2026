@@ -265,9 +265,9 @@ function EventCard({ event, papers, defaultExpanded = false }: { event: Schedule
                             <span className="text-sm font-medium text-left">
                               {paperTitle}
                             </span>
-                            <span className="text-sm text-muted-foreground flex items-center gap-1.5 shrink-0 text-left truncate">
-                              <User className="w-3.5 h-3.5 shrink-0" />
-                              <span className="truncate">{paper.presenter || "-"}</span>
+                            <span className="text-sm text-muted-foreground flex items-start gap-1.5 shrink-0 text-left">
+                              <User className="w-3.5 h-3.5 shrink-0 mt-0.5" />
+                              <span className="whitespace-normal break-words">{paper.presenter || "-"}</span>
                             </span>
                           </div>
                         );
