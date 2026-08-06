@@ -94,6 +94,7 @@ type EventFormData = {
 };
 
 type PaperFormData = {
+  paper_id?: string;
   title: string;
   presenter: string;
 };
@@ -110,6 +111,7 @@ const EMPTY_EVENT_FORM: EventFormData = {
 };
 
 const EMPTY_PAPER_FORM: PaperFormData = {
+  paper_id: "",
   title: "",
   presenter: "",
 };
@@ -355,7 +357,7 @@ export const ScheduleManager = () => {
 
   const openEditPaper = (paper: SchedulePaper) => {
     setEditingPaper(paper);
-    setPaperForm({ title: paper.title, presenter: paper.presenter });
+    setPaperForm({ paper_id: paper.paper_id || "", title: paper.title, presenter: paper.presenter });
     setPaperEventId(paper.event_id);
     setPaperDialogOpen(true);
   };
@@ -375,6 +377,7 @@ export const ScheduleManager = () => {
     if (editingPaper) {
       try {
         await adminDbUpdate("schedule_papers", editingPaper.id, {
+          paper_id: paperForm.paper_id?.trim() || null,
           title: paperForm.title.trim(),
           presenter: paperForm.presenter.trim(),
         });
@@ -390,6 +393,7 @@ export const ScheduleManager = () => {
       try {
         await adminDbInsert("schedule_papers", {
           event_id: paperEventId,
+          paper_id: paperForm.paper_id?.trim() || null,
           title: paperForm.title.trim(),
           presenter: paperForm.presenter.trim(),
           sort_order: nextOrder,
@@ -982,6 +986,16 @@ export const ScheduleManager = () => {
               </DialogHeader>
 
               <div className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="paper-id">Paper ID (Optional)</Label>
+                  <Input
+                    id="paper-id"
+                    placeholder="e.g., 123"
+                    value={paperForm.paper_id || ""}
+                    onChange={(e) => setPaperForm((p) => ({ ...p, paper_id: e.target.value }))}
+                  />
+                </div>
+
                 <div className="space-y-2">
                   <Label htmlFor="paper-title">Paper Title *</Label>
                   <Input

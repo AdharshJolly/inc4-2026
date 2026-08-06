@@ -113,8 +113,10 @@ export interface SchedulePaper {
   id: string;
   event_id: string;
   title: string;
+  paper_id?: string;
   presenter: string;
   sort_order: number;
+  created_at: string;
 }
 
 // ── Site config / feature flags ──

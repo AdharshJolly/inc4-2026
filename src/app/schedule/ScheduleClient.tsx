@@ -238,22 +238,42 @@ function EventCard({ event, papers, defaultExpanded = false }: { event: Schedule
 
               {/* Papers */}
               {papers.length > 0 && (
-                <div className="space-y-2">
-                  {papers.map((paper, idx) => (
-                    <div 
-                      key={paper.id} 
-                      className="flex flex-col md:flex-row md:items-center justify-between gap-2 bg-background/60 backdrop-blur-sm px-4 py-3 rounded-lg border border-border/40 hover:border-primary/30 transition-all animate-in fade-in"
-                      style={{ animationDelay: `${idx * 50}ms`, animationFillMode: 'both' }}
-                    >
-                      <span className="text-sm font-medium">
-                        {paper.title}
-                      </span>
-                      <span className="text-xs text-muted-foreground flex items-center gap-1.5 shrink-0">
-                        <User className="w-3 h-3" />
-                        {paper.presenter}
-                      </span>
+                <div className="mt-4 border border-border/40 rounded-lg overflow-x-auto bg-background/30 backdrop-blur-sm">
+                  <div className="min-w-[600px]">
+                    {/* Header */}
+                    <div className="grid grid-cols-[100px_1fr_200px] gap-4 px-4 py-3 text-xs font-semibold text-muted-foreground border-b border-border/50 bg-muted/30">
+                      <div className="text-left">Paper ID</div>
+                      <div className="text-left">Title</div>
+                      <div className="text-left">Presenter</div>
                     </div>
-                  ))}
+                    {/* Rows */}
+                    <div className="divide-y divide-border/40">
+                      {papers.map((paper, idx) => {
+                        const match = paper.title.match(/^\[?(?:ID:\s*)?#?([A-Za-z]*\d+)\]?[\s-:]+(.*)$/i);
+                        const paperId = paper.paper_id || (match ? match[1] : "-");
+                        const paperTitle = paper.paper_id ? paper.title : (match ? match[2] : paper.title);
+
+                        return (
+                          <div 
+                            key={paper.id} 
+                            className="grid grid-cols-[100px_1fr_200px] gap-4 items-center px-4 py-3 hover:bg-primary/5 transition-colors animate-in fade-in"
+                            style={{ animationDelay: `${idx * 50}ms`, animationFillMode: 'both' }}
+                          >
+                            <span className="text-sm font-mono text-muted-foreground text-left">
+                              {paperId !== "-" ? `#${paperId}` : "-"}
+                            </span>
+                            <span className="text-sm font-medium text-left">
+                              {paperTitle}
+                            </span>
+                            <span className="text-sm text-muted-foreground flex items-center gap-1.5 shrink-0 text-left truncate">
+                              <User className="w-3.5 h-3.5 shrink-0" />
+                              <span className="truncate">{paper.presenter || "-"}</span>
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
                 </div>
               )}
             </div>
