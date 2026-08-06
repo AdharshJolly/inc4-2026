@@ -34,6 +34,17 @@ export default function RegistrationPage() {
 
       <div className="container mx-auto px-4 pb-20">
         <div className="max-w-6xl mx-auto space-y-12">
+          <Reveal width="100%">
+            <div className="bg-primary/10 border border-primary/20 rounded-xl p-8 text-center mb-8">
+              <h2 className="text-2xl md:text-3xl font-bold text-primary mb-3">
+                Registrations Closed
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Thank you for the overwhelming response! The official registrations for InC4 2026 are now closed. We look forward to seeing you at the conference.
+              </p>
+            </div>
+          </Reveal>
+
           {/* Pricing Table */}
           <Reveal width="100%">
             <div className="overflow-x-auto rounded-xl border border-primary/20">
@@ -120,13 +131,13 @@ export default function RegistrationPage() {
                       <td className="p-4 text-center border-r border-primary/10 font-mono text-primary line-through">
                         {row.inrEarly}
                       </td>
-                      <td className="p-4 text-center border-r border-primary/10 font-mono">
+                      <td className="p-4 text-center border-r border-primary/10 font-mono text-primary line-through">
                         {row.inrReg}
                       </td>
                       <td className="p-4 text-center border-r border-primary/10 font-mono text-primary line-through">
                         {row.usdEarly}
                       </td>
-                      <td className="p-4 text-center font-mono">
+                      <td className="p-4 text-center font-mono text-primary line-through">
                         {row.usdReg}
                       </td>
                     </tr>
@@ -135,7 +146,7 @@ export default function RegistrationPage() {
                     <td className="p-4 border-r border-primary/20">Workshop</td>
                     <td
                       colSpan={4}
-                      className="p-4 text-center text-lg text-primary"
+                      className="p-4 text-center text-lg text-primary line-through"
                     >
                       ₹ 1500
                     </td>
@@ -190,19 +201,7 @@ export default function RegistrationPage() {
             </div>
           </Reveal>
 
-          <Reveal width="100%">
-            <div className="flex justify-center">
-              <Link
-                href="https://www.explara.com/e/2026-ieee-international-conference-on-contemporary-computing-and-communications-inc4"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Button size="lg" className="px-8 text-lg h-12">
-                  Register here
-                </Button>
-              </Link>
-            </div>
-          </Reveal>
+
         </div>
       </div>
     </div>

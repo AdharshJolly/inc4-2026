@@ -37,25 +37,7 @@ export const CTASection = () => {
             </p>
           </Reveal>
 
-          <Reveal width="100%">
-            <div className="flex flex-wrap justify-center gap-4">
-              <Link
-                href="https://www.explara.com/e/2026-ieee-international-conference-on-contemporary-computing-and-communications-inc4"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Button variant="hero" size="xl">
-                  Register for InC4 2026
-                  <ArrowRight className="w-5 h-5" />
-                </Button>
-              </Link>
-              {/* <Link to="/call-for-papers">
-                <Button variant="outline" size="xl">
-                  Submit Paper
-                </Button>
-              </Link> */}
-            </div>
-          </Reveal>
+
 
           {/* Stats Row */}
           {/* <div className="flex flex-wrap justify-center gap-8 mt-16 pt-16 border-t border-border">

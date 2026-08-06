@@ -194,21 +194,8 @@ export const Navbar = () => {
           ))}
         </div>
 
-        {/* Right Section - CTA Button & CHRIST Logo */}
+        {/* Right Section - CHRIST Logo */}
         <div className="hidden lg:flex items-center gap-6">
-          <Button
-            variant={isLanding && !isScrolled ? "hero" : "default"}
-            size="default"
-            asChild
-          >
-            <Link
-              href="https://www.explara.com/e/2026-ieee-international-conference-on-contemporary-computing-and-communications-inc4"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Register here
-            </Link>
-          </Button>
           <div
             className={`relative h-14 md:h-[4.5rem] w-32 md:w-48 transition-all duration-500 ${
               isLanding && !isScrolled
@@ -295,9 +282,7 @@ export const Navbar = () => {
                   )}
                 </div>
               ))}
-              <Button variant="default" size="lg" className="mt-6 px-8" asChild>
-                <Link href="/registration">Register</Link>
-              </Button>
+
             </div>
           </motion.div>
         )}

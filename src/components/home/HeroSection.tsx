@@ -122,16 +122,6 @@ export const HeroSection = ({
             variants={item}
             className="flex flex-wrap justify-center gap-4"
           >
-            <Link
-              href="https://www.explara.com/e/2026-ieee-international-conference-on-contemporary-computing-and-communications-inc4"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Button variant="hero" size="xl">
-                Register here
-                <ArrowRight className="w-5 h-5" />
-              </Button>
-            </Link>
             <Link href="/schedule">
               <Button variant="heroOutline" size="xl">
                 View Schedule
