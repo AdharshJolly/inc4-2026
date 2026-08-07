@@ -100,6 +100,16 @@ export default function CallForPapersPage() {
                       digital library.
                     </p>
 
+                    <Button size="lg" className="w-full gap-2" asChild>
+                      <a
+                        href="https://www.explara.com/e/2026-ieee-international-conference-on-contemporary-computing-and-communications-inc4"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Register for InC4 2026 <ArrowRight className="w-4 h-4" />
+                      </a>
+                    </Button>
+
                   </div>
                 </div>
                 {/* Decorative Blob */}

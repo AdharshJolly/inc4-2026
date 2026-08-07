@@ -196,6 +196,21 @@ export const Navbar = () => {
 
         {/* Right Section - CHRIST Logo */}
         <div className="hidden lg:flex items-center gap-6">
+
+        <Button
+            variant={isLanding && !isScrolled ? "hero" : "default"}
+            size="default"
+            asChild
+          >
+            <Link
+              href="https://www.explara.com/e/2026-ieee-international-conference-on-contemporary-computing-and-communications-inc4"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Register here
+            </Link>
+          </Button>
+          
           <div
             className={`relative h-14 md:h-[4.5rem] w-32 md:w-48 transition-all duration-500 ${
               isLanding && !isScrolled
