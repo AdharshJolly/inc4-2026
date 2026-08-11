@@ -61,7 +61,7 @@ export const CommitteeManager = () => {
       return {
         ...member,
         categoryId: member.category_id,
-        categoryLabel: cat?.label || "Unknown",
+        categoryLabel: cat?.label || member.category_id.split('-').map((w: string) => w.charAt(0).toUpperCase() + w.slice(1)).join(' '),
         memberIndex: member.id, // using member.id for consistency
         photo: { url: member.photo_url },
       };

@@ -18,6 +18,7 @@ const CATEGORIES = [
   { id: "general-chairs", label: "General Chairs" },
   { id: "general-co-chairs", label: "General Co-Chairs" },
   { id: "steering", label: "Steering Committee" },
+  { id: "technical-and-advisory-committee", label: "Technical and Advisory Committee" },
   { id: "technical-program-committee", label: "Technical Program Committee" },
   { id: "organizing-committee", label: "Organizing Committee" },
   { id: "volunteers", label: "Student Volunteers" }
