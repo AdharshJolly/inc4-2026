@@ -25,6 +25,7 @@ const navLinks = [
       { name: "Call for Papers", href: "/call-for-papers" },
       { name: "Registration fees", href: "/registration" },
       { name: "Important Dates", href: "/important-dates" },
+      { name: "Best Papers", href: "/best-papers" },
     ],
   },
   { name: "Schedule", href: "/schedule" },
