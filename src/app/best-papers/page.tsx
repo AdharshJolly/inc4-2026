@@ -21,7 +21,6 @@ export const metadata: Metadata = {
 
 const bestPapers = [
   {
-    id: "2344",
     position: "First",
     title: "VeloGuard: Adaptive AI-Driven API Rate Limiting Using Bidirectional LSTM with Temporal Attention",
     authors: "Yuvaraj Natarajan and Hardik Ahuja",
@@ -30,7 +29,14 @@ const bestPapers = [
     badgeClass: "bg-yellow-500 text-white"
   },
   {
-    id: "2545",
+    position: "First",
+    title: "Secure Crypto-Ransomware Detection and Data Protection Using Logarithmic Differential Convolutional Neural Networks and Paillier Cryptosystem",
+    authors: "Sree Pranathi Pallela, Chandrakanth Reddy Borra, Chaitanya Devella and Somnath Banerjee",
+    icon: <Trophy className="w-12 h-12 text-yellow-500" />,
+    colorClass: "border-yellow-500/50 shadow-[0_10px_40px_-10px_rgba(234,179,8,0.3)] bg-gradient-to-r from-yellow-500/10 via-background to-background scale-[1.02]",
+    badgeClass: "bg-yellow-500 text-white"
+  },
+  {
     position: "Second",
     title: "Towards Generalizable Deepfake Image Detection with Vision Transformers",
     authors: "Srinanda V Kaliki, M Manvith Prabhu, Hemanth Kumar Mogilipalem, Abhinai S Jayavarapu, Vaibhav Santhosh, Aryan N Herur and Deepu Vijayasenan",
@@ -39,10 +45,25 @@ const bestPapers = [
     badgeClass: "bg-slate-400 text-white"
   },
   {
-    id: "3010",
+    position: "Second",
+    title: "Next-Generation Serverless Engineering for Intelligent and Sustainable Cloud Computing",
+    authors: "Sai Vamsi Chennupati, Sravan Chittimalla, Sai Charan Chittimalla, Venkata Narendra Kode and Sanatya Singh",
+    icon: <Medal className="w-12 h-12 text-slate-400" />,
+    colorClass: "border-slate-400/50 shadow-[0_10px_40px_-10px_rgba(148,163,184,0.3)] bg-gradient-to-r from-slate-400/10 via-background to-background",
+    badgeClass: "bg-slate-400 text-white"
+  },
+  {
     position: "Third",
     title: "Miniaturized Hexagonal Novel Slot Antenna Using Substrate Integrated Waveguide Technology for 5 GHz Applications",
     authors: "Ashutosh Srivastava and Venkateswaran K",
+    icon: <Award className="w-12 h-12 text-amber-700" />,
+    colorClass: "border-amber-700/50 shadow-[0_10px_40px_-10px_rgba(180,83,9,0.3)] bg-gradient-to-r from-amber-700/10 via-background to-background",
+    badgeClass: "bg-amber-700 text-white"
+  },
+  {
+    position: "Third",
+    title: "Design and Implementation of Serverless Architectures for Modern Cloud Systems",
+    authors: "Srilekha Janagam, Vijay Dachepally, Padma Rama Divya Achanta and Dona Mukherjee",
     icon: <Award className="w-12 h-12 text-amber-700" />,
     colorClass: "border-amber-700/50 shadow-[0_10px_40px_-10px_rgba(180,83,9,0.3)] bg-gradient-to-r from-amber-700/10 via-background to-background",
     badgeClass: "bg-amber-700 text-white"
@@ -65,7 +86,7 @@ export default function BestPapersPage() {
 
           <div className="space-y-6">
             {bestPapers.map((paper, index) => (
-              <Reveal key={paper.id} width="100%">
+              <Reveal key={index} width="100%">
                 <Card 
                   className={`group overflow-hidden transition-all duration-500 animate-slide-up hover:-translate-y-1 ${paper.colorClass}`}
                   style={{ animationDelay: `${index * 0.1}s` }}
@@ -90,11 +111,7 @@ export default function BestPapersPage() {
 
                     {/* Right Content Block */}
                     <div className="p-6 sm:p-8 flex-1 flex flex-col justify-center relative">
-                      <div className="mb-2">
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-primary/10 text-primary border border-primary/20">
-                          Paper ID: {paper.id}
-                        </span>
-                      </div>
+
                       
                       <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-4 leading-tight group-hover:text-primary transition-colors">
                         {paper.title}

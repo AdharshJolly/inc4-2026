@@ -1,12 +1,9 @@
 "use client";
 
-import { PageTitle } from "@/components/common/PageTitle";
-import { Card, CardContent } from "@/components/ui/card";
+
 import { Reveal } from "@/components/common/Reveal";
-import { Badge } from "@/components/ui/badge";
 import { getPhotoUrl } from "@/lib/photoMigration";
 import Image from "next/image";
-import { useState } from "react";
 import { Users, Linkedin } from "lucide-react";
 
 export default function SpeakersClient({
@@ -14,16 +11,14 @@ export default function SpeakersClient({
 }: {
   initialSpeakers?: any[];
 }) {
-  const [speakers] = useState(() => {
-    return initialSpeakers.map((s) => ({
-      name: s.name,
-      role: s.role,
-      affiliation: s.affiliation,
-      topic: s.topic,
-      linkedin: s.linkedin,
-      photo: { url: s.photo_url },
-    }));
-  });
+  const speakers = initialSpeakers.map((s) => ({
+    name: s.name,
+    role: s.role,
+    affiliation: s.affiliation,
+    topic: s.topic,
+    linkedin: s.linkedin,
+    photo: { url: s.photo_url },
+  }));
 
   return (
     <div className="min-h-screen bg-background pt-24 pb-16 md:pt-32 md:pb-24">
